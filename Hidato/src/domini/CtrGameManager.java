@@ -1,5 +1,5 @@
 package domini;
-
+//lin 49
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -22,17 +22,16 @@ public class CtrGameManager {
     private final User loggedUser;
     private final CtrDBGame ctrDBGame;
     private final Solver solver;
-    private final CtrHidato ctrHidato;
+    private CtrHidato ctrHidato;
     
     /**
      * Creadora del controlador
      */
-    public CtrGameManager(HidatoSet hidatoSet, User loggedUser, CtrDBGame ctrDBGame, Solver solver, CtrHidato ctrHidato){
+    public CtrGameManager(HidatoSet hidatoSet, User loggedUser, CtrDBGame ctrDBGame, Solver solver){
         this.hidatoSet = hidatoSet;
         this.loggedUser = loggedUser;
         this.ctrDBGame = ctrDBGame;
         this.solver = solver;
-        this.ctrHidato = ctrHidato;
     }
     
     /**
@@ -46,7 +45,8 @@ public class CtrGameManager {
     public CtrCurrentGame createGame(String name, String hidatoName, Help help){
         Hidato hidato = hidatoSet.getHidatoByName(hidatoName);
         Game game = new Game(name, hidato, loggedUser, help, hidato.getDifficult());
-        CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver, ctrHidato); //qui passa el ctr hidato?
+        CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver, ctrHidato);
+        //treure ctrHidato
         return ctrCurrentGame;
     }
     /**

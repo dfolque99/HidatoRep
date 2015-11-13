@@ -33,7 +33,7 @@ public class Game {
      *  Crea un nou Game a partir d'un nom, un hidato, un usuari, un nivell d'ajuda i una dificultat
      */
     
-    public int Game(String name,  Hidato hidato, User user, Help help, Difficulty difficulty){
+    public Game(String name,  Hidato hidato, User user, Help help, Difficulty difficulty){
         this.name = name;
         this.date = new Date();
         this.hidato = new Hidato(hidato);
@@ -44,7 +44,6 @@ public class Game {
         this.duration = Duration.ZERO;
         this.hints = 0;
         this.difficulty = difficulty;
-        return 0;
     }
     
     /**

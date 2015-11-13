@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class Board {
     private int id;
-    private String difficult;
+    private Difficulty difficult;
     private int sizeX;
     private int sizeY;
     private ArrayList<ArrayList<Cell> > boards;
@@ -55,7 +55,7 @@ public class Board {
         username = board.getUsername();
     }
     
-    public String getDifficult() {
+    public Difficulty getDifficult() {
         return difficult;
     }
 
@@ -79,7 +79,7 @@ public class Board {
         return boards.get(y).get(x);
     }
 
-    public void setDifficult(String newDifficult) {
+    public void setDifficult(Difficulty newDifficult) {
         difficult = newDifficult;
     }
 

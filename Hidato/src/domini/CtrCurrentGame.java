@@ -1,5 +1,5 @@
 package domini;
-
+//lin 73, 128
 import java.util.ArrayList;
 
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 /**
  * Controlador d'una partida: cada partida te assignada una instancia de CtrCurrentGame,
- * que s'ocupa de comunicar la capa de vista amb la partida
+ * que s'ocupa de comunicar la capa de vista amb la partida.
  * @author Pau Surrell
  */
 public class CtrCurrentGame {
@@ -26,10 +26,11 @@ public class CtrCurrentGame {
     private long time0;
     
     /**
+     * Creadora
      * Crea un controlador a partir d'un game, un CtrDBGame (que permet la comunicacio
      * amb la capa de persistencia) i un solver
-     */
-    public CtrCurrentGame(Game game,CtrDBGame ctrDBGame, Solver solver){
+     */    
+    public CtrCurrentGame(Game game, CtrDBGame ctrDBGame, Solver solver){
         this.game = game;
         this.ctrDBGame = ctrDBGame;
         this.ctrHidato = new CtrHidato(game.getHidato());
@@ -68,7 +69,8 @@ public class CtrCurrentGame {
         Hidato hidato = ctrHidato.getHidato();
         game.incrementChangesMade();
         hidato.getCell(x,y).setVal(value); //CUIDAO
-        Help helpAux = game.getHelp(); controlar que la cela sigui valida
+        Help helpAux = game.getHelp(); 
+        //controlar que la cela sigui valida
         if (helpAux == Help.HIGH){
             if (!solver.solve(hidato)){
                 return -1; // -1 = EL HIDATO NO TE SOLUCIO
@@ -122,8 +124,11 @@ public class CtrCurrentGame {
         User user_aux = game.getUser();
         user_aux.IncrementSolvedHidatos();
         user_aux.IncrementTimePlayed(game.getDuration());
-        user_aux.IncrementTotalScore(calculateScore());
-        FALTA RANKING
+        int score = calculateScore();
+        user_aux.IncrementTotalScore(score);
+        RankingEntry entry = new RankingEntry(game.getDate(), user_aux.getUsername(), score);
+        
+        //FALTA RANKING
         return 0;
     }
     
