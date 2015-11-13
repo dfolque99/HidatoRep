@@ -30,9 +30,9 @@ public class Board {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         boards = new ArrayList<ArrayList<Cell> >();
-        for (int j = 0; j < sizeX; ++j) {
+        for (int i = 0; i < sizeY; ++i) {
             ArrayList<Cell> llista = new ArrayList<>();
-            for (int i = 0; i < sizeY; ++i) {
+            for (int j = 0; j < sizeX; ++j) {
                 llista.add(new Cell());
             }
             boards.add(llista);
@@ -43,10 +43,10 @@ public class Board {
         sizeX = board.getSizeX();
         sizeY = board.getSizeY();
         boards = new ArrayList<ArrayList<Cell> >();
-        for (int j = 0; j < sizeX; ++j) {
+        for (int i = 0; i < sizeY; ++i) {
             ArrayList<Cell> llista = new ArrayList<>();
-            for (int i = 0; i < sizeY; ++i) {
-                llista.add(new Cell(board.getCell(j, i)));
+            for (int j = 0; j < sizeX; ++j) {
+                llista.add(new Cell(board.getCell(i, j)));
             }
             boards.add(llista);
         }
@@ -75,16 +75,16 @@ public class Board {
         return username;
     }
 
-    public Cell getCell(int x, int y) {
-        return boards.get(x).get(y);
+    public Cell getCell(int y, int x) {
+        return boards.get(y).get(x);
     }
 
     public void setDifficult(String newDifficult) {
         difficult = newDifficult;
     }
 
-    public void setCell(int x, int y, Cell cell) {
-        boards.get(x).set(y, cell);
+    public void setCell(int y, int x, Cell cell) {
+        boards.get(y).set(x, cell);
     }
 
     public void setBoardName(String newName) {

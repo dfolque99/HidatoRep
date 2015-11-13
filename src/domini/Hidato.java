@@ -22,12 +22,12 @@ public class Hidato extends Board {
         super.setBoardName(name);
     }
     
-    public Hidato (int sizeX, int sizeY) {
-        super (sizeX,sizeY);
+    public Hidato (int sizeY, int sizeX) {
+        super (sizeY,sizeX);
     }
     
-    public Hidato (int sizeX, int sizeY, String difficulty) {
-        super (sizeX,sizeY);
+    public Hidato (int sizeY, int sizeX, String difficulty) {
+        super (sizeY,sizeX);
         super.setDifficult(difficulty);
     }
     
