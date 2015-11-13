@@ -1,5 +1,3 @@
-package domini;
-
 import java.util.*;
 
 //import java.util.logging.*;
@@ -18,7 +16,7 @@ public class Solver {
 	/**
 	 * Hidato board as array of array of cells
 	 */
-	private Cell[][] board;
+	private Hidato board;
 	/**
 	 * Current used cells of Hidato board
 	 */
@@ -35,6 +33,36 @@ public class Solver {
 		int x;
 		int y;
 		public Position(int x, int y){this.x=x; this.y=y;}
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + getOuterType().hashCode();
+			result = prime * result + x;
+			result = prime * result + y;
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Position other = (Position) obj;
+			if (!getOuterType().equals(other.getOuterType()))
+				return false;
+			if (x != other.x)
+				return false;
+			if (y != other.y)
+				return false;
+			return true;
+		}
+		private Solver getOuterType() {
+			return Solver.this;
+		}
+
 	}
 	
 	/**
@@ -48,7 +76,7 @@ public class Solver {
 	
 	private Integer getNext(int n){
 		return myMap.higherKey(n);
-	}
+	}	
 	
 	private boolean notEnoughDistance(int n, Position p1, int m, Position p2){
 		return (Math.min(Math.abs(p1.x-p2.x), Math.abs(p1.y-p2.y)) > Math.abs(n-m));	
@@ -80,33 +108,38 @@ public class Solver {
 	 * @param h 	Hidato to try to solve
 	 * @return		true if a solution exists, false otherwise
 	 */
-	public boolean solve(Hidato h) {
+	public void upload(Hidato h) {
 		nRows = h.getSizeX();
 		nCols = h.getSizeY();
-		board = new Cell[nRows][nCols];
+		board = h;
 		used  = new boolean[nRows][nCols];
 		given = new ArrayList<Integer>();
 		myMap = new TreeMap<Integer,Position>();
-		int startX = -1;
-		int startY = -1;
 		for (int i = 0; i < nRows; i += 1) {
 			for (int j = 0; j < nCols; j += 1) {
-				board[i][j] = h.getCell(i, j).toGiven();
-				if (board[i][j].getType() == Type.GIVEN) {
-					given.add(board[i][j].getValue());
-					myMap.put(board[i][j].getValue(), new Position(i,j));
-					if(board[i][j].getValue()==1) {startX=i;startY=j;}
+				board.getCell(i,j).blankToGiven();
+				if (board.getCell(i,j).getType() == Type.GIVEN) {
+					given.add(board.getCell(i,j).getValue());
+					myMap.put(board.getCell(i,j).getValue(), new Position(i,j));
 				}
 			}
 		}
 		Collections.sort(given); 
 		if (given != null && !given.isEmpty()) {
 			finish = given.get(given.size() - 1);
-			return solve(startX,startY,1);
 		}
-		return false;
+	}
+	public boolean uploadAndSolve(Hidato h){
+		upload(h);
+		return solve();
 	}
 
+	private boolean solve(){
+		boolean b = solve(myMap.get(1).x,myMap.get(1).y,1);
+		used = new boolean[nRows][nCols];
+		return b;
+	} 
+	
 	/**
 	 * Solves a Hidato and returns a random cell not in input/non void
 	 * 
@@ -114,19 +147,17 @@ public class Solver {
 	 * @return		3 numbers, x-position, y-position, value of a cell in a solution to hidato H, if not possible returns null
 	 */
 	public ArrayList<Integer> getHint(Hidato h) {
-		if (!solve(h)) {return null;}
+		upload(h);
+		if (!solve()) {return null;}
 		Random rand = new Random();
 		for (int count = 0; count < 100; count +=1){
 			
 			int x = rand.nextInt(nRows);
 			int y = rand.nextInt(nCols);
-			if (board[x][y].getType()==Type.BLANK){return new ArrayList<Integer>(Arrays.asList(x,y,board[x][y].getValue()));}
+			if (board.getCell(x, y).getType()==Type.BLANK){return new ArrayList<Integer>(Arrays.asList(x,y,board.getCell(x, y).getValue()));}
 		}
 		return null;
 	}
-
-
-
 	/**
 	 * Distinguishes whether cell input is available for number n
 	 * 
@@ -136,24 +167,24 @@ public class Solver {
 	 * @return 		true if cell can be assigned number n, false otherwise
 	 */
 	private boolean validPosition(int x, int y, int n) {
+		if ( (Math.min(x, y) < 0)	|| (Math.max(x - nRows, y - nCols) >= 0)) return false;
+		if (myMap.containsKey(n)) return myMap.get(n).equals(new Position(x,y));
+		if (notEnoughDistance(getNext(n),myMap.get(getNext(n)),n,new Position(x,y))) return false;
 		boolean isValid = true;
-
-		if ((Math.min(x, y) < 0)
-				|| (Math.max(x - nRows, y - nCols) >= 0)
-				|| (board[x][y].getType() == Type.VOID)
-				|| used[x][y]//(board[x][y].getType() == Type.BLANK && board[x][y].getValue() < n && board[x][y].getValue() != 0) //quizas hay que tener boolean[][] used
-				|| (board[x][y].getType() == Type.GIVEN && board[x][y].getValue() != n)
-				|| (given.contains(n) && board[x][y].getValue() != n)
+		if ( (board.getCell(x,y).getType() == Type.VOID)
+				|| used[x][y]//(board.getCell(x,y).getType() == Type.BLANK && board.getCell(x,y).getValue() < n && board.getCell(x,y).getValue() != 0) //quizas hay que tener boolean[][] used
+				|| (board.getCell(x,y).getType() == Type.GIVEN && board.getCell(x,y).getValue() != n)
+				|| (myMap.containsKey(n) && board.getCell(x,y).getValue() != n)
 		) 
 		{
 			isValid = false;
 		}
 		Integer m = getNext(n);
 		if (m != null){
-			//if (notEnoughDistance(n, new Position(x,y), m, myMap.get(m))) {isValid = false;}
+	//		if (notEnoughDistance(n, new Position(x,y), m, myMap.get(m))) {isValid = false;}
 		}
 		
-		//if (debug && n == 4) System.out.println(String.format("isValid %b x %d y %d n %d", isValid,x,y,n));
+		//if (debug && n == 4) System.out.println(String.format("isValid %b x %d y %d n %d", isValid,x,y,n));*/
 		return isValid;
 	}
 
@@ -188,8 +219,8 @@ public class Solver {
 		Collections.sort(result, new Comparator<int[]>() {
 			@Override
 			public int compare(final int[] a, final int[] b) {
-				return getNeighboursUnsorted(b[0], b[1], b[2]).size()
-						- getNeighboursUnsorted(a[0], a[1], a[2]).size();
+				return - getNeighboursUnsorted(b[0], b[1], b[2]).size()
+						+ getNeighboursUnsorted(a[0], a[1], a[2]).size();
 			}
 		});
 		return result;
@@ -204,12 +235,22 @@ public class Solver {
 	 * @return 		true if current Hidato board can be solved with cell in (x,y) with number n, otherwise false
 	 */
 	private boolean solve(int x, int y, int n) {
-		if (n == finish && board[x][y].getValue() == n) {return true;}
+		if (n == finish && board.getCell(x,y).getValue() == n) {return true;}
 		if (!validPosition(x, y, n)) {return false;}
-		if (board[x][y].getValue() != n) {board[x][y].setValue(n);}
+		if (board.getCell(x,y).getValue() != n) {board.getCell(x,y).setValue(n);}
+		
 		used[x][y]=true;
-		for (int[] s : getNeighboursSorted(x, y, n)) {if (solve(x + s[0], y + s[1], n + 1)) {return true;}}
+		/* if (myMap.containsKey(n+1)){
+			if ( notEnoughDistance(n+1,myMap.get(n+1),n,new Position(x,y)) ) {
+				used[x][y]=false;
+				return false;
+			}
+			return solve(myMap.get(n+1).x,myMap.get(n+1).y,n+1);
+		}*/
+		for (final int[] s : getNeighboursSorted(x, y, n)) {if (solve(x + s[0], y + s[1], n + 1)) {return true;}}
 		used[x][y]=false;
+		
+		System.out.format("n %d, x %d y %d \n",n,x,y);
 		return false;
 		//lento, hace falta extructura datos doble diccionario numero<->posicion
 	}
@@ -220,60 +261,57 @@ public class Solver {
 	 * @param h Hidato with only void and given cells, the result has a solution
 	 */
 	public void generator(Hidato h, int iterations){
-		if(!solve(h)) return;
-		Random rand = new Random();
-		ArrayList<Integer> Foo = new ArrayList<Integer>(myMap.keySet());
+		upload(h);
+		boolean b = solve();
+		if(!b) return;
 		
-		boolean b = solve(h);
+		Random rand = new Random();
+		
 		for (int count = 0; count < iterations; count +=1){
 			int n = 1 + rand.nextInt(finish-1);
 			int x = rand.nextInt(nRows);
 			int y = rand.nextInt(nCols);
 			if (h.getCell(x,y).getType() == Type.BLANK && !myMap.containsKey(n)){
-				board[x][y] = new GivenCell(n);
+				board.setCell(x,y, new Cell(n,Type.GIVEN));
 				
-				h.setCell(x, y, new GivenCell(n));
-				if(!solve(myMap.get(1).x,myMap.get(1).y,1)){
+				h.setCell(x, y, new Cell(n,Type.GIVEN));
+				if(!solve()){
 					h.setCell(x, y, new BlankCell());
 				}
 				else {
-					h.setCell(x,y,new GivenCell(n));
+					System.out.format("Generator:Adding: n %d x %d y %d \n",n,x,y);
+					h.setCell(x,y,new Cell(n,Type.GIVEN));
 					myMap.put(n, new Position(x,y));
 				}
 			}
 		}
-		//System.out.println(myMap);
+		System.out.println(myMap);
 	}
-	
-/*
-	@SuppressWarnings("unchecked")
-	public void upload(Cell[][] board, ArrayList<Integer> given, int finish) {
-		this.board = board.clone();
-		this.given = (ArrayList<Integer>) given.clone();
-		this.finish = finish;
-		nRows = board.length;
-		nCols = board[0].length;
+
+	public Hidato download() {
+		return board;
 	}
-	public Cell[][] download() {
-		return board.clone();
-	}
-*/	
-	public final Cell getCell(int x, int y){return (Cell) board[x][y];}
+		
+	public final Cell getCell(int x, int y){return (Cell) board.getCell(x,y);}
 
 	public static void main(String[] args) {
 		Solver s = new Solver();
-		//Cell[] r1 = new Cell[] { new GivenCell(1) {}, new BlankCell() {}, new GivenCell(5) {}};
-		//Cell[] r2 = new Cell[] { new VoidCell() {}, new GivenCell(3) {}, new BlankCell() {}};
+		//Cell[] r1 = new Cell[] { new Cell(1,Type.GIVEN)1) {}, new BlankCell() {}, new Cell(1,Type.GIVEN)5) {}};
+		//Cell[] r2 = new Cell[] { new VoidCell() {}, new Cell(1,Type.GIVEN)3) {}, new BlankCell() {}};
 		//s.upload(new Cell[][] { r1, r2 },
 		//new ArrayList<Integer>(Arrays.asList(1, 3, 5)), 5);
 		
-		int n = 5;
-		//s.generator(new Hidato(n,n), 0);
-		//System.out.println(s.solve(0,0,1));
-		s.solve(new Hidato(n,n));
+		int n = 6;
+		Hidato h = new Hidato(n,n);
+		//s.generator(h, 2);
+		
+		System.out.println(s.uploadAndSolve(h));
+		
+		
 		for (int i = 0; i < n; i+=1) {
 			for (int j = 0; j < n; j+=1) {
-				System.out.format("%s ", s.getCell(i,j).toString());	
+				System.out.format("%s ", s.getCell(i,j).toString());
+				//System.out.format("%b ", s.getCell(i,j).getType()==Type.GIVEN);	
 			}
 			System.out.format("\n");
 		}
