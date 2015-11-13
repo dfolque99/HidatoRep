@@ -29,6 +29,7 @@ public class HidatoManagerDriver {
         System.out.printf("3 x y t => canvia el tipus de (x,y) per t "
                 + "(1 = blanca, 2 = pista, 3 = no valida)\n");
         System.out.printf("4 => escriu el hidato\n");
+        System.out.printf("41 => escriu tots els hidatos guardats\n");
         System.out.printf("5 name => guarda el nou hidato amb nom name\n");
         System.out.printf("6 => actualitza el hidato a la base de dades\n");
         System.out.printf("7 name => obre el hidato amb nom name\n");
