@@ -23,7 +23,7 @@ public class CtrCurrentGame {
     private CtrDBGame ctrDBGame;
     private Solver solver;
     private CtrHidato ctrHidato;
-    private double time0;
+    private long time0;
     
     /**
      * Crea un controlador a partir d'un game, un CtrDBGame (que permet la comunicacio
@@ -88,8 +88,8 @@ public class CtrCurrentGame {
      */
     
     public int pause(){
-        double time1 = System.currentTimeMillis();
-        game.incrementDuration(time1 - time0);
+        long time1 = (long) System.currentTimeMillis();
+        game.incrementDuration((time1 - time0));
         return 0;
     }
     
@@ -117,7 +117,7 @@ public class CtrCurrentGame {
      * @return 0
      */
     public int finishGame(){
-        double time1 = System.currentTimeMillis();
+        long time1 = System.currentTimeMillis();
         game.incrementDuration(time1 - time0);
         User user_aux = game.getUser();
         user_aux.IncrementSolvedHidatos();
