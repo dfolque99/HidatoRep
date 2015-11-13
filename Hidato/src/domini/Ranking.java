@@ -12,17 +12,27 @@ import java.util.ArrayList;
  * @author Guillem
  */
 public class Ranking {
-    private final int N = 20;
+    private static final int N = 20;
     private final Difficulty difficulty;
     private ArrayList <RankingEntry> ranking;
-
+    
     public Ranking(Difficulty difficulty) {
         this.difficulty = difficulty;
         ranking = new ArrayList<>();
     }
     
-    public RankingEntry getEntry(int i) {
-        return ranking.get(i);
+    public void insertEntry(RankingEntry newEntry);
+    
+    public int getMaxSize() {
+        return N;
+    }
+    
+    public int getSize() {
+        return ranking.size();
+    }
+    
+    public getDifficulty() {
+        return difficulty;
     }
     
     
