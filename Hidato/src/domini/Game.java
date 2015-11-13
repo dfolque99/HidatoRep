@@ -9,68 +9,33 @@ import java.util.Date;
  */
 
 /**
- *
+ * Game representa una partida
  * @author Pau Surrell
  */
 public class Game {
     
     /**
-     *  Game name
+     *  Declara tots els parametres d'un Game
      */
     private String name;
-    
-    /**
-     *  Indicates the Help level chosen
-     */
     private Help help;
-    
-    /**
-     *  Stores the duration of the game (in seconds)
-     */
     private int duration;
-    
-    /**
-     *  Stores the number of checks made in the game
-     */
     private int checksMade;
-    
-    /**
-     *  Stores the number of changes made in the game.
-     *  A change includes putting a value into a cell,
-     *  modifying it or deleting it.
-     */
     private int changesMade;
-    
-    /**
-     *  Stores the number of hints the user has requested
-     */
     private int hints;
-    
-    /**
-     *  Stores the date in which the game was created
-     */
     private Date date;
-    
-    /**
-     *  Stores the Hidato board of the game
-     */
     private Hidato hidato;
-    
-    /**
-     *  Stores the user that created the game
-     */
     private User user;
-    
     private Difficulty difficulty;
     
     /**
-     *  Creator of a game, having the date, the hidato, the user, the name and the help
+     *  Crea un nou Game a partir d'un nom, un hidato, un usuari, un nivell d'ajuda i una dificultat
      */
     
     public int Game(String name,  Hidato hidato, User user, Help help, Difficulty difficulty){
         this.name = name;
         this.date = new Date();
-        this.hidato = hidato.clone();
+        this.hidato = new Hidato(hidato);
         this.user = user;
         this.help = help;
         this.changesMade = 0;
@@ -82,89 +47,51 @@ public class Game {
     }
     
     /**
-     * Getter of the name
-     * @return the name of the game
+     * Getters
      */
     
     public String getName(){
         return this.name;
     }
     
-    /**
-     * Getter of the creation date
-     * @return the creation date of the game
-     */
     public Date getDate(){
         return this.date;
     }
     
-    /**
-     * Getter of the hidato board 
-     * @return the board of the game
-     */
     public Hidato getHidato(){
         return this.hidato;
     }
-    
-    /**
-     * Getter of the user
-     * @return the user playing this game
-     */
     
     public User getUser(){
         return this.user;
     }
     
-    /**
-     * Getter of the help level
-     * @return the help level
-     */
-    
     public Help getHelp(){
         return this.help;
     }
-    
-    /**
-     * Getter of the changes made
-     * @return the number of changes made in the game
-     */
     
     public int getChangesMade(){
         return this.changesMade;
     }
     
-    /**
-     * Getter of the checks made
-     * @return the number of checks made in the game
-     */
     public int getChecksMade(){
         return this.checksMade;
     }
     
-    /**
-     * Getter of the duration
-     * @return the duration of the game, in seconds
-     */
     public int getDuration(){
         return this.duration;
     }
     
-    /**
-     * Getter of the number of hints
-     * @return the number of hints made
-     */
     public int getHints(){
         return this.hints;
     }
-    
     
     public Difficulty getDifficulty(){
         return this.difficulty;
     }
     
     /**
-     * Sets the Game name to the parameter name
-     * @param name the new name of the game
+     * Setter del nom de la partida
      * @return 0
      */
     public int setName(String name){
@@ -173,7 +100,7 @@ public class Game {
     }
     
     /**
-     * Increments the number of changes made by 1
+     * Incrementa el nombre de canvis fets en 1. 
      * @return 0
      */
     public int incrementChangesMade(){
@@ -182,7 +109,7 @@ public class Game {
     }
     
     /**
-     * Increments the number of checks made by 1
+     * Incrementa el nombre de checks fets en el game
      * @return 0
      */
     public int incrementChecksMade(){
@@ -191,7 +118,7 @@ public class Game {
     }
     
     /**
-     * Increments the number of hints requested by 1
+     * Incrementa el nombre de pistes demanades
      * @return 0
      */
     public int incrementHints(){
@@ -199,6 +126,11 @@ public class Game {
         return 0;
     }
     
+    /**
+     * Incrementa la durada de la partida
+     * @param time durada afegida
+     * @return 0
+     */
     public int incrementDuration(double time){
         this.duration += time;
         return 0;
