@@ -1,5 +1,7 @@
 package domini;
 
+import java.util.ArrayList;
+
 
 
 /*
@@ -10,23 +12,22 @@ package domini;
 
 /**
  *
- * @author Pau
+ * @author Pau Surrell
  */
 public class CtrCurrentGame {
     /**
      * Stores the current game
      */
-    private final Game game;  
+    private final Game game;
     private CtrDBGame ctrDBGame;
     private Solver solver;
     private CtrHidato ctrHidato;
     private double time0;
-    private double time1;
     
-    public CtrCurrentGame(Game game,CtrDBGame ctrDBGame, Solver solver, CtrHidato ctrHidato){
+    public CtrCurrentGame(Game game,CtrDBGame ctrDBGame, Solver solver){
         this.game = game;
         this.ctrDBGame = ctrDBGame;
-        this.ctrHidato = ctrHidato;
+        this.ctrHidato = new CtrHidato(game.getHidato());
         this.solver = solver;
     }
 
@@ -38,7 +39,7 @@ public class CtrCurrentGame {
     }
     
     
-    public int[] requestHint(){
+    public ArrayList<Integer> requestHint(){
         game.incrementHints();
         Hidato hidato = game.getHidato();
         return solver.getHint(hidato);
@@ -46,17 +47,22 @@ public class CtrCurrentGame {
     
     
     public int putValue(int value, int x, int y){
-        Hidato hidato = game.getHidato();
+        Hidato hidato = ctrHidato.getHidato();
         game.incrementChangesMade();
-        hidato.setValue(value, x, y);
+        hidato.getCell(x,y).setVal(value); //CUIDAO
         Help helpAux = game.getHelp();
-        if (helpAux == "HIGH"){
+        if (helpAux == Help.HIGH){
             if (!solver.solve(hidato)){
                 return -1; // -1 = EL HIDATO NO TE SOLUCIO
             }else return 0;
-        }else if (helpAux == "MEDIUM"){
+        }else if (helpAux == Help.MEDIUM){
+            if (ctrHidato.AreCellsContiguous(value, value+1) && ctrHidato.AreCellsContiguous(value, value-1)){
+                return 0;
+            }else return -2; // -2 = HI HA DOS NOMBRES CONSECUTIUS SEPARATS
+            
             // COM MIRO SI HE POSAT DOS NOMBRES SEGUITS SEPARATS?
         }
+        return 0;
     }
     
     public int pause(){
@@ -71,6 +77,7 @@ public class CtrCurrentGame {
     }
     
     public int saveGame(){
+        pause();
         ctrDBGame.saveGame(game);
         return 0;
     }
@@ -95,6 +102,8 @@ public class CtrCurrentGame {
     
     public int initialize(){
         game.getUser().IncrementStartedHidatos();
+        unpause();
+        return 0;
     }
     
     

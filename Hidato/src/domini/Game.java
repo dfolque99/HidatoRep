@@ -1,5 +1,7 @@
 package domini;
 
+import java.util.Date;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,7 +22,7 @@ public class Game {
     /**
      *  Indicates the Help level chosen
      */
-    private final Help help;
+    private Help help;
     
     /**
      *  Stores the duration of the game (in seconds)
@@ -47,19 +49,19 @@ public class Game {
     /**
      *  Stores the date in which the game was created
      */
-    private final Date date;
+    private Date date;
     
     /**
      *  Stores the Hidato board of the game
      */
-    private final Hidato hidato;
+    private Hidato hidato;
     
     /**
      *  Stores the user that created the game
      */
-    private final User user;
+    private User user;
     
-    private final String difficulty;
+    private Difficulty difficulty;
     
     /**
      *  Creator of a game, having the date, the hidato, the user, the name and the help
@@ -67,7 +69,7 @@ public class Game {
     
     public int Game(String name,  Hidato hidato, User user, Help help, Difficulty difficulty){
         this.name = name;
-        this.date = Date();
+        this.date = new Date();
         this.hidato = hidato.clone();
         this.user = user;
         this.help = help;
@@ -76,6 +78,7 @@ public class Game {
         this.duration = 0;
         this.hints = 0;
         this.difficulty = difficulty;
+        return 0;
     }
     
     /**

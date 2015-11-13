@@ -8,14 +8,19 @@ package domini;
 
 /**
  *
- * @author Pau
+ * @author Pau Surrell
  */
 
+
+/**
+ * Un d'aquests controladors per cada usuari loguejat -> si es fa logout i login
+ * amb un altre usuari, s'ha de crear un altre objecte CtrGameManager
+ */
 public class CtrGameManager {
-    private HidatoSet hidatoSet;
+    private final HidatoSet hidatoSet;
     private User loggedUser;
-    private CtrDBGame ctrDBGame;
-    private Solver solver;
+    private final CtrDBGame ctrDBGame;
+    private final Solver solver;
     private CtrHidato ctrHidato;
     
     public CtrGameManager(HidatoSet hidatoSet, User loggedUser, CtrDBGame ctrDBGame, Solver solver, CtrHidato ctrHidato){
@@ -42,5 +47,6 @@ public class CtrGameManager {
     
     public int deleteGame(String name){
         ctrDBGame.deleteGame(name, loggedUser);
+        return 0;
     }
 }
