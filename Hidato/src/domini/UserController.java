@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domini;
 
-
+import UserDBController;
 
 /**
  *
@@ -14,15 +13,14 @@ package domini;
 public class UserController {
     
     private User loggedUser;
-    private UserDBController userDBController;
     
     public UserController() {
         loggedUser = null;
-        userDBController = new UserDBController();
     }
     
     public int login(String username, String password) {
-        loggedUser = UserDBController.getUser(username);
+        UserDBController userDBController = new UserDBController();
+        loggedUser = userDBController.getUser(username);
         if (loggedUser == null) return -1;
         if (!password.equals(loggedUser.getPassword())) {
             loggedUser = null;
@@ -44,8 +42,11 @@ public class UserController {
         loggedUser = null;
         return 0;
     }
-    
-    public User getUser (String username) {
+
+    public User getLoggedUser() {
+        return loggedUser;
+    }    
+    public User getUser(String username) {
         return UserDBController.getUser(username);
     }
     
