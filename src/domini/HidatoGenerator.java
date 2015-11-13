@@ -10,11 +10,15 @@ package domini;
  * @author David
  */
 public class HidatoGenerator {
-
-    public HidatoGenerator() { }
+    
+    private Hidato h;
+    
+    public HidatoGenerator(Hidato h) {
+        this.h = h;
+    }
     
     public Hidato generateHidato(int sizeX, int sizeY, String difficulty) {
-        Hidato h = new Hidato(sizeX, sizeY, difficulty);
+        
         
         
         return h;
