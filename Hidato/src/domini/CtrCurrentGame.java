@@ -1,5 +1,4 @@
 package domini;
-//lin 73, 128
 import java.util.ArrayList;
 
 
@@ -41,6 +40,15 @@ public class CtrCurrentGame {
     }
 
     /**
+     * Retorna el game del controlador
+     * @return 
+     */
+    
+    public Game getGame(){
+        return this.game;
+    }
+    
+    /**
      * Fa un check del hidato
      * @return true si el hidato te solucio, false si no en te
      */
@@ -53,12 +61,19 @@ public class CtrCurrentGame {
     
     /**
      * Demana una pista del hidato
-     * @return una array list amb la posicio i valor de la pista
+     * @return una array list de mida 3, amb la posicio i valor de la pista
      */
-    public ArrayList<Integer> requestHint(){
+    public int requestHint(){
         game.incrementHints();
         Hidato hidato = ctrHidato.getHidato();
-        return solver.getHint(hidato);
+        ArrayList<Integer> hint = solver.getHint(hidato); //x y value
+        if (hint == null) return -1; //-1 = el hidato no te solucio
+        int x = hint.get(0);
+        int y = hint.get(1);
+        int value = hint.get(2);
+        Cell cell = hidato.getCell(x,y);
+        cell.setVal(value);
+        return 0;
     }
     
     /**

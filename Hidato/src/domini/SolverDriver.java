@@ -31,8 +31,9 @@ final public class SolverDriver {
 			}
 			if (3 == foo){
 				Utils.clean(hidato);
-				final boolean b = solver.uploadAndSolve(hidato);
+				final boolean b = solver.solve(hidato);
 				System.out.println(b ? "Has solution" : "No solution");
+                                hidato = solver.getHidato();
 			}
 			if (4 == foo){
 				System.out.println(Utils.toString(hidato));

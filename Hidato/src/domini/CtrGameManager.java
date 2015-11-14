@@ -1,5 +1,4 @@
 package domini;
-//lin 49
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -44,10 +43,15 @@ public class CtrGameManager {
      */
     
     public CtrCurrentGame createGame(String name, String hidatoName, Help help){
+        Boolean error = false;
+        Game game_aux = ctrDBGame.getGame(name, loggedUser);
+        if (game_aux != null) error = true;
         Hidato hidato = hidatoSet.getHidatoByName(hidatoName);
+        if (hidato == null) error = true;
         Game game = new Game(name, hidato, loggedUser, help, hidato.getDifficult());
+        if (game == null) error = true;
         CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver,ctrRanking);
-        //treure ctrHidato
+        if (error) return null;
         return ctrCurrentGame;
     }
     /**
@@ -57,6 +61,7 @@ public class CtrGameManager {
     public CtrCurrentGame restoreGame(String name){
         Game game = ctrDBGame.getGame(name, loggedUser);
         ctrDBGame.deleteGame(name, loggedUser);
+        if (game == null) return null;
         CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver, ctrRanking);
         return ctrCurrentGame;
     }
