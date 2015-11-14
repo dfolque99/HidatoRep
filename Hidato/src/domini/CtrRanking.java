@@ -18,7 +18,12 @@ public class CtrRanking {
     private Ranking hardRanking;
     
     //Inicializar los tres atributos con los rankings que devuelva el CtrDBRanking
-    //void init();
+    void init() {
+        CtrDBRanking ctrDBRanking = new CtrDBRanking();
+        easyRanking = ctrDBRanking.getRanking(Difficulty.EASY);
+        mediumRanking = ctrDBRanking.getRanking(Difficulty.MEDIUM);
+        hardRanking = ctrDBRanking.getRanking(Difficulty.HARD);
+    }
     
     void addScoreToRanking(int score, String username, Difficulty difficulty) {
         RankingEntry newEntry = new RankingEntry(new Date(),username,score);
@@ -36,7 +41,12 @@ public class CtrRanking {
                 break;
         }
     }
-    //Guardar las modificaciones en disco (a traves de CtrDBRanking)
-    //void save();
+    
+    void save() {
+        CtrDBRanking ctrDBRanking = new CtrDBRanking();
+        ctrDBRanking.modifyRanking(Difficulty.EASY,easyRanking);
+        ctrDBRanking.modifyRanking(Difficulty.MEDIUM,mediumRanking);
+        ctrDBRanking.modifyRanking(Difficulty.HARD,hardRanking);
+    }
     
 }
