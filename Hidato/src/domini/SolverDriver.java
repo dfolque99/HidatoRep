@@ -30,12 +30,12 @@ final public class SolverDriver {
 				hidato.setCell(x, y, new Cell(v, v > 0 ? Type.GIVEN : Type.VOID));
 			}
 			if (3 == foo){
-				hidato.clean();
+				Utils.clean(hidato);
 				final boolean b = solver.uploadAndSolve(hidato);
 				System.out.println(b ? "Has solution" : "No solution");
 			}
 			if (4 == foo){
-				System.out.println(hidato.toString());
+				System.out.println(Utils.toString(hidato));
 			}
 			if (5 == foo) {break;}			
 		}
