@@ -1,5 +1,6 @@
 package domini;
 
+import java.time.Duration;
 import java.util.Date;
 
 /*
@@ -19,7 +20,7 @@ public class Game {
      */
     private String name;
     private Help help;
-    private int duration;
+    private Duration duration;
     private int checksMade;
     private int changesMade;
     private int hints;
@@ -32,7 +33,7 @@ public class Game {
      *  Crea un nou Game a partir d'un nom, un hidato, un usuari, un nivell d'ajuda i una dificultat
      */
     
-    public int Game(String name,  Hidato hidato, User user, Help help, Difficulty difficulty){
+    public Game(String name,  Hidato hidato, User user, Help help, Difficulty difficulty){
         this.name = name;
         this.date = new Date();
         this.hidato = new Hidato(hidato);
@@ -40,10 +41,9 @@ public class Game {
         this.help = help;
         this.changesMade = 0;
         this.checksMade = 0;
-        this.duration = 0;
+        this.duration = Duration.ZERO;
         this.hints = 0;
         this.difficulty = difficulty;
-        return 0;
     }
     
     /**
@@ -78,7 +78,7 @@ public class Game {
         return this.checksMade;
     }
     
-    public int getDuration(){
+    public Duration getDuration(){
         return this.duration;
     }
     
@@ -131,8 +131,8 @@ public class Game {
      * @param time durada afegida
      * @return 0
      */
-    public int incrementDuration(double time){
-        this.duration += time;
+    public int incrementDuration(long time){
+        this.duration.plusMillis(time);
         return 0;
     }
 }

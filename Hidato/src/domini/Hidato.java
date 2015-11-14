@@ -26,7 +26,7 @@ public class Hidato extends Board {
         super (sizeY,sizeX);
     }
     
-    public Hidato (int sizeY, int sizeX, String difficulty) {
+    public Hidato (int sizeY, int sizeX, Difficulty difficulty) {
         super (sizeY,sizeX);
         super.setDifficult(difficulty);
     }
