@@ -37,7 +37,7 @@ public class RankingEntry {
 
     @Override
     public String toString() {
-        return "RankingEntry{" + "date=" + date + ", username=" + username + ", score=" + score + '}';
+        return date + "  " + username + "  " + score;
     }
     
 }

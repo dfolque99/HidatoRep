@@ -27,7 +27,7 @@ public class Ranking {
         return ranking.size();
     }
 
-    public int getMaxSize() {
+    public static int getMaxSize() {
         return N;
     }
 
@@ -60,5 +60,5 @@ public class Ranking {
         ranking.add(pos,newEntry);
         if (ranking.size() > N) ranking.remove(N);
     }
-
+    
 }
