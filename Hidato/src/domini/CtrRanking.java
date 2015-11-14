@@ -5,6 +5,8 @@
  */
 package domini;
 
+import java.util.Date;
+
 /**
  *
  * @author Guillem
@@ -15,9 +17,21 @@ public class CtrRanking {
     private Ranking mediumRanking;
     private Ranking hardRanking;
     
-    void addEntryToRanking(int score, String username, Difficulty difficulty) {
-        RankingEntry newEntry = new RankingEntry(,username,difficulty);
-        
+    void addScoreToRanking(int score, String username, Difficulty difficulty) {
+        RankingEntry newEntry = new RankingEntry(new Date(),username,score);
+        switch(difficulty) {
+            case EASY:
+                easyRanking.addRankingEntry(newEntry);
+                break;
+                
+            case MEDIUM:
+                mediumRanking.addRankingEntry(newEntry);
+                break;
+                
+            case HARD:
+                hardRanking.addRankingEntry(newEntry);
+                break;
+        }
     }
     
 }
