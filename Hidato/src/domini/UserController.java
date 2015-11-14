@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+package domini;
 /**
  *
  * @author Guillem
@@ -38,14 +38,14 @@ public class UserController {
     public int deleteUser(String password) {
         UserDBController userDBController = new UserDBController();
         if (!password.equals(loggedUser.getPassword())) return -1;
-        if (userDBController.deleteUser(loggedUser.getName()) != 0) return -2;
+        if (userDBController.deleteUser(loggedUser.getUsername()) != 0) return -2;
         loggedUser = null;
         return 0;
     }
     
     public int updateUser() {
         UserDBController userDBController = new UserDBController();
-        int error = userDBController.modifyUser(loggedUser);
+        int error = userDBController.modifyUser(loggedUser,loggedUser.getUsername());
         return error;
     }
 
@@ -61,11 +61,11 @@ public class UserController {
         UserDBController userDBController = new UserDBController();
         if (!password.equals(loggedUser.getPassword())) return -1;
         if (userDBController.getUser(newName) != null) return -2;
-        String oldName = new String(loggedUser.getName());
-        loggedUser.setName(newName);
-        int error = userDBController.modifyUser(loggedUser,loggedUser.getName());
+        String oldName = new String(loggedUser.getUsername());
+        loggedUser.setUsername(newName);
+        int error = userDBController.modifyUser(loggedUser,loggedUser.getUsername());
         if (error != 0) {
-            loggedUser.setName(oldName);
+            loggedUser.setUsername(oldName);
             return -3;
         }
         return 0;
@@ -76,7 +76,7 @@ public class UserController {
         UserDBController userDBController = new UserDBController();
         if (!oldPassword.equals(loggedUser.getPassword())) return -1;
         loggedUser.setPassword(newPassword);
-        int error = userDBController.modifyUser(loggedUser,loggedUser.getName());
+        int error = userDBController.modifyUser(loggedUser,loggedUser.getUsername());
         if (error != 0) {
             loggedUser.setPassword(oldPassword);
             return -2;
