@@ -1,6 +1,7 @@
 package domini;
 
 public class Utils {
+        private Utils(){throw new UnsupportedOperationException();}
 	public static int toInt(final Cell myCell){
 		if (Type.VOID == myCell.getType()) return -1;
 		return myCell.getVal();
