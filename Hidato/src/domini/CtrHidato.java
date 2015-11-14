@@ -47,4 +47,25 @@ public class CtrHidato {
         return false;
     }
     
+    public int countValidCells(){
+        int validCells = 0;
+        for (int i = 0; i < hidato.getSizeX(); i++){
+            for (int j = 0; j < hidato.getSizeY(); j++){
+                Cell cell = hidato.getCell(i, j);
+                if (cell.getType() != Type.VOID) validCells++;
+            }
+        }
+        return validCells;
+    }
+    
+    public Boolean isSolved(){
+        int validCells = countValidCells();
+        for (int i = 1; i <= validCells; i++){
+            if (getCellPositionFromValue(i,0) == -1) return false; 
+        }
+        for (int i = 1; i <= validCells-1; i++){
+            if (!AreCellsContiguous(i, i+1)) return false;
+        }
+        return true;
+    }
 }

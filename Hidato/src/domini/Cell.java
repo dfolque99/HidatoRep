@@ -11,7 +11,7 @@ package domini;
  */
 class Cell {
     int val;
-    String type;
+    String type; //canviar per enum?
     
     public Cell() {
         type = "Blanca";
