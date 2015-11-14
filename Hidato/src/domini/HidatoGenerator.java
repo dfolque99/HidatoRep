@@ -15,7 +15,7 @@ import java.util.LinkedList;
  * 
  * pendent:
  *      treure R[i][j]
- *      que el particionat no redueixi la meitat, sino nomes fins que no ho estigui
+ *      que quan crei el cami tingui en compte si esta massa lluny de la seguent pista (pel valor que esta posant)
  */
 public class HidatoGenerator {
     
@@ -49,11 +49,13 @@ public class HidatoGenerator {
     }
     
     
-    /*
+    /**
         completa el hidato h a un complet
         retorna null si no hi ha casella inicial o si es impossible de generar
     */
+    
     public Hidato generateHidato(Difficulty difficulty) {
+        if (!hidatoValid()) return null;
         if (completarCami() == false) return null;
         posarPistes(difficulty);
         
@@ -90,27 +92,34 @@ public class HidatoGenerator {
     /*============================== PRIVADES ================================*/
     
     private void posarPistes (Difficulty difficulty) {
-        double factor;
-        if (difficulty == Difficulty.EASY) factor = (double)1/3;
-        else if (difficulty == Difficulty.MEDIUM) factor = (double)1/4;
-        else factor = (double)1/5;
-        System.out.printf("%f\n",factor);
+        h.getCell(L[0].x, L[0].y).setType(Type.GIVEN);
+        h.getCell(L[totalCaselles-1].x, L[totalCaselles-1].y).setType(Type.GIVEN);
+        
+        int pistesTotals = calculaNumPistes(difficulty);
+        int pistesFixades = 0;
+        
         ArrayList<Integer> pistes = new ArrayList<>();
-        for (int i = 0; i < totalCaselles; ++i) pistes.add(i);
-        for (int i = 0; i < factor*totalCaselles; ++i) {
-            int j = randomNum(i,totalCaselles-1);
+        for (int i = 0; i < totalCaselles; ++i) {
+            if (h.getCell(L[i].x, L[i].y).getType() == Type.BLANK) pistes.add(i);
+            else if (h.getCell(L[i].x, L[i].y).getType() == Type.GIVEN) ++pistesFixades;
+        }
+        
+        int pistesAddicionals = pistesTotals - pistesFixades;
+        for (int i = 0; i < pistesAddicionals; ++i) {
+            int j = randomNum(i,pistes.size()-1);
             Integer aux = pistes.get(i);
             pistes.set(i, pistes.get(j));
             pistes.set(j,aux);
+            Position p = L[pistes.get(i)];
+            h.getCell(p.x, p.y).setType(Type.GIVEN);
         }
         
-        for (int i = 0; i < totalCaselles; ++i) {
-            Position p = L[pistes.get(i)];
-            if (i < factor*totalCaselles) h.getCell(p.x, p.y).setType(Type.GIVEN);
-            else h.getCell(p.x, p.y).setType(Type.BLANK);
-        }
-        //h.getCell(L[0].x, L[0].y).setType("Pista");
-        //h.getCell(L[totalCaselles-1].x, L[totalCaselles-1].y).setType("Pista");
+    }
+    
+    private int calculaNumPistes(Difficulty difficulty) {
+        if (difficulty == Difficulty.EASY) return totalCaselles/3;
+        else if (difficulty == Difficulty.MEDIUM) return totalCaselles/4;
+        return totalCaselles/5;
     }
     
     private boolean completarCami() {
@@ -120,9 +129,8 @@ public class HidatoGenerator {
         omplirD();
         iter = 0;
         val_ref = 0;
-        backtracking(1, casellaInicial);
         
-        return true;
+        return backtracking(1, casellaInicial);
     }
     
     private boolean backtracking (int val, Position p) {
@@ -298,5 +306,28 @@ public class HidatoGenerator {
         return (int)(Math.random() * (max - min + 1)) + min;
     }
     
+    /** comprova que cada numero apareixi com a molt un cop, que no estigui
+     * particionat, que els numeros estiguin dins del rang
+     */
+    private boolean hidatoValid() {
+        if (particionat(0)) return false;
+        
+        ArrayList<Integer> aparicions = new ArrayList<>();
+        for (int i = 0; i < totalCaselles; ++i) aparicions.add(0);
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (h.getCell(i,j).getType() == Type.VOID) continue;
+                if (h.getCell(i,j).getVal() == 0) continue;
+                int valor = h.getCell(i,j).getVal()-1;
+                if (valor < 0 || valor >= totalCaselles) return false;
+                aparicions.set(valor, aparicions.get(valor)+1);
+            }
+        }
+        for (int i = 0; i < totalCaselles; ++i) {
+            if (aparicions.get(i) > 1) return false;
+        }
+        
+        return true;
+    }
     
 }
