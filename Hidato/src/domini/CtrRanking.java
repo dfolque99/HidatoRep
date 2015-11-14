@@ -17,6 +17,9 @@ public class CtrRanking {
     private Ranking mediumRanking;
     private Ranking hardRanking;
     
+    //Inicializar los tres atributos con los rankings que devuelva el CtrDBRanking
+    //void init();
+    
     void addScoreToRanking(int score, String username, Difficulty difficulty) {
         RankingEntry newEntry = new RankingEntry(new Date(),username,score);
         switch(difficulty) {
@@ -33,5 +36,7 @@ public class CtrRanking {
                 break;
         }
     }
+    //Guardar las modificaciones en disco (a traves de CtrDBRanking)
+    //void save();
     
 }
