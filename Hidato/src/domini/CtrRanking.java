@@ -25,7 +25,7 @@ public class CtrRanking {
         hardRanking = ctrDBRanking.getRanking(Difficulty.HARD);
     }
     
-        void save() {
+    void save() {
         CtrDBRanking ctrDBRanking = new CtrDBRanking();
         ctrDBRanking.modifyRanking(Difficulty.EASY,easyRanking);
         ctrDBRanking.modifyRanking(Difficulty.MEDIUM,mediumRanking);
