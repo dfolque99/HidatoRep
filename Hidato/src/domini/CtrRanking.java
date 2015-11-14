@@ -5,6 +5,7 @@
  */
 package domini;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -47,6 +48,30 @@ public class CtrRanking {
                 hardRanking.addRankingEntry(newEntry);
                 break;
         }
+    }
+    
+    ArrayList <String> getRankingInfo(Difficulty difficulty) {
+        ArrayList <String> res = new ArrayList<>();
+        switch(difficulty) {
+            case EASY:
+                for (int i = 0; i < easyRanking.getSize(); ++i) {
+                    res.add(easyRanking.get(i).toString());
+                }
+                break;
+                
+            case MEDIUM:
+                for (int i = 0; i < mediumRanking.getSize(); ++i) {
+                    res.add(mediumRanking.get(i).toString());
+                }
+                break;
+                
+            case HARD:
+                for (int i = 0; i < hardRanking.getSize(); ++i) {
+                    res.add(hardRanking.get(i).toString());
+                }
+                break;
+        }
+        return res;
     }
     
     
