@@ -8,7 +8,7 @@ package domini;
 import java.time.Duration;
 
 /**
- *
+ * STUB DE USER, ES POT ESBORRAR QUAN HI HAGI LA BONA
  * @author Pau
  */
 public class User {
