@@ -18,7 +18,7 @@ public class CtrGameManager {
      * Declara els parametres i controladors de la classe
      */
     private final HidatoSet hidatoSet;
-    private final User loggedUser;
+    private final HidatoUser loggedUser;
     private final CtrDBGame ctrDBGame;
     private final Solver solver;
     private final CtrRanking ctrRanking;
@@ -26,7 +26,7 @@ public class CtrGameManager {
     /**
      * Creadora del controlador
      */
-    public CtrGameManager(HidatoSet hidatoSet, User loggedUser, CtrDBGame ctrDBGame, Solver solver, CtrRanking ctrRanking){
+    public CtrGameManager(HidatoSet hidatoSet, HidatoUser loggedUser, CtrDBGame ctrDBGame, Solver solver, CtrRanking ctrRanking){
         this.hidatoSet = hidatoSet;
         this.loggedUser = loggedUser;
         this.ctrDBGame = ctrDBGame;

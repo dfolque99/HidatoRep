@@ -145,13 +145,13 @@ public class CtrCurrentGame {
         long time1 = System.currentTimeMillis();
         game.incrementDuration(time1 - time0);
         
-        User user = game.getUser();
-        user.IncrementSolvedHidatos();
-        user.IncrementTimePlayed(game.getDuration());
+        HidatoUser user = game.getUser();
+        user.incrementSolvedGames();
+        user.incrementTotalTimePlayed(game.getDuration());
         String username = user.getUsername();
         
         int score = calculateScore();
-        user.IncrementTotalScore(score);
+        user.incrementTotalScore(score);
         
         //RankingEntry entry = new RankingEntry(game.getDate(), username, score);
         ctrRanking.addScoreToRanking(score, username, game.getDifficulty());
@@ -175,7 +175,7 @@ public class CtrCurrentGame {
      * @return 0
      */
     public int initialize(){
-        game.getUser().IncrementStartedHidatos();
+        game.getUser().incrementStartedGames();
         unpause();
         return 0;
     }

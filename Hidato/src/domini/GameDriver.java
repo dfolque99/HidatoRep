@@ -26,7 +26,7 @@ public class GameDriver {
             System.out.println("2. Eliminar una partida");
             System.out.println("-1. Sortir sessio i finalitzar");
             HidatoSet hidatoSet = new HidatoSet();
-            User user = new User(username, password);
+            HidatoUser user = new HidatoUser(username, password);
             CtrDBGame ctrDBGame = new CtrDBGame();
             Solver solver = new Solver();
             CtrRanking ctrRanking = new CtrRanking();
