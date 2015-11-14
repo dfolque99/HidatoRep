@@ -5,6 +5,7 @@
  */
 package domini;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -18,7 +19,19 @@ public class CtrRanking {
     private Ranking hardRanking;
     
     //Inicializar los tres atributos con los rankings que devuelva el CtrDBRanking
-    //void init();
+    void init() {
+        CtrDBRanking ctrDBRanking = new CtrDBRanking();
+        easyRanking = ctrDBRanking.getRanking(Difficulty.EASY);
+        mediumRanking = ctrDBRanking.getRanking(Difficulty.MEDIUM);
+        hardRanking = ctrDBRanking.getRanking(Difficulty.HARD);
+    }
+    
+    void save() {
+        CtrDBRanking ctrDBRanking = new CtrDBRanking();
+        ctrDBRanking.modifyRanking(Difficulty.EASY,easyRanking);
+        ctrDBRanking.modifyRanking(Difficulty.MEDIUM,mediumRanking);
+        ctrDBRanking.modifyRanking(Difficulty.HARD,hardRanking);
+    }
     
     void addScoreToRanking(int score, String username, Difficulty difficulty) {
         RankingEntry newEntry = new RankingEntry(new Date(),username,score);
@@ -36,7 +49,33 @@ public class CtrRanking {
                 break;
         }
     }
-    //Guardar las modificaciones en disco (a traves de CtrDBRanking)
-    //void save();
+    
+    ArrayList <String> getRankingInfo(Difficulty difficulty) {
+        ArrayList <String> res = new ArrayList<>();
+        switch(difficulty) {
+            case EASY:
+                for (int i = 0; i < easyRanking.getSize(); ++i) {
+                    res.add(easyRanking.get(i).toString());
+                }
+                break;
+                
+            case MEDIUM:
+                for (int i = 0; i < mediumRanking.getSize(); ++i) {
+                    res.add(mediumRanking.get(i).toString());
+                }
+                break;
+                
+            case HARD:
+                for (int i = 0; i < hardRanking.getSize(); ++i) {
+                    res.add(hardRanking.get(i).toString());
+                }
+                break;
+        }
+        return res;
+    }
+    
+    
+    
+    
     
 }

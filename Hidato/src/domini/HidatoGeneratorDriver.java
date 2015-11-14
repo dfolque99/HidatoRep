@@ -19,9 +19,9 @@ public class HidatoGeneratorDriver {
     }
     
     public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
         
         while (true) {
-            Scanner s = new Scanner(System.in);
             System.out.printf("Linies: ");
             int sizeX = s.nextInt();
             System.out.printf("Columnes: ");
@@ -33,9 +33,12 @@ public class HidatoGeneratorDriver {
             Hidato h = new Hidato(sizeX,sizeY);
             for (int i = 0; i < sizeX; ++i) {
                 for (int j = 0; j < sizeY; ++j) {
-                    int e = s.nextByte();
-                    if (e == -1) h.getCell(i, j).setType(Type.VOID);
-                    else h.setCell(i, j, new Cell(e,Type.BLANK));
+                    String t = s.next();
+                    int e = s.nextInt();
+                    if (t.equals("g")) h.getCell(i, j).setType(Type.GIVEN);
+                    else if (t.equals("b")) h.getCell(i, j).setType(Type.BLANK);
+                    else h.getCell(i, j).setType(Type.VOID);
+                    h.getCell(i,j).setVal(e);
                 }
             }
             HidatoGenerator hg = new HidatoGenerator(h);
@@ -55,7 +58,8 @@ public class HidatoGeneratorDriver {
                         break;
                     case 3:
                         long t1 = System.currentTimeMillis();
-                        hg.generateHidato("Facil");
+                        Difficulty diff[] = {Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD};
+                        if (hg.generateHidato(diff[d]) == null) System.out.printf("Impossible de generar\n");
                         long t2 = System.currentTimeMillis();
                         System.out.printf("Milisegons: %d\n", t2-t1);
                         break;
@@ -65,9 +69,6 @@ public class HidatoGeneratorDriver {
                 }
             }
             
-            /*System.out.printf("Generant hidato...\n");
-            String diff[] = {"Easy, Medium, Hard"};
-            hg.generateHidato(diff[d]);*/
         }
     }
 }

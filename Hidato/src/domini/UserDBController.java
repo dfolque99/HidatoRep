@@ -129,6 +129,28 @@ public class UserDBController {
             Logger.getLogger(UserDBController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return user;
+        
+        /* AIXO FUNCIONA SENSE THROWS
+        
+        FileInputStream fis;
+        User user = null;
+        
+        try {
+            fis = new FileInputStream(getPath(username));
+            ObjectInputStream ois;
+            ois = new ObjectInputStream(fis);
+            user = (User) ois.readObject();
+            fis.close();
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDBController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(UserDBController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(UserDBController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+        */
     }
     
     private String getPath(User user) {
