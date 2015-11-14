@@ -9,10 +9,22 @@ import java.util.*;
  * @see Warnsdorf's_rule <a href="https://en.wikipedia.org/wiki/Knight%27s_tour#Warnsdorf.27s_rule">Warnsdorf's rule</a>
  */
 public class Solver {
+        /**
+         * debug parameter, set to false
+         */
 	private final static boolean DEBUG = false;
+        /**
+         * the instance of hidato that will be modified and solved
+         */
 	private Hidato board;
+        
+        /**
+         * 
+         * @return this.board  
+         */
 	public Hidato getHidato(){return this.board;}
-	/**
+	
+        /**
 	 * Current used cells of Hidato board
 	 */
 	private boolean[][] used;
@@ -22,8 +34,14 @@ public class Solver {
 	 */
 	private NavigableMap<Integer,Position> myMap;
 
-	private Integer getNext(Integer n){
-		return myMap.higherKey(n);
+        /**
+         * 
+         * 
+         * @param value  >0 , <=finish,     
+         * @return null if finish, otherwise the least higer value of the given cells of the hidato contained in the class 
+         */
+	private Integer getNext(Integer value){
+		return myMap.higherKey(value);
 	}	
 
 	/**
@@ -33,6 +51,11 @@ public class Solver {
 				
 	}
 	
+        /**
+         * sets the environment for solve
+         * 
+         * @param hidato 
+         */
 	private void upload(final Hidato hidato) {
 		board = hidato;
 		used  = new boolean[board.getSizeX()][board.getSizeY()];
@@ -46,6 +69,7 @@ public class Solver {
 			}
 		}
 	}
+        
 	/**
 	 * Solves a Hidato modifying the hidato given to a solution
 	 * 
@@ -54,6 +78,11 @@ public class Solver {
 	 */
 	public boolean solve(final Hidato hidato){	upload(new Hidato(hidato)); return solve();	}
 
+        /**
+         * tries to solve hidato
+         * 
+         * @return true if hidato can be solved,
+         */
 	private boolean solve(){ return solve(myMap.get(1).getX(),myMap.get(1).getY(),1); } 
 	
 	/**
@@ -131,16 +160,15 @@ public class Solver {
                         + getNeighboursUnsorted(a[0], a[1], a[2]).size());
 		return result;
 	}
-	
-	
+		
 	/**
 	 * Tries to solve a Hidato board using backtracking/recursion
 	 * It must start with the starting cell (n=1)
 	 * 
-	 * @param x		x-position of cell input
+	 * @param x	x-position of cell input
 	 * @param y 	y-position of cell input
 	 * @param n 	number to try for cell input
-	 * @return 		true if current Hidato board can be solved with cell in (x,y) with number n, otherwise false
+	 * @return 	true if current Hidato board can be solved with cell in (x,y) with number n, otherwise false
 	 */
 	private boolean solve(int x, int y, int n) {
 		if (n == myMap.lastKey() && board.getCell(x,y).getVal() == n) {return true;}
@@ -148,16 +176,9 @@ public class Solver {
 		if (board.getCell(x,y).getVal() != n) {board.getCell(x,y).setVal(n);}
 		
 		used[x][y]=true;
-            /*	if (myMap.containsKey(n+1)){
-            if ( Position.notEnoughDistance(n+1,myMap.get(n+1),n,new Position(x,y)) ) {
-            used[x][y]=false;
-            return false;
-            }
-            return solve(myMap.get(n+1).x,myMap.get(n+1).y,n+1);
-            }*/
-            if (getNeighboursSorted(x, y, n).stream().anyMatch((s) -> (solve(x + s[0], y + s[1], n + 1)))) {
-                return true;
-            }
+                if (getNeighboursSorted(x, y, n).stream().anyMatch((s) -> (solve(x + s[0], y + s[1], n + 1)))) {
+                    return true;
+                }
 		used[x][y]=false;
 		
 		if (DEBUG) System.out.format("n %d, x %d y %d \n",n,x,y);
