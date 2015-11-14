@@ -26,6 +26,7 @@ public class RankingEntryDriver {
         System.out.println("2. Consultar fecha del RankingEntry actual");
         System.out.println("3. Consultar nombre de usuario del RankingEntry actual");
         System.out.println("4. Consultar puntuacion del RankingEntry actual");
+        System.out.println("-1.Finalizar ejecucion");
         int op = sc.nextInt();
         while (op != -1) {
             switch(op) {
