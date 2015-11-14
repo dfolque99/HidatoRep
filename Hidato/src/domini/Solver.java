@@ -187,6 +187,8 @@ public class Solver {
         
         /**
          * only for backwards compliance
+         * @param hidato hidato to try to solve
+         * @return true if solvable, otherwise false
          */
         public boolean uploadAndSolve(Hidato hidato){return this.solve(hidato);}
 }
