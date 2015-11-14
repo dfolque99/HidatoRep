@@ -19,7 +19,7 @@ public class RankingEntry {
 
     public RankingEntry(Date date, String username, int score) {
         this.date = date;
-        this.username = username;
+        this.username = new String(username);
         this.score = score;
     }
 
