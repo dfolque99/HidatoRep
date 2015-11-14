@@ -1,3 +1,4 @@
+package domini;
 /**
  * @author felix.axel.gimeno
  * @since 2015-11-13

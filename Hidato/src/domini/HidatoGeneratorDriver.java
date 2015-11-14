@@ -13,7 +13,12 @@ import java.util.Scanner;
  */
 public class HidatoGeneratorDriver {
     
-    public static void main() {
+    public HidatoGeneratorDriver() {
+        
+    }
+    
+    public static void main(String[] args) {
+        
         while (true) {
             Scanner s = new Scanner(System.in);
             System.out.printf("Linies: ");
@@ -28,14 +33,14 @@ public class HidatoGeneratorDriver {
             for (int i = 0; i < sizeX; ++i) {
                 for (int j = 0; j < sizeY; ++j) {
                     int e = s.nextByte();
-                    if (e == -1) h.getCell(i, j).setType("No valida");
-                    else h.setCell(i, j, new Cell(e,"No valida"));
+                    if (e == -1) h.getCell(i, j).setType("No Valida");
+                    else h.setCell(i, j, new Cell(e,"Blanca"));
                 }
             }
             HidatoGenerator hg = new HidatoGenerator(h);
             boolean seguir = true;
             while (seguir) {
-                System.out.printf("1) Particionat\n");
+                System.out.printf("1) Particionat\n2) Comptar caselles\n3) Sortir\n");
                 int acc = s.nextInt();
                 switch(acc) {
                     case 1:
@@ -44,14 +49,17 @@ public class HidatoGeneratorDriver {
                         if (hg.particionat(val)) System.out.printf("Particionat\n");
                         else System.out.printf("No particionat\n");
                         break;
+                    case 2:
+                        System.out.printf("Caselles = %d\n", hg.getTotalCaselles());
+                        break;
                     default:
                         seguir = false;
                         break;
                 }
             }
-            System.out.printf("Generant hidato...\n");
+            /*System.out.printf("Generant hidato...\n");
             String diff[] = {"Easy, Medium, Hard"};
-            hg.generateHidato(diff[d]);
+            hg.generateHidato(diff[d]);*/
         }
     }
 }
