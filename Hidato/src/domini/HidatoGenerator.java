@@ -6,6 +6,7 @@
 package domini;
 
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -22,7 +23,8 @@ public class HidatoGenerator {
     private int n, m;
     private int iter, val_ref;
     private int R[][]; // s'ha d'eliminar
-    private int D[][];
+    private int D[][]; // D[i][j] = caselles disponibles al voltant de (i,j)
+    private Position L[]; // L[i] = lloc del numero i
     private int totalCaselles;
     
     public HidatoGenerator(int sizeX, int sizeY) {
@@ -53,15 +55,32 @@ public class HidatoGenerator {
     */
     public Hidato generateHidato(String difficulty) {
         if (completarCami() == false) return null;
+        posarPistes(difficulty);
+        
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                System.out.printf("%d ", R[i][j]);
-                if (R[i][j] < 10) System.out.printf(" ");
-                if (R[i][j] < 100) System.out.printf(" ");
+                
+                    System.out.printf("%d ", R[i][j]);
+                    if (R[i][j] < 10) System.out.printf(" ");
+                    if (R[i][j] < 100) System.out.printf(" ");
+                
             }
             System.out.printf("\n");
         }
-        posarPistes(difficulty);
+        
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (h.getCell(i, j).getType() == Type.GIVEN) {
+                    System.out.printf("%d ", R[i][j]);
+                    if (R[i][j] < 10) System.out.printf(" ");
+                    if (R[i][j] < 100) System.out.printf(" ");
+                }
+                else System.out.printf("__  ", R[i][j]);
+                
+            }
+            System.out.printf("\n");
+        }
+        
         return h;
     }
     
@@ -70,11 +89,35 @@ public class HidatoGenerator {
     
     /*============================== PRIVADES ================================*/
     
+    private void posarPistes (String difficulty) {
+        double factor;
+        if (difficulty.equals("Easy")) factor = (double)1/3;
+        else if (difficulty.equals("Medium")) factor = (double)1/4;
+        else factor = (double)1/5;
+        System.out.printf("%f\n",factor);
+        ArrayList<Integer> pistes = new ArrayList<>();
+        for (int i = 0; i < totalCaselles; ++i) pistes.add(i);
+        for (int i = 0; i < factor*totalCaselles; ++i) {
+            int j = randomNum(i,totalCaselles-1);
+            Integer aux = pistes.get(i);
+            pistes.set(i, pistes.get(j));
+            pistes.set(j,aux);
+        }
+        
+        for (int i = 0; i < totalCaselles; ++i) {
+            Position p = L[pistes.get(i)];
+            if (i < factor*totalCaselles) h.getCell(p.x, p.y).setType(Type.GIVEN);
+            else h.getCell(p.x, p.y).setType(Type.BLANK);
+        }
+        //h.getCell(L[0].x, L[0].y).setType("Pista");
+        //h.getCell(L[totalCaselles-1].x, L[totalCaselles-1].y).setType("Pista");
+    }
+    
     private boolean completarCami() {
         Position casellaInicial = buscaCasellaInicial();
         if (casellaInicial == null) return false;
+        L = new Position[totalCaselles];
         omplirD();
-        
         iter = 0;
         val_ref = 0;
         backtracking(1, casellaInicial);
@@ -83,6 +126,7 @@ public class HidatoGenerator {
     }
     
     private boolean backtracking (int val, Position p) {
+        L[val-1] = p;
         if (val == totalCaselles) return true;
         if (!controlParticionament(val)) return false;
         Position veiObligat = buscaVeiObligat(val, p);
@@ -125,7 +169,7 @@ public class HidatoGenerator {
         for (int i = Math.max(p.x-1, 0); i <= Math.min(p.x+1, n-1); ++i) {
             for (int j = Math.max(p.y-1, 0); j <= Math.min(p.y+1, m-1); ++j) {
                 if (i == p.x && j == p.y) continue;
-                if (R[i][j] == 0 && !h.getCell(i,j).getType().equals("No Valida")) {
+                if (R[i][j] == 0 && !h.getCell(i,j).getType().equals(Type.VOID)) {
                     ret.addLast(new Position(i,j));
                 }
             }
@@ -137,7 +181,7 @@ public class HidatoGenerator {
         for (int i = Math.max(p.x-1, 0); i <= Math.min(p.x+1, n-1); ++i) {
             for (int j = Math.max(p.y-1, 0); j <= Math.min(p.y+1, m-1); ++j) {
                 if (i == p.x && j == p.y) continue;
-                if (R[i][j] == val+1 && !h.getCell(i,j).getType().equals("No Valida")) {
+                if (R[i][j] == val+1 && !h.getCell(i,j).getType().equals(Type.VOID)) {
                     return new Position(i,j);
                 }
             }
@@ -183,7 +227,7 @@ public class HidatoGenerator {
         for (int i = 0; i < n; ++i) {
           for (int j = 0; j < m; ++j) {
             BFS[i][j] = true;
-            if ((R[i][j] == 0 || R[i][j] > val) && !h.getCell(i, j).getType().equals("No Valida")) {
+            if ((R[i][j] == 0 || R[i][j] > val) && !h.getCell(i, j).getType().equals(Type.VOID)) {
               x0 = i; y0 = j;
               BFS[i][j] = false;
             }
@@ -213,10 +257,6 @@ public class HidatoGenerator {
             }
         }
         return part;
-    }
-    
-    private void posarPistes(String difficulty) {
-        
     }
     
     private void comptaCaselles() {
