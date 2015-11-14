@@ -48,7 +48,7 @@ public class HidatoManagerDriver {
                     hm.setTempCellVal(s.nextInt(), s.nextInt(), s.nextInt());
                     break;
                 case 3:
-                    String a[] = {"Buida", "Pista", "No Valida"};
+                    Type a[] = {Type.BLANK,Type.GIVEN,Type.VOID};//{"Buida", "Pista", "No Valida"};
                     hm.setTempCellType(s.nextInt(), s.nextInt(), a[s.nextInt()]);
                     break;
                 case 4:
