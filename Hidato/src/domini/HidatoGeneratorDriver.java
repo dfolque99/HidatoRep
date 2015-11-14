@@ -34,8 +34,8 @@ public class HidatoGeneratorDriver {
             for (int i = 0; i < sizeX; ++i) {
                 for (int j = 0; j < sizeY; ++j) {
                     int e = s.nextByte();
-                    if (e == -1) h.getCell(i, j).setType("No Valida");
-                    else h.setCell(i, j, new Cell(e,"Blanca"));
+                    if (e == -1) h.getCell(i, j).setType(Type.VOID);
+                    else h.setCell(i, j, new Cell(e,Type.BLANK));
                 }
             }
             HidatoGenerator hg = new HidatoGenerator(h);

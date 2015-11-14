@@ -11,10 +11,10 @@ package domini;
  */
 class Cell {
     int val;
-    String type;
+    Type type;
     
     public Cell() {
-        type = "Blanca";
+        type = Type.BLANK;
         val = 0;
     }
     
@@ -23,7 +23,7 @@ class Cell {
         type = cell.getType();
     }
 
-    public Cell(int val, String type) {
+    public Cell(int val, Type type) {
         this.val = val;
         this.type = type;
     }
@@ -32,7 +32,7 @@ class Cell {
         return val;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
     
@@ -40,7 +40,7 @@ class Cell {
         this.val = val;
     }
     
-    public void setType (String type) {
+    public void setType (Type type) {
         this.type = type;
     }
 }
