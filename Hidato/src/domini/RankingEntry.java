@@ -19,7 +19,7 @@ public class RankingEntry {
 
     public RankingEntry(Date date, String username, int score) {
         this.date = new Date(date.getTime());
-        this.username = new String(username);
+        this.username = username;
         this.score = score;
     }
 
@@ -28,7 +28,7 @@ public class RankingEntry {
     }
 
     public String getUsername() {
-        return new String(username);
+        return username;
     }
 
     public int getScore() {
@@ -37,7 +37,7 @@ public class RankingEntry {
 
     @Override
     public String toString() {
-        return date + "  " + username + "  " + score;
+        return date + "/" + username + "/" + score;
     }
     
 }
