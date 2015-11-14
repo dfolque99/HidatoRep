@@ -38,7 +38,7 @@ public class Board {
             boards.add(llista);
         }
         setCell(0,0,new Cell(1,Type.GIVEN));
-        setCell(sizeX,sizeY,new Cell(sizeX*sizeY,Type.GIVEN));
+        setCell(sizeX-1,sizeY-1,new Cell(sizeX*sizeY,Type.GIVEN));
 
     }
     
