@@ -65,7 +65,7 @@ public class HidatoGenerator {
         
     }
     
-    private boolean particionat(int val) {
+    public boolean particionat(int val) {
         if (val >= totalCaselles) return false;
         // fa un bfs des de la primera posicio buida que troba
         int x0 = 0, y0 = 0; //inicialitzem perque no doni warning
@@ -104,7 +104,7 @@ public class HidatoGenerator {
         boolean part = false;
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                part = part or not BFS[i][j];
+                part = part || !BFS[i][j];
             }
         }
   
