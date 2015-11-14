@@ -53,7 +53,7 @@ public class HidatoGenerator {
         completa el hidato h a un complet
         retorna null si no hi ha casella inicial o si es impossible de generar
     */
-    public Hidato generateHidato(String difficulty) {
+    public Hidato generateHidato(Difficulty difficulty) {
         if (completarCami() == false) return null;
         posarPistes(difficulty);
         
@@ -89,10 +89,10 @@ public class HidatoGenerator {
     
     /*============================== PRIVADES ================================*/
     
-    private void posarPistes (String difficulty) {
+    private void posarPistes (Difficulty difficulty) {
         double factor;
-        if (difficulty.equals("Easy")) factor = (double)1/3;
-        else if (difficulty.equals("Medium")) factor = (double)1/4;
+        if (difficulty == Difficulty.EASY) factor = (double)1/3;
+        else if (difficulty == Difficulty.MEDIUM) factor = (double)1/4;
         else factor = (double)1/5;
         System.out.printf("%f\n",factor);
         ArrayList<Integer> pistes = new ArrayList<>();
