@@ -119,10 +119,10 @@ public class Solver {
 		myMap = new TreeMap<Integer,Position>();
 		for (int i = 0; i < nRows; i += 1) {
 			for (int j = 0; j < nCols; j += 1) {
-				board.getCell(i,j).blankToGiven();
+				Utils.blankToGiven(board.getCell(i,j));
 				if (board.getCell(i,j).getType() == Type.GIVEN) {
-					given.add(board.getCell(i,j).getValue());
-					myMap.put(board.getCell(i,j).getValue(), new Position(i,j));
+					given.add(board.getCell(i,j).getVal());
+					myMap.put(board.getCell(i,j).getVal(), new Position(i,j));
 				}
 			}
 		}
@@ -156,7 +156,7 @@ public class Solver {
 			
 			int x = rand.nextInt(nRows);
 			int y = rand.nextInt(nCols);
-			if (board.getCell(x, y).getType()==Type.BLANK){return new ArrayList<Integer>(Arrays.asList(x,y,board.getCell(x, y).getValue()));}
+			if (board.getCell(x, y).getType()==Type.BLANK){return new ArrayList<Integer>(Arrays.asList(x,y,board.getCell(x, y).getVal()));}
 		}
 		return null;
 	}
@@ -174,9 +174,9 @@ public class Solver {
 		if (notEnoughDistance(getNext(n),myMap.get(getNext(n)),n,new Position(x,y))) return false;
 		boolean isValid = true;
 		if ( (board.getCell(x,y).getType() == Type.VOID)
-				|| used[x][y]//(board.getCell(x,y).getType() == Type.BLANK && board.getCell(x,y).getValue() < n && board.getCell(x,y).getValue() != 0) //quizas hay que tener boolean[][] used
-				|| (board.getCell(x,y).getType() == Type.GIVEN && board.getCell(x,y).getValue() != n)
-				|| (myMap.containsKey(n) && board.getCell(x,y).getValue() != n)
+				|| used[x][y]//(board.getCell(x,y).getType() == Type.BLANK && board.getCell(x,y).getVal() < n && board.getCell(x,y).getVal() != 0) //quizas hay que tener boolean[][] used
+				|| (board.getCell(x,y).getType() == Type.GIVEN && board.getCell(x,y).getVal() != n)
+				|| (myMap.containsKey(n) && board.getCell(x,y).getVal() != n)
 		) 
 		{
 			isValid = false;
@@ -237,9 +237,9 @@ public class Solver {
 	 * @return 		true if current Hidato board can be solved with cell in (x,y) with number n, otherwise false
 	 */
 	private boolean solve(int x, int y, int n) {
-		if (n == finish && board.getCell(x,y).getValue() == n) {return true;}
+		if (n == finish && board.getCell(x,y).getVal() == n) {return true;}
 		if (!validPosition(x, y, n)) {return false;}
-		if (board.getCell(x,y).getValue() != n) {board.getCell(x,y).setValue(n);}
+		if (board.getCell(x,y).getVal() != n) {board.getCell(x,y).setVal(n);}
 		
 		used[x][y]=true;
 		/* if (myMap.containsKey(n+1)){
@@ -278,7 +278,7 @@ public class Solver {
 				
 				h.setCell(x, y, new Cell(n,Type.GIVEN));
 				if(!solve()){
-					h.setCell(x, y, new BlankCell());
+					h.setCell(x, y, new Cell(0, Type.BLANK));
 				}
 				else {
 					System.out.format("Generator:Adding: n %d x %d y %d \n",n,x,y);
