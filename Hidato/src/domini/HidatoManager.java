@@ -77,7 +77,7 @@ public class HidatoManager {
         return tempHidato.getCell(x, y).getVal();
     }
     
-    public String getTempCellType (int x, int y) {
+    public Type getTempCellType (int x, int y) {
         return tempHidato.getCell(x, y).getType();
     }
     
@@ -93,7 +93,7 @@ public class HidatoManager {
         tempHidato.getCell(x, y).setVal(val);
     }
     
-    public void setTempCellType (int x, int y, String type) {
+    public void setTempCellType (int x, int y, Type type) {
         tempHidato.getCell(x, y).setType(type);
     }
     
