@@ -3,6 +3,7 @@
  * @since 2015-11-14
  * position class, stores x,y position
  */
+package domini;
 public class Position{
 	private Integer x;
 	private Integer y;
