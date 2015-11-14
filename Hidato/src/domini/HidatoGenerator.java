@@ -55,10 +55,7 @@ public class HidatoGenerator {
     */
     
     public Hidato generateHidato(Difficulty difficulty) {
-        if (!hidatoValid()) {
-            System.out.print("Invalid!\n");
-            return null;
-        }
+        if (!hidatoValid()) return null;
         if (completarCami() == false) return null;
         posarPistes(difficulty);
         
