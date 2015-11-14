@@ -22,16 +22,17 @@ public class CtrGameManager {
     private final User loggedUser;
     private final CtrDBGame ctrDBGame;
     private final Solver solver;
-    private CtrHidato ctrHidato;
+    private final CtrRanking ctrRanking;
     
     /**
      * Creadora del controlador
      */
-    public CtrGameManager(HidatoSet hidatoSet, User loggedUser, CtrDBGame ctrDBGame, Solver solver){
+    public CtrGameManager(HidatoSet hidatoSet, User loggedUser, CtrDBGame ctrDBGame, Solver solver, CtrRanking ctrRanking){
         this.hidatoSet = hidatoSet;
         this.loggedUser = loggedUser;
         this.ctrDBGame = ctrDBGame;
         this.solver = solver;
+        this.ctrRanking = ctrRanking;
     }
     
     /**
@@ -45,7 +46,7 @@ public class CtrGameManager {
     public CtrCurrentGame createGame(String name, String hidatoName, Help help){
         Hidato hidato = hidatoSet.getHidatoByName(hidatoName);
         Game game = new Game(name, hidato, loggedUser, help, hidato.getDifficult());
-        CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver, ctrHidato);
+        CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver,ctrRanking);
         //treure ctrHidato
         return ctrCurrentGame;
     }
@@ -56,7 +57,7 @@ public class CtrGameManager {
     public CtrCurrentGame restoreGame(String name){
         Game game = ctrDBGame.getGame(name, loggedUser);
         ctrDBGame.deleteGame(name, loggedUser);
-        CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver, ctrHidato);
+        CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver, ctrRanking);
         return ctrCurrentGame;
     }
     
