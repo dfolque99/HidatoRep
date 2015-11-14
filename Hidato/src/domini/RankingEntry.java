@@ -18,17 +18,17 @@ public class RankingEntry {
     private final int score;    
 
     public RankingEntry(Date date, String username, int score) {
-        this.date = date;
+        this.date = new Date(date.getTime());
         this.username = new String(username);
         this.score = score;
     }
 
     public Date getDate() {
-        return date;
+        return new Date(date.getTime());
     }
 
     public String getUsername() {
-        return username;
+        return new String(username);
     }
 
     public int getScore() {

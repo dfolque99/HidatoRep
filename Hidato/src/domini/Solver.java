@@ -36,7 +36,7 @@ public class Solver {
 	private void upload(final Hidato hidato) {
 		board = hidato;
 		used  = new boolean[board.getSizeX()][board.getSizeY()];
-		myMap = new TreeMap<Integer,Position>();
+		myMap = new TreeMap<>();
 		for (int i = 0; i < board.getSizeX(); i += 1) {
 			for (int j = 0; j < board.getSizeY(); j += 1) {
 				Utils.blankToGiven(board.getCell(i,j));
@@ -59,7 +59,7 @@ public class Solver {
 	/**
 	 * Solves a Hidato and returns a random cell not in input/non void
 	 * 
-	 * @param h		Hidato to solve, it is not modified
+	 * @param hidato	Hidato to solve, it is not modified
 	 * @return		3 numbers, x-position, y-position, value of a cell in a solution to hidato H, if not possible returns null
 	 */
 	public ArrayList<Integer> getHint(final Hidato hidato) {
@@ -70,7 +70,7 @@ public class Solver {
 			
 			int x = rand.nextInt(board.getSizeX());
 			int y = rand.nextInt(board.getSizeY());
-			if (board.getCell(x, y).getType()==Type.BLANK){return new ArrayList<Integer>(Arrays.asList(x,y,board.getCell(x, y).getVal()));}
+			if (board.getCell(x, y).getType()==Type.BLANK){return new ArrayList<>(Arrays.asList(x,y,board.getCell(x, y).getVal()));}
 		}
 		return null;
 	}
@@ -107,7 +107,7 @@ public class Solver {
 	 * @return		list of available neighbours of cell base
 	 */
 	private ArrayList<int[]> getNeighboursUnsorted(int x, int y, int n) {
-		ArrayList<int[]> result = new ArrayList<int[]>();
+		ArrayList<int[]> result = new ArrayList<>();
 		for (int i = -1; i < 2; i += 1) {
 			for (int j = -1; j < 2; j += 1) {
 				if (Math.max(Math.abs(i), Math.abs(j)) == 1
@@ -127,13 +127,8 @@ public class Solver {
 	 */
 	private ArrayList<int[]> getNeighboursSorted(int x, int y, int n) {
 		ArrayList<int[]> result = getNeighboursUnsorted(x, y, n);
-		Collections.sort(result, new Comparator<int[]>() {
-			@Override
-			public int compare(final int[] a, final int[] b) {
-				return - getNeighboursUnsorted(b[0], b[1], b[2]).size()
-						+ getNeighboursUnsorted(a[0], a[1], a[2]).size();
-			}
-		});
+		Collections.sort(result, (final int[] a, final int[] b) -> - getNeighboursUnsorted(b[0], b[1], b[2]).size()
+                        + getNeighboursUnsorted(a[0], a[1], a[2]).size());
 		return result;
 	}
 	
@@ -153,14 +148,16 @@ public class Solver {
 		if (board.getCell(x,y).getVal() != n) {board.getCell(x,y).setVal(n);}
 		
 		used[x][y]=true;
-	/*	if (myMap.containsKey(n+1)){
-			if ( Position.notEnoughDistance(n+1,myMap.get(n+1),n,new Position(x,y)) ) {
-				used[x][y]=false;
-				return false;
-			}
-			return solve(myMap.get(n+1).x,myMap.get(n+1).y,n+1);
-		}*/
-		for (final int[] s : getNeighboursSorted(x, y, n)) {if (solve(x + s[0], y + s[1], n + 1)) {return true;}}
+            /*	if (myMap.containsKey(n+1)){
+            if ( Position.notEnoughDistance(n+1,myMap.get(n+1),n,new Position(x,y)) ) {
+            used[x][y]=false;
+            return false;
+            }
+            return solve(myMap.get(n+1).x,myMap.get(n+1).y,n+1);
+            }*/
+            if (getNeighboursSorted(x, y, n).stream().anyMatch((s) -> (solve(x + s[0], y + s[1], n + 1)))) {
+                return true;
+            }
 		used[x][y]=false;
 		
 		if (DEBUG) System.out.format("n %d, x %d y %d \n",n,x,y);
