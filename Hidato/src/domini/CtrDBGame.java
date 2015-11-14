@@ -11,16 +11,14 @@ package domini;
  */
 public class CtrDBGame {
 
-    void saveGame(Game game) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    void saveGame(Game game) {}
 
     Game getGame(String name, User loggedUser) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Hidato hidato = new Hidato(10,15);
+        Game game = new Game(name, hidato, loggedUser, Help.LOW, Difficulty.EASY);
+        return game;
     }
 
-    void deleteGame(String name, User loggedUser) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    void deleteGame(String name, User loggedUser) {}
     
 }
