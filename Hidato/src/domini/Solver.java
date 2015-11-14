@@ -184,4 +184,9 @@ public class Solver {
 		if (DEBUG) System.out.format("n %d, x %d y %d \n",n,x,y);
 		return false;
 	}
+        
+        /**
+         * only for backwards compliance
+         */
+        public boolean uploadAndSolve(Hidato hidato){return this.solve(hidato);}
 }
