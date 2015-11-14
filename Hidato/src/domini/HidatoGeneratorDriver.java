@@ -55,7 +55,8 @@ public class HidatoGeneratorDriver {
                         break;
                     case 3:
                         long t1 = System.currentTimeMillis();
-                        hg.generateHidato("Facil");
+                        Difficulty diff[] = {Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD};
+                        hg.generateHidato(diff[d]);
                         long t2 = System.currentTimeMillis();
                         System.out.printf("Milisegons: %d\n", t2-t1);
                         break;
@@ -65,9 +66,6 @@ public class HidatoGeneratorDriver {
                 }
             }
             
-            /*System.out.printf("Generant hidato...\n");
-            String diff[] = {"Easy, Medium, Hard"};
-            hg.generateHidato(diff[d]);*/
         }
     }
 }
