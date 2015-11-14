@@ -23,6 +23,11 @@ class Cell {
         type = cell.getType();
     }
 
+    public Cell(int val, String type) {
+        this.val = val;
+        this.type = type;
+    }
+
     public int getVal() {
         return val;
     }
