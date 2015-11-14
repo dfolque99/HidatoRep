@@ -5,6 +5,7 @@
  */
 package domini;
 
+import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
@@ -40,7 +41,7 @@ public class HidatoGeneratorDriver {
             HidatoGenerator hg = new HidatoGenerator(h);
             boolean seguir = true;
             while (seguir) {
-                System.out.printf("1) Particionat\n2) Comptar caselles\n3) Sortir\n");
+                System.out.printf("1) Particionat\n2) Comptar caselles\n3) Generar hidato\n4) Sortir\n");
                 int acc = s.nextInt();
                 switch(acc) {
                     case 1:
@@ -52,11 +53,18 @@ public class HidatoGeneratorDriver {
                     case 2:
                         System.out.printf("Caselles = %d\n", hg.getTotalCaselles());
                         break;
+                    case 3:
+                        long t1 = System.currentTimeMillis();
+                        hg.generateHidato("Facil");
+                        long t2 = System.currentTimeMillis();
+                        System.out.printf("Milisegons: %d\n", t2-t1);
+                        break;
                     default:
                         seguir = false;
                         break;
                 }
             }
+            
             /*System.out.printf("Generant hidato...\n");
             String diff[] = {"Easy, Medium, Hard"};
             hg.generateHidato(diff[d]);*/
