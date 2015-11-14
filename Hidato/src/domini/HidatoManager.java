@@ -21,7 +21,7 @@ public class HidatoManager {
     }
     
     // crea un hidato aleatori i el deixa a tempHidato
-    public void createRandom (int sizeX, int sizeY, String difficulty) {
+    public void createRandom (int sizeX, int sizeY, Difficulty difficulty) {
         HidatoGenerator hg = new HidatoGenerator(sizeX, sizeY);
         Hidato newH = hg.generateHidato(difficulty);
         
