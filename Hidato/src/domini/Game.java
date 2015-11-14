@@ -26,14 +26,14 @@ public class Game {
     private int hints;
     private final Date date;
     private final Hidato hidato;
-    private final User user;
+    private final HidatoUser user;
     private final Difficulty difficulty;
     
     /**
      *  Crea un nou Game a partir d'un nom, un hidato, un usuari, un nivell d'ajuda i una dificultat
      */
     
-    public Game(String name,  Hidato hidato, User user, Help help, Difficulty difficulty){
+    public Game(String name,  Hidato hidato, HidatoUser user, Help help, Difficulty difficulty){
         this.name = name;
         this.date = new Date();
         this.hidato = new Hidato(hidato);
@@ -62,7 +62,7 @@ public class Game {
         return this.hidato;
     }
     
-    public User getUser(){
+    public HidatoUser getUser(){
         return this.user;
     }
     
