@@ -223,7 +223,7 @@ public class HidatoGenerator {
         totalCaselles = 0;
         for (int i = 0; i < h.getSizeX(); ++i) {
             for (int j = 0; j < h.getSizeY(); ++j) {
-                if (h.getCell(i,j).getType() != "No Valida") ++totalCaselles;
+                if (h.getCell(i,j).getType() != Type.VOID) ++totalCaselles;
             }
         }
     }
