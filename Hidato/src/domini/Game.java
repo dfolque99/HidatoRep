@@ -19,15 +19,15 @@ public class Game {
      *  Declara tots els parametres d'un Game
      */
     private String name;
-    private Help help;
-    private Duration duration;
+    private final Help help;
+    private final Duration duration;
     private int checksMade;
     private int changesMade;
     private int hints;
-    private Date date;
-    private Hidato hidato;
-    private User user;
-    private Difficulty difficulty;
+    private final Date date;
+    private final Hidato hidato;
+    private final User user;
+    private final Difficulty difficulty;
     
     /**
      *  Crea un nou Game a partir d'un nom, un hidato, un usuari, un nivell d'ajuda i una dificultat

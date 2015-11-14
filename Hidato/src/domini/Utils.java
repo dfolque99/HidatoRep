@@ -1,21 +1,22 @@
+package domini;
 
 public class Utils {
 	public static int toInt(final Cell myCell){
 		if (Type.VOID == myCell.getType()) return -1;
-		return myCell.getValue();
+		return myCell.getVal();
 	}
 	public static String toString(final Cell myCell){return Integer.toString(Utils.toInt(myCell));}
 	public static void blankToGiven(Cell myCell){
-		if (myCell.getType() == Type.BLANK && myCell.getValue() != 0) {myCell.setType(Type.GIVEN);}
+		if (myCell.getType() == Type.BLANK && myCell.getVal() != 0) {myCell.setType(Type.GIVEN);}
 	}
 	public static Cell copy(final Cell otherCell){
 		Cell myCell = new Cell();
 		myCell.setType(otherCell.getType());
-		myCell.setValue(otherCell.getValue());
+		myCell.setVal(otherCell.getVal());
 		return myCell;
 	}
 	public static void toZero(final Cell myCell){
-		if (myCell.getType() == Type.BLANK) {myCell.setValue(0);}
+		if (myCell.getType() == Type.BLANK) {myCell.setVal(0);}
 	}
 	public static String toString(Hidato hidato) {
 		String ret = "";

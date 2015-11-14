@@ -48,7 +48,7 @@ public class CtrCurrentGame {
     public boolean check(){
         game.incrementChecksMade();
         Hidato hidato = ctrHidato.getHidato();
-        return solver.solve(hidato);
+        return solver.uploadAndSolve(hidato);
     }
     
     /**
@@ -75,7 +75,7 @@ public class CtrCurrentGame {
         Help helpAux = game.getHelp(); 
         //controlar que la cela sigui valida
         if (helpAux == Help.HIGH){
-            if (!solver.solve(hidato)){
+            if (!solver.uploadAndSolve(hidato)){
                 return -1; // -1 = EL HIDATO NO TE SOLUCIO
             }else return 0;
         }else if (helpAux == Help.MEDIUM){
