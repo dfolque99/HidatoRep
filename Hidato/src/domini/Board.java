@@ -13,7 +13,6 @@ import java.util.Date;
  * @author David
  */
 public class Board {
-    private int id;
     private Difficulty difficult;
     private int sizeX;
     private int sizeY;
@@ -25,7 +24,7 @@ public class Board {
     public Board() {
         
     }
-    
+
     public Board(int sizeX, int sizeY) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
@@ -82,6 +81,10 @@ public class Board {
         return boards.get(x).get(y);
     }
 
+    public Date getCreationDate() {
+        return creationDate;
+    }
+    
     public void setDifficult(Difficulty newDifficult) {
         difficult = newDifficult;
     }

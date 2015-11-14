@@ -1,7 +1,8 @@
 package domini;
 
-public class Utils {
+public final class Utils {
         private Utils(){throw new UnsupportedOperationException();}
+        
 	public static int toInt(final Cell myCell){
 		if (Type.VOID == myCell.getType()) return -1;
 		return myCell.getVal();
@@ -19,17 +20,17 @@ public class Utils {
 	public static void toZero(final Cell myCell){
 		if (myCell.getType() == Type.BLANK) {myCell.setVal(0);}
 	}
-	public static String toString(Hidato hidato) {
-		String ret = "";
+	public static String toString(final Hidato hidato) {
+		StringBuilder ret = new StringBuilder();
 		for (int i = 0; i < hidato.getSizeX(); i+=1) {
 			for (int j = 0; j < hidato.getSizeY(); j+=1) {
-				ret += String.format("%2d ", Utils.toInt(hidato.getCell(i,j)));	
+				ret.append(String.format("%2d ", Utils.toInt(hidato.getCell(i,j))));	
 			}
-			ret += "\n";
+			ret.append("\n");
 		}
-		return ret;
+		return ret.toString();
 	}
-	public static void clean(Hidato hidato){
+	public static void clean(final Hidato hidato){
 		for (int i = 0; i < hidato.getSizeX(); i+=1) {
 			for (int j = 0; j < hidato.getSizeY(); j+=1) {
 				Utils.toZero(hidato.getCell(i,j));	
