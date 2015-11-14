@@ -20,17 +20,17 @@ public class CtrRanking {
     
     //Inicializar los tres atributos con los rankings que devuelva el CtrDBRanking
     void init() {
-        CtrDBRanking ctrDBRanking = new CtrDBRanking();
-        easyRanking = ctrDBRanking.getRanking(Difficulty.EASY);
-        mediumRanking = ctrDBRanking.getRanking(Difficulty.MEDIUM);
-        hardRanking = ctrDBRanking.getRanking(Difficulty.HARD);
+        CtrDBRanking db = new CtrDBRanking();
+        easyRanking = db.getRanking(Difficulty.EASY);
+        mediumRanking = db.getRanking(Difficulty.MEDIUM);
+        hardRanking = db.getRanking(Difficulty.HARD);
     }
     
     void save() {
-        CtrDBRanking ctrDBRanking = new CtrDBRanking();
-        ctrDBRanking.modifyRanking(Difficulty.EASY,easyRanking);
-        ctrDBRanking.modifyRanking(Difficulty.MEDIUM,mediumRanking);
-        ctrDBRanking.modifyRanking(Difficulty.HARD,hardRanking);
+        CtrDBRanking db = new CtrDBRanking();
+        db.modifyRanking(Difficulty.EASY,easyRanking);
+        db.modifyRanking(Difficulty.MEDIUM,mediumRanking);
+        db.modifyRanking(Difficulty.HARD,hardRanking);
     }
     
     void addScoreToRanking(int score, String username, Difficulty difficulty) {
