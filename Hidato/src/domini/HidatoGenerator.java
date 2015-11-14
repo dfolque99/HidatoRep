@@ -14,17 +14,28 @@ import java.util.LinkedList;
 public class HidatoGenerator {
     
     private Hidato h;
+    private int n, m;
     private int R[][]; // s'ha d'eliminar
+    private int D[][];
     private int totalCaselles;
     
     public HidatoGenerator(int sizeX, int sizeY) {
         this.h = new Hidato(sizeX, sizeY);
+        n = sizeX;
+        m = sizeY;
         R = new int[sizeX][sizeY]; // canviar
         comptaCaselles();
     }
     public HidatoGenerator(Hidato h) {
         this.h = new Hidato(h);
-        R = new int[h.getSizeX()][h.getSizeY()]; // canviar
+        n = h.getSizeX();
+        m = h.getSizeY();
+        R = new int[n][m]; // canviar
+        for (int i = 0; i < h.getSizeX(); i++) {
+            for (int j = 0; j < h.getSizeY(); ++j) {
+                R[i][j] = h.getCell(i, j).getVal();
+            }
+        }
         comptaCaselles();
     }
     
@@ -53,8 +64,8 @@ public class HidatoGenerator {
     
     private boolean noCasellaInicial() {
         boolean ret = true;
-        for (int i = 0; i < h.getSizeY(); ++i){
-            for (int j = 0; j < h.getSizeX(); ++j) {
+        for (int i = 0; i < n; ++i){
+            for (int j = 0; j < m; ++j) {
                 if (h.getCell(i,j).getVal() == 1) ret = false;
             }
         }
@@ -62,23 +73,23 @@ public class HidatoGenerator {
     }
     
     private boolean completarCami() {
-        
+        omplirD();
+        return true;
     }
     
-    private boolean particionat(int val) {
+    public boolean particionat(int val) {
         if (val >= totalCaselles) return false;
         // fa un bfs des de la primera posicio buida que troba
         int x0 = 0, y0 = 0; //inicialitzem perque no doni warning
         /* busca una casella buida (y0,x0) i posa totes les caselles buides 
          * fins al moment a false en BFS i les plenes a true
          */
-        int n = h.getSizeX();
-        int m = h.getSizeY();
+        
         boolean BFS[][] = new boolean[n][m];
         for (int i = 0; i < n; ++i) {
           for (int j = 0; j < m; ++j) {
             BFS[i][j] = true;
-            if (R[i][j] == 0 || R[i][j] > val) {
+            if ((R[i][j] == 0 || R[i][j] > val) && !h.getCell(i, j).getType().equals("No Valida")) {
               x0 = i; y0 = j;
               BFS[i][j] = false;
             }
@@ -104,11 +115,10 @@ public class HidatoGenerator {
         boolean part = false;
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                part = part or not BFS[i][j];
+                part = part || !BFS[i][j];
             }
         }
-  
-  return part;
+        return part;
     }
     
     private void posarPistes(String difficulty) {
@@ -123,5 +133,32 @@ public class HidatoGenerator {
             }
         }
     }
+
+    public int getTotalCaselles() {
+        return totalCaselles;
+    }
+    
+    private void sumarValD (int x, int y, int val) {
+        if (x >= 0 && x < n && y >= 0 && y < m) D[x][y] += val;
+    }
+    
+    private void sumaVoltantD (int x, int y, int val) {
+        for (int i = x-1; i <= x+1; ++i) {
+            for (int j = y-1; j <= y+1; ++j) {
+                if (i == x && j == y) continue;
+                    sumarValD(y, x, val);
+              }
+          }
+    }
+    
+    private void omplirD () {
+        D = new int[h.getSizeX()][h.getSizeY()];
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if(R[i][j] == 0) sumaVoltantD(i,j,1);
+            }
+        }
+    }
+    
     
 }
