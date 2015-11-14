@@ -25,7 +25,6 @@ public class CtrCurrentGame {
     private final CtrRanking ctrRanking;
     private long time0;
     
-    
     /**
      * Creadora
      * Crea un controlador a partir d'un game, un CtrDBGame (que permet la comunicacio
@@ -56,7 +55,7 @@ public class CtrCurrentGame {
     public boolean check(){
         game.incrementChecksMade();
         Hidato hidato = ctrHidato.getHidato();
-        return solver.uploadAndSolve(hidato);
+        return solver.solve(hidato);
     }
     
     /**
@@ -79,18 +78,26 @@ public class CtrCurrentGame {
     /**
      * Intenta colocar el valor 'value' a la posicio (x,y) del hidato
      * @return 0 si s'ha colocat el valor correctament, -1 si el nivell d'ajuda 
-     * era alt i el hidato no te solucio, o -2 si el nivell d'ajuda es mitja i 
-     * hi ha dos nombres consecutius separats en el hidato
+     * era alt i el hidato no te solucio, -2 si el nivell d'ajuda es mitja i 
+     * hi ha dos nombres consecutius separats en el hidato, -3 si el valor esta
+     * fora del rang de cells, -4 si ja esta colocada la cell amb el valor donat,
+     * o -5 si la posicio donada no es una cell valida
      */
     
     public int putValue(int value, int x, int y){
         Hidato hidato = ctrHidato.getHidato();
+        if (value < 1 || value > ctrHidato.countValidCells()) return -3;
+        if (ctrHidato.getCellPositionFromValue(value,0) != -1) return -4;
+        if (x < 1 || x > hidato.getSizeX()) return -5;
+        if (y < 1 || y > hidato.getSizeY()) return -5;
+        if (hidato.getCell(x, y).getType() == Type.VOID) return -5;
+        
         game.incrementChangesMade();
         hidato.getCell(x,y).setVal(value); //CUIDAO
         Help helpAux = game.getHelp(); 
-        //controlar que la cela sigui valida
+        //controlar que la cell sigui valida
         if (helpAux == Help.HIGH){
-            if (!solver.uploadAndSolve(hidato)){
+            if (!solver.solve(hidato)){
                 return -1; // -1 = EL HIDATO NO TE SOLUCIO
             }else return 0;
         }else if (helpAux == Help.MEDIUM){
