@@ -10,7 +10,8 @@ public final class CtrStatsUser {
 
     private final HidatoUser user;
 
-    private CtrStatsUser() {
+    @SuppressWarnings("unused")
+	private CtrStatsUser() {
         throw new UnsupportedOperationException();
     }
 
