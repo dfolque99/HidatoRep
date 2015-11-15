@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
  * @author felix.axel.gimeno
  * @version 0.3
  * @since 2015-11-07
- * @see Hidato <a href="https://en.wikipedia.org/wiki/Hidato">Hidato</a>
- * @see Warnsdorf's_rule <a href="https://en.wikipedia.org/wiki/Knight%27s_tour#Warnsdorf.27s_rule">Warnsdorf's rule</a>
+ * @see <a href="https://en.wikipedia.org/wiki/Hidato">Hidato</a>
+ * @see <a href="https://en.wikipedia.org/wiki/Knight%27s_tour#Warnsdorf.27s_rule">Warnsdorf's rule</a>
  */
 public class Solver {
     /**
