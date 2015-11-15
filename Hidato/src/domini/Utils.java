@@ -90,9 +90,10 @@ public final class Utils {
         StringBuilder ret = new StringBuilder();
         for (int i = 0; i < hidato.getSizeX(); i += 1) {
             for (int j = 0; j < hidato.getSizeY(); j += 1) {
-                ret.append(String.format("%2d ", Utils.toInt(hidato.getCell(i, j))));
+                ret.append("|");
+                ret.append(String.format("%3d ", Utils.toInt(hidato.getCell(i, j))));
             }
-            ret.append('\n');
+            ret.append("|\n");
         }
         return ret.toString();
     }
