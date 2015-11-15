@@ -60,13 +60,13 @@ public class GameDriver {
                                 HidatoGenerator hidatoGenerator;
                                 switch (difficulty){
                                     case EASY: 
-                                        hidatoGenerator = new HidatoGenerator(4,5); //tamany del hidato
+                                        hidatoGenerator = new HidatoGenerator(6,6); //tamany del hidato
                                         break;
                                     case MEDIUM:
-                                        hidatoGenerator = new HidatoGenerator(5,6); //tamany del hidato
+                                        hidatoGenerator = new HidatoGenerator(7,8); //tamany del hidato
                                         break;
                                     case HARD:
-                                        hidatoGenerator = new HidatoGenerator(6,7); //tamany del hidato
+                                        hidatoGenerator = new HidatoGenerator(9,9); //tamany del hidato
                                         break;
                                     default: hidatoGenerator = new HidatoGenerator(0,0);//Mai s'hauria d'arribar aqui
                                 }
@@ -87,7 +87,7 @@ public class GameDriver {
                                 ctrCurrentGame = ctrGameManager.restoreGame(name2);
                                 if (ctrCurrentGame == null) System.out.println("Error. No hi ha cap partida d'aquest usuari amb aquest nom");
                                 break;
-                            default: break;
+                            default: break; //Mai s'hauria d'arribar aqui
                         }
                         if (op2 != -1){
                             Game game = ctrCurrentGame.getGame();
@@ -140,6 +140,7 @@ public class GameDriver {
                                     case 6:
                                         ctrCurrentGame.restartGame();
                                         hidato = game.getHidato();
+                                        ctrHidato = new CtrHidato(hidato);
                                         break;
                                     case 7:
                                         ctrCurrentGame.solve();
