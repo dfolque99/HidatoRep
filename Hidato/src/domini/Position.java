@@ -89,7 +89,7 @@ public final class Position {
     /**
      * (x,y) to (-x,-y)
      * 
-     * @param p1
+     * @param p1 position to give opposite to
      * @return the symmetrical position of input
      */
     public static Position symmetric(final Position p1){
@@ -99,8 +99,8 @@ public final class Position {
     /**
      * calculates the norm of a position 
      * 
-     * @param p
-     * @return
+     * @param p position to give the norm of
+     * @return norm of p
      */
     public static Integer norm(Position p){
     	return Math.max(Math.abs(p.getX()), Math.abs(p.getY()));
