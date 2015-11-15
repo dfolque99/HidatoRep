@@ -120,7 +120,7 @@ public class Solver {
     /**
      * Solves a Hidato and returns a random cell not in input/non void
      *
-     * @param hidato	Hidato to solve, it is not modified
+     * @param hidato	Hidato to solve, it is not modified, has BLANK cells with value 0
      * @return	3 numbers, x-position, y-position, value of a cell in a solution
      * to hidato H, if not possible returns null
      */
@@ -136,6 +136,13 @@ public class Solver {
             int y = rand.nextInt(board.getSizeY());
             if (board.getCell(x, y).getType() == Type.BLANK) {
                 return new ArrayList<>(Arrays.asList(x, y, board.getCell(x, y).getVal()));
+            }
+        }
+        for (int i = 0; i < board.getSizeX(); i+=1){
+            for (int j = 0; j < board.getSizeY(); j += 1){
+                if (board.getCell(i, j).getType() == Type.BLANK) {
+                    return new ArrayList<>(Arrays.asList(i, j, board.getCell(i, j).getVal()));
+                }               
             }
         }
         return null;
