@@ -14,7 +14,7 @@ import java.util.Date;
  * @author David
  */
 
-public class Hidato {
+public class Hidato extends Board{
     
     private Difficulty difficulty;
     private int sizeX;
@@ -30,7 +30,7 @@ public class Hidato {
     public Hidato (int sizeX, int sizeY) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
-        cells = new ArrayList<ArrayList<Cell> >();
+        cells = new ArrayList<>();
         for (int i = 0; i < sizeX; ++i) {
             ArrayList<Cell> llista = new ArrayList<>();
             for (int j = 0; j < sizeY; ++j) {
@@ -50,7 +50,7 @@ public class Hidato {
     public Hidato (Hidato h) {
         sizeX = h.getSizeX();
         sizeY = h.getSizeY();
-        cells = new ArrayList<ArrayList<Cell> >();
+        cells = new ArrayList<>();
         for (int i = 0; i < sizeX; ++i) {
             ArrayList<Cell> llista = new ArrayList<>();
             for (int j = 0; j < sizeY; ++j) {
