@@ -32,23 +32,21 @@ public class Solver {
      * Current used cells of Hidato board
      */
     private boolean[][] used;
-
+   
     /**
-     * stores for a value of a cell, the cell's position
+     * value to position, only for given cells
      */
-    private NavigableMap<Integer, Position> myMap;
-
+    private Position[] givenCells;
+    
     /**
-     *
-     *
-     * @param value >0 , <=finish,
-     * @return null if finish, otherwise the least higer value of the given
-     * cells of the hidato contained in the class
+     * for a value, gives value next given cell
      */
-    private Integer getNext(Integer value) {
-        return myMap.higherKey(value);
-    }
-
+    private Integer[] next;
+    /**
+     * values starting cell, finishing cell 
+     */
+    private Integer start, finish; 
+    
     /**
      * constructor
      */
@@ -64,7 +62,7 @@ public class Solver {
     private void upload(final Hidato hidato) {
         board = hidato;
         used = new boolean[board.getSizeX()][board.getSizeY()];
-        myMap = new TreeMap<>();
+        NavigableMap<Integer, Position> myMap = new TreeMap<>();
         for (int i = 0; i < board.getSizeX(); i += 1) {
             for (int j = 0; j < board.getSizeY(); j += 1) {
                 Utils.blankToGiven(board.getCell(i, j));
@@ -73,6 +71,17 @@ public class Solver {
                 }
             }
         }
+        start = myMap.firstKey();
+        finish = myMap.lastKey(); 
+        givenCells = new Position[finish+1];
+        next = new Integer[finish+1];
+        
+       for(Integer i = start; i <= finish; i += 0x1){
+            givenCells[i]=myMap.get(i);
+            next[i]=myMap.higherKey(i);
+
+        }
+        
     }
 
     /**
@@ -92,7 +101,10 @@ public class Solver {
      * @return true if hidato can be solved,
      */
     private boolean solve() {
-        return solve(myMap.get(1).getX(), myMap.get(1).getY(), 1);
+        //final Map.Entry<Integer,Position> startingCell = myMap.firstEntry();
+        //final Position startingPosition = startingCell.getValue();
+        //return solve(startingPosition.getX(), startingPosition.getY(), startingCell.getKey());
+        return solve(givenCells[start].getX(), givenCells[start].getY(), start);
     }
 
     /**
@@ -131,17 +143,19 @@ public class Solver {
         if ((Math.min(x, y) < 0) || (Math.max(x - board.getSizeX(), y - board.getSizeY()) >= 0)) {
             return false;
         }
-        if (myMap.containsKey(n)) {
-            return myMap.get(n).equals(new Position(x, y));
+        final Position positionOfValueN = givenCells[n];//myMap.get(n);
+        if (positionOfValueN != null){
+            return positionOfValueN.equals(new Position(x, y));
         }
-        if (Position.notEnoughDistance(getNext(n), myMap.get(getNext(n)), n, new Position(x, y))) {
+        //final Map.Entry<Integer,Position> nextGivenCell =  myMap.higherEntry(n);
+        if (Position.notEnoughDistance(next[n], givenCells[next[n]], n, new Position(x, y))) {
             return false;
         }
         boolean isValid = true;
         if ((board.getCell(x, y).getType() == Type.VOID)
                 || used[x][y]
                 || (board.getCell(x, y).getType() == Type.GIVEN && board.getCell(x, y).getVal() != n)
-                || (myMap.containsKey(n) && board.getCell(x, y).getVal() != n)) {
+                || (positionOfValueN != null && board.getCell(x, y).getVal() != n)) {
             isValid = false;
         }
         if (DEBUG) {
@@ -195,7 +209,7 @@ public class Solver {
      * with number n, otherwise false
      */
     private boolean solve(int x, int y, int n) {
-        if (n == myMap.lastKey() && board.getCell(x, y).getVal() == n) {
+        if (n == finish && board.getCell(x, y).getVal() == n) {
             return true;
         }
         if (!validPosition(x, y, n)) {
