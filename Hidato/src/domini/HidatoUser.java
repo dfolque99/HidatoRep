@@ -14,10 +14,14 @@ import java.time.Duration;
 public class HidatoUser extends User {
     
     private int totalScore;
+    private int bestScore;
+    private Duration bestTime;
     
     public HidatoUser(String username, String password) {
         super(username,password);
         totalScore = 0;
+        bestScore = 0;
+        bestTime = null;
     }
     
     public void incrementTotalScore(int score) {
@@ -26,6 +30,23 @@ public class HidatoUser extends User {
     
     public int getTotalScore() {
         return totalScore;
+    }
+    
+    public void updateBestScore(int newScore) {
+        if (newScore > bestScore) bestScore = newScore;
+    }
+    
+    public int getBestScore() {
+        return bestScore;
+    }
+    
+    public void updateBestTime(Duration newTime) {
+        if (bestTime == null) bestTime = newTime;
+        else if (newTime.compareTo(bestTime) < 0) bestTime = newTime;
+    }
+    
+    public Duration getBestTime() {
+        return bestTime;
     }
     
     public double getSolvedPercentage() {
