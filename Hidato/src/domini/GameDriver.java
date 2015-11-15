@@ -5,7 +5,15 @@
  */
 package domini;
 
-//QUAN S'EXECUTA SEMPRE FALLA PQ NO HI HA CAP HIDATO AL SET
+/**
+ * Nota: hi ha funcionalitats que no funcionen perquè les classes de la capa de 
+ * persistencia son stubs. Coses que no funcionen:
+ * 
+ * - No es comprova usuari/contrasenya
+ * - No es poden guardar partides, ni carregar-ne
+ * - Les partides sempre es juguen sobre el mateix hidato (es pot canviar la mida
+ *   en aquest codi)
+ */
 
 import java.util.Scanner;
 
@@ -31,7 +39,7 @@ public class GameDriver {
             CtrDBGame ctrDBGame = new CtrDBGame();
             Solver solver = new Solver();
             CtrRanking ctrRanking = new CtrRanking();
-            HidatoGenerator hidatoGenerator = new HidatoGenerator(6,5); //tamany del hidato
+           // HidatoGenerator hidatoGenerator = new HidatoGenerator(4,5); //tamany del hidato
             CtrGameManager ctrGameManager = new CtrGameManager(hidatoSet, ctrDBGame, solver, ctrRanking, hidatoUserController);
             CtrCurrentGame ctrCurrentGame = null;
             hidatoUserController.login(username, password);
@@ -51,12 +59,26 @@ public class GameDriver {
                         }
                         switch(op2){
                             case 1: //Crear nova partida
-                                System.out.println("Introdueix nom de partida i nivell d'ajuda (LOW/MEDIUM/HIGH):");
+                                System.out.println("Introdueix nom de partida, nivell d'ajuda (LOW/MEDIUM/HIGH) i dificultat (EASY/MEDIUM/HARD):");
                                 String name = sc.next();    
-                                Hidato hidato = hidatoGenerator.generateHidato(Difficulty.EASY);
-                                if (hidato == null) System.out.println("hidato nul");
                                 Help help = Help.valueOf(sc.next());
-                                ctrCurrentGame = ctrGameManager.createGame(name, hidato, Help.LOW);
+                                Difficulty difficulty = Difficulty.valueOf(sc.next());
+                                HidatoGenerator hidatoGenerator;
+                                switch (difficulty){
+                                    case EASY: 
+                                        hidatoGenerator = new HidatoGenerator(4,5); //tamany del hidato
+                                        break;
+                                    case MEDIUM:
+                                        hidatoGenerator = new HidatoGenerator(5,6); //tamany del hidato
+                                        break;
+                                    case HARD:
+                                        hidatoGenerator = new HidatoGenerator(6,7); //tamany del hidato
+                                        break;
+                                    default: hidatoGenerator = new HidatoGenerator(0,0);//Mai s'hauria d'arribar aqui
+                                }
+                                Hidato hidato = hidatoGenerator.generateHidato(difficulty);
+                                if (hidato == null) System.out.println("hidato nul");
+                                ctrCurrentGame = ctrGameManager.createGame(name, hidato, help);
                                 if (ctrCurrentGame == null){
                                     System.out.println("Error. Possibles causes:");
                                     System.out.println("- Ja existia una partida amb el nom introduit");
@@ -86,8 +108,9 @@ public class GameDriver {
                             System.out.println("4 -> pausar la partida");
                             System.out.println("5 -> guardar la partida");
                             System.out.println("6 -> reiniciar la partida");
+                            System.out.println("7 -> resoldre la partida");
                             int op3 = sc.nextInt();
-                            while (op3 != 5){
+                            while (op3 != 5 && !ctrHidato.isSolved()){
                                 switch(op3){
                                     case 1:
                                         int value = sc.nextInt();
@@ -123,7 +146,12 @@ public class GameDriver {
                                         break;
                                     case 6:
                                         ctrCurrentGame.restartGame();
-                                        break;                                    
+                                        hidato = game.getHidato();
+                                        break;
+                                    case 7:
+                                        ctrCurrentGame.solve();
+                                        hidato = game.getHidato();
+                                        ctrHidato = new CtrHidato(hidato);
                                     default:
                                 }
                                 System.out.println(Utils.toString(hidato));
@@ -133,10 +161,14 @@ public class GameDriver {
                                 System.out.println("3 -> fer un check (comprovar si el hidato te solucio)");
                                 System.out.println("4 -> pausar la partida");
                                 System.out.println("5 -> guardar la partida");
+                                System.out.println("6 -> reiniciar la partida");
+                                System.out.println("7 -> resoldre la partida");
+                                
                                 op3 = sc.nextInt();
                             }
                             ctrCurrentGame.saveGame();
-                            System.out.println("S'ha guardat la partida");
+                            if (op3 == 5) System.out.println("S'ha guardat la partida");
+                            else System.out.println("Hidato resolt!!");
                         }
                         break;
                     case 2: //Eliminar partida

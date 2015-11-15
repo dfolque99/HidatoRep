@@ -26,6 +26,7 @@ public class Game {
     private int hints;
     private final Date date;
     private Hidato hidato;
+    private final Hidato solvedHidato;
     private final Hidato origHidato;
     private final HidatoUser user;
     private final Difficulty difficulty;
@@ -34,11 +35,12 @@ public class Game {
      *  Crea un nou Game a partir d'un nom, un hidato, un usuari, un nivell d'ajuda i una dificultat
      */
     
-    public Game(String name,  Hidato hidato, HidatoUser user, Help help, Difficulty difficulty){
+    public Game(String name, Hidato hidato, Hidato solvedHidato, HidatoUser user, Help help, Difficulty difficulty){
         this.name = name;
         this.date = new Date();
         this.hidato = new Hidato(hidato);
         this.origHidato = new Hidato(hidato);
+        this.solvedHidato = new Hidato(solvedHidato);
         this.user = user;
         this.help = help;
         this.changesMade = 0;
@@ -64,8 +66,8 @@ public class Game {
         return this.hidato;
     }
     
-    public Hidato getOrigHidato(){
-        return new Hidato(origHidato);
+    public Hidato getSolvedHidato(){
+        return new Hidato(solvedHidato);
     }
     
     public HidatoUser getUser(){
@@ -110,11 +112,16 @@ public class Game {
      * @return 
      */
     public int restartGame(){
-        this.hidato = this.origHidato;
+        this.hidato = new Hidato(this.origHidato);
         this.changesMade = 0;
         this.checksMade = 0;
         this.duration = Duration.ZERO;
         this.hints = 0;
+        return 0;
+    }
+    
+    public int solve(){
+        this.hidato = new Hidato(this.solvedHidato);
         return 0;
     }
     

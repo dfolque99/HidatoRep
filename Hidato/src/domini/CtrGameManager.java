@@ -48,19 +48,20 @@ public class CtrGameManager {
      * @return el controlador de la partida creada
      */
     
-    public CtrCurrentGame createGame(String name, Hidato hidato, Help help){
+    public CtrCurrentGame createGame(String name, Hidato solvedHidato, Help help){
         Boolean error = false;
         Game game_aux = ctrDBGame.getGame(name, loggedUser);
         if (game_aux != null) {
-            System.out.println("ja existeix partida amb aquest nom: "+name);
             error = true;
         }
-        if (hidato == null) {
-            System.out.println("el hidato passat es nul");
+        if (solvedHidato == null) {
             error = true;
         }
         if (error) return null;
-        Game game = new Game(name, hidato, loggedUser, help, hidato.getDifficult());
+        Hidato hidato = new Hidato(solvedHidato);
+        CtrHidato ctrHidato = new CtrHidato(hidato);
+        ctrHidato.setBlankCellsToZero();
+        Game game = new Game(name, hidato, solvedHidato, loggedUser, help, hidato.getDifficulty());
         CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver, ctrRanking, hidatoUserController);
         
         return ctrCurrentGame;
