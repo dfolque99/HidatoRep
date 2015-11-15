@@ -117,11 +117,18 @@ public final class Utils {
      */
     public static String toStringWithZeros(final Hidato hidato) {
         StringBuilder ret = new StringBuilder();
+        ret.append(" ");
+        for (int i = 0; i < hidato.getSizeX(); i += 1) ret.append("____ ");
+        ret.append("\n");
         for (int i = 0; i < hidato.getSizeX(); i += 1) {
             for (int j = 0; j < hidato.getSizeY(); j += 1) {
-                ret.append(String.format("%2d ", Utils.toIntZero(hidato.getCell(i, j))));
+                ret.append("|");
+                int val = Utils.toIntZero(hidato.getCell(i,j));
+                if (val != 0) ret.append(String.format("%3d ", val));
+                else if (hidato.getCell(i,j).getType() == Type.BLANK) ret.append("____");
+                else ret.append("####");
             }
-            ret.append('\n');
+            ret.append("|\n");
         }
         return ret.toString();
     }
