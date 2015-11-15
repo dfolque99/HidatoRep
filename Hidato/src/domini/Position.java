@@ -115,7 +115,7 @@ public final class Position {
      */
     public static Integer distance(final Position p1, final Position p2){
     	return norm(Position.add(p1, Position.symmetric(p2)));
-    	//return Math.min(Math.abs(p1.getX() - p2.getX()), Math.abs(p1.getY() - p2.getY()));
+    	//return Math.max(Math.abs(p1.getX() - p2.getX()), Math.abs(p1.getY() - p2.getY()));
    }
     
     /**
