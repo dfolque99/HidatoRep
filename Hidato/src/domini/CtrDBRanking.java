@@ -10,7 +10,7 @@ package domini;
  * @author Guillem
  */
 
-//DE MOMENTO ES SOLO PARA QUE NO DE ERRORES DE COMPILACION EL PROYECTO
+//ES SOLO PARA QUE NO DE ERRORES DE COMPILACION EL PROYECTO
 public class CtrDBRanking {
     
     public Ranking getRanking(Difficulty difficulty) {
