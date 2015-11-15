@@ -16,7 +16,7 @@ public class UserController {
         loggedUser = null;
     }
     
-    /* Pre: username i password no són nuls.
+    /* Pre: username i password no són nuls
     ** Post: Retorna un enter que indica en quin estat ha acabat l’operació. 
     **	  Si retorna 0 vol dir que l’operació ha finalitzat correctament, en aquest
     **	  cas loggedUser s’inicialitza amb l’usuari amb nom username.
@@ -36,7 +36,7 @@ public class UserController {
         return 0;
     }
 
-    /* Pre: username i password no són nuls.
+    /* Pre: username i password no són nuls
     ** Post: Retorna una enter que indica en quin estat ha acabat l’operació.
     **	  Si retorna 0 vol dir que l’operació ha finalitzat correctament, en aquest
     **	  cas s’ha creat un usuari en la capa de dades amb nom username i 	
@@ -51,7 +51,7 @@ public class UserController {
         return error;
     }
     
-    /* Pre: password no és nul.
+    /* Pre: password no és nul
     ** Post: Retorna un enter que indica en quin estat ha acabat l’operació.
     **	  Si retorna 0 vol dir que l’operacio ha finalitzat correctament, en aquest
     **	  cas l’usuari amb nom username s’ha eliminat de la capa de dades.
@@ -83,7 +83,7 @@ public class UserController {
         return loggedUser;
     }    
     
-    /* Pre: username no és nul.
+    /* Pre: username no és nul
     ** Post: Retorna l’usuari amb nom username, en cas d’error (p.e. no existeix)
     **	  es null.
     */
@@ -91,7 +91,7 @@ public class UserController {
         UserDBController db = new UserDBController();
         return db.getUser(username);
     }
-    /* Pre: S’ha fet login i password i newName no són nuls.
+    /* Pre: Previament s’ha fet login correctament i password i newName no són nuls.
     ** Post: Retorna un enter que indica en quin estat ha acabat l’operació. 
     **	  Si retorna 0 vol dir que l’operació ha finalitzat correctament, en aquest
     **	  cas el nom de loggedUser passa a ser newName (també en capa de
@@ -114,7 +114,7 @@ public class UserController {
         return 0;
     }
     
-    /* Pre: S’ha fet login i oldPassword i newPassword no són nuls.
+    /* Pre: Previament s’ha fet login correctament i oldPassword i newPassword no són nuls.
     ** Post: Retorna un enter que indica en quin estat ha acabat l’operació. 
     **	  Si retorna 0 vol dir que la contrasenya de loggedUser passa a ser
     **	  newPassword (també en capa de dades).
