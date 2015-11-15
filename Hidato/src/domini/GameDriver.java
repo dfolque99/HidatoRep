@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package domini;
 
 /**
@@ -10,15 +5,14 @@ package domini;
  * persistencia son stubs. Coses que no funcionen:
  * 
  * - No es comprova usuari/contrasenya
- * - No es poden guardar partides, ni carregar-ne
- * - Les partides sempre es juguen sobre el mateix hidato (es pot canviar la mida
- *   en aquest codi)
+ * - No es poden guardar partides, ni carregar-ne, ni esborrar-ne
  */
 
 import java.util.Scanner;
 
 /**
- *
+ * Driver de partida. Conte l'estructura que seguiria un jugador que vulgues jugar 
+ * una partida. Permet fer moltes partides consecutives, i tambe canviar d'usuari
  * @author Pau
  */
 public class GameDriver {
@@ -82,7 +76,6 @@ public class GameDriver {
                                 if (ctrCurrentGame == null){
                                     System.out.println("Error. Possibles causes:");
                                     System.out.println("- Ja existia una partida amb el nom introduit");
-                                    //System.out.println("- No existeix cap tauler amb el nom introduit");
                                     System.out.println("- El nivell d'ajuda no es LOW/MEDIUM/HIGH");
                                     op2 = -1;
                                 }else System.out.println("S'ha creat correctament la partida");

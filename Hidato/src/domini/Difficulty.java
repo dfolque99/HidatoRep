@@ -6,7 +6,9 @@
 package domini;
 
 /**
- *
+ * EASY: Nivell facil
+ * MEDIUM: Nivell mitja
+ * HARD: Nivell dificil
  * @author Pau
  */
 public enum Difficulty {

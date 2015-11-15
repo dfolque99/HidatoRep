@@ -1,35 +1,53 @@
 package domini;
 import java.util.ArrayList;
 
-
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Controlador d'una partida: cada partida te assignada una instancia de CtrCurrentGame,
- * que s'ocupa de comunicar la capa de vista amb la partida.
+ * que s'ocupa de comunicar la capa de vista i els altres controladors amb la partida.
  * @author Pau Surrell
  */
 public class CtrCurrentGame {
+
     /**
-     * Declaracio dels parametres i controladors amb els que necessita comunicar-se
+     * Partida sobre la qual el controlador actuara
      */
     private final Game game;
+    
+    /**
+     * Controlador de DB de game, de la capa de persistencia
+     */
     private final CtrDBGame ctrDBGame;
+    
+    /**
+     * Solver, te els metodes per resoldre hidatos
+     */
     private final Solver solver;
+    
+    /**
+     * Controlador de hidato, te metodes per modificar hidatos
+     */
     private CtrHidato ctrHidato;
+    
+    /**
+     * Controlador de ranking, te metodes per modificar el ranking
+     */
     private final CtrRanking ctrRanking;
+    
+    /**
+     * Controlador d'usuari, te metodes per modificar dades de l'usuari
+     */
     private final HidatoUserController hidatoUserController;
+    
+    /**
+     * Variable auxiliar utilitzada per calcular la durada de la partida
+     */
     private long time0;
     
     /**
      * Creadora
      * Crea un controlador a partir d'un game, un CtrDBGame (que permet la comunicacio
-     * amb la capa de persistencia) i un solver
+     * amb la capa de persistencia), un solver, un controlador de ranking  i un
+     * controlador d'usuari
      * @param game partida assignada a aquest controlador
      * @param ctrDBGame controlador de la DB per comunicar-se amb la capa de persistencia
      * @param solver solver per poder resoldre els hidatos
@@ -46,10 +64,9 @@ public class CtrCurrentGame {
     }
 
     /**
-     * Retorna el game del controlador
-     * @return 
+     * Getter de la partida del controlador
+     * @return la partida del controlador
      */
-    
     public Game getGame(){
         return this.game;
     }
@@ -58,7 +75,6 @@ public class CtrCurrentGame {
      * Fa un check del hidato
      * @return true si el hidato te solucio, false si no en te
      */
-    
     public boolean check(){
         game.incrementChecksMade();
         Hidato hidato = ctrHidato.getHidato();
@@ -67,7 +83,8 @@ public class CtrCurrentGame {
     
     /**
      * Demana una pista del hidato
-     * @return una array list de mida 3, amb la posicio i valor de la pista
+     * @return 0 si s'ha colocat la pista, 
+     * -1 si no s'ha colocat degut a que el hidato no tenia solucio
      */
     public int requestHint(){
         game.incrementHints();
@@ -87,13 +104,13 @@ public class CtrCurrentGame {
      * @param value el valor de la cell
      * @param x posicio x de la cell en el hidato
      * @param y posicio y de la cell en el hidato
-     * @return 0 si s'ha colocat el valor correctament, -1 si el nivell d'ajuda 
-     * era alt i el hidato no te solucio, -2 si el nivell d'ajuda es mitja i 
-     * hi ha dos nombres consecutius separats en el hidato, -3 si el valor esta
-     * fora del rang de cells, -4 si ja esta colocada la cell amb el valor donat,
-     * o -5 si la posicio donada no es una cell valida
+     * @return 0 si s'ha colocat el valor correctament, 
+     * -1 si el nivell d'ajuda era alt i el hidato no te solucio, 
+     * -2 si el nivell d'ajuda es mitja i hi ha dos nombres consecutius separats en el hidato, 
+     * -3 si el valor esta fora del rang de cells, 
+     * -4 si ja esta colocada la cell amb el valor donat,
+     * -5 si la posicio donada no es una cell valida
      */
-    
     public int putValue(int value, int x, int y){
         Hidato hidato = ctrHidato.getHidato();
         if (value < 0 || value > ctrHidato.countValidCells()) return -3;
@@ -128,7 +145,6 @@ public class CtrCurrentGame {
      * Fa una pausa en la partida (atura el temps de partida)
      * @return 0
      */
-    
     public int pause(){
         long time1 = (long) System.currentTimeMillis();
         game.incrementDuration((time1 - time0));
@@ -144,12 +160,20 @@ public class CtrCurrentGame {
         return 0;
     }
     
+    /**
+     * Reinicia la partida (torna el hidato i les estadistiques tal com estaven al principi)
+     * @return 0
+     */
     public int restartGame(){
         game.restartGame();
         this.ctrHidato = new CtrHidato(game.getHidato());
         return 0;
     }
     
+    /**
+     * Resol la partida automaticament
+     * @return 0
+     */
     public int solve(){
         game.solve();
         this.ctrHidato = new CtrHidato(game.getHidato());
@@ -158,6 +182,7 @@ public class CtrCurrentGame {
     
     /**
      * Guarda la partida al repositori
+     * NOTA: com que ctrDBGame actualment es un stub, la partida es eliminada i no es guarda enlloc
      * @return 0
      */
     public int saveGame(){
@@ -191,10 +216,11 @@ public class CtrCurrentGame {
     }
     
     /**
-     * Calcula la puntuacio de la partida
+     * Calcula la puntuacio de la partida (val 0 si s'ha utilitzat el solve per acabar-la)
      * @return la puntuacio
      */
     public int calculateScore(){
+        if (!game.getLegitSolved()) return 0;
         int checkPenalty = 60000;
         int changePenalty = 1000;
         long totalDuration = game.getDuration().toMillis() + checkPenalty*game.getChecksMade() + changePenalty * game.getChangesMade();
@@ -208,9 +234,8 @@ public class CtrCurrentGame {
      */
     public int initialize(){
         game.getUser().incrementStartedGames();
+        hidatoUserController.updateUser();
         unpause();
         return 0;
     }
-    
-    
 }
