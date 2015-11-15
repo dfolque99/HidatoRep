@@ -30,6 +30,7 @@ public class GameDriver {
             CtrDBGame ctrDBGame = new CtrDBGame();
             Solver solver = new Solver();
             CtrRanking ctrRanking = new CtrRanking();
+            HidatoGenerator hidatoGenerator = new HidatoGenerator(6,5); //tamany del hidato
             CtrGameManager ctrGameManager = new CtrGameManager(hidatoSet, user, ctrDBGame, solver, ctrRanking);
             CtrCurrentGame ctrCurrentGame = null;
 
@@ -49,15 +50,16 @@ public class GameDriver {
                         }
                         switch(op2){
                             case 1: //Crear nova partida
-                                System.out.println("Introdueix nom de partida, nom del tauler i nivell d'ajuda (LOW/MEDIUM/HARD):");
-                                String name = sc.next();
-                                String hidatoName = sc.next();
+                                System.out.println("Introdueix nom de partida i nivell d'ajuda (LOW/MEDIUM/HIGH):");
+                                String name = sc.next();    
+                                Hidato hidato = hidatoGenerator.generateHidato(Difficulty.EASY);
+                                if (hidato == null) System.out.println("hidato nul");
                                 Help help = Help.valueOf(sc.next());
-                                ctrCurrentGame = ctrGameManager.createGame(name, hidatoName, help);
+                                ctrCurrentGame = ctrGameManager.createGame(name, hidato, Help.LOW);
                                 if (ctrCurrentGame == null){
                                     System.out.println("Error. Possibles causes:");
                                     System.out.println("- Ja existia una partida amb el nom introduit");
-                                    System.out.println("- No existeix cap tauler amb el nom introduit");
+                                    //System.out.println("- No existeix cap tauler amb el nom introduit");
                                     System.out.println("- El nivell d'ajuda no es LOW/MEDIUM/HIGH");
                                     op2 = -1;
                                 }else System.out.println("S'ha creat correctament la partida");
@@ -85,7 +87,6 @@ public class GameDriver {
                             int op3 = sc.nextInt();
                             while (op3 != 5){
                                 switch(op3){
-                                    //FALTA CASE 1 2 3 4
                                     case 1:
                                         int value = sc.nextInt();
                                         int posx = sc.nextInt();
@@ -134,7 +135,6 @@ public class GameDriver {
                         }
                         break;
                     case 2: //Eliminar partida
-                        //FALTA
                         System.out.println("Introdueix el nom de la partida a eliminar:");
                         String name3 = sc.next();
                         ctrGameManager.deleteGame(name3);
@@ -145,8 +145,7 @@ public class GameDriver {
             System.out.println("Selecciona una opcio:");
             System.out.println("1. Jugar una partida");
             System.out.println("2. Eliminar una partida");
-            System.out.println("3. Sortir sessio");
-            System.out.println("-1. Finalitzar execucio");
+            System.out.println("-1. Sortir sessio i finalitzar");
             op = sc.nextInt();            
             }
         System.out.println("----GameDriver----");

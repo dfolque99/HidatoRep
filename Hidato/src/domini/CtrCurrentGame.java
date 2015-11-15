@@ -160,7 +160,8 @@ public class CtrCurrentGame {
         int score = calculateScore();
         user.incrementTotalScore(score);
         
-        //RankingEntry entry = new RankingEntry(game.getDate(), username, score);
+        
+        
         ctrRanking.addScoreToRanking(score, username, game.getDifficulty());
         return 0;
     }
