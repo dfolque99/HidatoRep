@@ -27,10 +27,10 @@ public class HidatoGenerator {
     private int R[][]; // s'ha d'eliminar
     private int D[][]; // D[i][j] = caselles disponibles al voltant de (i,j)
     private Position L[]; // L[i] = lloc del numero i
-    private Position LG[]; // LG[i] = lloc del numero donat i
     private int nextGiven[];
     private int totalCaselles;
     private String error;
+    private long iteracions_totals, bfs_totals;
     
     public HidatoGenerator(int sizeX, int sizeY) {
         this.h = new Hidato(sizeX, sizeY);
@@ -132,18 +132,28 @@ public class HidatoGenerator {
         }
         L = new Position[totalCaselles];
         omplirD();
-        omplirNextGivenILG();
+        omplirNextGivenIL();
         iter = 0;
+        iteracions_totals = 0;
+        bfs_totals = 0;
         val_ref = 0;
         
         error = "impossible (o molt dificil)";
         return backtracking(1, casellaInicial);
     }
     
+    public long getIt() {
+        return iteracions_totals;
+    }
+    public long getBfs() {
+        return bfs_totals;
+    }
+    
     private boolean backtracking (int val, Position p) {
+        ++iteracions_totals;
+        if (massaLluny(val,p)) return false;
         L[val-1] = p;
         if (val == totalCaselles) return true;
-        if (massaLluny(val,p)) return false;
         if (!controlParticionament(val)) return false;
         Position veiObligat = buscaVeiObligat(val, p);
         if (veiObligat != null) return backtracking(val+1, veiObligat);
@@ -165,7 +175,7 @@ public class HidatoGenerator {
             sumaVoltantD(next.getX(),next.getY(),1);
             R[next.getX()][next.getY()] = antVal;
             if (val_ref != 0) {
-                if (val > val_ref/2) return false;
+                if (val > val_ref*1/2) return false;
                 if (particionat(val)) {
                     val_ref = val;
                     return false;
@@ -206,7 +216,7 @@ public class HidatoGenerator {
     }
     
     private boolean controlParticionament(int val) {
-        if (++iter == 1000) {
+        if (++iter == 30) {
             iter = 0;
             if (particionat(val-1)) {
                 val_ref = val;
@@ -226,6 +236,7 @@ public class HidatoGenerator {
     }
     
     public boolean particionat(int val) {
+        ++bfs_totals;
         if (val >= totalCaselles) return false;
         // fa un bfs des de la primera posicio buida que troba
         int x0 = 0, y0 = 0; //inicialitzem perque no doni warning
@@ -272,7 +283,7 @@ public class HidatoGenerator {
     public boolean massaLluny(int val, Position p) {
         int valNextGiven = nextGiven[val-1];
         if (valNextGiven == 0) return false;
-        return (Position.distance(p, LG[valNextGiven-1]) > valNextGiven-val);
+        return (Position.distance(p, L[valNextGiven-1]) > valNextGiven-val);
     }
     
     private void comptaCaselles() {
@@ -310,8 +321,7 @@ public class HidatoGenerator {
         }
     }
     
-    private void omplirNextGivenILG() {
-        LG = new Position[totalCaselles];
+    private void omplirNextGivenIL() {
         nextGiven = new int[totalCaselles];
         ArrayList<Integer> donats = new ArrayList<>();
         for (int i = 0; i < n; ++i) {
@@ -319,7 +329,7 @@ public class HidatoGenerator {
                 int valor = h.getCell(i, j).getVal();
                 if (valor != 0) {
                     donats.add(valor);
-                    LG[valor-1] = new Position(i,j);
+                    L[valor-1] = new Position(i,j);
                 }
             }
         }
