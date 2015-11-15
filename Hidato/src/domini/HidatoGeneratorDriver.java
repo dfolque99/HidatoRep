@@ -21,11 +21,35 @@ public class HidatoGeneratorDriver {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         
-        HidatoGenerator pau = new HidatoGenerator(5,5);
-        Hidato hPau = pau.generateHidato(Difficulty.EASY);
         
         
         
+        Hidato hPau = new Hidato();
+        int N = 1;
+        int M = 8;
+        Hidato ah = new Hidato(8,8);
+        ah.getCell(0, 0).setVal(1);
+        ah.getCell(1, 1).setVal(4);
+        ah.getCell(4, 2).setVal(10);
+        ah.getCell(2, 4).setVal(20);
+        ah.getCell(6, 6).setVal(50);
+        //ah.getCell(0, 3).setVal(32);
+        //ah.getCell(7, 4).setVal(40);
+        //ah.getCell(0, 5).setVal(48);
+        ah.getCell(7, 7).setVal(64);
+        long T1 = System.currentTimeMillis();
+        long T3 = T1;
+        for (int i = 0; i < N; ++i) {
+            HidatoGenerator pau = new HidatoGenerator(ah);
+            hPau = pau.generateHidato(Difficulty.EASY);
+            //System.out.printf("%d milisegons \n", System.currentTimeMillis()-T3);
+            //T3 = System.currentTimeMillis();
+            
+        }
+        long T2 = System.currentTimeMillis();
+        System.out.printf("%d milisegons per Hidato %dx%d generat\nTemps total: %d segons\n", (T2-T1)/N, M, M, (T2-T1)/1000);
+        System.out.print(Utils.toString(hPau));
+        /*
         while (true) {
             System.out.printf("Linies: ");
             int sizeX = s.nextInt();
@@ -73,7 +97,7 @@ public class HidatoGeneratorDriver {
                 }
             }
             
-        }
+        }/* */
     }
 }
 
