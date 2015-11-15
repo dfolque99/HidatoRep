@@ -103,7 +103,7 @@ public final class Position {
      * @return
      */
     public static Integer norm(Position p){
-    	return Math.min(Math.abs(p.getX()), Math.abs(p.getY()));
+    	return Math.max(Math.abs(p.getX()), Math.abs(p.getY()));
     }
     
     /**
