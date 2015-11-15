@@ -6,7 +6,7 @@ import java.time.Duration;
  * @since 2015-11-14
  * @author felix.axel.gimeno
  */
-public class CtrStatsUser {
+public final class CtrStatsUser {
 
     private final HidatoUser user;
 
@@ -45,8 +45,8 @@ public class CtrStatsUser {
     public Duration getAverageTimePerSolve() {
         return user.getAverageTimePerSolve();
     }
-    public int getTotalCreatedBoards(){
+
+    public int getTotalCreatedBoards() {
         return user.getTotalCreatedBoards();
     }
 }
-
