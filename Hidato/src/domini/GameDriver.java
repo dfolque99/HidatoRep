@@ -154,7 +154,7 @@ public class GameDriver {
                                         ctrHidato = new CtrHidato(hidato);
                                     default:
                                 }
-                                System.out.println(Utils.toString(hidato));
+                                System.out.println(Utils.toString(ctrHidato.getHidato()));
                                 System.out.println("Selecciona quina accio vols fer:");
                                 System.out.println("1 v x y -> posar el nombre v a la casella (x,y)");
                                 System.out.println("2 -> demanar una pista");
