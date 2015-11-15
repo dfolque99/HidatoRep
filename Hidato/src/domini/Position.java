@@ -6,10 +6,10 @@ package domini;
 
 import java.util.Objects;
 
-public class Position {
+public final class Position {
 
-    private Integer x;
-    private Integer y;
+    private final Integer x;
+    private final Integer y;
 
     public Integer getX() {
         return x;
@@ -17,14 +17,6 @@ public class Position {
 
     public Integer getY() {
         return y;
-    }
-
-    public void setX(Integer x) {
-        this.x = x;
-    }
-
-    public void setY(Integer y) {
-        this.y = y;
     }
 
     @SuppressWarnings("unused")
@@ -54,16 +46,13 @@ public class Position {
             return false;
         }
         final Position other = (Position) obj;
-        if (!Objects.equals(this.x, other.x)) {
+        if (!Objects.equals(this.getX(), other.getX())) {
             return false;
         }
-        if (!Objects.equals(this.y, other.y)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.getY(), other.getY());
     }
 
     public static boolean notEnoughDistance(int n, Position p1, int m, Position p2) {
-        return (Math.min(Math.abs(p1.x - p2.x), Math.abs(p1.y - p2.y)) > Math.abs(n - m));
+        return (Math.min(Math.abs(p1.getX() - p2.getY()), Math.abs(p1.getY() - p2.getY())) > Math.abs(n - m));
     }
 }
