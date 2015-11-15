@@ -1,6 +1,13 @@
 package domini;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.Random;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
@@ -11,12 +18,6 @@ import java.util.stream.Collectors;
  * @see Warnsdorf's_rule <a href="https://en.wikipedia.org/wiki/Knight%27s_tour#Warnsdorf.27s_rule">Warnsdorf's rule</a>
  */
 public class Solver {
-
-    /**
-     * debug parameter, set to false
-     */
-    private final static boolean DEBUG = false;
-    
     /**
      * Moore Neighbourhood
      */
@@ -203,7 +204,7 @@ public class Solver {
      */
     private ArrayList<int[]> getNeighboursSorted(final int x, final int y, final int n) {
         ArrayList<int[]> result = getNeighboursUnsorted(x, y, n);
-        Map<int[], Integer> Values = new HashMap<>();
+        Map<int[], Integer> Values = new HashMap<>(8);
         result.stream().forEach(s-> {Values.put(s,getNeighboursUnsorted(s[0], s[1], s[2]).size());});
         Collections.sort(result, (final int[] a, final int[] b) -> -Values.get(b)
                 + Values.get(a));
