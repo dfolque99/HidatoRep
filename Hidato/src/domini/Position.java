@@ -37,8 +37,30 @@ public class Position {
         this.y = y;
     }
 
-    public boolean equals(Position p) {
-        return this.x.equals(p.x) && this.y.equals(p.y);
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 67 * hash + Objects.hashCode(this.x);
+        hash = 67 * hash + Objects.hashCode(this.y);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Position other = (Position) obj;
+        if (!Objects.equals(this.x, other.x)) {
+            return false;
+        }
+        if (!Objects.equals(this.y, other.y)) {
+            return false;
+        }
+        return true;
     }
 
     public static boolean notEnoughDistance(int n, Position p1, int m, Position p2) {
