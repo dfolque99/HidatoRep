@@ -20,7 +20,8 @@ final public class SolverDriver {
                 System.out.println("5 → exit");
                 System.out.println("6 → is hidato solvable?");
                 System.out.println("7 → get random hint");
-                System.out.println("8 → to clean hidato");
+                System.out.println("8 → clean hidato");
+                System.out.println("9 → go to HidatoGeneratorDriver");
                 
                 while (true){
                     final int foo = user_input.nextInt();
@@ -51,6 +52,13 @@ final public class SolverDriver {
                         hidato.setCell(A.get(0),A.get(1),new Cell(A.get(2),Type.GIVEN));
                     
                     }
+                    if (8 == foo){ 
+                        Utils.clean(hidato);
+                    }
+                    if (9 == foo){
+                        HidatoGeneratorDriver.main(new String[0]);
+                        return;
+                    } 
                 }
             }
 	}
