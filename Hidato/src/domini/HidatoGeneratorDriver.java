@@ -62,14 +62,16 @@ public class HidatoGeneratorDriver {
                         long t2 = System.currentTimeMillis();
                         System.out.printf("Milisegons: %d\n", t2-t1);
                         if (resolt == null) System.out.printf("Impossible de generar\n");
-                        else System.out.printf(Utils.toString(resolt));
+                        else {
+                            System.out.printf(Utils.toString(resolt));
+                            System.out.printf(Utils.toStringWithZeros(resolt));
+                        }
                         break;
                     default:
                         seguir = false;
                         break;
                 }
             }
-            
         }
     }
 }
