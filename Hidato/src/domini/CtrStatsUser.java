@@ -45,4 +45,8 @@ public class CtrStatsUser {
     public Duration getAverageTimePerSolve() {
         return user.getAverageTimePerSolve();
     }
+    public int getTotalCreatedBoards(){
+        return user.getTotalCreatedBoards();
+    }
 }
+
