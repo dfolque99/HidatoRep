@@ -45,7 +45,7 @@ public class UserController {
     
     public int updateUser() {
         UserDBController db = new UserDBController();
-        int error = db.modifyUser(loggedUser,loggedUser.getUsername());
+        int error = db.modifyUser(loggedUser,null);
         return error;
     }
 
@@ -76,7 +76,7 @@ public class UserController {
         UserDBController db = new UserDBController();
         if (!oldPassword.equals(loggedUser.getPassword())) return -1;
         loggedUser.setPassword(newPassword);
-        int error = db.modifyUser(loggedUser,loggedUser.getUsername());
+        int error = db.modifyUser(loggedUser,null);
         if (error != 0) {
             loggedUser.setPassword(oldPassword);
             return -2;
