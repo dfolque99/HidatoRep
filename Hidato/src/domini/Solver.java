@@ -39,17 +39,6 @@ public class Solver {
     private NavigableMap<Integer, Position> myMap;
 
     /**
-     *
-     *
-     * @param value >0 , <=finish,
-     * @return null if finish, otherwise the least higer value of the given
-     * cells of the hidato contained in the class
-     */
-    private Integer getNext(Integer value) {
-        return myMap.higherKey(value);
-    }
-
-    /**
      * constructor
      */
     public Solver() {
@@ -92,7 +81,9 @@ public class Solver {
      * @return true if hidato can be solved,
      */
     private boolean solve() {
-        return solve(myMap.get(1).getX(), myMap.get(1).getY(), 1);
+        final Map.Entry<Integer,Position> startingCell = myMap.firstEntry();
+        final Position startingPosition = startingCell.getValue();
+        return solve(startingPosition.getX(), startingPosition.getY(), startingCell.getKey());
     }
 
     /**
@@ -131,17 +122,19 @@ public class Solver {
         if ((Math.min(x, y) < 0) || (Math.max(x - board.getSizeX(), y - board.getSizeY()) >= 0)) {
             return false;
         }
-        if (myMap.containsKey(n)) {
-            return myMap.get(n).equals(new Position(x, y));
+        final Position positionOfValueN = myMap.get(n);
+        if (positionOfValueN != null){
+            return positionOfValueN.equals(new Position(x, y));
         }
-        if (Position.notEnoughDistance(getNext(n), myMap.get(getNext(n)), n, new Position(x, y))) {
+        final Map.Entry<Integer,Position> nextGivenCell = myMap.higherEntry(n);
+        if (Position.notEnoughDistance(nextGivenCell.getKey(), nextGivenCell.getValue(), n, new Position(x, y))) {
             return false;
         }
         boolean isValid = true;
         if ((board.getCell(x, y).getType() == Type.VOID)
                 || used[x][y]
                 || (board.getCell(x, y).getType() == Type.GIVEN && board.getCell(x, y).getVal() != n)
-                || (myMap.containsKey(n) && board.getCell(x, y).getVal() != n)) {
+                || (positionOfValueN != null && board.getCell(x, y).getVal() != n)) {
             isValid = false;
         }
         if (DEBUG) {
