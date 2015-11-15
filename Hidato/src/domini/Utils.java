@@ -46,7 +46,7 @@ public final class Utils {
             for (int j = 0; j < hidato.getSizeY(); j += 1) {
                 ret.append(String.format("%2d ", Utils.toInt(hidato.getCell(i, j))));
             }
-            ret.append("\n");
+            ret.append('\n');
         }
         return ret.toString();
     }
