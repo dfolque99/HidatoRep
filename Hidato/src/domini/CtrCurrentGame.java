@@ -23,6 +23,7 @@ public class CtrCurrentGame {
     private final Solver solver;
     private final CtrHidato ctrHidato;
     private final CtrRanking ctrRanking;
+    private final HidatoUserController hidatoUserController;
     private long time0;
     
     /**
@@ -33,13 +34,15 @@ public class CtrCurrentGame {
      * @param ctrDBGame controlador de la DB per comunicar-se amb la capa de persistencia
      * @param solver solver per poder resoldre els hidatos
      * @param ctrRanking controlador del ranking per enviar-li les dades de la partida acabada
+     * @param userController controlador de l'usuari que juga la partida
      */    
-    public CtrCurrentGame(Game game, CtrDBGame ctrDBGame, Solver solver, CtrRanking ctrRanking){
+    public CtrCurrentGame(Game game, CtrDBGame ctrDBGame, Solver solver, CtrRanking ctrRanking, HidatoUserController hidatoUserController){
         this.game = game;
         this.ctrDBGame = ctrDBGame;
         this.ctrHidato = new CtrHidato(game.getHidato());
         this.solver = solver;
         this.ctrRanking = ctrRanking;
+        this.hidatoUserController = hidatoUserController;
     }
 
     /**
@@ -134,6 +137,11 @@ public class CtrCurrentGame {
         return 0;
     }
     
+    public int restartGame(){
+        game.restartGame();
+        return 0;
+    }
+    
     /**
      * Guarda la partida al repositori
      * @return 0
@@ -160,7 +168,7 @@ public class CtrCurrentGame {
         int score = calculateScore();
         user.incrementTotalScore(score);
         
-        
+        hidatoUserController.updateUser();
         
         ctrRanking.addScoreToRanking(score, username, game.getDifficulty());
         return 0;
