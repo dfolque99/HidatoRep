@@ -16,6 +16,11 @@ public class UserControllerDriver {
     /**
      * @param args the command line arguments
      */
+    /**
+     * Driver de la classe UserController
+     * Permet fer proves amb la classe UserController, per realitzar les
+     * operacions 3, 4, 5, 6 i 8 cal haver realitzat login amb exit previament.
+    */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         User userActual = null;
