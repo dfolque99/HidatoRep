@@ -1,4 +1,5 @@
 package domini;
+import java.util.*;
 /**
  * @author felix.axel.gimeno
  * @since 2015-11-13
@@ -17,6 +18,9 @@ final public class SolverDriver {
                 System.out.println("3 → tries to solve hidato (hidato must have least and biggest values)");
                 System.out.println("4 → print hidato");
                 System.out.println("5 → exit");
+                System.out.println("6 → is hidato solvable?");
+                System.out.println("7 → get random hint");
+                System.out.println("8 → to clean hidato");
                 
                 while (true){
                     final int foo = user_input.nextInt();
@@ -38,6 +42,15 @@ final public class SolverDriver {
                         System.out.println(Utils.toString(hidato));
                     }
                     if (5 == foo) {break;}
+                    if (6 == foo){
+                        final boolean b = solver.solve(hidato);
+                        System.out.println(b ? "Has solution" : "No solution");
+                    }
+                    if (7 == foo){
+                        final ArrayList<Integer> A = solver.getHint(hidato);
+                        hidato.setCell(A.get(0),A.get(1),new Cell(A.get(2),Type.GIVEN));
+                    
+                    }
                 }
             }
 	}
