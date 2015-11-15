@@ -10,14 +10,15 @@ package domini;
  * @author Guillem
  */
 
-//DE MOMENTO ES SOLO UN STUB
+//DE MOMENTO ES SOLO PARA QUE NO DE ERRORES DE COMPILACION EL PROYECTO
 public class CtrDBRanking {
     
     public Ranking getRanking(Difficulty difficulty) {
-        return new Ranking(difficulty);
+        return null;
     }
     
-    public void save() {
+    public void modifyRanking(Difficulty difficulty,Ranking ranking) {
+        
     }
     
 }
