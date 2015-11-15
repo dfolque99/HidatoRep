@@ -1,6 +1,7 @@
 package domini;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author felix.axel.gimeno
@@ -15,6 +16,15 @@ public class Solver {
      * debug parameter, set to false
      */
     private final static boolean DEBUG = false;
+    
+    /**
+     * Moore Neighbourhood
+     */
+    private final static Position[] Moore ={ 
+        new Position(+1,+1), new Position(+1,0), new Position(0,+1),
+        new Position(-1,-1), new Position(-1,0), new Position(0,-1),
+        new Position(-1,+1), new Position(+1,-1)
+    };
     /**
      * the instance of hidato that will be modified and solved
      */
@@ -110,7 +120,7 @@ public class Solver {
     /**
      * Solves a Hidato and returns a random cell not in input/non void
      *
-     * @param hidato	Hidato to solve, it is not modified
+     * @param hidato	Hidato to solve, it is not modified, has BLANK cells with value 0
      * @return	3 numbers, x-position, y-position, value of a cell in a solution
      * to hidato H, if not possible returns null
      */
@@ -128,6 +138,13 @@ public class Solver {
                 return new ArrayList<>(Arrays.asList(x, y, board.getCell(x, y).getVal()));
             }
         }
+        for (int i = 0; i < board.getSizeX(); i+=1){
+            for (int j = 0; j < board.getSizeY(); j += 1){
+                if (board.getCell(i, j).getType() == Type.BLANK) {
+                    return new ArrayList<>(Arrays.asList(i, j, board.getCell(i, j).getVal()));
+                }               
+            }
+        }
         return null;
     }
 
@@ -139,7 +156,8 @@ public class Solver {
      * @param n number to try for cell input
      * @return true if cell can be assigned number n, false otherwise
      */
-    private boolean validPosition(int x, int y, int n) {
+    private boolean validPosition(final int x, final int y, final int n) {
+        if (n > finish) return false;
         if ((Math.min(x, y) < 0) || (Math.max(x - board.getSizeX(), y - board.getSizeY()) >= 0)) {
             return false;
         }
@@ -171,17 +189,11 @@ public class Solver {
      * @param n	number to try in neighbour cells
      * @return	list of available neighbours of cell base
      */
-    private ArrayList<int[]> getNeighboursUnsorted(int x, int y, int n) {
-        ArrayList<int[]> result = new ArrayList<>();
-        for (int i = -1; i < 2; i += 1) {
-            for (int j = -1; j < 2; j += 1) {
-                if (Math.max(Math.abs(i), Math.abs(j)) == 1
-                        && validPosition(x + i, y + j, n + 1)) {
-                    result.add(new int[]{i, j, n + 1});
-                }
-            }
-        }
-        return result;
+    private ArrayList<int[]> getNeighboursUnsorted(final int x, final int y, final int n) {
+        return Arrays.stream(Moore)
+                .filter(p -> validPosition(x + p.getX(), y + p.getY(), n + 1))
+                .map(p -> new int[]{p.getX(), p.getY(), n + 1})
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
@@ -191,10 +203,12 @@ public class Solver {
      * @return	list of available neighbours of cell base sorted using
      * Warnsdoff's rule
      */
-    private ArrayList<int[]> getNeighboursSorted(int x, int y, int n) {
+    private ArrayList<int[]> getNeighboursSorted(final int x, final int y, final int n) {
         ArrayList<int[]> result = getNeighboursUnsorted(x, y, n);
-        Collections.sort(result, (final int[] a, final int[] b) -> -getNeighboursUnsorted(b[0], b[1], b[2]).size()
-                + getNeighboursUnsorted(a[0], a[1], a[2]).size());
+        Map<int[], Integer> Values = new HashMap<>();
+        result.stream().forEach(s-> {Values.put(s,getNeighboursUnsorted(s[0], s[1], s[2]).size());});
+        Collections.sort(result, (final int[] a, final int[] b) -> -Values.get(b)
+               + Values.get(a));
         return result;
     }
 
@@ -208,7 +222,7 @@ public class Solver {
      * @return true if current Hidato board can be solved with cell in (x,y)
      * with number n, otherwise false
      */
-    private boolean solve(int x, int y, int n) {
+    private boolean solve(final int x, final int y, final int n) {
         if (n == finish && board.getCell(x, y).getVal() == n) {
             return true;
         }
@@ -229,15 +243,5 @@ public class Solver {
             System.out.format("n %d, x %d y %d \n", n, x, y);
         }
         return false;
-    }
-
-    /**
-     * only for backwards compliance
-     *
-     * @param hidato hidato to try to solve
-     * @return true if solvable, otherwise false
-     */
-    public boolean uploadAndSolve(Hidato hidato) {
-        return this.solve(hidato);
     }
 }
