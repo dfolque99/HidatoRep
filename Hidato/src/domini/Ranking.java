@@ -8,8 +8,11 @@ package domini;
 import java.util.ArrayList;
 
 /**
- *
  * @author Guillem
+ * Representa un ranking. Contiene una serie de entradas de ranking ordenadas por
+ * puntuacion decreciente. En el ranking solo puede haber N (20 en este caso)
+ * entradas, en caso de intentar añadir una más se eliminara la que tenga menos
+ * puntuación.
  */
 public class Ranking {
 
@@ -23,18 +26,31 @@ public class Ranking {
         ranking.ensureCapacity(N+1);
     }
 
+    /**
+     * @return Numero actual de entradas en el ranking
+     */
     public int getSize() {
         return ranking.size();
     }
 
+    /**
+     * @return Numero maximo de entradas en el ranking
+     */
     public static int getMaxSize() {
         return N;
     }
 
+    /**
+     * @return Dificultad con la que se han conseguido las puntuaciones del ranking
+     */
     public Difficulty getDifficulty() {
         return difficulty;
     }
 
+    /**
+     * @return La entrada que se encuentra en la posicion i del ranking o null
+     * si esta no existe
+     */
     public RankingEntry get(int i) {
         if (0 <= i && i < ranking.size()) {
             return ranking.get(i);
@@ -42,6 +58,13 @@ public class Ranking {
         return null;
     }
 
+    /**
+     * @param newEntry entrada a añadair al ranking
+     * Se añade la entrada en su posicion correspondiente, es decir, manteniendo
+     * el orden decreciente por puntuacion. En caso de exceder el numero de 
+     * entradas maximas permitidas (N) se elimina la ultiam entrada (sale del
+     * ranking)
+     */
     public void addRankingEntry(RankingEntry newEntry) {
         int newScore = newEntry.getScore();
         int l = 0;

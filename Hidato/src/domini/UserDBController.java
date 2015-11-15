@@ -119,18 +119,20 @@ public class UserDBController {
         
         FileInputStream fis;
         User user = null;
+        if (exists(username)) {
         
-        try {
-            fis = new FileInputStream(getPath(username));
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            user = (User) ois.readObject();
-            fis.close();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UserDBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(UserDBController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(UserDBController.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                fis = new FileInputStream(getPath(username));
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                user = (User) ois.readObject();
+                fis.close();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(UserDBController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(UserDBController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(UserDBController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return user;
     }
