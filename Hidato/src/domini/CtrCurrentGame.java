@@ -34,7 +34,7 @@ public class CtrCurrentGame {
      * @param ctrDBGame controlador de la DB per comunicar-se amb la capa de persistencia
      * @param solver solver per poder resoldre els hidatos
      * @param ctrRanking controlador del ranking per enviar-li les dades de la partida acabada
-     * @param userController controlador de l'usuari que juga la partida
+     * @param hidatoUserController controlador de l'usuari que juga la partida
      */    
     public CtrCurrentGame(Game game, CtrDBGame ctrDBGame, Solver solver, CtrRanking ctrRanking, HidatoUserController hidatoUserController){
         this.game = game;
@@ -163,10 +163,12 @@ public class CtrCurrentGame {
         HidatoUser user = game.getUser();
         user.incrementSolvedGames();
         user.incrementTotalTimePlayed(game.getDuration());
+        user.updateBestTime(game.getDuration());
         String username = user.getUsername();
         
         int score = calculateScore();
         user.incrementTotalScore(score);
+        user.updateBestScore(score);
         
         hidatoUserController.updateUser();
         
