@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
  * The class <code>PositionTest</code> contains tests for the class <code>{@link Position}</code>.
  *
  * @generatedBy CodePro at 15/11/15 12:37
- * @author keur
+ * @author felix.axel.gimeno
  * @version $Revision: 1.0 $
  */
 public class PositionTest {
