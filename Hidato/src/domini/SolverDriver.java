@@ -1,27 +1,22 @@
 package domini;
-import java.util.*;
-/**
- * @author felix.axel.gimeno
- * @since 2015-11-13
- * @see Solver Solver
- */
+import java.util.ArrayList;
 import java.util.Scanner;
 final public class SolverDriver {
-	private SolverDriver(){throw new UnsupportedOperationException();}
-	public static void main(final String... args) {
-		final Solver solver = new Solver();
-		Hidato hidato = new Hidato(1,1);
-                try (Scanner user_input = new Scanner( System.in )) {
+        @SuppressWarnings("UseOfSystemOutOrSystemErr")
+	public static void main(final String... args){
+            final Solver solver = new Solver();
+            Hidato hidato = new Hidato(1,1);
+            try (Scanner user_input = new Scanner( System.in )) {
                 System.out.println("Usage:");
-                System.out.println("1 X Y → creates a new hidato of size (X,Y)");
-                System.out.println("2 X Y V → modifies (X,Y) position of the hidato to value V (-1 is void, 0 blank, any other is given)");
-                System.out.println("3 → tries to solve hidato (hidato must have least and biggest values)");
-                System.out.println("4 → print hidato");
-                System.out.println("5 → exit");
-                System.out.println("6 → is hidato solvable?");
-                System.out.println("7 → get random hint");
-                System.out.println("8 → clean hidato");
-                System.out.println("9 → go to HidatoGeneratorDriver");
+                System.out.println("1 X Y : creates a new hidato of size (X,Y)");
+                System.out.println("2 X Y V : modifies (X,Y) position of the hidato to value V (-1 is void, 0 blank, any other is given)");
+                System.out.println("3 : tries to solve hidato (hidato must have least and biggest values)");
+                System.out.println("4 : print hidato");
+                System.out.println("5 : exit");
+                System.out.println("6 : is hidato solvable?");
+                System.out.println("7 : get random hint");
+                System.out.println("8 : clean hidato");
+                //System.out.println("9 : go to HidatoGeneratorDriver");
                 
                 while (true){
                     final int foo = user_input.nextInt();
@@ -55,12 +50,13 @@ final public class SolverDriver {
                     if (8 == foo){ 
                         Utils.clean(hidato);
                     }
-                    if (9 == foo){
+                    /*if (9 == foo){
                         HidatoGeneratorDriver.main(new String[0]);
                         return;
-                    } 
+                    }*/ 
                 }
             }
-	}
+        }
+	private SolverDriver() {throw new UnsupportedOperationException();}
 
 }
