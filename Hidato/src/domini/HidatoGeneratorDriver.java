@@ -21,6 +21,11 @@ public class HidatoGeneratorDriver {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         
+        HidatoGenerator pau = new HidatoGenerator(5,5);
+        Hidato hPau = pau.generateHidato(Difficulty.EASY);
+        
+        
+        
         while (true) {
             System.out.printf("Linies: ");
             int sizeX = s.nextInt();
@@ -28,8 +33,7 @@ public class HidatoGeneratorDriver {
             int sizeY = s.nextInt();
             System.out.printf("Dificultat: ");
             int d = s.nextInt();
-            System.out.printf("Hidato (0 per casella buida, -1 per casella no "
-                    + "valida:\n");
+            System.out.printf("Hidato (cada casella s'ha de dir si és blank(b) given(g) o void(v) i despres el numero (0 si esta per determinar)");
             Hidato h = new Hidato(sizeX,sizeY);
             for (int i = 0; i < sizeX; ++i) {
                 for (int j = 0; j < sizeY; ++j) {
@@ -72,3 +76,4 @@ public class HidatoGeneratorDriver {
         }
     }
 }
+
