@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author felix.axel.gimeno
- * @version 0.2
+ * @version 0.3
  * @since 2015-11-07
  * @see Hidato <a href="https://en.wikipedia.org/wiki/Hidato">Hidato</a>
  * @see Warnsdorf's_rule <a href="https://en.wikipedia.org/wiki/Knight%27s_tour#Warnsdorf.27s_rule">Warnsdorf's rule</a>
@@ -30,13 +30,6 @@ public class Solver {
      */
     private Hidato board;
 
-    /**
-     *
-     * @return this.board
-     */
-    public Hidato getHidato() {
-        return this.board;
-    }
 
     /**
      * Current used cells of Hidato board
@@ -53,15 +46,27 @@ public class Solver {
      */
     private Integer[] next;
     /**
-     * values starting cell, finishing cell 
+     * value of starting cell
      */
-    private Integer start, finish; 
+    private Integer start;
+    /**
+     * value of finishing cell
+     */
+    private Integer finish; 
     
     /**
-     * constructor
+     * constructor, does nothing
      */
     public Solver() {
 
+    }
+
+    /**
+     *
+     * @return this.board
+     */
+    public Hidato getHidato() {
+        return this.board;
     }
 
     /**
@@ -86,7 +91,7 @@ public class Solver {
         givenCells = new Position[finish+1];
         next = new Integer[finish+1];
         
-       for(Integer i = start; i <= finish; i += 0x1){
+        for(Integer i = start; i <= finish; i += 0x1){
             givenCells[i]=myMap.get(i);
             next[i]=myMap.higherKey(i);
 
@@ -111,9 +116,6 @@ public class Solver {
      * @return true if hidato can be solved,
      */
     private boolean solve() {
-        //final Map.Entry<Integer,Position> startingCell = myMap.firstEntry();
-        //final Position startingPosition = startingCell.getValue();
-        //return solve(startingPosition.getX(), startingPosition.getY(), startingCell.getKey());
         return solve(givenCells[start].getX(), givenCells[start].getY(), start);
     }
 
@@ -157,15 +159,14 @@ public class Solver {
      * @return true if cell can be assigned number n, false otherwise
      */
     private boolean validPosition(final int x, final int y, final int n) {
-        if (n > finish) return false;
+        if (n > finish) {return false;}
         if ((Math.min(x, y) < 0) || (Math.max(x - board.getSizeX(), y - board.getSizeY()) >= 0)) {
             return false;
         }
-        final Position positionOfValueN = givenCells[n];//myMap.get(n);
+        final Position positionOfValueN = givenCells[n];
         if (positionOfValueN != null){
             return positionOfValueN.equals(new Position(x, y));
         }
-        //final Map.Entry<Integer,Position> nextGivenCell =  myMap.higherEntry(n);
         if (Position.notEnoughDistance(next[n], givenCells[next[n]], n, new Position(x, y))) {
             return false;
         }
@@ -173,11 +174,8 @@ public class Solver {
         if ((board.getCell(x, y).getType() == Type.VOID)
                 || used[x][y]
                 || (board.getCell(x, y).getType() == Type.GIVEN && board.getCell(x, y).getVal() != n)
-                || (positionOfValueN != null && board.getCell(x, y).getVal() != n)) {
+                ) {
             isValid = false;
-        }
-        if (DEBUG) {
-            System.out.format("isValid %b x %d y %d n %d \n", isValid, x, y, n);
         }
         return isValid;
     }
@@ -208,7 +206,7 @@ public class Solver {
         Map<int[], Integer> Values = new HashMap<>();
         result.stream().forEach(s-> {Values.put(s,getNeighboursUnsorted(s[0], s[1], s[2]).size());});
         Collections.sort(result, (final int[] a, final int[] b) -> -Values.get(b)
-               + Values.get(a));
+                + Values.get(a));
         return result;
     }
 
@@ -223,25 +221,16 @@ public class Solver {
      * with number n, otherwise false
      */
     private boolean solve(final int x, final int y, final int n) {
-        if (n == finish && board.getCell(x, y).getVal() == n) {
-            return true;
+        if (n == finish) { //exit case
+            return board.getCell(x, y).getVal() == n;
         }
-        if (!validPosition(x, y, n)) {
-            return false;
-        }
-        if (board.getCell(x, y).getVal() != n) {
-            board.getCell(x, y).setVal(n);
-        }
-
+        //recursion case
+        board.getCell(x, y).setVal(n);    
         used[x][y] = true;
         if (getNeighboursSorted(x, y, n).stream().anyMatch((s) -> (solve(x + s[0], y + s[1], n + 1)))) {
             return true;
         }
         used[x][y] = false;
-
-        if (DEBUG) {
-            System.out.format("n %d, x %d y %d \n", n, x, y);
-        }
         return false;
     }
 }
