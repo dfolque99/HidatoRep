@@ -128,7 +128,7 @@ public class Game {
     
     /**
      * Incrementa la durada de la partida
-     * @param time durada afegida
+     * @param time durada afegida, en milliseconds
      * @return 0
      */
     public int incrementDuration(long time){
