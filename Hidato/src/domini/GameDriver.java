@@ -5,7 +5,7 @@
  */
 package domini;
 
-
+//QUAN S'EXECUTA SEMPRE FALLA PQ NO HI HA CAP HIDATO AL SET
 
 import java.util.Scanner;
 
@@ -58,7 +58,8 @@ public class GameDriver {
                                     System.out.println("Error. Possibles causes:");
                                     System.out.println("- Ja existia una partida amb el nom introduit");
                                     System.out.println("- No existeix cap tauler amb el nom introduit");
-                                    System.out.println("- El nivell d'ajuda no es LOW/MEDIUM/HARD");
+                                    System.out.println("- El nivell d'ajuda no es LOW/MEDIUM/HIGH");
+                                    op2 = -1;
                                 }else System.out.println("S'ha creat correctament la partida");
                                 break;
 
@@ -148,10 +149,10 @@ public class GameDriver {
             System.out.println("-1. Finalitzar execucio");
             op = sc.nextInt();            
             }
-        }
         System.out.println("----GameDriver----");
         System.out.println("Introdueix el nom d'usuari i la contrasenya, o '.' per sortir:");
         username = sc.next();
         password = sc.next();
+        }        
     }
 }

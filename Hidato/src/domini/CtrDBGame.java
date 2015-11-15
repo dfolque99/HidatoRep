@@ -6,7 +6,8 @@
 package domini;
 
 /**
- *
+ * Stub del controlador DB de la partida: hauria de proporcionar la informacio de les partides
+ * a la capa de domini
  * @author Pau
  */
 public class CtrDBGame {

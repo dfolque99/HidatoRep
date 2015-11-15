@@ -25,6 +25,11 @@ public class CtrGameManager {
     
     /**
      * Creadora del controlador
+     * @param hidatoSet conjunt amb tots els hidatos (taulers)
+     * @param loggedUser usuari loguejat
+     * @param ctrDBGame controlador de la DB, per comunicar-se amb la capa de persistencia
+     * @param solver solver per poder resoldre hidatos
+     * @param ctrRanking controlador del ranking per poder enviar-li entrades
      */
     public CtrGameManager(HidatoSet hidatoSet, HidatoUser loggedUser, CtrDBGame ctrDBGame, Solver solver, CtrRanking ctrRanking){
         this.hidatoSet = hidatoSet;
@@ -48,14 +53,15 @@ public class CtrGameManager {
         if (game_aux != null) error = true;
         Hidato hidato = hidatoSet.getHidatoByName(hidatoName);
         if (hidato == null) error = true;
-        Game game = new Game(name, hidato, loggedUser, help, hidato.getDifficult());
-        if (game == null) error = true;
-        CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver,ctrRanking);
         if (error) return null;
+        Game game = new Game(name, hidato, loggedUser, help, hidato.getDifficult());
+        CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver,ctrRanking);
+        
         return ctrCurrentGame;
     }
     /**
      * Recupera una partida que s'havia guardat amb nom 'name'
+     * @param name
      * @return el controlador de la partida recuperada
      */
     public CtrCurrentGame restoreGame(String name){
@@ -68,6 +74,7 @@ public class CtrGameManager {
     
     /**
      * Elimina la partida del repositori amb nom 'name' i usuari 'loggedUser'
+     * @param name nom del hidato a eliminar
      * @return 0
      */
     

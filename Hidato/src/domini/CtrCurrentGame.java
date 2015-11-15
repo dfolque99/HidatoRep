@@ -29,6 +29,10 @@ public class CtrCurrentGame {
      * Creadora
      * Crea un controlador a partir d'un game, un CtrDBGame (que permet la comunicacio
      * amb la capa de persistencia) i un solver
+     * @param game partida assignada a aquest controlador
+     * @param ctrDBGame controlador de la DB per comunicar-se amb la capa de persistencia
+     * @param solver solver per poder resoldre els hidatos
+     * @param ctrRanking controlador del ranking per enviar-li les dades de la partida acabada
      */    
     public CtrCurrentGame(Game game, CtrDBGame ctrDBGame, Solver solver, CtrRanking ctrRanking){
         this.game = game;
@@ -77,6 +81,9 @@ public class CtrCurrentGame {
     
     /**
      * Intenta colocar el valor 'value' a la posicio (x,y) del hidato
+     * @param value el valor de la cell
+     * @param x posicio x de la cell en el hidato
+     * @param y posicio y de la cell en el hidato
      * @return 0 si s'ha colocat el valor correctament, -1 si el nivell d'ajuda 
      * era alt i el hidato no te solucio, -2 si el nivell d'ajuda es mitja i 
      * hi ha dos nombres consecutius separats en el hidato, -3 si el valor esta
