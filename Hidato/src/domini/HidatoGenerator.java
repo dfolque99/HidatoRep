@@ -35,6 +35,11 @@ public class HidatoGenerator {
         n = sizeX;
         m = sizeY;
         R = new int[sizeX][sizeY]; // canviar
+        for (int i = 0; i < h.getSizeX(); i++) {
+            for (int j = 0; j < h.getSizeY(); ++j) {
+                R[i][j] = h.getCell(i, j).getVal();
+            }
+        }
         totalCaselles = sizeX*sizeY;
     }
     
@@ -58,6 +63,7 @@ public class HidatoGenerator {
     */
     
     public Hidato generateHidato(Difficulty difficulty) {
+        dibuixa();
         if (hidatoValid() == false) {
             error = "Hidato inicial no valid: " + error;
             return null;
@@ -67,7 +73,7 @@ public class HidatoGenerator {
             return null;
         }
         posarPistes(difficulty);
-        
+        dibuixa();
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
                 h.getCell(i, j).setVal(R[i][j]);
