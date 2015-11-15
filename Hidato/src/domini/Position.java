@@ -61,7 +61,7 @@ public final class Position {
 
     @Override
     public boolean equals(Object obj) {
-    	if (obj == this) return true;
+    	if (obj == this) {return true;}
         if (obj == null) {
             return false;
         }
@@ -103,7 +103,7 @@ public final class Position {
      * @return
      */
     public static Integer norm(Position p){
-    	return Math.min(p.getX(), p.getY());
+    	return Math.min(Math.abs(p.getX()), Math.abs(p.getY()));
     }
     
     /**
