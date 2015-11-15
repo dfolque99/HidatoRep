@@ -27,13 +27,14 @@ public class GameDriver {
             System.out.println("-1. Sortir sessio i finalitzar");
             HidatoSet hidatoSet = new HidatoSet();
             HidatoUser user = new HidatoUser(username, password);
+            HidatoUserController hidatoUserController = new HidatoUserController();
             CtrDBGame ctrDBGame = new CtrDBGame();
             Solver solver = new Solver();
             CtrRanking ctrRanking = new CtrRanking();
             HidatoGenerator hidatoGenerator = new HidatoGenerator(6,5); //tamany del hidato
-            CtrGameManager ctrGameManager = new CtrGameManager(hidatoSet, user, ctrDBGame, solver, ctrRanking);
+            CtrGameManager ctrGameManager = new CtrGameManager(hidatoSet, ctrDBGame, solver, ctrRanking, hidatoUserController);
             CtrCurrentGame ctrCurrentGame = null;
-
+            hidatoUserController.login(username, password);
 
             int op = sc.nextInt();
             while (op != -1){
@@ -84,6 +85,7 @@ public class GameDriver {
                             System.out.println("3 -> fer un check (comprovar si el hidato te solucio)");
                             System.out.println("4 -> pausar la partida");
                             System.out.println("5 -> guardar la partida");
+                            System.out.println("6 -> reiniciar la partida");
                             int op3 = sc.nextInt();
                             while (op3 != 5){
                                 switch(op3){
@@ -119,6 +121,9 @@ public class GameDriver {
                                         System.out.println("Continua el joc");
                                         ctrCurrentGame.unpause();
                                         break;
+                                    case 6:
+                                        ctrCurrentGame.restartGame();
+                                        break;                                    
                                     default:
                                 }
                                 System.out.println(Utils.toString(hidato));

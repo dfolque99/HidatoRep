@@ -20,12 +20,13 @@ public class Game {
      */
     private String name;
     private final Help help;
-    private final Duration duration;
+    private Duration duration;
     private int checksMade;
     private int changesMade;
     private int hints;
     private final Date date;
-    private final Hidato hidato;
+    private Hidato hidato;
+    private final Hidato origHidato;
     private final HidatoUser user;
     private final Difficulty difficulty;
     
@@ -37,6 +38,7 @@ public class Game {
         this.name = name;
         this.date = new Date();
         this.hidato = new Hidato(hidato);
+        this.origHidato = new Hidato(hidato);
         this.user = user;
         this.help = help;
         this.changesMade = 0;
@@ -60,6 +62,10 @@ public class Game {
     
     public Hidato getHidato(){
         return this.hidato;
+    }
+    
+    public Hidato getOrigHidato(){
+        return new Hidato(origHidato);
     }
     
     public HidatoUser getUser(){
@@ -96,6 +102,19 @@ public class Game {
      */
     public int setName(String name){
         this.name = name;
+        return 0;
+    }
+    
+    /**
+     * Reinicia la partida, i posa tots els paràmetres com al principi
+     * @return 
+     */
+    public int restartGame(){
+        this.hidato = this.origHidato;
+        this.changesMade = 0;
+        this.checksMade = 0;
+        this.duration = Duration.ZERO;
+        this.hints = 0;
         return 0;
     }
     

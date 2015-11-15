@@ -22,18 +22,19 @@ public class CtrGameManager {
     private final CtrDBGame ctrDBGame;
     private final Solver solver;
     private final CtrRanking ctrRanking;
+    private final HidatoUserController hidatoUserController;
     
     /**
      * Creadora del controlador
      * @param hidatoSet conjunt amb tots els hidatos (taulers)
-     * @param loggedUser usuari loguejat
      * @param ctrDBGame controlador de la DB, per comunicar-se amb la capa de persistencia
      * @param solver solver per poder resoldre hidatos
      * @param ctrRanking controlador del ranking per poder enviar-li entrades
      */
-    public CtrGameManager(HidatoSet hidatoSet, HidatoUser loggedUser, CtrDBGame ctrDBGame, Solver solver, CtrRanking ctrRanking){
+    public CtrGameManager(HidatoSet hidatoSet, CtrDBGame ctrDBGame, Solver solver, CtrRanking ctrRanking, HidatoUserController hidatoUserController){
         this.hidatoSet = hidatoSet;
-        this.loggedUser = loggedUser;
+        this.hidatoUserController = hidatoUserController;        
+        this.loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
         this.ctrDBGame = ctrDBGame;
         this.solver = solver;
         this.ctrRanking = ctrRanking;
@@ -60,7 +61,7 @@ public class CtrGameManager {
         }
         if (error) return null;
         Game game = new Game(name, hidato, loggedUser, help, hidato.getDifficult());
-        CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver, ctrRanking);
+        CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver, ctrRanking, hidatoUserController);
         
         return ctrCurrentGame;
     }
@@ -73,7 +74,7 @@ public class CtrGameManager {
         Game game = ctrDBGame.getGame(name, loggedUser);
         ctrDBGame.deleteGame(name, loggedUser);
         if (game == null) return null;
-        CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver, ctrRanking);
+        CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver, ctrRanking, hidatoUserController);
         return ctrCurrentGame;
     }
     
