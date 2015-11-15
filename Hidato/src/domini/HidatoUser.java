@@ -22,7 +22,6 @@ public class HidatoUser extends User {
         totalScore = 0;
         bestScore = 0;
         bestTime = null;
-        
     }
     
     public void incrementTotalScore(int score) {
@@ -33,7 +32,7 @@ public class HidatoUser extends User {
         return totalScore;
     }
     
-    public void updateBestscore(int newScore) {
+    public void updateBestScore(int newScore) {
         if (newScore > bestScore) bestScore = newScore;
     }
     
