@@ -21,7 +21,7 @@ public class CtrCurrentGame {
     private final Game game;
     private final CtrDBGame ctrDBGame;
     private final Solver solver;
-    private final CtrHidato ctrHidato;
+    private CtrHidato ctrHidato;
     private final CtrRanking ctrRanking;
     private final HidatoUserController hidatoUserController;
     private long time0;
@@ -96,24 +96,31 @@ public class CtrCurrentGame {
     
     public int putValue(int value, int x, int y){
         Hidato hidato = ctrHidato.getHidato();
-        if (value < 1 || value > ctrHidato.countValidCells()) return -3;
-        if (ctrHidato.getCellPositionFromValue(value,0) != -1) return -4;
-        if (x < 1 || x > hidato.getSizeX()) return -5;
-        if (y < 1 || y > hidato.getSizeY()) return -5;
-        if (hidato.getCell(x, y).getType() == Type.VOID) return -5;
+        if (value < 0 || value > ctrHidato.countValidCells()) return -3;
+        if (ctrHidato.getCellPositionFromValue(value,0) != -1 && value != 0) return -4;
+        if (x < 0 || x >= hidato.getSizeX()) return -5;
+        if (y < 0 || y >= hidato.getSizeY()) return -5;
+        if (hidato.getCell(x, y).getType() != Type.BLANK) return -5;
         
         game.incrementChangesMade();
-        hidato.getCell(x,y).setVal(value); //CUIDAO
+        hidato.getCell(x,y).setVal(value);
         Help helpAux = game.getHelp(); 
         //controlar que la cell sigui valida
         if (helpAux == Help.HIGH){
             if (!solver.solve(hidato)){
+                hidato.getCell(x,y).setVal(0);
                 return -1; // -1 = EL HIDATO NO TE SOLUCIO
             }else return 0;
         }else if (helpAux == Help.MEDIUM){
+
             if (ctrHidato.AreCellsContiguous(value, value+1) && ctrHidato.AreCellsContiguous(value, value-1)){
+                    game.incrementChangesMade();
+                    hidato.getCell(x,y).setVal(value);
                 return 0;
-            }else return -2; // -2 = HI HA DOS NOMBRES CONSECUTIUS SEPARATS
+            }else {
+                hidato.getCell(x,y).setVal(0);
+                return -2;
+            } // -2 = HI HA DOS NOMBRES CONSECUTIUS SEPARATS
         }else return 0;
     }
     
@@ -127,7 +134,7 @@ public class CtrCurrentGame {
         game.incrementDuration((time1 - time0));
         return 0;
     }
-    
+       
     /**
      * Torna a la partida despres d'una pausa (el temps de partida torna a comptar)
      * @return 0
@@ -139,6 +146,13 @@ public class CtrCurrentGame {
     
     public int restartGame(){
         game.restartGame();
+        this.ctrHidato = new CtrHidato(game.getHidato());
+        return 0;
+    }
+    
+    public int solve(){
+        game.solve();
+        this.ctrHidato = new CtrHidato(game.getHidato());
         return 0;
     }
     
