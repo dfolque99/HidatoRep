@@ -23,7 +23,18 @@ public final class Utils {
         }
         return myCell.getVal();
     }
-
+    /**
+     *
+     * @param myCell Cell to get value from
+     * @return value of the cell, except if its type is VOID, then -1
+     */
+    public static int toIntZero(final Cell myCell) {
+        if (Type.VOID == myCell.getType()) {
+            return -1;
+        }
+        if (Type.BLANK == myCell.getType()){return 0;}
+        return myCell.getVal();
+    }
     /**
      * converts cell to string for printing purposes 
      * 
@@ -97,5 +108,21 @@ public final class Utils {
             }
         }
     }
-
+    
+    /**
+     *  Hidato to String, for printing purposes
+     * 
+     * @param hidato unmodified
+     * @return String of concatenation of every cell
+     */
+    public static String toStringWithZeros(final Hidato hidato) {
+        StringBuilder ret = new StringBuilder();
+        for (int i = 0; i < hidato.getSizeX(); i += 1) {
+            for (int j = 0; j < hidato.getSizeY(); j += 1) {
+                ret.append(String.format("%2d ", Utils.toIntZero(hidato.getCell(i, j))));
+            }
+            ret.append('\n');
+        }
+        return ret.toString();
+    }
 }
