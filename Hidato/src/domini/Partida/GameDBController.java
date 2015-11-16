@@ -8,7 +8,7 @@ import domini.Usuari.HidatoUser;
  * que les classes de la capa de domini tinguin errors de compilacio
  * @author Pau
  */
-public class CtrDBGame {
+public class GameDBController {
 
     public void saveGame(Game game) {}
 

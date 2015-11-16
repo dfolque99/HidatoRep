@@ -39,11 +39,11 @@ public class DriverGame {
             HidatoSet hidatoSet = new HidatoSet();
             HidatoUser user = new HidatoUser(username, password);
             HidatoUserController hidatoUserController = new HidatoUserController();
-            CtrDBGame ctrDBGame = new CtrDBGame();
+            GameDBController ctrDBGame = new GameDBController();
             SolverController solver = new SolverController();
             RankingController ctrRanking = new RankingController();
            // GeneratorController hidatoGenerator = new GeneratorController(4,5); //tamany del hidato
-            CtrGameManager ctrGameManager = new CtrGameManager(hidatoSet, ctrDBGame, solver, ctrRanking, hidatoUserController);
+            GameManagerController ctrGameManager = new GameManagerController(hidatoSet, ctrDBGame, solver, ctrRanking, hidatoUserController);
             CurrentGameController ctrCurrentGame = null;
             hidatoUserController.login(username, password);
 

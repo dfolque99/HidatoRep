@@ -12,11 +12,11 @@ import domini.Tauler.SolverController;
  * Controlador de totes les partides. Quan la vista vol crear/recuperar una partida,
  * aquest controlador li proporciona el controlador de partida corresponent. Hi ha
  * un d'aquests controladors per cada usuari loguejat -> si es fa logout i login
- * amb un altre usuari, s'ha de crear un altre objecte CtrGameManager
+ amb un altre usuari, s'ha de crear un altre objecte GameManagerController
  * @author Pau Surrell
  */
 
-public class CtrGameManager {
+public class GameManagerController {
 
     /**
      * Conte tots els hidatos del repositori
@@ -31,7 +31,7 @@ public class CtrGameManager {
     /**
      * Controlador de la capa de persistencia
      */
-    private final CtrDBGame ctrDBGame;
+    private final GameDBController ctrDBGame;
     
     /**
      * SolverController, conte els metodes per resoldre hidatos
@@ -56,7 +56,7 @@ public class CtrGameManager {
      * @param ctrRanking controlador del ranking per poder enviar-li entrades
      * @param hidatoUserController controlador d'usuari per modificar els parametres de l'usuari loguejat
      */
-    public CtrGameManager(HidatoSet hidatoSet, CtrDBGame ctrDBGame, SolverController solver, RankingController ctrRanking, HidatoUserController hidatoUserController){
+    public GameManagerController(HidatoSet hidatoSet, GameDBController ctrDBGame, SolverController solver, RankingController ctrRanking, HidatoUserController hidatoUserController){
         this.hidatoSet = hidatoSet;
         this.hidatoUserController = hidatoUserController;        
         this.loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
@@ -93,8 +93,8 @@ public class CtrGameManager {
     
     /**
      * Recupera una partida que s'havia guardat amb nom 'name'
-     * NOTA: com que CtrDBGame actualment es un stub, no guarda mai cap partida, 
-     * i per tant les partides no es poden recuperar
+ NOTA: com que GameDBController actualment es un stub, no guarda mai cap partida, 
+ i per tant les partides no es poden recuperar
      * @param name nom de la partida a recuperar
      * @return el controlador de la partida recuperada
      */

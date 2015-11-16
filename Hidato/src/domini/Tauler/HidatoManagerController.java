@@ -7,7 +7,7 @@
 package domini.Tauler;
 
 import domini.Partida.Difficulty;
-import domini.Partida.CtrGameManager;
+import domini.Partida.GameManagerController;
 import domini.Partida.CurrentGameController;
 import domini.Partida.Help;
 
@@ -19,10 +19,10 @@ import domini.Partida.Help;
 public class HidatoManagerController {
     
     HidatoSet hset;
-    CtrGameManager cgm;
+    GameManagerController cgm;
     Hidato tempHidato;
     
-    public HidatoManagerController (HidatoSet hset, CtrGameManager cgm) {
+    public HidatoManagerController (HidatoSet hset, GameManagerController cgm) {
         this.hset = hset;
         this.cgm = cgm;
     }

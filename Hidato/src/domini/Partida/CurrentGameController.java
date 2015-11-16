@@ -24,7 +24,7 @@ public class CurrentGameController {
     /**
      * Controlador de DB de game, de la capa de persistencia
      */
-    private final CtrDBGame ctrDBGame;
+    private final GameDBController ctrDBGame;
     
     /**
      * SolverController, te els metodes per resoldre hidatos
@@ -53,16 +53,16 @@ public class CurrentGameController {
     
     /**
      * Creadora
-     * Crea un controlador a partir d'un game, un CtrDBGame (que permet la comunicacio
-     * amb la capa de persistencia), un solver, un controlador de ranking  i un
-     * controlador d'usuari
+ Crea un controlador a partir d'un game, un GameDBController (que permet la comunicacio
+ amb la capa de persistencia), un solver, un controlador de ranking  i un
+ controlador d'usuari
      * @param game partida assignada a aquest controlador
      * @param ctrDBGame controlador de la DB per comunicar-se amb la capa de persistencia
      * @param solver solver per poder resoldre els hidatos
      * @param ctrRanking controlador del ranking per enviar-li les dades de la partida acabada
      * @param hidatoUserController controlador de l'usuari que juga la partida
      */    
-    public CurrentGameController(Game game, CtrDBGame ctrDBGame, SolverController solver, RankingController ctrRanking, HidatoUserController hidatoUserController){
+    public CurrentGameController(Game game, GameDBController ctrDBGame, SolverController solver, RankingController ctrRanking, HidatoUserController hidatoUserController){
         this.game = game;
         this.ctrDBGame = ctrDBGame;
         this.ctrHidato = new CtrHidato(game.getHidato());
