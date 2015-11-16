@@ -17,10 +17,10 @@ public class DriverRankingController {
 
     /**
      * @param args the command line arguments
- Driver de la clase RankingController.
- Permite ir añadiendo entradas a cada ranking (un ranking por dificultad).
- Inicialmente los rankings empiezan vacios. Tambien se puede consultar el
- estado de los rankings para comprobar que el resultado es el esperado.
+     * Driver de la clase RankingController.
+     * Permite ir añadiendo entradas a cada ranking (un ranking por dificultad).
+     * Inicialmente los rankings empiezan vacios. Tambien se puede consultar el
+     * estado de los rankings para comprobar que el resultado es el esperado.
      */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

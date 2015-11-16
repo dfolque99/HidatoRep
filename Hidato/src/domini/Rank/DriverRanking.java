@@ -17,6 +17,10 @@ public class DriverRanking {
 
     /**
      * @param args the command line arguments
+     * Driver de la clase Ranking.
+     * Permite crear un ranking asociandole una dificultad y ir añadiendo
+     * entradas a este ranking. Para comprobar que la funcion añadir funciona
+     * bien se puede consultar el estado del ranking en cualquier momento.
      */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
