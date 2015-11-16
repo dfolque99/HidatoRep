@@ -17,13 +17,13 @@ public class DriverUserController {
      * @param args the command line arguments
      * Driver de la clase UserController.
      * Permite hacer pruebas con la clase UserController, para realizar las
-     * operaciones 3, 4, 5, 6 y 8 hay que realizar login con exito previamente.
+     * operaciones 3, 4, 5, 6, 7 y 8 hay que realizar login con exito previamente.
     */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         User userActual = null;
         UserController u = new UserController();
-        System.out.println("----UserControllerDriver----");
+        System.out.println("----DriverUserController----");
         System.out.println("Seleccion una opcion:");
         System.out.println("1. Crear un nuevo usuario");
         System.out.println("2. Hacer login");
@@ -119,6 +119,7 @@ public class DriverUserController {
                     System.out.println("Opcion no disponible");
                     
             }
+            System.out.print("Introduce una nueva opcion: ");
             op = sc.nextInt();
         }
     }

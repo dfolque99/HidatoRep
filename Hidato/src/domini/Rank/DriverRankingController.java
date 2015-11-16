@@ -17,16 +17,16 @@ public class DriverRankingController {
 
     /**
      * @param args the command line arguments
- Driver de la clase RankingController.
- Permite ir añadiendo entradas a cada ranking (un ranking por dificultad).
- Inicialmente los rankings empiezan vacios. Tambien se puede consultar el
- estado de los rankings para comprobar que el resultado es el esperado.
+     * Driver de la clase RankingController.
+     * Permite ir añadiendo entradas a cada ranking (un ranking por dificultad).
+     * Inicialmente los rankings empiezan vacios. Tambien se puede consultar el
+     * estado de los rankings para comprobar que el resultado es el esperado.
      */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         RankingController ranking = new RankingController();
         ranking.init();
-        System.out.println("----CtrRankingDriver----");
+        System.out.println("----DriverRankingController----");
         System.out.println("Seleccion una opcion:");
         System.out.println("1. Insertar una entrada en un ranking");
         System.out.println("2. Mostrar un ranking");
@@ -57,10 +57,14 @@ public class DriverRankingController {
                     Difficulty diffi = int2diff(a);
                     ArrayList <String> v = ranking.getRankingInfo(diffi);
                     for (int i = 0; i < v.size(); ++i) {
-                        System.out.println(v.get(i));
+                        System.out.println((i+1) +  ". " + v.get(i));
                     }
                     break;
+                    
+                default:
+                    System.out.println("Opcion no disponible");
             }
+            System.out.print("Introduce una nueva opcion: ");
             op = sc.nextInt();
         }
     }
