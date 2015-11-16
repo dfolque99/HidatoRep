@@ -30,10 +30,13 @@ public class UserControllerDriver {
         System.out.println("3. Eliminar el usuario logeado");
         System.out.println("4. Modificar el nombre del usuario logeado");
         System.out.println("5. Modificar la contraseña del usuario logeado");
-        System.out.println("6. Actualitzar la bd amb les modificacions de loggedUser");
-        System.out.println("7. Agafa un usuari");
-        System.out.println("8. Agafa l'usuari loguejat");
-        System.out.println("9. Modifica algun atribut de l'usuari actual");
+        /*
+        Estas ultimas opciones sirven para comprobar que las modificaciones sobre
+        loggedUser solo se hacen en capa de datos si se utiliza la funcion updateUser
+        */
+        System.out.println("6. Actualiza la bd con las modificaciones de loggedUser");
+        System.out.println("7. Modifica el atributo solvedGames de loggedUser");
+        System.out.println("8. Muestra el atributo solvedGames de loggedUser");
         
         System.out.println("-1.Finalizar ejecucion");
         int op = sc.nextInt();
@@ -96,6 +99,24 @@ public class UserControllerDriver {
                     break;
                     
                 case 6:
+                    int errorCode6 = u.updateUser();
+                    if (errorCode6 != 0) error(0);
+                    else exito();
+                    break;
+                    
+                case 7:
+                    userActual = u.getLoggedUser();
+                    userActual.incrementSolvedGames();
+                    exito();
+                    break;
+                    
+                case 8:
+                    userActual = u.getLoggedUser();
+                    System.out.println("solvedGames: " + userActual.getSolvedGames());
+                    break;
+                    
+                default:
+                    System.out.println("Opcion no disponible");
                     
             }
             op = sc.nextInt();
