@@ -31,6 +31,7 @@ public class Hidato extends Board{
     public Hidato (int sizeX, int sizeY) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
+        creationDate = new Date();
         cells = new ArrayList<>();
         for (int i = 0; i < sizeX; ++i) {
             ArrayList<Cell> llista = new ArrayList<>();
@@ -51,6 +52,7 @@ public class Hidato extends Board{
     public Hidato (Hidato h) {
         sizeX = h.getSizeX();
         sizeY = h.getSizeY();
+        creationDate = h.getCreationDate();
         cells = new ArrayList<>();
         for (int i = 0; i < sizeX; ++i) {
             ArrayList<Cell> llista = new ArrayList<>();

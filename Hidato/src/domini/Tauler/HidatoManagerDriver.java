@@ -81,11 +81,11 @@ public class HidatoManagerDriver {
     }
     
     private static void dibuixa (HidatoManager hm) {
-        int n = hm.getTempSizeY();
-        int m = hm.getTempSizeX();
+        int n = hm.getTempSizeX();
+        int m = hm.getTempSizeY();
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                System.out.printf("%3d ", hm.getTempCellVal(j,i));
+                System.out.printf("%3d ", hm.getTempCellVal(i,j));
             }
             System.out.print("\n");
         }
