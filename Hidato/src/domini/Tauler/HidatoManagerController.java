@@ -19,12 +19,15 @@ import domini.Partida.Help;
 public class HidatoManagerController {
     
     HidatoSet hset;
+    HidatoSetDBController dbc;
     GameManagerController cgm;
     Hidato tempHidato;
     
-    public HidatoManagerController (HidatoSet hset, GameManagerController cgm) {
+    
+    public HidatoManagerController (HidatoSet hset, GameManagerController cgm, HidatoSetDBController dbc) {
         this.hset = hset;
         this.cgm = cgm;
+        this.dbc = dbc;
     }
     
     // crea un hidato aleatori i el deixa a tempHidato
@@ -105,5 +108,8 @@ public class HidatoManagerController {
         tempHidato.getCell(x, y).setType(type);
     }
     
+    public int saveAll() {
+        return dbc.saveAll();
+    }
     
 }

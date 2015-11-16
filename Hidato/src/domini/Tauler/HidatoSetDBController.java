@@ -12,8 +12,10 @@ package domini.Tauler;
  */
 public class HidatoSetDBController {
     
-    public HidatoSetDBController() {
-        
+    HidatoSet hs;
+    
+    public HidatoSetDBController(HidatoSet hs) {
+        this.hs = hs;
     }
     
     public int saveAll() {

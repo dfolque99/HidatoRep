@@ -22,7 +22,8 @@ public class DriverHidatoManagerController {
      */
     public static void main(String[] args) {
         HidatoSet hs = new HidatoSet();
-        HidatoManagerController hm = new HidatoManagerController(hs, null);
+        HidatoSetDBController dbc = new HidatoSetDBController(null);
+        HidatoManagerController hm = new HidatoManagerController(hs, null, dbc);
         Scanner s = new Scanner(System.in);
         int acc, n, m, d, val;
         String name;
@@ -73,6 +74,8 @@ public class DriverHidatoManagerController {
                 case 72:
                     hm.saveTempHidato(null);
                     break;
+                case 8:
+                    if (hm.saveAll() == 0) System.out.printf("Guardat correctament\n");
                 default:
                     break;
             }
@@ -106,7 +109,8 @@ public class DriverHidatoManagerController {
         System.out.printf("6 name => mira si el nom name ja esta utilitzat\n");
         System.out.printf("71 name => guarda el hidato temporal amb nom name\n");
         System.out.printf("72 => guarda el hidato temporal amb nom que ja te\n");
-        System.out.printf("8 => sortir\n");
+        System.out.printf("8 => guardar tot a disc\n"
+                + "9 => sortir\n");
     }
     
 }
