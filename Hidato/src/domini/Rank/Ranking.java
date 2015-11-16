@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * @author Guillem
- * Representa un ranking. Contiene una serie de entradas de ranking ordenadas por
+ * Representa un ranking. Contiene un conjunto de entradas de ranking ordenadas por
  * puntuacion decreciente. En el ranking solo puede haber N (20 en este caso)
  * entradas, en caso de intentar añadir una más se eliminara la que tenga menos
  * puntuación.
@@ -67,6 +67,11 @@ public class Ranking {
      * ranking)
      */
     public void addRankingEntry(RankingEntry newEntry) {
+        /*
+        Esta funcion utiliza una adaptacion del algoritmo de busqueda binaria
+        para encontrar la posicion en la que se debe colocar la nueva entrada
+        del ranking.
+        */
         int newScore = newEntry.getScore();
         int l = 0;
         int r = ranking.size() - 1;

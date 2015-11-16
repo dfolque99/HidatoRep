@@ -8,15 +8,17 @@ package domini.Rank;
 import domini.Partida.Difficulty;
 
 /**
- *
+ * Clase que gestiona la persistencia de los rankings.
  * @author Guillem
  */
 
 //ES SOLO PARA QUE NO DE ERRORES DE COMPILACION EL PROYECTO
+//SE IMPLEMENTARA MAS TARDE
+
 public class CtrDBRanking {
     
     public Ranking getRanking(Difficulty difficulty) {
-        return null;
+        return new Ranking(difficulty);
     }
     
     public void modifyRanking(Difficulty difficulty,Ranking ranking) {

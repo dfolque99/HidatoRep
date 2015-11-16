@@ -12,7 +12,8 @@ import java.util.Date;
 /**
  *
  * @author Guillem
- * Esta clase sirve para gestionar los rankings.
+ * Controlador que gestiona los rankings. Tiene tres rankings, uno por cada
+ * dificultad de juego
  */
 public class CtrRanking {
     
@@ -21,7 +22,8 @@ public class CtrRanking {
     private Ranking hardRanking;
     
     /**
-     * Inicializa los rankings con la informacion guardada en la capa de datos.
+     * Inicializa los rankings con la informacion que habia almacenada en la
+     * capa de datos.
      * Se debe realizar al principio de la ejecucion del programa
      */
     public void init() {
@@ -33,7 +35,7 @@ public class CtrRanking {
     
     /**
      * Guarda en la capa de datos los cambios realizados en los rankings.
-     * Se debe realizara antes de cerrar el programa.
+     * Se debe realizar antes de cerrar el programa.
      */
     public void save() {
         CtrDBRanking db = new CtrDBRanking();
@@ -44,9 +46,12 @@ public class CtrRanking {
     
     /**
      * Añade una entrada al ranking correspondiente con la informacion proporcionada.
-     * La fecha con la que se crea la entrada es la actual.
+     * Este metodo debe ser invocado cada vez que se finaliza una partida. La fecha
+     * que se pone a la entrada del ranking es la fecha de creacion de esta (es decir,
+     * la fecha en la que un record entra al ranking)
+     * Pre: Hacer init()
      */
-    public void addScoreToRanking(int score, String username, Difficulty difficulty) {
+    void addScoreToRanking(int score, String username, Difficulty difficulty) {
         RankingEntry newEntry = new RankingEntry(new Date(),username,score);
         switch(difficulty) {
             case EASY:
@@ -68,8 +73,9 @@ public class CtrRanking {
      * @return Un arraylist de strings donde cada string representa una entrada
      * del ranking. Cada parametro de las entradas del ranking esta separado
      * por un caracter '/'
+     * Pre: Hacer init()
      */
-    public ArrayList <String> getRankingInfo(Difficulty difficulty) {
+    ArrayList <String> getRankingInfo(Difficulty difficulty) {
         ArrayList <String> res = new ArrayList<>();
         switch(difficulty) {
             case EASY:
@@ -92,9 +98,5 @@ public class CtrRanking {
         }
         return res;
     }
-    
-    
-    
-    
-    
+
 }

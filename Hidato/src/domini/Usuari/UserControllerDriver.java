@@ -15,11 +15,9 @@ public class UserControllerDriver {
 
     /**
      * @param args the command line arguments
-     */
-    /**
-     * Driver de la classe UserController
-     * Permet fer proves amb la classe UserController, per realitzar les
-     * operacions 3, 4, 5, 6 i 8 cal haver realitzat login amb exit previament.
+     * Driver de la clase UserController.
+     * Permite hacer pruebas con la clase UserController, para realizar las
+     * operaciones 3, 4, 5, 6 y 8 hay que realizar login con exito previamente.
     */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -33,7 +31,7 @@ public class UserControllerDriver {
         System.out.println("4. Modificar el nombre del usuario logeado");
         System.out.println("5. Modificar la contraseña del usuario logeado");
         System.out.println("6. Actualitzar la bd amb les modificacions de loggedUser");
-        //System.out.println("7. Agafa un usuari");
+        System.out.println("7. Agafa un usuari");
         System.out.println("8. Agafa l'usuari loguejat");
         System.out.println("9. Modifica algun atribut de l'usuari actual");
         
