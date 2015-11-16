@@ -18,71 +18,139 @@ import domini.Partida.Help;
 
 public class HidatoManagerController {
     
+    /**
+     * Controlador HidatoSet al qual enviar queries
+     */
     HidatoSet hset;
+    
+    /**
+     * Controlador HidatoSetDBController per enviar queries
+     */
     HidatoSetDBController dbc;
+    
+    /**
+     * Controlador GameManagerController per enviar queries
+     */
     GameManagerController cgm;
+    
+    /**
+     * Hidato sobre el qual anirem aplicant els canvis
+     */
     Hidato tempHidato;
     
-    
+    /**
+     * Creadora amb parametres
+     * @param hset
+     * @param cgm
+     * @param dbc 
+     */
     public HidatoManagerController (HidatoSet hset, GameManagerController cgm, HidatoSetDBController dbc) {
         this.hset = hset;
         this.cgm = cgm;
         this.dbc = dbc;
     }
     
-    // crea un hidato aleatori i el deixa a tempHidato
+    /**
+     * Pre: sizeX,sizeY >= 0, difficulty != null
+     * Post: crea un hidato aleatori i el carrega a tempHidato
+     */
     public void createRandom (int sizeX, int sizeY, Difficulty difficulty) {
         GeneratorController hg = new GeneratorController(sizeX, sizeY);
         tempHidato = hg.generateHidato(difficulty);
     }
     
-    // inicialitza tempHidato amb sizeX x sizeY
+    /**
+     * Pre: sizeX,sizeY >= 0
+     * Post: inicialitza tempHidato amb sizeX x sizeY (buit: nomes extrems)
+     */
     public void createManual (int sizeX, int sizeY) {
         tempHidato = new Hidato (sizeX, sizeY);
     }
     
-    // pre: existeix un hidato amb nom name
-    // fa una copia a tempHidato amb les dades del que te nom name, retorna l'editor
-    public void loadHidato (String name) {
-        tempHidato = new Hidato(hset.getHidatoByName(name));
+    /**
+     * Pre: name != null
+     * Post: si no existeix un hidato a hset amb nom name, retorna false
+     *      si existeix, el carrega a tempHidato i retorna true
+     */
+    public boolean loadHidato (String name) {
+        Hidato obert = hset.getHidatoByName(name);
+        if (obert == null) return false;
+        tempHidato = new Hidato(obert);
+        return true;
     }
     
+    /**
+     * Pre: name != null
+     * Post: retorna true si existeix un Hidato anomenat name a hset
+     */
     public boolean usedName (String name) {
         return (hset.getHidatoByName(name) != null);
     }
     
-    /** coses que es poden fer amb el tempHidato:
-     * jugar-lo
-     * resoldre'l
-     * guardar-lo
+    /**
+     * Pre: name,help!= null
+     * Post: retorna un CurrentGameController per jugar al hidato amb nom name
+     *      del hset; si no existeix aquest hidato, retorna null
      */
-    
     public CurrentGameController playTempHidato(String name, Help help) {
+        if (hset.getHidatoByName(name)== null) return null;
         return cgm.createGame(name, tempHidato, help);
     }
     
+    /**
+     * Pre: cert
+     * Post: si tempHidato te solucio, la posa a tempHidato i retorna true;
+     *      sino, retorna false
+     */
     public boolean solveTempHidato() {
         SolverController solver = new SolverController();
-        return solver.solve(tempHidato);
+        boolean teSolucio = solver.solve(tempHidato);
+        if (!teSolucio) return false;
+        tempHidato = solver.getHidato();
+        return true;
     }
     
-    // pre: si name != null, no es el nom de cap hidato existent
-    // si name == null, guarda'l amb el mateix nom, sino guardal amb el nom name
+    /**
+     * Pre: name != null
+     * Post: guarda el tempHidato a hset amb nom name (sobreescriu si cal)
+     */
     public void saveTempHidato(String name) {
-        if (name == null) {
-            hset.replaceHidatoByName(tempHidato.getBoardName(), tempHidato);
-        }
-        else {
-            tempHidato.setBoardName(name);
-            hset.addHidato(tempHidato);
-        }
+        Hidato guardat = new Hidato(tempHidato);
+        guardat.setBoardName(name);
+        if (hset.getHidatoByName(name) == null) hset.addHidato(guardat);
+        else hset.addHidato(guardat);
     }
     
-    // agafa el tempHidato i el completa (pel cas d'us crea amb limitacions)
+    /**
+     * Pre: difficulty != null
+     * Post: si tempHidato es pot completar, ho fa a tempHidato i retorna true;
+     *      sino, retorna false
+     */
     public void completeTempHidato (Difficulty difficulty) {
         GeneratorController hg = new GeneratorController(tempHidato);
-        tempHidato = hg.generateHidato(difficulty);
+        Hidato completat = hg.generateHidato(difficulty);
+        if (completat != null ) tempHidato = completat;
     }
+    
+    /**
+     * Pre: cert
+     * Post: guarda l'estat de hset al disc
+     */
+    public int saveAll() {
+        return dbc.saveAll();
+    }
+    
+    /**
+     * Pre: cert
+     * Post: carrega l'estat de hset del disc
+     */
+    public int loadAll() {
+        return dbc.loadAll();
+    }
+    
+    /**
+     * Getters i setters sobre el hidato tempHidato
+     */
     
     public int getTempCellVal (int x, int y) {
         return tempHidato.getCell(x, y).getVal();
@@ -108,8 +176,5 @@ public class HidatoManagerController {
         tempHidato.getCell(x, y).setType(type);
     }
     
-    public int saveAll() {
-        return dbc.saveAll();
-    }
     
 }

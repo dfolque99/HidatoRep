@@ -21,4 +21,9 @@ public class HidatoSetDBController {
     public int saveAll() {
         return 0;
     }
+    
+    public int loadAll() {
+        return 0;
+    }
+    
 }

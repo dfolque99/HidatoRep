@@ -14,21 +14,37 @@ public class Cell {
     int val;
     Type type;
     
+    /**
+     * Creadora per defecte
+     */
     public Cell() {
         type = Type.BLANK;
         val = 0;
     }
     
+    /**
+     * Creadora per deep copy
+     * @param cell 
+     */
     public Cell (Cell cell) {
         val = cell.getVal();
         type = cell.getType();
     }
 
+    /**
+     * Creadora amb parametres
+     * @param val
+     * @param type 
+     */
     public Cell(int val, Type type) {
         this.val = val;
         this.type = type;
     }
 
+    /**
+     * A partir d'aquí, getters i setters
+     */
+    
     public int getVal() {
         return val;
     }

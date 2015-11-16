@@ -20,6 +20,7 @@ public class GeneratorController {
     private Position L[];
     private int nextGiven[];
     private int totalCaselles;
+    private boolean controlarPart;
     
     /**
      * Pre: sizeX, sizeY >= 0
@@ -59,8 +60,12 @@ public class GeneratorController {
      *  retorna null si no hi ha casella inicial, o si es impossible de generar
     */
     public Hidato generateHidato(Difficulty difficulty) {
+        controlarPart = true;
         if (hidatoValid() == false) return null;
-        if (completarCami() == false) return null;
+        if (completarCami() == false) {
+            controlarPart = false;
+            if (completarCami() == false) return null;
+        }
         posarPistes(difficulty);
         return h;
     }
@@ -70,7 +75,9 @@ public class GeneratorController {
         if (massaLluny(val,p)) return false;
         L[val-1] = p;
         if (val == totalCaselles) return true;
-        if (!controlParticionament(val)) return false;
+        if (controlarPart) {
+            if (!controlParticionament(val)) return false;
+        }
         Position veiObligat = buscaVeiObligat(val, p);
         if (veiObligat != null) return backtracking(val+1, veiObligat);
         LinkedList<Position> veins = buscaVeins(p);
@@ -160,7 +167,6 @@ public class GeneratorController {
                 if (h.getCell(i,j).getType() != Type.VOID) ++totalCaselles;
             }
         }
-        System.out.printf("%d\n",totalCaselles);
     }
     
     private boolean controlParticionament(int val) {

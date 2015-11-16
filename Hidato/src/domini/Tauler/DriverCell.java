@@ -11,6 +11,7 @@ import java.util.Scanner;
  *
  * @author David
  */
+
 public class DriverCell {
     
     public static void main (String[] args) {
@@ -18,7 +19,7 @@ public class DriverCell {
         Cell c = new Cell();
         int acc, v, t;
         Type tipus[] = {Type.BLANK, Type.GIVEN, Type.VOID};
-        while (true) {
+        do {
             usage();
             acc = s.nextInt();
             switch(acc) {
@@ -44,7 +45,7 @@ public class DriverCell {
                     break;
             }
             System.out.printf("c te valor %d i es de tipus " + c.getType().toString() + "\n", c.getVal());
-        }
+        } while (acc != 6);
     }
     
     private static void usage() {

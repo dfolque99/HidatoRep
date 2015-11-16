@@ -60,7 +60,7 @@ public class DriverHidato {
                     break;
             }
             dibuixa(h);
-        } while (acc != 8);
+        } while (acc != 7);
     }
     
     private static void dibuixa (Hidato h) {

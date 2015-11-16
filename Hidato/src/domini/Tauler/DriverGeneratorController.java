@@ -27,12 +27,12 @@ public class DriverGeneratorController {
         GeneratorController hg;
         Hidato h;
         long t1, t2;
-        
-        while (true) {
+        int acc;
+        do {
             print(    "1) Generar hidato per dificultat\n"
                     + "2) Generar hidato amb condicions\n"
                     + "3) Sortir\n");
-            int acc = s.nextInt();
+            acc = s.nextInt();
             switch(acc) {
                 case 1:
                     print ("Files: ");
@@ -77,13 +77,18 @@ public class DriverGeneratorController {
                     hg = new GeneratorController(origen);
                     h = hg.generateHidato(dificultat);
                     t2 = System.currentTimeMillis();
-                    print(Utils.toString(h));
-                    print(Utils.toStringWithZeros(h));
-                    System.out.printf("Generat en %d milisegons\n\n\n", t2-t1);
+                    if (h != null) {
+                        print(Utils.toString(h));
+                        print(Utils.toStringWithZeros(h));
+                        System.out.printf("Generat en %d milisegons\n\n\n", t2-t1);
+                    }
+                    else {
+                        System.out.printf("Hidato no trobat\n");
+                    }
                     break;
                 default: break;
             }
-        }
+        } while (acc != 3);
     }
     
     private static void print (String a) {

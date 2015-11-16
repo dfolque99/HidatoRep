@@ -17,17 +17,49 @@ import java.util.Date;
 
 public class Hidato extends Board{
     
+    /**
+     * dificultat del hidato
+     */
     private Difficulty difficulty;
+    /**
+     * numero de files
+     */
     private int sizeX;
+    /**
+     * numero de columnes
+     */
     private int sizeY;
+    /**
+     * matriu de Cells de que es compon el taulell
+     */
     private ArrayList<ArrayList<Cell> > cells;
+    /**
+     * nom del Hidato
+     */
     private String boardName;
+    /**
+     * nom de l'usuari que el va crear
+     */
     private String username;
+    /**
+     * data de creacio del hidato
+     */
     private Date creationDate;
     
+    /** 
+     * Constructora sense parametres: inicialitza amb sizeX = sizeY = 5
+     */
     public Hidato() {
+        this(5,5);
     }
     
+    /**
+     * Constructora amb les mides.
+     * Pre: sizeX,sizeY >= 0
+     * Post: crea un Hidato amb mida sizeX x sizeY amb data de creacio la
+     *      actual, Cells per defecte, amb l'inici a la posicio (0,0) i el
+     *      final a la (sizeX-1, sizeY-1).
+     */
     public Hidato (int sizeX, int sizeY) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
@@ -44,11 +76,23 @@ public class Hidato extends Board{
         setCell(sizeX-1,sizeY-1,new Cell(sizeX*sizeY,Type.GIVEN));
     }
     
+    /**
+     * Constructora amb les mides i la dificultat.
+     * Pre: sizeX,sizeY >= 0, difficulty != null
+     * Post: crea un Hidato amb mida sizeX x sizeY amb data de creacio la
+     *      actual, Cells per defecte, amb l'inici a la posicio (0,0) i el
+     *      final a la (sizeX-1, sizeY-1), i la dificultat = difficulty.
+     */
     public Hidato (int sizeX, int sizeY, Difficulty difficulty) {
         this(sizeX,sizeY);
         this.difficulty = difficulty;
     }
     
+    /**
+     * Constructora per deep copy.
+     * Pre: h != null
+     * Post: crea un Hidato igual que h
+     */
     public Hidato (Hidato h) {
         sizeX = h.getSizeX();
         sizeY = h.getSizeY();
@@ -65,6 +109,10 @@ public class Hidato extends Board{
         difficulty = h.getDifficulty();
         username = h.getUsername();
     }
+    
+    /**
+     * Getters i setters
+    */
     
     public Difficulty getDifficulty() {
         return difficulty;

@@ -6,8 +6,10 @@
 package domini.Tauler;
 
 
-/**
- *
+/** 
+ * Classe que utilitzem per a compatibilitat de classes compartides, pero que
+ * realment és buida, ja que nosaltres la volem anomenar Hidato
+ * 
  * @author David
  */
 public class Board {
