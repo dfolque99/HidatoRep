@@ -21,6 +21,7 @@ final public class DriverSolverController {
             System.out.println("Example: 1 5 7 : Creates Hidato 5x7");
             System.out.println("Example: 2 1 1 30 : Overwrites cell (1,1) to value 30");
             System.out.println("Example: 3 4 5 : Get solution, plus print hidato, plus exit ");
+            System.out.println("Example: 1 5 7 2 1 1 30 3 4 5: Takes about 20 seconds");
             
         }
     
