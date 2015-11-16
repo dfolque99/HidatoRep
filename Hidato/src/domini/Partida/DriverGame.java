@@ -17,6 +17,8 @@ import domini.Usuari.HidatoUser;
 import domini.Usuari.HidatoUserController;
 import domini.Tauler.SolverController;
 import domini.Misc.Utils;
+import domini.Tauler.Cell;
+import domini.Tauler.Type;
 import java.util.Scanner;
 
 /**
@@ -25,6 +27,21 @@ import java.util.Scanner;
  * @author Pau Surrell
  */
 public class DriverGame {
+    
+    private static Hidato defaultHidato(){
+        int values[][] = {{1,2,3,4,5,6},{12,11,10,9,8,7},{13,14,15,16,17,18},{24,23,22,21,20,19},{25,26,27,28,29,30}};
+        Hidato hidato = new Hidato(5,6);
+        for (int i = 0; i < 5; i++){
+            for (int j = 0; j < 6; j++){
+                Cell cell = new Cell(values[i][j], Type.BLANK);
+                if ((i+j)% 4 == 0 || (i == 4 && j == 5)) cell.setType(Type.GIVEN);
+                hidato.setCell(i,j,cell);
+            }
+        }
+        
+        return hidato;
+    }
+    
     public static void main(String [] args){
         Scanner sc = new Scanner(System.in);
         System.out.println("----GameDriver----");
@@ -54,9 +71,10 @@ public class DriverGame {
                         System.out.println("Vols crear una nova partida, o recuperar una guardada?");
                         System.out.println("1. Crear nova partida");
                         System.out.println("2. Recuperar una partida guardada");
+                        System.out.println("3. Jugar al hidato per defecte");
                         System.out.println("-1. Tornar al primer menu");
                         int op2 = sc.nextInt();
-                        while (op2 != 1 && op2 != 2 && op2 != -1){
+                        while (op2 != 1 && op2 != 2 && op2 != 3 && op2 != -1){
                             System.out.println("Introdueix un dels nombres correctes!");
                             op2 = sc.nextInt();
                         }
@@ -89,12 +107,18 @@ public class DriverGame {
                                     op2 = -1;
                                 }else System.out.println("S'ha creat correctament la partida");
                                 break;
-
+                            
                             case 2: //Recuperar partida guardada
                                 System.out.println("Introdueix el nom de la partida a recuperar:");
                                 String name2 = sc.next();
                                 ctrCurrentGame = ctrGameManager.restoreGame(name2);
                                 if (ctrCurrentGame == null) System.out.println("Error. No hi ha cap partida d'aquest usuari amb aquest nom");
+                                break;
+                            case 3:
+                                name = "default";
+                                help = Help.LOW;
+                                hidato = defaultHidato();
+                                ctrCurrentGame = ctrGameManager.createGame(name,hidato,help);
                                 break;
                             default: break; //Mai s'hauria d'arribar aqui
                         }
@@ -159,7 +183,7 @@ public class DriverGame {
                                 }
                                 System.out.println(Utils.toString(ctrHidato.getHidato()));
                                 System.out.println("Selecciona quina accio vols fer:");
-                                System.out.println("1 v x y -> posar el nombre v a la casella (x,y) (v = 0 per esborrar");
+                                System.out.println("1 v x y -> posar el nombre v a la casella (x,y) (v = 0 per esborrar)");
                                 System.out.println("2 -> demanar una pista");
                                 System.out.println("3 -> fer un check (comprovar si el hidato te solucio)");
                                 System.out.println("4 -> pausar la partida");
