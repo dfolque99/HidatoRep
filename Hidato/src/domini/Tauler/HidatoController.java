@@ -7,7 +7,7 @@ package domini.Tauler;
  * Cada instancia de la classe te assignada un hidato, sobre el qual fara els metodes
  * @author Pau Surrell
  */
-public class CtrHidato {
+public class HidatoController {
     
     /**
      * Hidato sobre el qual s'apliquen els metodes de la classe
@@ -19,7 +19,7 @@ public class CtrHidato {
      * Creadora
      * @param hidato hidato de la classe 
      */
-    public CtrHidato(Hidato hidato){
+    public HidatoController(Hidato hidato){
         this.hidato = hidato;
     }
     

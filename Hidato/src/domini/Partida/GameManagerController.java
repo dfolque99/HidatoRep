@@ -1,6 +1,6 @@
 package domini.Partida;
 
-import domini.Tauler.CtrHidato;
+import domini.Tauler.HidatoController;
 import domini.Rank.RankingController;
 import domini.Tauler.Hidato;
 import domini.Tauler.HidatoSet;
@@ -83,7 +83,7 @@ public class GameManagerController {
         }
         if (error) return null;
         Hidato hidato = new Hidato(solvedHidato);
-        CtrHidato ctrHidato = new CtrHidato(hidato);
+        HidatoController ctrHidato = new HidatoController(hidato);
         ctrHidato.setBlankCellsToZero();
         Game game = new Game(name, hidato, solvedHidato, loggedUser, help, hidato.getDifficulty());
         CurrentGameController ctrCurrentGame = new CurrentGameController(game, ctrDBGame, solver, ctrRanking, hidatoUserController);

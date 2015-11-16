@@ -8,7 +8,7 @@ package domini.Partida;
  * - No es poden guardar partides, ni carregar-ne, ni esborrar-ne
  */
 
-import domini.Tauler.CtrHidato;
+import domini.Tauler.HidatoController;
 import domini.Rank.RankingController;
 import domini.Tauler.Hidato;
 import domini.Tauler.GeneratorController;
@@ -101,7 +101,7 @@ public class DriverGame {
                         if (op2 != -1){
                             Game game = ctrCurrentGame.getGame();
                             Hidato hidato = game.getHidato();
-                            CtrHidato ctrHidato = new CtrHidato(hidato);
+                            HidatoController ctrHidato = new HidatoController(hidato);
                             System.out.println(Utils.toString(hidato));
                             System.out.println("Selecciona quina accio vols fer:");
                             System.out.println("1 v x y -> posar el nombre v a la casella (x,y) (v = 0 per esborrar)");
@@ -149,12 +149,12 @@ public class DriverGame {
                                     case 6:
                                         ctrCurrentGame.restartGame();
                                         hidato = game.getHidato();
-                                        ctrHidato = new CtrHidato(hidato);
+                                        ctrHidato = new HidatoController(hidato);
                                         break;
                                     case 7:
                                         ctrCurrentGame.solve();
                                         hidato = game.getHidato();
-                                        ctrHidato = new CtrHidato(hidato);
+                                        ctrHidato = new HidatoController(hidato);
                                     default:
                                 }
                                 System.out.println(Utils.toString(ctrHidato.getHidato()));

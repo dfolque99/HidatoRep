@@ -1,6 +1,6 @@
 package domini.Partida;
 import domini.Tauler.Cell;
-import domini.Tauler.CtrHidato;
+import domini.Tauler.HidatoController;
 import domini.Rank.RankingController;
 import domini.Tauler.Hidato;
 import domini.Usuari.HidatoUser;
@@ -34,7 +34,7 @@ public class CurrentGameController {
     /**
      * Controlador de hidato, te metodes per modificar hidatos
      */
-    private CtrHidato ctrHidato;
+    private HidatoController ctrHidato;
     
     /**
      * Controlador de ranking, te metodes per modificar el ranking
@@ -65,7 +65,7 @@ public class CurrentGameController {
     public CurrentGameController(Game game, GameDBController ctrDBGame, SolverController solver, RankingController ctrRanking, HidatoUserController hidatoUserController){
         this.game = game;
         this.ctrDBGame = ctrDBGame;
-        this.ctrHidato = new CtrHidato(game.getHidato());
+        this.ctrHidato = new HidatoController(game.getHidato());
         this.solver = solver;
         this.ctrRanking = ctrRanking;
         this.hidatoUserController = hidatoUserController;
@@ -174,7 +174,7 @@ public class CurrentGameController {
      */
     public int restartGame(){
         game.restartGame();
-        this.ctrHidato = new CtrHidato(game.getHidato());
+        this.ctrHidato = new HidatoController(game.getHidato());
         return 0;
     }
     
@@ -184,7 +184,7 @@ public class CurrentGameController {
      */
     public int solve(){
         game.solve();
-        this.ctrHidato = new CtrHidato(game.getHidato());
+        this.ctrHidato = new HidatoController(game.getHidato());
         return 0;
     }
     
