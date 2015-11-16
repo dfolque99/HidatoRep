@@ -17,11 +17,15 @@ public class DriverRanking {
 
     /**
      * @param args the command line arguments
+     * Driver de la clase Ranking.
+     * Permite crear un ranking asociandole una dificultad y ir añadiendo
+     * entradas a este ranking. Para comprobar que la funcion añadir funciona
+     * bien se puede consultar el estado del ranking en cualquier momento.
      */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Ranking ranking = null;
-        System.out.println("----RankingDriver----");
+        System.out.println("----DriverRanking----");
         System.out.println("Selecciona una opcion:");
         System.out.println("1. Crear nuevo Ranking vacio");
         System.out.println("2. Consultar numero de entradas del ranking");
@@ -95,7 +99,7 @@ public class DriverRanking {
                     else {
                         int n = ranking.getSize();
                         for (int i = 0; i < n; ++i) {
-                            System.out.println(i + ". " + ranking.get(i));
+                            System.out.println((i+1) + ". " + ranking.get(i));
                         }
                     }
                     break;
