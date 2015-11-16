@@ -99,7 +99,7 @@ public class DriverRanking {
                     else {
                         int n = ranking.getSize();
                         for (int i = 0; i < n; ++i) {
-                            System.out.println(i + ". " + ranking.get(i));
+                            System.out.println((i+1) + ". " + ranking.get(i));
                         }
                     }
                     break;

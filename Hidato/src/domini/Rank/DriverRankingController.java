@@ -57,9 +57,12 @@ public class DriverRankingController {
                     Difficulty diffi = int2diff(a);
                     ArrayList <String> v = ranking.getRankingInfo(diffi);
                     for (int i = 0; i < v.size(); ++i) {
-                        System.out.println(v.get(i));
+                        System.out.println((i+1) +  ". " + v.get(i));
                     }
                     break;
+                    
+                default:
+                    System.out.println("Opcion no disponible");
             }
             System.out.print("Introduce una nueva opcion: ");
             op = sc.nextInt();
