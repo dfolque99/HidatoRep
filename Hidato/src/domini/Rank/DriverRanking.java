@@ -21,7 +21,7 @@ public class DriverRanking {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Ranking ranking = null;
-        System.out.println("----RankingDriver----");
+        System.out.println("----DriverRanking----");
         System.out.println("Selecciona una opcion:");
         System.out.println("1. Crear nuevo Ranking vacio");
         System.out.println("2. Consultar numero de entradas del ranking");

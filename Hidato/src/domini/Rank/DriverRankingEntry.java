@@ -20,7 +20,7 @@ public class DriverRankingEntry {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         RankingEntry entry = null;
-        System.out.println("----RankingEntryDriver----");
+        System.out.println("----DriverRankingEntry----");
         System.out.println("Selecciona una opcion:");
         System.out.println("1. Crear nuevo RankingEntry (con la fecha actual)");
         System.out.println("2. Consultar fecha del RankingEntry actual");

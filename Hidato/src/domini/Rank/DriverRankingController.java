@@ -26,7 +26,7 @@ public class DriverRankingController {
         Scanner sc = new Scanner(System.in);
         RankingController ranking = new RankingController();
         ranking.init();
-        System.out.println("----CtrRankingDriver----");
+        System.out.println("----DriverRankingController----");
         System.out.println("Seleccion una opcion:");
         System.out.println("1. Insertar una entrada en un ranking");
         System.out.println("2. Mostrar un ranking");
@@ -61,6 +61,7 @@ public class DriverRankingController {
                     }
                     break;
             }
+            System.out.print("Introduce una nueva opcion: ");
             op = sc.nextInt();
         }
     }
