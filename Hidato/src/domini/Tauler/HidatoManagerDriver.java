@@ -8,6 +8,7 @@ package domini.Tauler;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import domini.Partida.Difficulty;
 
 /**
  *
@@ -21,57 +22,61 @@ public class HidatoManagerDriver {
      */
     public static void main(String[] args) {
         HidatoSet hs = new HidatoSet();
-        HidatoManager hm = new HidatoManager(hs);
+        HidatoManager hm = new HidatoManager(hs, null);
         Scanner s = new Scanner(System.in);
-        System.out.printf("USAGE:\n");
-        System.out.printf("1 m n => crea nou hidato de mida mxn\n");
-        System.out.printf("2 x y v => canvia el valor de (x,y) per v\n");
-        System.out.printf("3 x y t => canvia el tipus de (x,y) per t "
-                + "(1 = blanca, 2 = pista, 3 = no valida)\n");
-        System.out.printf("4 => escriu el hidato\n");
-        System.out.printf("41 => escriu tots els hidatos guardats\n");
-        System.out.printf("5 name => guarda el nou hidato amb nom name\n");
-        System.out.printf("6 => actualitza el hidato a la base de dades\n");
-        System.out.printf("7 name => obre el hidato amb nom name\n");
-        System.out.printf("8 => sortir\n");
-        int acc;
+        int acc, n, m, d, val;
+        String name;
         hm.createManual(4,4);
-        String nom;
+        Difficulty diff[] = {Difficulty.EASY,Difficulty.MEDIUM,Difficulty.HARD};
+        Type tipus[] = {Type.BLANK,Type.GIVEN,Type.VOID};
+        
         do {
+            usage();
             acc = s.nextInt();
-            switch(acc){
-                case 1:
-                    hm.createManual(s.nextInt(),s.nextInt());
-                    System.out.print("Creat nou hidato\n");
+            switch (acc) {
+                case 11:
+                    n = s.nextInt(); m = s.nextInt(); d = s.nextInt();
+                    hm.createRandom(n,m,diff[d-1]);
+                    break;
+                case 12:
+                    n = s.nextInt(); m = s.nextInt();
+                    hm.createManual(n,m);
                     break;
                 case 2:
-                    hm.setTempCellVal(s.nextInt(), s.nextInt(), s.nextInt());
+                    name = s.next();
+                    hm.loadHidato(name);
                     break;
-                case 3:
-                    Type a[] = {Type.BLANK,Type.GIVEN,Type.VOID};//{"Buida", "Pista", "No Valida"};
-                    hm.setTempCellType(s.nextInt(), s.nextInt(), a[s.nextInt()]);
+                case 31:
+                    n = s.nextInt(); m = s.nextInt(); val = s.nextInt();
+                    hm.setTempCellVal(n, m, val);
+                    break;
+                case 32:
+                    n = s.nextInt(); m = s.nextInt(); val = s.nextInt();
+                    hm.setTempCellType(n, m, tipus[val-1]);
                     break;
                 case 4:
-                    dibuixa(hm);
-                    break;
-                case 41:
-                    hm.dibuixaTots();
+                    d = s.nextInt();
+                    hm.completeTempHidato(diff[d-1]);
                     break;
                 case 5:
-                    s.skip(" ");
-                    nom = s.nextLine();
-                    hm.saveTempHidato(nom);
+                    hm.solveTempHidato();
                     break;
                 case 6:
+                    name = s.next();
+                    if (hm.usedName(name)) System.out.printf("Esta utilitzat");
+                    else System.out.printf("No esta utilitzat");
+                    break;
+                case 71:
+                    name = s.next();
+                    hm.saveTempHidato(name);
+                    break;
+                case 72:
                     hm.saveTempHidato(null);
                     break;
-                case 7:
-                    s.skip(" ");
-                    nom = s.nextLine();
-                    hm.modifyHidato(nom);
                 default:
                     break;
             }
+            dibuixa(hm);
         } while (acc != 8);
     }
     
@@ -80,10 +85,28 @@ public class HidatoManagerDriver {
         int m = hm.getTempSizeX();
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                System.out.printf("%d ", hm.getTempCellVal(j,i));
+                System.out.printf("%3d ", hm.getTempCellVal(j,i));
             }
             System.out.print("\n");
         }
+    }
+    
+    private static void usage() {
+        System.out.printf("USAGE:\n");
+        System.out.printf("11 n m d => crea nou hidato aleatori de mida nxm "
+                + "i dificultat d (1 = EASY, 2 = MEDIUM, 3 = HARD)\n");
+        System.out.printf("12 n m => crea nou hidato buit de mida nxm\n");
+        System.out.printf("2 name => obre el hidato amb nom name");
+        System.out.printf("31 x y v => canvia el valor de (x,y) per v\n");
+        System.out.printf("32 x y t => canvia el tipus de (x,y) per t "
+                + "(1 = BLANK, 2 = GIVEN, 3 = VOID)\n");
+        System.out.printf("4 d => acaba de generar el hidato posant-li"
+                + "dificultat d (1 = EASY, 2 = MEDIUM, 3 = HARD)\n");
+        System.out.printf("5 => soluciona el hidato temporal\n");
+        System.out.printf("6 name => mira si el nom name ja esta utilitzat\n");
+        System.out.printf("71 name => guarda el hidato temporal amb nom name\n");
+        System.out.printf("72 => guarda el hidato temporal amb nom que ja te\n");
+        System.out.printf("8 => sortir\n");
     }
     
 }

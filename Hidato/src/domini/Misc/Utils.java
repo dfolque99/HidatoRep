@@ -11,6 +11,7 @@ import domini.Tauler.Type;
  * @see Cell
  * @see Hidato
  */
+
 public final class Utils {
 
     private Utils() {
@@ -130,7 +131,7 @@ public final class Utils {
             for (int j = 0; j < hidato.getSizeY(); j += 1) {
                 ret.append("|");
                 int val = Utils.toIntZero(hidato.getCell(i,j));
-                if (val != 0) ret.append(String.format("%3d ", val));
+                if (hidato.getCell(i,j).getType() == Type.GIVEN) ret.append(String.format("%3d ", val));
                 else if (hidato.getCell(i,j).getType() == Type.BLANK) ret.append("____");
                 else ret.append("####");
             }

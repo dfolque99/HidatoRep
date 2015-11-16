@@ -7,6 +7,10 @@
 package domini.Tauler;
 
 import domini.Partida.Difficulty;
+import domini.Partida.CtrGameManager;
+import domini.Partida.CtrCurrentGame;
+import domini.Partida.Help;
+
 /**
  *
  * @author David
@@ -15,27 +19,28 @@ import domini.Partida.Difficulty;
 public class HidatoManager {
     
     HidatoSet hset;
+    CtrGameManager cgm;
     Hidato tempHidato;
     
-    public HidatoManager (HidatoSet hset) {
+    public HidatoManager (HidatoSet hset, CtrGameManager cgm) {
         this.hset = hset;
+        this.cgm = cgm;
     }
     
     // crea un hidato aleatori i el deixa a tempHidato
     public void createRandom (int sizeX, int sizeY, Difficulty difficulty) {
         HidatoGenerator hg = new HidatoGenerator(sizeX, sizeY);
-        Hidato newH = hg.generateHidato(difficulty);
-        
+        tempHidato = hg.generateHidato(difficulty);
     }
     
-    // inicialitza tempHidato amb sizeX x sizeY, i retorna el seu editor
+    // inicialitza tempHidato amb sizeX x sizeY
     public void createManual (int sizeX, int sizeY) {
         tempHidato = new Hidato (sizeX, sizeY);
     }
     
     // pre: existeix un hidato amb nom name
     // fa una copia a tempHidato amb les dades del que te nom name, retorna l'editor
-    public void modifyHidato (String name) {
+    public void loadHidato (String name) {
         tempHidato = new Hidato(hset.getHidatoByName(name));
     }
     
@@ -49,12 +54,13 @@ public class HidatoManager {
      * guardar-lo
      */
     
-    public void playTempHidato() {
-        
+    public CtrCurrentGame playTempHidato(String name, Help help) {
+        return cgm.createGame(name, tempHidato, help);
     }
     
-    public void solveTempHidato() {
-        
+    public boolean solveTempHidato() {
+        Solver solver = new Solver();
+        return solver.solve(tempHidato);
     }
     
     // pre: si name != null, no es el nom de cap hidato existent
@@ -70,8 +76,9 @@ public class HidatoManager {
     }
     
     // agafa el tempHidato i el completa (pel cas d'us crea amb limitacions)
-    public void completeTempHidato (/* limitacions */) {
-        // falten coses!
+    public void completeTempHidato (Difficulty difficulty) {
+        HidatoGenerator hg = new HidatoGenerator(tempHidato);
+        tempHidato = hg.generateHidato(difficulty);
     }
     
     public int getTempCellVal (int x, int y) {
@@ -98,20 +105,5 @@ public class HidatoManager {
         tempHidato.getCell(x, y).setType(type);
     }
     
-    // nomes pel main
-    public void dibuixaTots() {
-        for (int k = 0; k < hset.getTotalHidatos(); ++k) {
-            Hidato h = hset.getHidatoByPos(k);
-            System.out.printf("Hidato %s:\n", h.getBoardName());
-            int n = h.getSizeY();
-            int m = h.getSizeX();
-            for (int i = 0; i < n; ++i) {
-                for (int j = 0; j < m; ++j) {
-                    System.out.printf("%d ", h.getCell(j,i).getVal());
-                }
-                System.out.print("\n");
-            }
-        }
-    }
     
 }
