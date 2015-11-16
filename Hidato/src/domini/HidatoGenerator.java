@@ -13,9 +13,7 @@ import java.util.LinkedList;
  *
  * @author David
  * 
- * pendent:
- *      treure R[i][j]
- *      que quan crei el cami tingui en compte si esta massa lluny de la seguent pista (pel valor que esta posant)
+ *      
  */
 
 
@@ -24,7 +22,6 @@ public class HidatoGenerator {
     private Hidato h;
     private int n, m;
     private int iter, val_ref;
-    private int R[][]; // s'ha d'eliminar
     private int D[][]; // D[i][j] = caselles disponibles al voltant de (i,j)
     private Position L[]; // L[i] = lloc del numero i
     private int nextGiven[];
@@ -36,12 +33,6 @@ public class HidatoGenerator {
         this.h = new Hidato(sizeX, sizeY);
         n = sizeX;
         m = sizeY;
-        R = new int[sizeX][sizeY]; // canviar
-        for (int i = 0; i < h.getSizeX(); i++) {
-            for (int j = 0; j < h.getSizeY(); ++j) {
-                R[i][j] = h.getCell(i, j).getVal();
-            }
-        }
         totalCaselles = sizeX*sizeY;
     }
     
@@ -49,12 +40,6 @@ public class HidatoGenerator {
         this.h = new Hidato(h);
         n = h.getSizeX();
         m = h.getSizeY();
-        R = new int[n][m]; // canviar
-        for (int i = 0; i < h.getSizeX(); i++) {
-            for (int j = 0; j < h.getSizeY(); ++j) {
-                R[i][j] = h.getCell(i, j).getVal();
-            }
-        }
         comptaCaselles();
     }
     
@@ -65,7 +50,7 @@ public class HidatoGenerator {
     */
     
     public Hidato generateHidato(Difficulty difficulty) {
-        //dibuixa();
+        
         if (hidatoValid() == false) {
             error = "Hidato inicial no valid: " + error;
             return null;
@@ -75,12 +60,7 @@ public class HidatoGenerator {
             return null;
         }
         posarPistes(difficulty);
-        //dibuixa();
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < m; ++j) {
-                h.getCell(i, j).setVal(R[i][j]);
-            }
-        }
+        
         return h;
     }
     
@@ -167,13 +147,13 @@ public class HidatoGenerator {
         else random = randomNum(0,veins.size()-1);
         for (int i = 0; i < veins.size(); ++i) {
             Position next = veins.get((i+random)%veins.size());
-            int antVal = R[next.getX()][next.getY()];
-            R[next.getX()][next.getY()] = val+1;
+            int antVal = GC(next.getX(),next.getY());
+            SC(next.getX(),next.getY(),val+1);
             sumaVoltantD(next.getX(),next.getY(),-1);
             boolean result = backtracking(val+1,next);
             if (result) return true;
             sumaVoltantD(next.getX(),next.getY(),1);
-            R[next.getX()][next.getY()] = antVal;
+            SC(next.getX(),next.getY(),antVal);
             if (val_ref != 0) {
                 if (val > val_ref*1/2) return false;
                 if (particionat(val)) {
@@ -195,7 +175,7 @@ public class HidatoGenerator {
         for (int i = Math.max(p.getX()-1, 0); i <= Math.min(p.getX()+1, n-1); ++i) {
             for (int j = Math.max(p.getY()-1, 0); j <= Math.min(p.getY()+1, m-1); ++j) {
                 if (i == p.getX() && j == p.getY()) continue;
-                if (R[i][j] == 0 && !h.getCell(i,j).getType().equals(Type.VOID)) {
+                if (GC(i,j) == 0 && !h.getCell(i,j).getType().equals(Type.VOID)) {
                     ret.addLast(new Position(i,j));
                 }
             }
@@ -207,7 +187,7 @@ public class HidatoGenerator {
         for (int i = Math.max(p.getX()-1, 0); i <= Math.min(p.getX()+1, n-1); ++i) {
             for (int j = Math.max(p.getY()-1, 0); j <= Math.min(p.getY()+1, m-1); ++j) {
                 if (i == p.getX() && j == p.getY()) continue;
-                if (R[i][j] == val+1 && !h.getCell(i,j).getType().equals(Type.VOID)) {
+                if (GC(i,j) == val+1 && !h.getCell(i,j).getType().equals(Type.VOID)) {
                     return new Position(i,j);
                 }
             }
@@ -248,7 +228,7 @@ public class HidatoGenerator {
         for (int i = 0; i < n; ++i) {
           for (int j = 0; j < m; ++j) {
             BFS[i][j] = true;
-            if ((R[i][j] == 0 || R[i][j] > val) && !h.getCell(i, j).getType().equals(Type.VOID)) {
+            if ((GC(i,j) == 0 || GC(i,j) > val) && !h.getCell(i, j).getType().equals(Type.VOID)) {
               x0 = i; y0 = j;
               BFS[i][j] = false;
             }
@@ -316,7 +296,7 @@ public class HidatoGenerator {
         D = new int[n][m];
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                if(R[i][j] == 0) sumaVoltantD(i,j,1);
+                if(GC(i,j) == 0) sumaVoltantD(i,j,1);
             }
         }
     }
@@ -382,12 +362,19 @@ public class HidatoGenerator {
         return true;
     }
     
+    private int GC (int i, int j) {
+        return h.getCell(i, j).getVal();
+    }
+    private void SC (int i, int j, int val) {
+        h.getCell(i, j).setVal(val);
+    }
+    
     private void dibuixa() {
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                    System.out.printf("%d ", R[i][j]);
-                    if (R[i][j] < 10) System.out.printf(" ");
-                    if (R[i][j] < 100) System.out.printf(" ");
+                    System.out.printf("%d ", GC(i,j));
+                    if (GC(i,j) < 10) System.out.printf(" ");
+                    if (GC(i,j) < 100) System.out.printf(" ");
             }
             System.out.printf("\n");
         }
@@ -402,11 +389,11 @@ public class HidatoGenerator {
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
                 if (h.getCell(i, j).getType() == Type.GIVEN) {
-                    System.out.printf("%d ", R[i][j]);
-                    if (R[i][j] < 10) System.out.printf(" ");
-                    if (R[i][j] < 100) System.out.printf(" ");
+                    System.out.printf("%d ", GC(i,j));
+                    if (GC(i,j) < 10) System.out.printf(" ");
+                    if (GC(i,j) < 100) System.out.printf(" ");
                 }
-                else System.out.printf("__  ", R[i][j]);
+                else System.out.printf("__  ", GC(i,j));
             }
             System.out.printf("\n");
         }
