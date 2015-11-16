@@ -8,7 +8,7 @@ package domini.Tauler;
 
 import domini.Partida.Difficulty;
 import domini.Partida.CtrGameManager;
-import domini.Partida.CtrCurrentGame;
+import domini.Partida.CurrentGameController;
 import domini.Partida.Help;
 
 /**
@@ -16,20 +16,20 @@ import domini.Partida.Help;
  * @author David
  */
 
-public class HidatoManager {
+public class HidatoManagerController {
     
     HidatoSet hset;
     CtrGameManager cgm;
     Hidato tempHidato;
     
-    public HidatoManager (HidatoSet hset, CtrGameManager cgm) {
+    public HidatoManagerController (HidatoSet hset, CtrGameManager cgm) {
         this.hset = hset;
         this.cgm = cgm;
     }
     
     // crea un hidato aleatori i el deixa a tempHidato
     public void createRandom (int sizeX, int sizeY, Difficulty difficulty) {
-        HidatoGenerator hg = new HidatoGenerator(sizeX, sizeY);
+        GeneratorController hg = new GeneratorController(sizeX, sizeY);
         tempHidato = hg.generateHidato(difficulty);
     }
     
@@ -54,12 +54,12 @@ public class HidatoManager {
      * guardar-lo
      */
     
-    public CtrCurrentGame playTempHidato(String name, Help help) {
+    public CurrentGameController playTempHidato(String name, Help help) {
         return cgm.createGame(name, tempHidato, help);
     }
     
     public boolean solveTempHidato() {
-        Solver solver = new Solver();
+        SolverController solver = new SolverController();
         return solver.solve(tempHidato);
     }
     
@@ -77,7 +77,7 @@ public class HidatoManager {
     
     // agafa el tempHidato i el completa (pel cas d'us crea amb limitacions)
     public void completeTempHidato (Difficulty difficulty) {
-        HidatoGenerator hg = new HidatoGenerator(tempHidato);
+        GeneratorController hg = new GeneratorController(tempHidato);
         tempHidato = hg.generateHidato(difficulty);
     }
     

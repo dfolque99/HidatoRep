@@ -1,12 +1,12 @@
 package domini.Partida;
 
 import domini.Tauler.CtrHidato;
-import domini.Rank.CtrRanking;
+import domini.Rank.RankingController;
 import domini.Tauler.Hidato;
 import domini.Tauler.HidatoSet;
 import domini.Usuari.HidatoUser;
 import domini.Usuari.HidatoUserController;
-import domini.Tauler.Solver;
+import domini.Tauler.SolverController;
 
 /**
  * Controlador de totes les partides. Quan la vista vol crear/recuperar una partida,
@@ -34,14 +34,14 @@ public class CtrGameManager {
     private final CtrDBGame ctrDBGame;
     
     /**
-     * Solver, conte els metodes per resoldre hidatos
+     * SolverController, conte els metodes per resoldre hidatos
      */
-    private final Solver solver;
+    private final SolverController solver;
     
     /**
      * Controlador de ranking
      */
-    private final CtrRanking ctrRanking;
+    private final RankingController ctrRanking;
     
     /**
      * Controlador d'usuari
@@ -56,7 +56,7 @@ public class CtrGameManager {
      * @param ctrRanking controlador del ranking per poder enviar-li entrades
      * @param hidatoUserController controlador d'usuari per modificar els parametres de l'usuari loguejat
      */
-    public CtrGameManager(HidatoSet hidatoSet, CtrDBGame ctrDBGame, Solver solver, CtrRanking ctrRanking, HidatoUserController hidatoUserController){
+    public CtrGameManager(HidatoSet hidatoSet, CtrDBGame ctrDBGame, SolverController solver, RankingController ctrRanking, HidatoUserController hidatoUserController){
         this.hidatoSet = hidatoSet;
         this.hidatoUserController = hidatoUserController;        
         this.loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
@@ -72,7 +72,7 @@ public class CtrGameManager {
      * @param help Nivell d'ajuda (LOW/MEDIUM/HIGH)
      * @return el controlador de la partida creada
      */
-    public CtrCurrentGame createGame(String name, Hidato solvedHidato, Help help){
+    public CurrentGameController createGame(String name, Hidato solvedHidato, Help help){
         Boolean error = false;
         Game game_aux = ctrDBGame.getGame(name, loggedUser);
         if (game_aux != null) {
@@ -86,7 +86,7 @@ public class CtrGameManager {
         CtrHidato ctrHidato = new CtrHidato(hidato);
         ctrHidato.setBlankCellsToZero();
         Game game = new Game(name, hidato, solvedHidato, loggedUser, help, hidato.getDifficulty());
-        CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver, ctrRanking, hidatoUserController);
+        CurrentGameController ctrCurrentGame = new CurrentGameController(game, ctrDBGame, solver, ctrRanking, hidatoUserController);
         
         return ctrCurrentGame;
     }
@@ -98,11 +98,11 @@ public class CtrGameManager {
      * @param name nom de la partida a recuperar
      * @return el controlador de la partida recuperada
      */
-    public CtrCurrentGame restoreGame(String name){
+    public CurrentGameController restoreGame(String name){
         Game game = ctrDBGame.getGame(name, loggedUser);
         ctrDBGame.deleteGame(name, loggedUser);
         if (game == null) return null;
-        CtrCurrentGame ctrCurrentGame = new CtrCurrentGame(game, ctrDBGame, solver, ctrRanking, hidatoUserController);
+        CurrentGameController ctrCurrentGame = new CurrentGameController(game, ctrDBGame, solver, ctrRanking, hidatoUserController);
         return ctrCurrentGame;
     }
     

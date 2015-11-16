@@ -14,9 +14,9 @@ import java.util.Scanner;
  *
  * @author David
  */
-public class HidatoGeneratorDriver {
+public class DriverGeneratorController {
     
-    public HidatoGeneratorDriver() {
+    public DriverGeneratorController() {
         
     }
     
@@ -24,7 +24,7 @@ public class HidatoGeneratorDriver {
         Scanner s = new Scanner(System.in);
         int sizeX, sizeY;
         Difficulty dificultat;
-        HidatoGenerator hg;
+        GeneratorController hg;
         Hidato h;
         long t1, t2;
         
@@ -42,7 +42,7 @@ public class HidatoGeneratorDriver {
                     print ("Dificultat (EASY/MEDIUM/HARD): ");
                     dificultat = Difficulty.valueOf(s.next());
                     t1 = System.currentTimeMillis();
-                    hg = new HidatoGenerator(sizeX,sizeY);
+                    hg = new GeneratorController(sizeX,sizeY);
                     h = hg.generateHidato(dificultat);
                     t2 = System.currentTimeMillis();
                     print(Utils.toString(h));
@@ -74,7 +74,7 @@ public class HidatoGeneratorDriver {
                     print ("Dificultat (EASY/MEDIUM/HARD): ");
                     dificultat = Difficulty.valueOf(s.next());
                     t1 = System.currentTimeMillis();
-                    hg = new HidatoGenerator(origen);
+                    hg = new GeneratorController(origen);
                     h = hg.generateHidato(dificultat);
                     t2 = System.currentTimeMillis();
                     print(Utils.toString(h));

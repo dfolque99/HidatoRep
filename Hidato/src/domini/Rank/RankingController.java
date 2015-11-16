@@ -15,7 +15,7 @@ import java.util.Date;
  * Controlador que gestiona los rankings. Tiene tres rankings, uno por cada
  * dificultad de juego
  */
-public class CtrRanking {
+public class RankingController {
     
     private Ranking easyRanking;
     private Ranking mediumRanking;
@@ -27,7 +27,7 @@ public class CtrRanking {
      * Se debe realizar al principio de la ejecucion del programa
      */
     public void init() {
-        CtrDBRanking db = new CtrDBRanking();
+        RankingDBController db = new RankingDBController();
         easyRanking = db.getRanking(Difficulty.EASY);
         mediumRanking = db.getRanking(Difficulty.MEDIUM);
         hardRanking = db.getRanking(Difficulty.HARD);
@@ -38,7 +38,7 @@ public class CtrRanking {
      * Se debe realizar antes de cerrar el programa.
      */
     public void save() {
-        CtrDBRanking db = new CtrDBRanking();
+        RankingDBController db = new RankingDBController();
         db.modifyRanking(Difficulty.EASY,easyRanking);
         db.modifyRanking(Difficulty.MEDIUM,mediumRanking);
         db.modifyRanking(Difficulty.HARD,hardRanking);

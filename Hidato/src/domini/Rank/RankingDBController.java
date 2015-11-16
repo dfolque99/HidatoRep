@@ -15,7 +15,7 @@ import domini.Partida.Difficulty;
 //ES SOLO PARA QUE NO DE ERRORES DE COMPILACION EL PROYECTO
 //SE IMPLEMENTARA MAS TARDE
 
-public class CtrDBRanking {
+public class RankingDBController {
     
     public Ranking getRanking(Difficulty difficulty) {
         return new Ranking(difficulty);

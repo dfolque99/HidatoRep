@@ -2,7 +2,7 @@ package domini.Tauler;
 import domini.Misc.Utils;
 import java.util.ArrayList;
 import java.util.Scanner;
-final public class SolverDriver {
+final public class DriverSolverController {
     
         @SuppressWarnings("UseOfSystemOutOrSystemErr")
         public static void showHelp(){
@@ -26,7 +26,7 @@ final public class SolverDriver {
     
         @SuppressWarnings("UseOfSystemOutOrSystemErr")
 	public static void main(final String... args){
-            final Solver solver = new Solver();
+            final SolverController solver = new SolverController();
             Hidato hidato = new Hidato(1,1);
             try (Scanner user_input = new Scanner( System.in )) {
                 showHelp();  
@@ -70,6 +70,6 @@ final public class SolverDriver {
                 }
             }
         }
-	private SolverDriver() {throw new UnsupportedOperationException();}
+	private DriverSolverController() {throw new UnsupportedOperationException();}
 
 }

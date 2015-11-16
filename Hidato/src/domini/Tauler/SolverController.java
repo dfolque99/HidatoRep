@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @see <a href="https://en.wikipedia.org/wiki/Hidato">Hidato</a>
  * @see <a href="https://en.wikipedia.org/wiki/Knight%27s_tour#Warnsdorf.27s_rule">Warnsdorf's rule</a>
  */
-public class Solver {
+public class SolverController {
     /**
      * Moore Neighbourhood
      */
@@ -60,7 +60,7 @@ public class Solver {
     /**
      * constructor, does nothing
      */
-    public Solver() {
+    public SolverController() {
 
     }
 

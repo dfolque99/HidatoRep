@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author Guillem
  */
-public class UserControllerDriver {
+public class DriverUserController {
 
     /**
      * @param args the command line arguments

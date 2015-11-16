@@ -9,13 +9,13 @@ package domini.Partida;
  */
 
 import domini.Tauler.CtrHidato;
-import domini.Rank.CtrRanking;
+import domini.Rank.RankingController;
 import domini.Tauler.Hidato;
-import domini.Tauler.HidatoGenerator;
+import domini.Tauler.GeneratorController;
 import domini.Tauler.HidatoSet;
 import domini.Usuari.HidatoUser;
 import domini.Usuari.HidatoUserController;
-import domini.Tauler.Solver;
+import domini.Tauler.SolverController;
 import domini.Misc.Utils;
 import java.util.Scanner;
 
@@ -24,7 +24,7 @@ import java.util.Scanner;
  * una partida. Permet fer moltes partides consecutives, i tambe canviar d'usuari
  * @author Pau Surrell
  */
-public class GameDriver {
+public class DriverGame {
     public static void main(String [] args){
         Scanner sc = new Scanner(System.in);
         System.out.println("----GameDriver----");
@@ -40,11 +40,11 @@ public class GameDriver {
             HidatoUser user = new HidatoUser(username, password);
             HidatoUserController hidatoUserController = new HidatoUserController();
             CtrDBGame ctrDBGame = new CtrDBGame();
-            Solver solver = new Solver();
-            CtrRanking ctrRanking = new CtrRanking();
-           // HidatoGenerator hidatoGenerator = new HidatoGenerator(4,5); //tamany del hidato
+            SolverController solver = new SolverController();
+            RankingController ctrRanking = new RankingController();
+           // GeneratorController hidatoGenerator = new GeneratorController(4,5); //tamany del hidato
             CtrGameManager ctrGameManager = new CtrGameManager(hidatoSet, ctrDBGame, solver, ctrRanking, hidatoUserController);
-            CtrCurrentGame ctrCurrentGame = null;
+            CurrentGameController ctrCurrentGame = null;
             hidatoUserController.login(username, password);
 
             int op = sc.nextInt();
@@ -66,18 +66,18 @@ public class GameDriver {
                                 String name = sc.next();    
                                 Help help = Help.valueOf(sc.next());
                                 Difficulty difficulty = Difficulty.valueOf(sc.next());
-                                HidatoGenerator hidatoGenerator;
+                                GeneratorController hidatoGenerator;
                                 switch (difficulty){
                                     case EASY: 
-                                        hidatoGenerator = new HidatoGenerator(6,6); //tamany del hidato
+                                        hidatoGenerator = new GeneratorController(6,6); //tamany del hidato
                                         break;
                                     case MEDIUM:
-                                        hidatoGenerator = new HidatoGenerator(7,8); //tamany del hidato
+                                        hidatoGenerator = new GeneratorController(7,8); //tamany del hidato
                                         break;
                                     case HARD:
-                                        hidatoGenerator = new HidatoGenerator(9,9); //tamany del hidato
+                                        hidatoGenerator = new GeneratorController(9,9); //tamany del hidato
                                         break;
-                                    default: hidatoGenerator = new HidatoGenerator(0,0);//Mai s'hauria d'arribar aqui
+                                    default: hidatoGenerator = new GeneratorController(0,0);//Mai s'hauria d'arribar aqui
                                 }
                                 Hidato hidato = hidatoGenerator.generateHidato(difficulty);
                                 if (hidato == null) System.out.println("hidato nul");

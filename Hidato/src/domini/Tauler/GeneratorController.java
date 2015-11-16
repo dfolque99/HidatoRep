@@ -11,7 +11,7 @@ import java.util.LinkedList;
  * 
  */
 
-public class HidatoGenerator {
+public class GeneratorController {
     
     private Hidato h;
     private int n, m;
@@ -25,7 +25,7 @@ public class HidatoGenerator {
      * Pre: sizeX, sizeY >= 0
      * Post: crea una instancia de HidatoGenerator que partira d'un hidato buit
     */
-    public HidatoGenerator(int sizeX, int sizeY) {
+    public GeneratorController(int sizeX, int sizeY) {
         this.h = new Hidato(sizeX, sizeY);
         n = sizeX;
         m = sizeY;
@@ -46,7 +46,7 @@ public class HidatoGenerator {
      *      * si el tipus d'una casella es BLANK, sera BLANK o GIVEN, depenent
      *        de si cal donar mes nombres inicials per satisfer la dificultat
     */
-    public HidatoGenerator(Hidato h) {
+    public GeneratorController(Hidato h) {
         this.h = new Hidato(h);
         n = h.getSizeX();
         m = h.getSizeY();

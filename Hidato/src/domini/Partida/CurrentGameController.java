@@ -1,20 +1,20 @@
 package domini.Partida;
 import domini.Tauler.Cell;
 import domini.Tauler.CtrHidato;
-import domini.Rank.CtrRanking;
+import domini.Rank.RankingController;
 import domini.Tauler.Hidato;
 import domini.Usuari.HidatoUser;
 import domini.Usuari.HidatoUserController;
-import domini.Tauler.Solver;
+import domini.Tauler.SolverController;
 import domini.Tauler.Type;
 import java.util.ArrayList;
 
 /**
- * Controlador d'una partida: cada partida te assignada una instancia de CtrCurrentGame,
- * que s'ocupa de comunicar la capa de vista i els altres controladors amb la partida.
+ * Controlador d'una partida: cada partida te assignada una instancia de CurrentGameController,
+ que s'ocupa de comunicar la capa de vista i els altres controladors amb la partida.
  * @author Pau Surrell
  */
-public class CtrCurrentGame {
+public class CurrentGameController {
 
     /**
      * Partida sobre la qual el controlador actuara
@@ -27,9 +27,9 @@ public class CtrCurrentGame {
     private final CtrDBGame ctrDBGame;
     
     /**
-     * Solver, te els metodes per resoldre hidatos
+     * SolverController, te els metodes per resoldre hidatos
      */
-    private final Solver solver;
+    private final SolverController solver;
     
     /**
      * Controlador de hidato, te metodes per modificar hidatos
@@ -39,7 +39,7 @@ public class CtrCurrentGame {
     /**
      * Controlador de ranking, te metodes per modificar el ranking
      */
-    private final CtrRanking ctrRanking;
+    private final RankingController ctrRanking;
     
     /**
      * Controlador d'usuari, te metodes per modificar dades de l'usuari
@@ -62,7 +62,7 @@ public class CtrCurrentGame {
      * @param ctrRanking controlador del ranking per enviar-li les dades de la partida acabada
      * @param hidatoUserController controlador de l'usuari que juga la partida
      */    
-    public CtrCurrentGame(Game game, CtrDBGame ctrDBGame, Solver solver, CtrRanking ctrRanking, HidatoUserController hidatoUserController){
+    public CurrentGameController(Game game, CtrDBGame ctrDBGame, SolverController solver, RankingController ctrRanking, HidatoUserController hidatoUserController){
         this.game = game;
         this.ctrDBGame = ctrDBGame;
         this.ctrHidato = new CtrHidato(game.getHidato());

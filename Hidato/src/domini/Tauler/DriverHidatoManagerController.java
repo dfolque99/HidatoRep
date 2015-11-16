@@ -15,14 +15,14 @@ import domini.Partida.Difficulty;
  * @author David
  */
 
-public class HidatoManagerDriver {
+public class DriverHidatoManagerController {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         HidatoSet hs = new HidatoSet();
-        HidatoManager hm = new HidatoManager(hs, null);
+        HidatoManagerController hm = new HidatoManagerController(hs, null);
         Scanner s = new Scanner(System.in);
         int acc, n, m, d, val;
         String name;
@@ -80,7 +80,7 @@ public class HidatoManagerDriver {
         } while (acc != 8);
     }
     
-    private static void dibuixa (HidatoManager hm) {
+    private static void dibuixa (HidatoManagerController hm) {
         int n = hm.getTempSizeX();
         int m = hm.getTempSizeY();
         for (int i = 0; i < n; ++i) {

@@ -13,7 +13,7 @@ import java.util.Scanner;
  *
  * @author Guillem
  */
-public class RankingDriver {
+public class DriverRanking {
 
     /**
      * @param args the command line arguments

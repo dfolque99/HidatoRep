@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author David
  */
-public class CellDriver {
+public class DriverCell {
     
     public static void main (String[] args) {
         Scanner s = new Scanner(System.in);

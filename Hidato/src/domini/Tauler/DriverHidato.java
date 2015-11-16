@@ -15,7 +15,7 @@ import domini.Partida.Difficulty;
  * @author David
  */
 
-public class HidatoDriver {
+public class DriverHidato {
 
     /**
      * @param args the command line arguments

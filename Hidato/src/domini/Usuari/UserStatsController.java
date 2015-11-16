@@ -8,12 +8,12 @@ import java.time.Duration;
  * @see HidatoUser
  * @see User
  */
-public final class CtrStatsUser {
+public final class UserStatsController {
 
     private final HidatoUser user;
 
     @SuppressWarnings("unused")
-	private CtrStatsUser() {
+	private UserStatsController() {
         throw new UnsupportedOperationException();
     }
 
@@ -21,7 +21,7 @@ public final class CtrStatsUser {
      *
      * @param user instance of User to show stats of
      */
-    public CtrStatsUser(HidatoUser user) {
+    public UserStatsController(HidatoUser user) {
         this.user = user;
     }
 
