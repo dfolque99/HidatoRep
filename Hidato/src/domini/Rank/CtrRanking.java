@@ -51,7 +51,7 @@ public class CtrRanking {
      * la fecha en la que un record entra al ranking)
      * Pre: Hacer init()
      */
-    void addScoreToRanking(int score, String username, Difficulty difficulty) {
+    public void addScoreToRanking(int score, String username, Difficulty difficulty) {
         RankingEntry newEntry = new RankingEntry(new Date(),username,score);
         switch(difficulty) {
             case EASY:
