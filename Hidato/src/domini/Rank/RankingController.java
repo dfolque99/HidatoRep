@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * @author Guillem
  * Controlador que gestiona los rankings. Tiene tres rankings, uno por cada
- * dificultad de juego
+ * dificultad de juego.
  */
 public class RankingController {
     

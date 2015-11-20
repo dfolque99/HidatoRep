@@ -5,6 +5,7 @@
  */
 package domini.Rank;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Date;
  * Representa una entrada del Ranking, contiene el nombre del usuario que ha
  * conseguido la puntuacion, la puntuacion y la fecha en la que lo ha conseguido.
  */
-public class RankingEntry {
+public class RankingEntry implements Serializable {
     
     private final Date date;
     private final String username;

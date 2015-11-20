@@ -6,6 +6,7 @@
 package domini.Rank;
 
 import domini.Partida.Difficulty;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  * entradas, en caso de intentar añadir una más se eliminara la que tenga menos
  * puntuación.
  */
-public class Ranking {
+public class Ranking implements Serializable {
 
     private static final int N = 20;
     private final Difficulty difficulty;
@@ -23,7 +24,7 @@ public class Ranking {
 
     public Ranking(Difficulty difficulty) {
         this.difficulty = difficulty;
-        ranking = new ArrayList<>(N+1);
+        ranking = new ArrayList<>();
         ranking.ensureCapacity(N+1);
     }
 

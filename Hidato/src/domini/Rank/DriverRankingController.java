@@ -25,11 +25,12 @@ public class DriverRankingController {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         RankingController ranking = new RankingController();
-        ranking.init();
         System.out.println("----DriverRankingController----");
         System.out.println("Seleccion una opcion:");
         System.out.println("1. Insertar una entrada en un ranking");
         System.out.println("2. Mostrar un ranking");
+        System.out.println("3. Cargar rankings guardados");
+        System.out.println("4. Guardar rankings");
         System.out.println("-1. Finalizar ejecucion");
         int op = sc.nextInt();
         while (op != -1) {
@@ -59,6 +60,14 @@ public class DriverRankingController {
                     for (int i = 0; i < v.size(); ++i) {
                         System.out.println((i+1) +  ". " + v.get(i));
                     }
+                    break;
+                    
+                case 3:
+                    ranking.init();
+                    break;
+                    
+                case 4:
+                    ranking.save();
                     break;
                     
                 default:
