@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
  * @since 2015-11-07
  * @see <a href="https://en.wikipedia.org/wiki/Hidato">Hidato</a>
  * @see <a href="https://en.wikipedia.org/wiki/Knight%27s_tour#Warnsdorf.27s_rule">Warnsdorf's rule</a>
+ * @see <a href="https://en.wikipedia.org/wiki/Hamiltonian_path_problem">Hamiltonian</a>
  */
 public class SolverController {
     /**
@@ -304,7 +305,15 @@ public class SolverController {
                 + Values.get(a));
         return result;
     }
-
+    private ArrayList<int[]> getNeighboursSortedWorst(final int x, final int y, final int n) { //worst first search ?
+        //ArrayList<int[]> result = getNeighboursUnsorted(x, y, n);
+        ArrayList<int[]> result = getNeighboursSorted(x, y, n);
+        Map<int[], Integer> Values = new HashMap<>(8);
+        result.stream().forEach(s-> {Values.put(s,Position.distance(givenCells[next[n]],new Position(s[0],s[1])));});
+        Collections.sort(result, (final int[] a, final int[] b) -> +Values.get(b)
+                -Values.get(a));
+        return result;
+    }
     /**
      * Tries to solve a Hidato board using backtracking/recursion It must start
      * with the starting cell (n=1)
@@ -322,7 +331,7 @@ public class SolverController {
         //recursion case
         board.getCell(x, y).setVal(n);    
         used[x][y] = true;
-        if (getNeighboursSorted(x, y, n).stream().anyMatch((s) -> (solve(x + s[0], y + s[1], n + 1)))) {
+        if (getNeighboursSortedWorst(x, y, n).stream().anyMatch((s) -> (solve(x + s[0], y + s[1], n + 1)))) {
             return true;
         }
         used[x][y] = false;
