@@ -215,7 +215,7 @@ public class SolverController {
                 }
                 if (1 == count) {
                     board.setCell(i,j,new Cell(n,Type.GIVEN));
-                    System.out.println("presolve, only one value for a position i,j,n "+i+" "+j+" "+n);
+                    //System.out.println("presolve, only one value for a position i,j,n "+i+" "+j+" "+n);
                     upload(board);
                     return;
                 }
@@ -239,7 +239,7 @@ public class SolverController {
             }    
             if (1 == count) {
                 board.setCell(x,y,new Cell(k,Type.GIVEN));
-                System.out.println("presolve, only one position for a value i,j,n "+x+" "+y+" "+k);
+                //System.out.println("presolve, only one position for a value i,j,n "+x+" "+y+" "+k);
                 upload(board);
                 return;
             }
