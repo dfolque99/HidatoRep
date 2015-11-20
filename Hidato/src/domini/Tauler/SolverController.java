@@ -1,7 +1,7 @@
 package domini.Tauler;
 
-import domini.Misc.Utils;
 import domini.Misc.Position;
+import domini.Misc.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
