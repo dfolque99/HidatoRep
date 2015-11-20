@@ -7,7 +7,15 @@ public class DisplayStatsUI extends javax.swing.JFrame {
     private final static String[] getStats(){
         HidatoUser h = CurrentUser.getHidatoUser();
         UserStatsController usc = new UserStatsController(h);
-        return new String[]{String.valueOf(usc.getAverageScore())};
+        return new String[]{"getAverageScore: "+String.valueOf(usc.getAverageScore()),
+                            "getAverageTimePerSolve: "+String.valueOf(usc.getAverageTimePerSolve().getSeconds()),
+                            "getSolvedGames: "+String.valueOf(usc.getSolvedGames()),
+                            "getSolvedPercentage: "+String.valueOf(usc.getSolvedPercentage()),
+                            "getStartedGames: "+String.valueOf(usc.getStartedGames()),
+                            "getTotalCreatedBoards: "+String.valueOf(usc.getTotalCreatedBoards()),
+                            "getTotalScore: "+String.valueOf(usc.getTotalScore()),
+                            "getTotalTimePlayed: "+String.valueOf(usc.getTotalTimePlayed().getSeconds())
+        };
         
     }
     public DisplayStatsUI(){
