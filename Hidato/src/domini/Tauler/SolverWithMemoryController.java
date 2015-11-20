@@ -16,6 +16,7 @@ public class SolverWithMemoryController {
     private static final Map<Hidato, Boolean > solved = new HashMap<>(5);
     public static Boolean solve(Hidato hidato){
         return solved.computeIfAbsent(hidato,t->new SolverController().solve(t));
+        //no funciona bien porque el hash de hidato incluye mas oarametros... 
     }
     private SolverWithMemoryController() {}
 }
