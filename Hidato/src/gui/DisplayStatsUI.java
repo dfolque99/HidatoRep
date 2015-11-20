@@ -5,7 +5,7 @@ import domini.Usuari.*;
  */
 public class DisplayStatsUI extends javax.swing.JFrame {
     private final static String[] getStats(){
-        HidatoUser h = CurrentUser.getHidatoUser();
+        HidatoUser h = CurrentUser.getInstance().getHidatoUser();
         UserStatsController usc = new UserStatsController(h);
         return new String[]{"Statistics of user: "+h.getUsername(),
                             "getAverageScore: "+String.valueOf(usc.getAverageScore()),
