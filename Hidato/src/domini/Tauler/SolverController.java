@@ -13,6 +13,9 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 /**
+ * hidoku, hidato, king's tour, hamiltonian path, longest simple path ...
+ * Hidato is NP-complete
+ * if numbrix, and if grid is rectangular then ...
  * @author felix.axel.gimeno
  * @version 0.4
  * @since 2015-11-07
@@ -305,6 +308,13 @@ public class SolverController {
                 + Values.get(a));
         return result;
     }
+    /**
+     * Worst-first search, worst is most distance to next given cell
+     * @param x
+     * @param y
+     * @param n
+     * @return 
+     */
     private ArrayList<int[]> getNeighboursSortedWorst(final int x, final int y, final int n) { //worst first search ?
         //ArrayList<int[]> result = getNeighboursUnsorted(x, y, n);
         ArrayList<int[]> result = getNeighboursSorted(x, y, n);
