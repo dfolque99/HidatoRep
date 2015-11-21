@@ -7,16 +7,33 @@ package domini.Tauler;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *
  * @author felix.axel.gimeno
  */
 public class SolverWithMemoryController {
-    private static final Map<Hidato, Boolean > solved = new HashMap<>(5);
+    private static final Map<Integer, Boolean > solved = new HashMap<>(5);
+    private static Integer hashCode(Hidato hidato){
+               int hash = 7;
+               hash = 61 * hash + hidato.getSizeX();
+               hash = 61 * hash + hidato.getSizeY();
+               for (int i = 0; i < hidato.getSizeX(); i += 1){
+                   for (int j = 0; j < hidato.getSizeY(); j +=1){
+                       hash = 61 * hash + hidato.getCell(i,j).getVal();
+                   }
+               }
+               System.out.println("Hidato Hash: " +hash);
+               return hash;
+    }
     public static Boolean solve(Hidato hidato){
-        return solved.computeIfAbsent(hidato,t->new SolverController().solve(t));
-        //no funciona bien porque el hash de hidato incluye mas oarametros... 
+        int hash = hashCode(hidato);
+        Boolean b = solved.get(hash);
+        if (null == b) {
+            solved.put(hash,new SolverController().solve(hidato) );
+        }
+        return solved.get(hash);
     }
     private SolverWithMemoryController() {}
 }
