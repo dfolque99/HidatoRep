@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.NavigableMap;
 import java.util.Random;
 import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 /**
  * hidoku, hidato, king's tour, hamiltonian path, longest simple path ...
@@ -60,6 +60,47 @@ public class SolverController {
      * value of finishing cell
      */
     private Integer finish; 
+    /**
+     * Distinguishes whether cell input is available for number n
+     *
+     * @param x	x-position of cell input
+     * @param y y-position of cell input
+     * @param n number to try for cell input
+     * @return true if cell can be assigned number n, false otherwise
+     */
+    /*private boolean validPosition(final int x, final int y, final int n) { //to do: can i split this, mnemoize this ...
+    if (n > finish) {return false;}
+    if ((Math.min(x, y) < 0) || (Math.max(x - board.getSizeX(), y - board.getSizeY()) >= 0)) {
+    return false;
+    }
+    final Position positionOfValueN = givenCells[n];
+    if (positionOfValueN != null){
+    return positionOfValueN.equals(new Position(x, y));
+    }
+    if (Position.notEnoughDistance(next[n], givenCells[next[n]], n, new Position(x, y))) {
+    return false;
+    }
+    if (board.getCell(x, y).getType() == Type.VOID){return false;}
+    boolean isValid = true;
+    if (used[x][y]
+    || (board.getCell(x, y).getType() == Type.GIVEN && board.getCell(x, y).getVal() != n)
+    ) {
+    isValid = false;
+    }
+    return isValid;
+    }*/
+    /*public class PositionValue {
+    private final Position p;
+    private final Integer n;
+    private PositionValue() {throw new UnsupportedOperationException();}
+    public PositionValue(Position p,Integer n){this.p=p;this.n=n;}
+    public PositionValue(final int x, final int y, final int n){this.p = new Position(x,y); this.n = n;}
+    public Position getP(){return this.p;}
+    public Integer  getN(){return this.n;}
+    }
+     */
+    //private Map<PositionValue, Boolean> cache;
+    private boolean[][][] myCache;
     
     /**
      * constructor, does nothing
@@ -161,47 +202,6 @@ public class SolverController {
         return null;
     }
 
-    /**
-     * Distinguishes whether cell input is available for number n
-     *
-     * @param x	x-position of cell input
-     * @param y y-position of cell input
-     * @param n number to try for cell input
-     * @return true if cell can be assigned number n, false otherwise
-     */
-    /*private boolean validPosition(final int x, final int y, final int n) { //to do: can i split this, mnemoize this ...
-        if (n > finish) {return false;}
-        if ((Math.min(x, y) < 0) || (Math.max(x - board.getSizeX(), y - board.getSizeY()) >= 0)) {
-            return false;
-        }
-        final Position positionOfValueN = givenCells[n];
-        if (positionOfValueN != null){
-            return positionOfValueN.equals(new Position(x, y));
-        }
-        if (Position.notEnoughDistance(next[n], givenCells[next[n]], n, new Position(x, y))) {
-            return false;
-        }
-        if (board.getCell(x, y).getType() == Type.VOID){return false;}
-        boolean isValid = true;
-        if (used[x][y]
-                || (board.getCell(x, y).getType() == Type.GIVEN && board.getCell(x, y).getVal() != n)
-                ) {
-            isValid = false;
-        }
-        return isValid;
-    }*/
-    /*public class PositionValue {
-        private final Position p;
-        private final Integer n;
-        private PositionValue() {throw new UnsupportedOperationException();}
-        public PositionValue(Position p,Integer n){this.p=p;this.n=n;}
-        public PositionValue(final int x, final int y, final int n){this.p = new Position(x,y); this.n = n;}
-        public Position getP(){return this.p;}
-        public Integer  getN(){return this.n;}
-    }
-    */
-    //private Map<PositionValue, Boolean> cache; 
-    private boolean[][][] myCache; 
     private void presolve(){
         for (int i = 0; i < board.getSizeX(); i+=1){
             for (int j = 0; j < board.getSizeY(); j+=1 ){
@@ -373,5 +373,4 @@ public class SolverController {
         }
         return false;
     }
-    
 }
