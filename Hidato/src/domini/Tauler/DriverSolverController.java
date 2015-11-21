@@ -47,8 +47,11 @@ final public class DriverSolverController {
                     }
                     if (3 == foo){
                         Utils.clean(hidato);
+                        long startTime = System.nanoTime();
                         final boolean b = solver.solve(hidato);
+                        long endTime = System.nanoTime();
                         System.out.println(b ? "Has solution" : "No solution");
+                        System.out.format("Elapsed time: %d \n",endTime-startTime);
                         hidato = solver.getHidato();
                     }
                     if (4 == foo){
