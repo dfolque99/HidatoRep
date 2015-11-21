@@ -310,6 +310,7 @@ public class SolverController {
     }
     /**
      * Worst-first search, worst is most distance to next given cell
+     * For greedy search longest simple path 
      * @param x
      * @param y
      * @param n
