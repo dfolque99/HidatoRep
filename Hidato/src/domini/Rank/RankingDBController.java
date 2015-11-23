@@ -32,7 +32,8 @@ public class RankingDBController {
             ret = (Ranking)ois.readObject();
             fis.close();
         }
-        catch (Exception e) {
+        catch(Exception e) {
+            ret = new Ranking(difficulty,0);
         }
         return ret;
     }
