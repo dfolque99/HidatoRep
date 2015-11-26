@@ -55,8 +55,8 @@ public class HidatoManagerController {
      * Post: crea un hidato aleatori i el carrega a tempHidato
      */
     public void createRandom (int sizeX, int sizeY, Difficulty difficulty) {
-        GeneratorController hg = new GeneratorController(sizeX, sizeY);
-        tempHidato = hg.generateHidato(difficulty);
+        GeneratorController hg = new GeneratorController();
+        tempHidato = hg.generateHidato(sizeX, sizeY);
     }
     
     /**
@@ -127,8 +127,8 @@ public class HidatoManagerController {
      *      sino, retorna false
      */
     public void completeTempHidato (Difficulty difficulty) {
-        GeneratorController hg = new GeneratorController(tempHidato);
-        Hidato completat = hg.generateHidato(difficulty);
+        GeneratorController hg = new GeneratorController();
+        Hidato completat = hg.generateHidato(tempHidato);
         if (completat != null ) tempHidato = completat;
     }
     
