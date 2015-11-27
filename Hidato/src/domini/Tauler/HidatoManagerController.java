@@ -22,12 +22,7 @@ public class HidatoManagerController {
      * Controlador HidatoSet al qual enviar queries
      */
     HidatoSet hset;
-    
-    /**
-     * Controlador HidatoSetDBController per enviar queries
-     */
-    HidatoSetDBController dbc;
-    
+  
     /**
      * Controlador GameManagerController per enviar queries
      */
@@ -42,12 +37,10 @@ public class HidatoManagerController {
      * Creadora amb parametres
      * @param hset
      * @param cgm
-     * @param dbc 
      */
-    public HidatoManagerController (HidatoSet hset, GameManagerController cgm, HidatoSetDBController dbc) {
+    public HidatoManagerController (HidatoSet hset, GameManagerController cgm) {
         this.hset = hset;
         this.cgm = cgm;
-        this.dbc = dbc;
     }
     
     /**
@@ -135,17 +128,21 @@ public class HidatoManagerController {
     /**
      * Pre: cert
      * Post: guarda l'estat de hset al disc
+     * @return 0
      */
     public int saveAll() {
-        return dbc.saveAll();
+        HidatoSetDBController.saveAll(hset);
+        return 0;
     }
     
     /**
      * Pre: cert
      * Post: carrega l'estat de hset del disc
+     * @return 0
      */
     public int loadAll() {
-        return dbc.loadAll();
+        hset = HidatoSetDBController.loadAll();
+        return 0;        
     }
     
     /**
