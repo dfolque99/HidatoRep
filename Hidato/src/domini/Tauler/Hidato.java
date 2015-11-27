@@ -7,6 +7,7 @@
 package domini.Tauler;
 
 import domini.Partida.Difficulty;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -15,7 +16,7 @@ import java.util.Date;
  * @author David
  */
 
-public class Hidato extends Board{
+public class Hidato extends Board implements Serializable{
     
     /**
      * dificultat del hidato
