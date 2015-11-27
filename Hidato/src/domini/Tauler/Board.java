@@ -5,6 +5,8 @@
  */
 package domini.Tauler;
 
+import java.io.Serializable;
+
 
 /** 
  * Classe que utilitzem per a compatibilitat de classes compartides, pero que
@@ -12,7 +14,7 @@ package domini.Tauler;
  * 
  * @author David
  */
-public class Board {
+public class Board implements Serializable{
     
 
     public Board() {
