@@ -23,8 +23,7 @@ public class DriverHidatoManagerController {
      */
     public static void main(String[] args) {
         HidatoSet hs = new HidatoSet();
-        HidatoSetDBController dbc = new HidatoSetDBController(null);
-        HidatoManagerController hm = new HidatoManagerController(hs, null, dbc);
+        HidatoManagerController hm = new HidatoManagerController(hs, null);
         Scanner s = new Scanner(System.in);
         int acc, n, m, d, val;
         String name;
