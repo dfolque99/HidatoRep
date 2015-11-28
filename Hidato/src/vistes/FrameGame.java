@@ -22,7 +22,11 @@ import javax.swing.JPanel;
  */
 public class FrameGame extends javax.swing.JFrame {
 
-    ArrayList<ArrayList<JPanel>> panels;
+    ArrayList<ArrayList<CellPanel>> panels;
+    Color blankColor;
+    Color hintColor;
+    Color voidColor;
+    Color hoverColor;
     /**
      * Creates new form FrameGame
      */
@@ -30,64 +34,57 @@ public class FrameGame extends javax.swing.JFrame {
         
         
         initComponents();
+        blankColor = new Color(0xFFFFFF);
+        hintColor = new Color(0xFFE0E0);
+        voidColor = new Color(0x000000);
+        hoverColor = new Color(0xDFDFDF);
         
-        int N = 10, M = 15;
+        int N = 10, M = 10;
         int cellsize = 40;
         
         javax.swing.border.Border blackline = BorderFactory.createLineBorder(Color.black);
         
         this.setBackground(Color.yellow);
         jPanel1.setPreferredSize(new Dimension(cellsize*M, cellsize*N));
-        jPanel2.setPreferredSize(new Dimension(cellsize*M+10, cellsize*N+10));
+        jPanel2.setPreferredSize(new Dimension(cellsize*M+100, cellsize*N+100));
         jPanel1.setLayout(new GridLayout(N,M));
         panels = new ArrayList<>();
         for (int i = 0; i < N; ++i) {
-            panels.add(new ArrayList<JPanel>());
+            panels.add(new ArrayList<CellPanel>());
             for (int j = 0; j < M; ++j) {
-                JPanel p = new JPanel();
+                CellPanel p = new CellPanel(i,j);
                 p.setBorder(blackline);
                 panels.get(i).add(p);
-                Color c;
-                c = Color.WHITE;
-                p.setBackground(c);
+                p.setBackground(blankColor);
                 jPanel1.add(p);
                 p.addMouseListener(new java.awt.event.MouseAdapter() {
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
-                        for (int i = 0; i < N; ++i) {
-                            for (int j = 0; j < M; ++j) {
-                                if ((JPanel)evt.getComponent() == panels.get(i).get(j)) {
-                                    mouseIn(i,j);
-                                }
-                            }
-                        }
+                        int i = p.getPosX();
+                        int j = p.getPosY();
+                        panels.get(i).get(j).setBackground(hoverColor);
                     }
                     @Override
                     public void mouseExited(java.awt.event.MouseEvent evt) {
-                        for (int i = 0; i < N; ++i) {
-                            for (int j = 0; j < M; ++j) {
-                                if ((JPanel)evt.getComponent() == panels.get(i).get(j)) {
-                                    mouseOut(i,j);
-                                }
-                            }
-                        }
+                        int i = p.getPosX();
+                        int j = p.getPosY();
+                        panels.get(i).get(j).setBackground(blankColor);
+                    }
+                    @Override
+                    public void mouseReleased(java.awt.event.MouseEvent evt){
+                        
+                        int i = p.getPosX();
+                        int j = p.getPosY();
+                        Color c = new Color(0x000000);
+                        panels.get(i).get(j).setBackground(c);
+                        int value = (Integer) newValue.getValue();
+                        p.setValue(value);
+                        
                     }
                 });
             }
         }
     }
-
-    private void mouseIn(int i, int j) {
-        Color c = new Color(0xFDF6B8);
-        panels.get(i).get(j).setBackground(c);
-    }
-    
-    private void mouseOut(int i, int j) {
-        Color c;
-        c = Color.WHITE;
-        panels.get(i).get(j).setBackground(c);
-    }
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -100,6 +97,8 @@ public class FrameGame extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        newValue = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -137,6 +136,8 @@ public class FrameGame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jLabel1.setText("Nombre a colocar:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,14 +145,25 @@ public class FrameGame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(247, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(newValue, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(64, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(newValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43))))
         );
 
         pack();
@@ -193,7 +205,9 @@ public class FrameGame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JSpinner newValue;
     // End of variables declaration//GEN-END:variables
 }
