@@ -100,7 +100,7 @@ public class GeneratorController {
             
         } while (trobat == false && vegades-- > 0);
         if (trobat == false) return null;
-        
+        System.out.print(Utils.toString(h));
         posarPistes();
         return h;
     }
