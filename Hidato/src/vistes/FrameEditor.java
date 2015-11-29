@@ -137,11 +137,11 @@ public class FrameEditor extends javax.swing.JFrame {
         for (int i = 0; i < N; ++i) {
             panels.add(new ArrayList<>());
             for (int j = 0; j < M; ++j) {
-                SquareCell p = new SquareCell(i,j);
-                p.setColors(color(i,j),Colors.vermell, Colors.blau_fosc);
+                int val = h.getCell(i,j).getVal();
+                domini.Tauler.Type type = h.getCell(i,j).getType();
+                SquareCell p = new SquareCell(i,j,val,type,color(i,j),Colors.vermell,Colors.blau_fosc);
                 panels.get(i).add(p);
                 jPanel1.add(p);
-                p.omplir(h.getCell(i,j));
                 p.addMouseListener(new java.awt.event.MouseAdapter() {
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -186,7 +186,7 @@ public class FrameEditor extends javax.swing.JFrame {
             try {
                 int num = Integer.parseInt(input);
                 h.getCell(p.getA(), p.getB()).setVal(num);
-                p.omplir(h.getCell(p.getA(), p.getB()));
+                p.changeVal(num);
             }
             catch (Exception e) {
                 msgError("No és un número");
