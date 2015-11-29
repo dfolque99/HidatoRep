@@ -189,7 +189,6 @@ public class FrameLogin extends javax.swing.JFrame {
             else if (result == -2) msgError("Contrasenya incorrecta");
             else if (result == -3) msgError("Error desconegut");
             else {
-                JOptionPane.showMessageDialog(this,"Has entrat correctament","Fantàstic!",JOptionPane.INFORMATION_MESSAGE);
                 FrameMenu fm = new FrameMenu();
                 fm.setVisible(true);
                 fm.escriuNom(username);
@@ -213,7 +212,6 @@ public class FrameLogin extends javax.swing.JFrame {
             if (result == -1) msgError("L'usuari ja existeix");
             else if (result == -2) msgError("Error desconegut");
             else {
-                JOptionPane.showMessageDialog(this,"Has entrat correctament","Fantàstic!",JOptionPane.INFORMATION_MESSAGE);
                 FrameMenu fm = new FrameMenu();
                 fm.setVisible(true);
                 fm.escriuNom(username);
