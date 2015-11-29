@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javafx.scene.layout.Border;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 
 
 //https://www.youtube.com/watch?v=FKJxPlWQp9Y

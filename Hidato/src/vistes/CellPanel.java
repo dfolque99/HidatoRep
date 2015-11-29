@@ -21,6 +21,8 @@ public class CellPanel extends JPanel{
         super();
         posx = i;
         posy = j;
+        value = new javax.swing.JLabel();
+        add(value);
         //value.setText("");
     }
     

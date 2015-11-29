@@ -7,21 +7,14 @@ package vistes;
 
 
 import domini.Misc.Colors;
-import domini.Tauler.Cell;
 import domini.Tauler.GeneratorController;
 import domini.Tauler.Hidato;
-import domini.Tauler.HidatoManagerController;
-import domini.Tauler.Type;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 
 /**
  *
@@ -34,7 +27,7 @@ public class FrameEditor extends javax.swing.JFrame {
      */
     public FrameEditor() {
         initComponents();
-        inici(5,5);
+        inici(10,10);
     }
     
 
