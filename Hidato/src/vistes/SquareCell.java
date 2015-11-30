@@ -26,69 +26,70 @@ public class SquareCell extends JPanel{
     private final int b;
     private int val;
     private Type type;
-    private final Color color_normal, color_highlight, color_void;
+    private final Color color_normal, color_highlight, color_given, color_void;
     private final JLabel label;
     private final String font_nom = "Tahoma";
-    private int font_num;
     private boolean light;
+    private boolean modificable;
     
     
-    
-    
-    public SquareCell (int a, int b, int val, Type type, Color cn, Color ch, Color cv) {
+    public SquareCell (int a, int b, int val, Type type, Color cn, Color ch, Color cg, Color cv, int font_num, boolean mod) {
         this.a = a;
         this.b = b;
         this.val = val;
         this.type = type;
         color_normal = cn;
         color_highlight = ch;
+        color_given = cg;
         color_void = cv;
+        modificable = mod;
         light = false;
-        font_num = 20;
         
         setLayout(new GridBagLayout());
         label = new JLabel();
         add(label);
-        //label.setBounds(20,20,100,100);
         if (val == 0) label.setText("");
         else label.setText(Integer.toString(val));
-        label.setFont(new Font(font_nom, Font.PLAIN, 20));
-        System.out.printf("%f\n", label.getSize().getHeight());
-        //System.out.printf("%d, %d\n", label.getLocation().x, label.getLocation().y);
-        //label.setLocation((int) label.getLocation().getX(), 200);
-        //System.out.printf("%d, %d\n", label.getLocation().x, label.getLocation().y);
-        //label.setBounds(new Rectangle (0,10,100,100));
+        label.setFont(new Font(font_nom, Font.PLAIN, font_num));
         setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
         setBackground(color_normal);
     }
     
     public void changeVal(int val) {
         this.val = val;
-        if (val == 0) label.setText("");
+        if (val <= 0) label.setText("");
         else label.setText(Integer.toString(val));
-        label.setFont(new Font("Tahoma", Font.PLAIN, val));
     }
     
-    public void setNegreta (boolean negreta) {
-        if (negreta) label.setFont(new Font(font_nom, Font.BOLD, font_num));
-        else label.setFont(new Font(font_nom, Font.PLAIN, font_num));
-    }
-    
-    public void setFontNum (int num) {
-        font_num = num;
-        label.setFont(new Font(font_nom, label.getFont().getStyle(), font_num));
+    public void changeType(Type type) {
+        this.type = type;
+        if (type == Type.VOID) {
+            setBackground(color_void);
+        }
+        else if (type == Type.GIVEN) {
+            label.setFont(new Font("Tahoma", Font.BOLD, label.getFont().getSize()));
+            setBackground(color_given);
+        }
+        else {
+            setBackground(color_normal);
+            label.setFont(new Font("Tahoma", Font.PLAIN, label.getFont().getSize()));
+        }
     }
     
     public void setLight(boolean light) {
-        if (type != Type.VOID) {
+        if (modificable) {
             this.light = light;
             if (light) {
                 setBackground(color_highlight);
             }
             else {
-                setBackground(color_normal);
+                changeType(type);
             }
         }
+    }
+
+    public void setModificable(boolean modificable) {
+        this.modificable = modificable;
     }
     
     public int getVal() {
@@ -106,6 +107,5 @@ public class SquareCell extends JPanel{
     public int getB() {
         return b;
     }
-    
     
 }

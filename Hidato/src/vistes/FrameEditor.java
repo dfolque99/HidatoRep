@@ -34,7 +34,7 @@ public class FrameEditor extends javax.swing.JFrame {
      */
     public FrameEditor() {
         initComponents();
-        inici(10,10);
+        inici(3,3);
     }
     
 
@@ -48,7 +48,6 @@ public class FrameEditor extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,19 +66,6 @@ public class FrameEditor extends javax.swing.JFrame {
             .addGap(0, 500, Short.MAX_VALUE)
         );
 
-        jPanel2.setBackground(new java.awt.Color(153, 255, 204));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 101, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 101, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,17 +73,13 @@ public class FrameEditor extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -141,7 +123,6 @@ public class FrameEditor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 
     // =============================AQUI LO MEU=================================
@@ -153,15 +134,8 @@ public class FrameEditor extends javax.swing.JFrame {
     Hidato h;
     
     public void inici(int N, int M) {
-        JLabel la = new JLabel();
-        jPanel2.setLayout(null);  // Eliminamos el layout
-        jPanel2.add (la); // Añadimos el botón
-        la.setBounds (10,10,40,20); // Botón en posicion 10,10 con ancho 40 pixels y alto 20
-        la.setText("Hola món!\n");
-        
-        
         GeneratorController gc = new GeneratorController();
-        h = new Hidato(N, M);
+        h = gc.generateHidato(N,M);
         panels = new ArrayList<>();
         
         int maxim, N1, N2, M1, M2;
@@ -180,10 +154,10 @@ public class FrameEditor extends javax.swing.JFrame {
                     int i = i0-N1, j = j0-M1;
                     int val = h.getCell(i,j).getVal();
                     domini.Tauler.Type type = h.getCell(i,j).getType();
-                    SquareCell p = new SquareCell(i,j,val,type,color(i,j),Colors.vermell,Colors.blau_fosc);
+                    SquareCell p = new SquareCell(i,j,val,type,color(i,j),Colors.vermell,Colors.blau_fluix,Colors.negre, 500/maxim/2,type!=domini.Tauler.Type.VOID);
                     panels.get(i).add(p);
                     jPanel1.add(p, i0*maxim+j0);
-                    p.setFontNum(500/maxim/2);
+                    p.changeType(h.getCell(i,j).getType());
                     p.addMouseListener(new java.awt.event.MouseAdapter() {
                         @Override
                         public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -243,7 +217,6 @@ public class FrameEditor extends javax.swing.JFrame {
     }
     
     private Color color (int i, int j) {
-        if ((i+j)%2 == 0) return Colors.blau_fluix;
         return Colors.blanc;
     }
     
