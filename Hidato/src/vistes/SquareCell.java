@@ -53,6 +53,18 @@ public class SquareCell extends JPanel{
         label.setFont(new Font(font_nom, Font.PLAIN, font_num));
         setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
         setBackground(color_normal);
+        
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+                setLight(false);
+            }
+        });
     }
     
     public void changeVal(int val) {

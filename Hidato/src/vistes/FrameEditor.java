@@ -34,7 +34,7 @@ public class FrameEditor extends javax.swing.JFrame {
      */
     public FrameEditor() {
         initComponents();
-        inici(3,3);
+        inici(7,10);
     }
     
 
@@ -160,14 +160,6 @@ public class FrameEditor extends javax.swing.JFrame {
                     p.changeType(h.getCell(i,j).getType());
                     p.addMouseListener(new java.awt.event.MouseAdapter() {
                         @Override
-                        public void mouseEntered(java.awt.event.MouseEvent evt) {
-                            mouseIn((SquareCell) evt.getComponent());
-                        }
-                        @Override
-                        public void mouseExited(java.awt.event.MouseEvent evt) {
-                            mouseOut((SquareCell) evt.getComponent());
-                        }
-                        @Override
                         public void mousePressed(java.awt.event.MouseEvent evt) {
                             mousePress((SquareCell) evt.getComponent());
                         }
@@ -183,18 +175,9 @@ public class FrameEditor extends javax.swing.JFrame {
                 }
                 
             }
-        }/**/
+        }
         
         
-    }
-    
-    private void mouseIn (SquareCell p) {
-        p.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
-    }
-    
-    private void mouseOut (SquareCell p) {
-        p.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
-        p.setLight(false);
     }
     
     private void mousePress (SquareCell p) {
