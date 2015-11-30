@@ -55,19 +55,8 @@ public class FrameLogin extends javax.swing.JFrame {
         jLabel1.setText("Nom d'usuari");
 
         jTextField1.setToolTipText("");
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextField1KeyReleased(evt);
-            }
-        });
 
         jLabel2.setText("Contrasenya");
-
-        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jPasswordField1KeyReleased(evt);
-            }
-        });
 
         jButton1.setText("Entra");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -154,14 +143,6 @@ public class FrameLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         entra();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jPasswordField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1KeyReleased
-
-    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
