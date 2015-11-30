@@ -9,19 +9,11 @@ package vistes;
 import domini.Misc.Colors;
 import domini.Tauler.GeneratorController;
 import domini.Tauler.Hidato;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.util.ArrayList;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SpringLayout;
-import javax.swing.border.SoftBevelBorder;
 
 /**
  *
@@ -34,7 +26,7 @@ public class FrameEditor extends javax.swing.JFrame {
      */
     public FrameEditor() {
         initComponents();
-        inici(7,10);
+        inici(10,10);
     }
     
 
@@ -115,6 +107,7 @@ public class FrameEditor extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new FrameEditor().setVisible(true);
             }
@@ -154,7 +147,7 @@ public class FrameEditor extends javax.swing.JFrame {
                     int i = i0-N1, j = j0-M1;
                     int val = h.getCell(i,j).getVal();
                     domini.Tauler.Type type = h.getCell(i,j).getType();
-                    SquareCell p = new SquareCell(i,j,val,type,color(i,j),Colors.vermell,Colors.blau_fluix,Colors.negre, 500/maxim/2,type!=domini.Tauler.Type.VOID);
+                    SquareCell p = new SquareCell(i,j,val,type,Colors.blanc,Colors.vermell,Colors.blau_fluix,Colors.negre, 500/maxim/2,type!=domini.Tauler.Type.VOID);
                     panels.get(i).add(p);
                     jPanel1.add(p, i0*maxim+j0);
                     p.changeType(h.getCell(i,j).getType());
@@ -193,15 +186,14 @@ public class FrameEditor extends javax.swing.JFrame {
                 p.changeVal(num);
             }
             catch (Exception e) {
-                msgError("No és un número");
+                if (input != null) {
+                    msgError("No és un número");
+                }
             }
             p.setLight(false);
         }
     }
     
-    private Color color (int i, int j) {
-        return Colors.blanc;
-    }
     
     private void msgError(String text) {
         JOptionPane.showMessageDialog(this,text,"Error",JOptionPane.ERROR_MESSAGE);
