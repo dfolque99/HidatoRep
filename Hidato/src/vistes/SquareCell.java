@@ -7,11 +7,13 @@ package vistes;
 
 
 import domini.Tauler.Type;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Rectangle;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
 
 /**
  *
@@ -25,7 +27,8 @@ public class SquareCell extends JPanel{
     private Type type;
     private final Color color_normal, color_highlight, color_void;
     private final JLabel label;
-    private final Font fontNormal, fontNegreta;
+    private final String font_nom = "Tahoma";
+    private int font_num;
     private boolean light;
     
     
@@ -40,16 +43,29 @@ public class SquareCell extends JPanel{
         color_highlight = ch;
         color_void = cv;
         light = false;
-        fontNormal = new Font("Tahoma", Font.PLAIN, 20);
-        fontNegreta = new Font("Tahoma", Font.BOLD, 20);
+        font_num = 20;
+        setLayout(new BorderLayout());
         
         label = new JLabel();
-        label.setFont(fontNormal);
-        add(label);
+        add(label, BorderLayout.CENTER);
         if (val == 0) label.setText("");
         else label.setText(Integer.toString(val));
-        setBorder(new BevelBorder(BevelBorder.RAISED));
+        label.setFont(new Font(font_nom, Font.PLAIN, 20));
+        //System.out.printf("%d, %d\n", label.getLocation().x, label.getLocation().y);
+        //label.setLocation((int) label.getLocation().getX(), 200);
+        //System.out.printf("%d, %d\n", label.getLocation().x, label.getLocation().y);
+        //label.setBounds(new Rectangle (0,10,100,100));
+        setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
         setBackground(color_normal);
+        label.setBounds(new Rectangle (0,10,100,100));
+    }
+    
+    public void ficar() {
+        Rectangle r = new Rectangle();
+        r.x = 0;
+        r.y = 0;
+        r.height = 100;
+        r.width = 100;
     }
     
     public void changeVal(int val) {
@@ -59,8 +75,13 @@ public class SquareCell extends JPanel{
     }
     
     public void setNegreta (boolean negreta) {
-        if (negreta) label.setFont(fontNegreta);
-        else label.setFont(fontNormal);
+        if (negreta) label.setFont(new Font(font_nom, Font.BOLD, font_num));
+        else label.setFont(new Font(font_nom, Font.PLAIN, font_num));
+    }
+    
+    public void setFontNum (int num) {
+        font_num = num;
+        label.setFont(new Font(font_nom, label.getFont().getStyle(), font_num));
     }
     
     public void setLight(boolean light) {

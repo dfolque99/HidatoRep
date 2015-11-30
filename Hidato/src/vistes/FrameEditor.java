@@ -9,12 +9,19 @@ package vistes;
 import domini.Misc.Colors;
 import domini.Tauler.GeneratorController;
 import domini.Tauler.Hidato;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.border.BevelBorder;
+import javax.swing.JPanel;
+import javax.swing.SpringLayout;
+import javax.swing.border.SoftBevelBorder;
 
 /**
  *
@@ -27,7 +34,7 @@ public class FrameEditor extends javax.swing.JFrame {
      */
     public FrameEditor() {
         initComponents();
-        inici(10,10);
+        inici(3,3);
     }
     
 
@@ -41,12 +48,13 @@ public class FrameEditor extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.setPreferredSize(new java.awt.Dimension(800, 800));
+        jPanel1.setPreferredSize(new java.awt.Dimension(500, 500));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -59,20 +67,37 @@ public class FrameEditor extends javax.swing.JFrame {
             .addGap(0, 500, Short.MAX_VALUE)
         );
 
+        jPanel2.setBackground(new java.awt.Color(153, 255, 204));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 101, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 101, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -116,6 +141,7 @@ public class FrameEditor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 
     // =============================AQUI LO MEU=================================
@@ -127,57 +153,79 @@ public class FrameEditor extends javax.swing.JFrame {
     Hidato h;
     
     public void inici(int N, int M) {
+        JButton la = new JButton();
+        jPanel2.setLayout(new SpringLayout());
+        jPanel2.add(la);
+        la.setText("Hola món!\n");
+        la.setBounds(0, 10, 0, 10);
+        
         
         GeneratorController gc = new GeneratorController();
         h = new Hidato(N, M);
         panels = new ArrayList<>();
         
-        jPanel1.setLayout(new GridLayout(N, M));
+        int maxim, N1, N2, M1, M2;
+        maxim = Math.max(N,M);
+        N1 = (maxim-N)/2;
+        N2 = N + N1;
+        M1 = (maxim-M)/2;
+        M2 = M + M1;
+        jPanel1.setLayout(new GridLayout(maxim, maxim));
         
-        for (int i = 0; i < N; ++i) {
+        
+        for (int i0 = 0; i0 < maxim; ++i0) {
             panels.add(new ArrayList<>());
-            for (int j = 0; j < M; ++j) {
-                int val = h.getCell(i,j).getVal();
-                domini.Tauler.Type type = h.getCell(i,j).getType();
-                SquareCell p = new SquareCell(i,j,val,type,color(i,j),Colors.vermell,Colors.blau_fosc);
-                panels.get(i).add(p);
-                jPanel1.add(p);
-                p.addMouseListener(new java.awt.event.MouseAdapter() {
-                    @Override
-                    public void mouseEntered(java.awt.event.MouseEvent evt) {
-                        mouseIn((SquareCell) evt.getComponent());
-                    }
-                    @Override
-                    public void mouseExited(java.awt.event.MouseEvent evt) {
-                        mouseOut((SquareCell) evt.getComponent());
-                    }
-                    @Override
-                    public void mousePressed(java.awt.event.MouseEvent evt) {
-                        mousePress((SquareCell) evt.getComponent());
-                    }
-                    @Override
-                    public void mouseReleased(java.awt.event.MouseEvent evt) {
-                        mouseRelease((SquareCell) evt.getComponent());
-                    }
-                });
+            for (int j0 = 0; j0 < maxim; ++j0) {
+                if (N1 <= i0 && i0 < N2 && M1 <= j0 && j0 < M2) {
+                    int i = i0-N1, j = j0-M1;
+                    int val = h.getCell(i,j).getVal();
+                    domini.Tauler.Type type = h.getCell(i,j).getType();
+                    SquareCell p = new SquareCell(i,j,val,type,color(i,j),Colors.vermell,Colors.blau_fosc);
+                    panels.get(i).add(p);
+                    jPanel1.add(p, i0*maxim+j0);
+                    p.setFontNum(500/maxim/2);
+                    p.addMouseListener(new java.awt.event.MouseAdapter() {
+                        @Override
+                        public void mouseEntered(java.awt.event.MouseEvent evt) {
+                            mouseIn((SquareCell) evt.getComponent());
+                        }
+                        @Override
+                        public void mouseExited(java.awt.event.MouseEvent evt) {
+                            mouseOut((SquareCell) evt.getComponent());
+                        }
+                        @Override
+                        public void mousePressed(java.awt.event.MouseEvent evt) {
+                            mousePress((SquareCell) evt.getComponent());
+                        }
+                        @Override
+                        public void mouseReleased(java.awt.event.MouseEvent evt) {
+                            mouseRelease((SquareCell) evt.getComponent());
+                        }
+                    });
+                }
+                else {
+                    JPanel p = new JPanel();
+                    jPanel1.add(p,i0*maxim+j0);
+                }
                 
             }
-        }
+        }/**/
         
         
     }
     
     private void mouseIn (SquareCell p) {
-        p.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        p.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
     }
     
     private void mouseOut (SquareCell p) {
-        p.setBorder(new BevelBorder(BevelBorder.RAISED));
+        p.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
         p.setLight(false);
     }
     
     private void mousePress (SquareCell p) {
         p.setLight(true);
+        p.ficar();
     }
     
     private void mouseRelease (SquareCell p) {
