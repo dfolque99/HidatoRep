@@ -5,6 +5,7 @@
  */
 package vistes;
 
+import java.awt.Font;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -16,6 +17,8 @@ public class CellPanel extends JPanel{
     private final int posx;
     private final int posy;
     private javax.swing.JLabel value;
+    private final String font_nom = "Tahoma";
+    
     
     CellPanel(int i, int j){
         super();
@@ -23,6 +26,7 @@ public class CellPanel extends JPanel{
         posy = j;
         value = new javax.swing.JLabel();
         add(value);
+        value.setFont(new Font(font_nom, Font.PLAIN, 20));
         //value.setText("");
     }
     

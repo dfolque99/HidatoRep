@@ -10,6 +10,7 @@ import domini.Tauler.Type;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -45,13 +46,14 @@ public class SquareCell extends JPanel{
         light = false;
         font_num = 20;
         
-        setLayout(null);
+        setLayout(new GridBagLayout());
         label = new JLabel();
         add(label);
-        label.setBounds(20,20,100,100);
+        //label.setBounds(20,20,100,100);
         if (val == 0) label.setText("");
         else label.setText(Integer.toString(val));
         label.setFont(new Font(font_nom, Font.PLAIN, 20));
+        System.out.printf("%f\n", label.getSize().getHeight());
         //System.out.printf("%d, %d\n", label.getLocation().x, label.getLocation().y);
         //label.setLocation((int) label.getLocation().getX(), 200);
         //System.out.printf("%d, %d\n", label.getLocation().x, label.getLocation().y);
@@ -60,18 +62,11 @@ public class SquareCell extends JPanel{
         setBackground(color_normal);
     }
     
-    public void ficar() {
-        Rectangle r = new Rectangle();
-        r.x = 0;
-        r.y = 0;
-        r.height = 100;
-        r.width = 100;
-    }
-    
     public void changeVal(int val) {
         this.val = val;
         if (val == 0) label.setText("");
         else label.setText(Integer.toString(val));
+        label.setFont(new Font("Tahoma", Font.PLAIN, val));
     }
     
     public void setNegreta (boolean negreta) {
