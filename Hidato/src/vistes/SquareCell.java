@@ -44,10 +44,11 @@ public class SquareCell extends JPanel{
         color_void = cv;
         light = false;
         font_num = 20;
-        setLayout(new BorderLayout());
         
+        setLayout(null);
         label = new JLabel();
-        add(label, BorderLayout.CENTER);
+        add(label);
+        label.setBounds(20,20,100,100);
         if (val == 0) label.setText("");
         else label.setText(Integer.toString(val));
         label.setFont(new Font(font_nom, Font.PLAIN, 20));
@@ -57,7 +58,6 @@ public class SquareCell extends JPanel{
         //label.setBounds(new Rectangle (0,10,100,100));
         setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
         setBackground(color_normal);
-        label.setBounds(new Rectangle (0,10,100,100));
     }
     
     public void ficar() {

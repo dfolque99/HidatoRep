@@ -153,11 +153,11 @@ public class FrameEditor extends javax.swing.JFrame {
     Hidato h;
     
     public void inici(int N, int M) {
-        JButton la = new JButton();
-        jPanel2.setLayout(new SpringLayout());
-        jPanel2.add(la);
+        JLabel la = new JLabel();
+        jPanel2.setLayout(null);  // Eliminamos el layout
+        jPanel2.add (la); // Añadimos el botón
+        la.setBounds (10,10,40,20); // Botón en posicion 10,10 con ancho 40 pixels y alto 20
         la.setText("Hola món!\n");
-        la.setBounds(0, 10, 0, 10);
         
         
         GeneratorController gc = new GeneratorController();
