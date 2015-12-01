@@ -8,7 +8,7 @@ package domini.Rank;
 import domini.Partida.Difficulty;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+//import java.util.Date;
 
 /**
  * @author Guillem
@@ -34,7 +34,7 @@ public class Ranking implements Serializable {
     en persistencia (primera vez que se ejecute el programa) se creen unos
     rankings "de muestra".
     */
-    
+    /*
     public Ranking(Difficulty difficulty, int i) {
         this(difficulty);
         RankingEntry entry = new RankingEntry(new Date(),"xX_ProHidato360_Xx",3000);
@@ -78,6 +78,7 @@ public class Ranking implements Serializable {
         entry = new RankingEntry(new Date(),"Bad Player",1);
         ranking.add(entry);
     }
+    */
 
     /**
      * @return Numero actual de entradas en el ranking
