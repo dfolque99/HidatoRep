@@ -16,62 +16,111 @@ public class GeneratorController {
     private Hidato h;
     private int n, m;
     private int iter, val_ref;
-    private int D[][];
+    private int D[][]; // implementarlo de manera que digui els llocs disponibles segons el numero que hi fiquem (aixi tenim en compte les pistes)
     private Position L[];
     private int nextGiven[];
     private int totalCaselles;
-    private boolean controlarPart;
+    private boolean controlarPart = true;
+    private double factor = 1.0 * 5/10;
+    private final int N = 30;
+    public double iteracions, bfss, controls, controlsfallats;
+    // reordenar el backtracking de manera que comenci a fer els trams entre pistes mes properes i acabi pels trams mes llargs
     
-    /**
-     * Pre: sizeX, sizeY >= 0
-     * Post: crea una instancia de HidatoGenerator que partira d'un hidato buit
-    */
-    public GeneratorController(int sizeX, int sizeY) {
-        this.h = new Hidato(sizeX, sizeY);
-        n = sizeX;
-        m = sizeY;
-        h.getCell(0,0).setVal(0);
-        h.getCell(n-1, m-1).setVal(0);
-        h.getCell(randomNum(0,n-1), randomNum(0,m-1)).setVal(1);
-        totalCaselles = sizeX*sizeY;
+    public GeneratorController() {
+        
     }
     
+    
     /**
-     * Pre: h != null
-     * Post: crea una instancia de HidatoGenerator que partira del hidato h
-     *  h s'interpreta de la manera seguent:
+     * Pre: cert
+     * Post: retorna el hidato generat a partir de h
+     * h s'interpreta de la manera seguent:
      *      * si el valor d'una casella es 0 es que hi pot anar qualsevol nombre
      *      * si el valor d'una casella no es 0, hi ha d'anar aquell nombre
      *      * si el tipus d'una casella es VOID, haura de ser VOID
      *      * si el tipus d'una casella es GIVEN, haura de ser GIVEN
      *      * si el tipus d'una casella es BLANK, sera BLANK o GIVEN, depenent
      *        de si cal donar mes nombres inicials per satisfer la dificultat
+     *  retorna null si no hi ha casella inicial, o si es impossible de generar
     */
-    public GeneratorController(Hidato h) {
+    public Hidato generateHidato(Hidato h) {
         this.h = new Hidato(h);
         n = h.getSizeX();
         m = h.getSizeY();
         comptaCaselles();
+        
+        iteracions = 0;
+        bfss = 0;
+        controls = 0;
+        controlsfallats = 0;
+        if (hidatoValid() == false) return null;
+        
+        System.out.print("Factor 5/10...\n");
+        factor = 5.0/10;
+        if (completarCami() == false) {
+            System.out.print("Factor 8/10...\n");
+            factor = 8.0/10;
+            if (completarCami() == false) return null;
+        }
+        
+        posarPistes();
+        return this.h;
     }
     
     /**
-     * Pre: cert
-     * Post: retorna el hidato generat amb dificultat difficulty
-     *  retorna null si no hi ha casella inicial, o si es impossible de generar
+     * Pre: sizeX, sizeY >= 0
+     * Post: retorna el hidato generat aleatoriament de mida sizeX x sizeY
     */
-    public Hidato generateHidato(Difficulty difficulty) {
-        controlarPart = true;
-        if (hidatoValid() == false) return null;
-        if (completarCami() == false) {
-            controlarPart = false;
-            if (completarCami() == false) return null;
-        }
-        posarPistes(difficulty);
+    public Hidato generateHidato(int sizeX, int sizeY) {
+        this.h = new Hidato(sizeX, sizeY);
+        n = sizeX;
+        m = sizeY;
+        h.getCell(0,0).setVal(0);
+        h.getCell(n-1, m-1).setVal(0);
+        
+        iteracions = 0;
+        bfss = 0;
+        controls = 0;
+        controlsfallats = 0;
+        
+        factor = 5.0/10;
+        
+        int vegades = 10;
+        boolean trobat = false;
+        do {
+            posarCasellesVoid();
+            int x0, y0;
+            do {
+                x0 = randomNum(0,n-1);
+                y0 = randomNum(0,m-1);
+            } while (h.getCell(x0, y0).getType() == Type.VOID);
+            h.getCell(x0, y0).setVal(1);
+            trobat = completarCami();
+            if (trobat == false) h.getCell(x0, y0).setVal((0));
+            
+        } while (trobat == false && vegades-- > 0);
+        if (trobat == false) return null;
+        System.out.print(Utils.toString(h));
+        posarPistes();
         return h;
     }
     
     
+    /*=============================PRIVADES===================================*/
+    
+    private boolean backtracking_enc (int val, Position p) {
+        int antVal = GC(p.getX(),p.getY());
+        SC(p.getX(),p.getY(),val);
+        sumarVoltantD(p.getX(),p.getY(),-1);
+        boolean result = backtracking(val,p);
+        if (result == true) return true;
+        sumarVoltantD(p.getX(),p.getY(),1);
+        SC(p.getX(),p.getY(),antVal);
+        return false;
+    }
+    
     private boolean backtracking (int val, Position p) {
+        ++iteracions;
         if (massaLluny(val,p)) return false;
         L[val-1] = p;
         if (val == totalCaselles) return true;
@@ -79,9 +128,11 @@ public class GeneratorController {
             if (!controlParticionament(val)) return false;
         }
         Position veiObligat = buscaVeiObligat(val, p);
-        if (veiObligat != null) return backtracking(val+1, veiObligat);
-        LinkedList<Position> veins = buscaVeins(p);
-        if (veins.size() == 0) return false;
+        if (veiObligat != null) return backtracking_enc(val+1, veiObligat);
+        ArrayList<Position> veins = buscaVeins(p);
+        if (veins.isEmpty()) return false;
+        Position veiRecomanable = buscaVeiRecomanable(veins);
+        if (veiRecomanable != null) return backtracking_enc(val+1,veiRecomanable);
         int random;
         if (probabilitatCamiSegur()) {
             veins.sort((p1, p2) -> D[p1.getX()][p1.getY()] - D[p2.getX()][p2.getY()]);
@@ -90,15 +141,10 @@ public class GeneratorController {
         else random = randomNum(0,veins.size()-1);
         for (int i = 0; i < veins.size(); ++i) {
             Position next = veins.get((i+random)%veins.size());
-            int antVal = GC(next.getX(),next.getY());
-            SC(next.getX(),next.getY(),val+1);
-            sumarVoltantD(next.getX(),next.getY(),-1);
-            boolean result = backtracking(val+1,next);
+            boolean result = backtracking_enc(val+1,next);
             if (result) return true;
-            sumarVoltantD(next.getX(),next.getY(),1);
-            SC(next.getX(),next.getY(),antVal);
             if (val_ref != 0) {
-                if (val > val_ref*1/2) return false;
+                if (val > val_ref*factor) return false;
                 if (particionat(val)) {
                     val_ref = val;
                     return false;
@@ -118,13 +164,13 @@ public class GeneratorController {
         return null;
     }
     
-    private LinkedList<Position> buscaVeins(Position p) {
-        LinkedList<Position> ret = new LinkedList<>();
+    private ArrayList<Position> buscaVeins(Position p) {
+        ArrayList<Position> ret = new ArrayList<>();
         for (int i = Math.max(p.getX()-1, 0); i <= Math.min(p.getX()+1, n-1); ++i) {
             for (int j = Math.max(p.getY()-1, 0); j <= Math.min(p.getY()+1, m-1); ++j) {
                 if (i == p.getX() && j == p.getY()) continue;
                 if (GC(i,j) == 0 && !h.getCell(i,j).getType().equals(Type.VOID)) {
-                    ret.addLast(new Position(i,j));
+                    ret.add(new Position(i,j));
                 }
             }
         }
@@ -143,10 +189,18 @@ public class GeneratorController {
         return null;
     }
     
-    private int calculaNumPistes(Difficulty difficulty) {
-        if (difficulty == Difficulty.EASY) return totalCaselles/3;
-        else if (difficulty == Difficulty.MEDIUM) return totalCaselles/4;
-        return totalCaselles/5;
+    private Position buscaVeiRecomanable(ArrayList<Position> veins) {
+        for (int i = 0; i < veins.size(); ++i) {
+            Position vei = veins.get(i);
+            if (D[vei.getX()][vei.getY()] == 1) {
+                return vei;
+            }
+        }
+        return null;
+    }
+    
+    private int calculaNumPistes() {
+        return randomNum(totalCaselles/5, totalCaselles/3+1);
     }
     
     private boolean completarCami() {
@@ -157,22 +211,24 @@ public class GeneratorController {
         omplirNextGivenIL();
         iter = 0;
         val_ref = 0;
-        return backtracking(1, casellaInicial);
+        return backtracking_enc(1, casellaInicial);
     }
     
     private void comptaCaselles() {
         totalCaselles = 0;
-        for (int i = 0; i < h.getSizeX(); ++i) {
-            for (int j = 0; j < h.getSizeY(); ++j) {
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
                 if (h.getCell(i,j).getType() != Type.VOID) ++totalCaselles;
             }
         }
     }
     
     private boolean controlParticionament(int val) {
-        if (++iter == 30) {
+        if (++iter == N) {
+            ++controls;
             iter = 0;
             if (particionat(val-1)) {
+                ++controlsfallats;
                 val_ref = val;
                 return false;
             }
@@ -180,14 +236,31 @@ public class GeneratorController {
         return true;
     }
     
+    private void ficarCasellesVoid(int buides) {
+        ArrayList<Integer> llista = new ArrayList<>();
+        for (int i = 0; i < n*m; ++i) llista.add(i);
+        for (int i = 0; i < buides; ++i) {
+            int j = randomNum(i,n*m-1);
+            Integer aux = llista.get(i);
+            llista.set(i, llista.get(j));
+            llista.set(j, aux);
+        }
+        for (int i = 0; i < n*m; ++i) {
+            Integer num = llista.get(i);
+            if (i < buides) h.getCell(num/m, num%m).setType(Type.VOID);
+            else h.getCell(num/m, num%m).setType(Type.BLANK);
+        }
+        comptaCaselles();
+    }
+    
     private int GC (int i, int j) {
         return h.getCell(i, j).getVal();
     }
     
-    /** comprova que cada numero apareixi com a molt un cop, que no estigui
-     * particionat, i que els numeros estiguin dins del rang
-     */
     private boolean hidatoValid() {
+        /** comprova que cada numero apareixi com a molt un cop, que no estigui
+         * particionat, i que els numeros estiguin dins del rang
+         */
         if (particionat(0)) return false;
         ArrayList<Integer> aparicions = new ArrayList<>();
         for (int i = 0; i < totalCaselles; ++i) aparicions.add(0);
@@ -216,7 +289,7 @@ public class GeneratorController {
         D = new int[n][m];
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                if(GC(i,j) == 0) sumarVoltantD(i,j,1);
+                sumarVoltantD(i,j,1);
             }
         }
     }
@@ -245,6 +318,7 @@ public class GeneratorController {
     }
     
     private boolean particionat(int val) {
+        ++bfss;
         if (val >= totalCaselles) return false;
         int x0 = 0, y0 = 0;
         boolean BFS[][] = new boolean[n][m];
@@ -281,10 +355,18 @@ public class GeneratorController {
         return part;
     }
     
-    private void posarPistes (Difficulty difficulty) {
+    private void posarCasellesVoid() {
+        if (randomNum(1,100) <= 30) return;
+        do {
+            int buides = randomNum(1,n*m/3);
+            ficarCasellesVoid(buides);
+        } while (!hidatoValid());
+    }
+    
+    private void posarPistes () {
         h.getCell(L[0].getX(), L[0].getY()).setType(Type.GIVEN);
         h.getCell(L[totalCaselles-1].getX(), L[totalCaselles-1].getY()).setType(Type.GIVEN);
-        int pistesTotals = calculaNumPistes(difficulty);
+        int pistesTotals = calculaNumPistes();
         int pistesFixades = 0;
         ArrayList<Integer> pistes = new ArrayList<>();
         for (int i = 0; i < totalCaselles; ++i) {

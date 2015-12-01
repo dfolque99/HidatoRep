@@ -5,12 +5,14 @@
  */
 package domini.Tauler;
 
+import java.io.Serializable;
+
 
 /**
  *
  * @author David
  */
-public class Cell {
+public class Cell implements Serializable{
     int val;
     Type type;
     

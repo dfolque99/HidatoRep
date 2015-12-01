@@ -22,12 +22,7 @@ public class HidatoManagerController {
      * Controlador HidatoSet al qual enviar queries
      */
     HidatoSet hset;
-    
-    /**
-     * Controlador HidatoSetDBController per enviar queries
-     */
-    HidatoSetDBController dbc;
-    
+  
     /**
      * Controlador GameManagerController per enviar queries
      */
@@ -42,12 +37,10 @@ public class HidatoManagerController {
      * Creadora amb parametres
      * @param hset
      * @param cgm
-     * @param dbc 
      */
-    public HidatoManagerController (HidatoSet hset, GameManagerController cgm, HidatoSetDBController dbc) {
+    public HidatoManagerController (HidatoSet hset, GameManagerController cgm) {
         this.hset = hset;
         this.cgm = cgm;
-        this.dbc = dbc;
     }
     
     /**
@@ -55,8 +48,8 @@ public class HidatoManagerController {
      * Post: crea un hidato aleatori i el carrega a tempHidato
      */
     public void createRandom (int sizeX, int sizeY, Difficulty difficulty) {
-        GeneratorController hg = new GeneratorController(sizeX, sizeY);
-        tempHidato = hg.generateHidato(difficulty);
+        GeneratorController hg = new GeneratorController();
+        tempHidato = hg.generateHidato(sizeX, sizeY);
     }
     
     /**
@@ -127,25 +120,29 @@ public class HidatoManagerController {
      *      sino, retorna false
      */
     public void completeTempHidato (Difficulty difficulty) {
-        GeneratorController hg = new GeneratorController(tempHidato);
-        Hidato completat = hg.generateHidato(difficulty);
+        GeneratorController hg = new GeneratorController();
+        Hidato completat = hg.generateHidato(tempHidato);
         if (completat != null ) tempHidato = completat;
     }
     
     /**
      * Pre: cert
      * Post: guarda l'estat de hset al disc
+     * @return 0
      */
     public int saveAll() {
-        return dbc.saveAll();
+        HidatoSetDBController.saveAll(hset);
+        return 0;
     }
     
     /**
      * Pre: cert
      * Post: carrega l'estat de hset del disc
+     * @return 0
      */
     public int loadAll() {
-        return dbc.loadAll();
+        hset = HidatoSetDBController.loadAll();
+        return 0;        
     }
     
     /**

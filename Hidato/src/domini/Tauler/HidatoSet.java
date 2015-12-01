@@ -6,6 +6,7 @@
 
 package domini.Tauler;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  * @author David
  */
 
-public class HidatoSet {
+public class HidatoSet implements Serializable {
     
     /**
      * ArrayList on es guarden tots els hidatos del repositori

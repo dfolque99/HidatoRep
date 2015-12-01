@@ -6,7 +6,6 @@
 package domini.Tauler;
 
 
-import domini.Partida.Difficulty;
 import domini.Misc.Utils;
 import java.util.Scanner;
 
@@ -23,13 +22,12 @@ public class DriverGeneratorController {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         int sizeX, sizeY;
-        Difficulty dificultat;
         GeneratorController hg;
         Hidato h;
         long t1, t2;
         int acc;
         do {
-            print(    "1) Generar hidato per dificultat\n"
+            print(    "1) Generar hidato aleatori\n"
                     + "2) Generar hidato amb condicions\n"
                     + "3) Sortir\n");
             acc = s.nextInt();
@@ -39,11 +37,9 @@ public class DriverGeneratorController {
                     sizeX = s.nextInt();
                     print ("Columnes: ");
                     sizeY = s.nextInt();
-                    print ("Dificultat (EASY/MEDIUM/HARD): ");
-                    dificultat = Difficulty.valueOf(s.next());
                     t1 = System.currentTimeMillis();
-                    hg = new GeneratorController(sizeX,sizeY);
-                    h = hg.generateHidato(dificultat);
+                    hg = new GeneratorController();
+                    h = hg.generateHidato(sizeX,sizeY);
                     t2 = System.currentTimeMillis();
                     print(Utils.toString(h));
                     print(Utils.toStringWithZeros(h));
@@ -71,11 +67,9 @@ public class DriverGeneratorController {
                             else origen.getCell(i, j).setType(Type.VOID);
                         }
                     }
-                    print ("Dificultat (EASY/MEDIUM/HARD): ");
-                    dificultat = Difficulty.valueOf(s.next());
                     t1 = System.currentTimeMillis();
-                    hg = new GeneratorController(origen);
-                    h = hg.generateHidato(dificultat);
+                    hg = new GeneratorController();
+                    h = hg.generateHidato(origen);
                     t2 = System.currentTimeMillis();
                     if (h != null) {
                         print(Utils.toString(h));

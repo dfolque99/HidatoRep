@@ -84,20 +84,20 @@ public class DriverGame {
                                 String name = sc.next();    
                                 Help help = Help.valueOf(sc.next());
                                 Difficulty difficulty = Difficulty.valueOf(sc.next());
-                                GeneratorController hidatoGenerator;
+                                GeneratorController hidatoGenerator = new GeneratorController();
+                                Hidato hidato;
                                 switch (difficulty){
                                     case EASY: 
-                                        hidatoGenerator = new GeneratorController(6,6); //tamany del hidato
+                                        hidato = hidatoGenerator.generateHidato(6,6);
                                         break;
                                     case MEDIUM:
-                                        hidatoGenerator = new GeneratorController(7,8); //tamany del hidato
+                                        hidato = hidatoGenerator.generateHidato(7,8); //tamany del hidato
                                         break;
                                     case HARD:
-                                        hidatoGenerator = new GeneratorController(9,9); //tamany del hidato
+                                        hidato = hidatoGenerator.generateHidato(9,9); //tamany del hidato
                                         break;
-                                    default: hidatoGenerator = new GeneratorController(0,0);//Mai s'hauria d'arribar aqui
+                                    default: hidato = hidatoGenerator.generateHidato(0,0);//Mai s'hauria d'arribar aqui
                                 }
-                                Hidato hidato = hidatoGenerator.generateHidato(difficulty);
                                 if (hidato == null) System.out.println("hidato nul");
                                 ctrCurrentGame = ctrGameManager.createGame(name, hidato, help);
                                 if (ctrCurrentGame == null){
