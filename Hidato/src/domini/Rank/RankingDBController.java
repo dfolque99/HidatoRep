@@ -13,11 +13,6 @@ import java.io.*;
  * @author Guillem
  */
 
-//Para funcionar necesita que ya haya un ranking creado para cada dificultad
-//en la carpeta "Ranking". Se pueden poner en esta carpeta unos rankings fakes
-//iniciales
-//SE PUEDE MEJORAR/CAMBIAR TODAVIA
-
 
 public class RankingDBController {
     
@@ -32,7 +27,8 @@ public class RankingDBController {
             ret = (Ranking)ois.readObject();
             fis.close();
         }
-        catch (Exception e) {
+        catch(Exception e) {
+            ret = new Ranking(difficulty);
         }
         return ret;
     }

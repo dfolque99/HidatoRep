@@ -8,6 +8,7 @@ package domini.Rank;
 import domini.Partida.Difficulty;
 import java.io.Serializable;
 import java.util.ArrayList;
+//import java.util.Date;
 
 /**
  * @author Guillem
@@ -27,6 +28,57 @@ public class Ranking implements Serializable {
         ranking = new ArrayList<>();
         ranking.ensureCapacity(N+1);
     }
+    
+    /*
+    Constructor para que en el caso en el que no esten los rankings ya creados
+    en persistencia (primera vez que se ejecute el programa) se creen unos
+    rankings "de muestra".
+    */
+    /*
+    public Ranking(Difficulty difficulty, int i) {
+        this(difficulty);
+        RankingEntry entry = new RankingEntry(new Date(),"xX_ProHidato360_Xx",3000);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"Mariano",2999);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"John",2500);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"William",2300);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"The Hidato Master",2183);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"Joan",2015);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"Einstein",1995);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"Player 1",1824);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"Heisenberg",1700);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"Charlie",1650);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"Oscar",1640);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"Leonardo da Vinci",1600);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"David",1580);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"asdf",1500);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"Newton",1432);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"Heisenberg",1200);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"Alan Turing",1000);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"Dummy",500);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"Lufranxucy",100);
+        ranking.add(entry);
+        entry = new RankingEntry(new Date(),"Bad Player",1);
+        ranking.add(entry);
+    }
+    */
 
     /**
      * @return Numero actual de entradas en el ranking
@@ -64,7 +116,7 @@ public class Ranking implements Serializable {
      * @param newEntry entrada a añadair al ranking
      * Se añade la entrada en su posicion correspondiente, es decir, manteniendo
      * el orden decreciente por puntuacion. En caso de exceder el numero de 
-     * entradas maximas permitidas (N) se elimina la ultiam entrada (sale del
+     * entradas maximas permitidas (N) se elimina la ultima entrada (sale del
      * ranking)
      */
     public void addRankingEntry(RankingEntry newEntry) {
