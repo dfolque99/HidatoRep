@@ -563,7 +563,7 @@ public class GeneratorController {
         }
         else {
             do {
-                int buides = randomNum(1,n*m/3);
+                int buides = randomNum(1,n*m/2);
                 posarCasellesVoid(buides);
             } while (!hidatoValid());
         }
