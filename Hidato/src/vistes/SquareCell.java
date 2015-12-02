@@ -108,6 +108,10 @@ public class SquareCell extends JPanel{
         return val;
     }
     
+    public Type getType() {
+        return type;
+    }
+    
     public boolean getLight() {
         return light;
     }

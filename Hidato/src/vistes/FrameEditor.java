@@ -9,14 +9,19 @@ package vistes;
 import domini.Misc.Colors;
 import domini.Tauler.HidatoManagerController;
 import domini.Tauler.HidatoSet;
+import java.awt.Color;
+import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -31,7 +36,7 @@ public class FrameEditor extends javax.swing.JFrame {
      */
     public FrameEditor() {
         initComponents();
-        inici(10,10);
+        inici(7,10);
     }
     
 
@@ -68,7 +73,6 @@ public class FrameEditor extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 500));
 
@@ -189,6 +193,7 @@ public class FrameEditor extends javax.swing.JFrame {
 
         label_nom.setText("Nom del hidato:");
 
+        b_canvia_nom.setBackground(new java.awt.Color(153, 255, 153));
         b_canvia_nom.setText("Canvia el nom");
 
         javax.swing.GroupLayout panel_nomLayout = new javax.swing.GroupLayout(panel_nom);
@@ -328,16 +333,24 @@ public class FrameEditor extends javax.swing.JFrame {
 
     
     
-    ArrayList<ArrayList<SquareCell>> panels;
-    ArrayList<ArrayList<JLabel>> labels;
-    HidatoManagerController hmc;
-    ButtonGroup g1, g2, g3;
-    String nomHidato;
+    private ArrayList<ArrayList<SquareCell>> panels;
+    private ArrayList<ArrayList<JLabel>> labels;
+    private HidatoManagerController hmc;
+    private ButtonGroup g1, g2, g3;
+    private String nomHidato;
+    private Color fons = new Color(0x0C0C0C); // negre
+    private Color blanc = new Color(fons.getRGB()^0xFFFFFF);
+    private Color color1 = new Color(0xC40D2A); // granate
+    private Color color2 = new Color(0x780088); // lila fluix
+    private Color color3 = new Color(0x550088); // lila fort
+    private Color color4 = new Color(0x3E88DE); // blau fluix
+    
+    
     
     public void inici(int N, int M) {
         HidatoSet hs = new HidatoSet();
         hmc = new HidatoManagerController(hs, null);
-        hmc.createManual(N, M);
+        hmc.createRandom(N, M);
         label_nom.setText("Hidato sense nom");
         panels = new ArrayList<>();
         
@@ -357,7 +370,7 @@ public class FrameEditor extends javax.swing.JFrame {
                     int i = i0-N1, j = j0-M1;
                     int val = hmc.getTempCellVal(i,j);
                     domini.Tauler.Type type = hmc.getTempCellType(i,j);
-                    SquareCell p = new SquareCell(i,j,val,type,Colors.blanc,Colors.vermell,Colors.blau_fluix,Colors.negre, 500/maxim/2,type!=domini.Tauler.Type.VOID);
+                    SquareCell p = new SquareCell(i,j,val,type,blanc,Color.GRAY,color1,Colors.negre, 500/maxim/2,true);
                     panels.get(i).add(p);
                     jPanel1.add(p, i0*maxim+j0);
                     p.changeType(hmc.getTempCellType(i,j));
@@ -459,6 +472,40 @@ public class FrameEditor extends javax.swing.JFrame {
         });
         
         totInvisible();
+        //canviarColors(this);
+    }
+    
+    private void canviarColors(Container c) {
+        try {
+            ((SquareCell) c).getA();
+        }
+        catch(Exception e1) {
+            try {
+                ((Container)c).setBackground(blanc);
+            }
+            catch (Exception e) {}
+            try {
+                ((Container)c).setForeground(fons);
+            }
+            catch (Exception e) {}
+            try {
+                Border d = ((JPanel)c).getBorder();
+                ((TitledBorder)d).setTitleColor(fons);
+            }
+            catch (Exception e) {}
+            try {
+                ((JButton)c).setForeground(fons);
+            }
+            catch(Exception e) {}
+        }
+        
+        int n = c.getComponentCount();
+        for (int i = 0; i < n; ++i) {
+            try {
+                canviarColors((Container)c.getComponent(i));
+            }
+            catch(Exception e) {}
+        }
     }
     
     private void totInvisible() {
@@ -476,53 +523,61 @@ public class FrameEditor extends javax.swing.JFrame {
     }
     
     private void mouseRelease (SquareCell p) {
-        if(p.getLight()) {
-            if (b_canvi_num.isSelected()) {
-                if (b_esborrar_num.isSelected()) {
-                    hmc.setTempCellVal(p.getA(), p.getB(), 0);
-                    p.changeVal(0);
-                }
-                else {
-                    try {
-                        int num = 0;
-                        if (b_preguntar_num.isSelected()) {
-                            String input = JOptionPane.showInputDialog("Escriu un número:");
-                            if (input == null) throw new NullPointerException();
-                            num = Integer.parseInt(input);
-                        }
-                        else if (b_seq_num.isSelected()) {
-                            num = (Integer) spinner_num_actual.getValue();
-                            if (num > 0) spinner_num_actual.setValue(num+1);
-                        }
-                        if (num <= 0) throw new Exception();
-                        hmc.getTempCellVal(p.getA(), p.getB());
-                        p.changeVal(num);
-                    }
-                    catch (NullPointerException e) {
-                    }
-                    catch (Exception e) {
-                        msgError("No és un número vàlid");
-                    }
-                }
+        if (p.getLight()) {
+            if (b_canvi_num.isSelected() && p.getType() != domini.Tauler.Type.VOID) {
+                canviarNum(p);
             }
             else if (b_canvi_type.isSelected()) {
-                domini.Tauler.Type t = null;
-                if (b_blank.isSelected()) t = domini.Tauler.Type.BLANK;
-                else if (b_given.isSelected()) t = domini.Tauler.Type.GIVEN;
-                if (b_void.isSelected()) t = domini.Tauler.Type.VOID;
-                if (t != null) {
-                    hmc.setTempCellType(p.getA(), p.getB(), t);
-                    p.changeType(t);
-                    if (t == domini.Tauler.Type.VOID) {
-                        hmc.setTempCellVal(p.getA(), p.getB(), -1);
-                        p.changeVal(0);
-                    }
-                }
+                canviarType(p);
             }
             p.setLight(false);
         }
     }
     
+    private void canviarNum (SquareCell p) {
+        int num = -2;
+        if (b_esborrar_num.isSelected()) {
+            num = 0;
+        }
+        else if (b_preguntar_num.isSelected()) {
+            try {
+                String input = JOptionPane.showInputDialog("Escriu un número:");
+                if (input == null) return;
+                num = Integer.parseInt(input);
+                if (num <= 0) num = -1;
+            }
+            catch (Exception e) {
+                num = -1;
+            }
+        }
+        else if (b_seq_num.isSelected()) {
+            num = (Integer) spinner_num_actual.getValue();
+            spinner_num_actual.setValue(num+1);
+        }
+        if (num == -1) msgError("Número no vàlid");
+        else if (num == -2) msgError("Selecciona una opció");
+        else {
+            hmc.setTempCellVal(p.getA(), p.getB(), num);
+            p.changeVal(num);
+        }
+    }
+    
+    private void canviarType (SquareCell p) {
+        if (b_blank.isSelected()) {
+            hmc.setTempCellType(p.getA(), p.getB(), domini.Tauler.Type.BLANK);
+            p.changeType(domini.Tauler.Type.BLANK);
+        }
+        else if (b_given.isSelected()) {
+            hmc.setTempCellType(p.getA(), p.getB(), domini.Tauler.Type.GIVEN);
+            p.changeType(domini.Tauler.Type.GIVEN);
+        }
+        if (b_void.isSelected()) {
+            hmc.setTempCellType(p.getA(), p.getB(), domini.Tauler.Type.VOID);
+            hmc.setTempCellVal(p.getA(), p.getB(), -1);
+            p.changeType(domini.Tauler.Type.VOID);
+            p.changeVal(0);
+        }
+    }
     
     private void msgError(String text) {
         JOptionPane.showMessageDialog(this,text,"Error",JOptionPane.ERROR_MESSAGE);
