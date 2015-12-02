@@ -19,7 +19,7 @@ public class GeneratorController {
     private int D[][]; // implementarlo de manera que digui els llocs disponibles segons el numero que hi fiquem (aixi tenim en compte les pistes)
     private Position L[];
     private int nextGiven[];
-    private int totalCaselles;
+    private int totalCaselles = 0;
     private boolean controlarPart = true;
     private double factor = 1.0 * 5/10;
     private final int N = 30;
@@ -28,6 +28,35 @@ public class GeneratorController {
     
     public GeneratorController() {
         
+    }
+    
+    public Hidato uhc (int sizeX, int sizeY) {
+        this.h = new Hidato(sizeX, sizeY);
+        n = sizeX;
+        m = sizeY;
+        h.getCell(0,0).setVal(0);
+        h.getCell(n-1, m-1).setVal(0);
+        
+        iteracions = 0;
+        
+        int vegades = 10;
+        boolean trobat = false;
+        while (trobat == false && vegades-- > 0){
+            posarCasellesVoid();
+            comptaCaselles();
+            int x0, y0;
+            do {
+                x0 = randomNum(0,n-1);
+                y0 = randomNum(0,m-1);
+            } while (h.getCell(x0, y0).getType() == Type.VOID);
+            h.getCell(x0, y0).setVal(1);
+            trobat = completarCamiUHC();
+            if (trobat == false) h.getCell(x0, y0).setVal((0));
+        }
+        if (trobat == false) return null;
+        System.out.print(Utils.toString(h));
+        posarPistes();
+        return h;
     }
     
     
@@ -72,36 +101,25 @@ public class GeneratorController {
      * Post: retorna el hidato generat aleatoriament de mida sizeX x sizeY
     */
     public Hidato generateHidato(int sizeX, int sizeY) {
-        this.h = new Hidato(sizeX, sizeY);
+        h = new Hidato(sizeX, sizeY);
         n = sizeX;
         m = sizeY;
         h.getCell(0,0).setVal(0);
         h.getCell(n-1, m-1).setVal(0);
         
         iteracions = 0;
-        bfss = 0;
-        controls = 0;
-        controlsfallats = 0;
-        
-        factor = 5.0/10;
         
         int vegades = 10;
         boolean trobat = false;
-        do {
+        while (trobat == false && vegades-- > 0){
             posarCasellesVoid();
-            int x0, y0;
-            do {
-                x0 = randomNum(0,n-1);
-                y0 = randomNum(0,m-1);
-            } while (h.getCell(x0, y0).getType() == Type.VOID);
-            h.getCell(x0, y0).setVal(1);
-            trobat = completarCami();
-            if (trobat == false) h.getCell(x0, y0).setVal((0));
-            
-        } while (trobat == false && vegades-- > 0);
+            comptaCaselles();
+            trobat = completarCamiUHC();
+        }
+        
         if (trobat == false) return null;
-        System.out.print(Utils.toString(h));
-        posarPistes();
+        System.out.print(Utils.toString(h) + "\n\n");
+        //posarPistes();
         return h;
     }
     
@@ -236,23 +254,6 @@ public class GeneratorController {
         return true;
     }
     
-    private void ficarCasellesVoid(int buides) {
-        ArrayList<Integer> llista = new ArrayList<>();
-        for (int i = 0; i < n*m; ++i) llista.add(i);
-        for (int i = 0; i < buides; ++i) {
-            int j = randomNum(i,n*m-1);
-            Integer aux = llista.get(i);
-            llista.set(i, llista.get(j));
-            llista.set(j, aux);
-        }
-        for (int i = 0; i < n*m; ++i) {
-            Integer num = llista.get(i);
-            if (i < buides) h.getCell(num/m, num%m).setType(Type.VOID);
-            else h.getCell(num/m, num%m).setType(Type.BLANK);
-        }
-        comptaCaselles();
-    }
-    
     private int GC (int i, int j) {
         return h.getCell(i, j).getVal();
     }
@@ -359,8 +360,24 @@ public class GeneratorController {
         if (randomNum(1,100) <= 30) return;
         do {
             int buides = randomNum(1,n*m/3);
-            ficarCasellesVoid(buides);
+            posarCasellesVoid(buides);
         } while (!hidatoValid());
+    }
+    
+    private void posarCasellesVoid(int buides) {
+        ArrayList<Integer> llista = new ArrayList<>();
+        for (int i = 0; i < n*m; ++i) llista.add(i);
+        for (int i = 0; i < buides; ++i) {
+            int j = randomNum(i,n*m-1);
+            Integer aux = llista.get(i);
+            llista.set(i, llista.get(j));
+            llista.set(j, aux);
+        }
+        for (int i = 0; i < n*m; ++i) {
+            Integer num = llista.get(i);
+            if (i < buides) h.getCell(num/m, num%m).setType(Type.VOID);
+            else h.getCell(num/m, num%m).setType(Type.BLANK);
+        }
     }
     
     private void posarPistes () {
@@ -409,4 +426,161 @@ public class GeneratorController {
           }
     }
     
+    
+    private class Node {
+        int x, y;
+        Node seg, ant;
+        ArrayList<Node> veins;
+        boolean posat;
+        boolean esVoid;
+        
+        Node (int x, int y) {
+            this.x = x;
+            this.y = y;
+            esVoid = false;
+            posat = false;
+            veins = new ArrayList<>();
+        }
+        
+        public int getInt() {
+            return x*m+y;
+        }
+    }
+    
+    
+    Node[][] quad;
+    ArrayList<Node> llista;
+    
+    private boolean completarCamiUHC() {
+        
+        quad = new Node[n][m];
+        llista = new ArrayList<>();
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                quad[i][j] = new Node(i,j);
+                llista.add(quad[i][j]);
+                if (h.getCell(i, j).getType() == Type.VOID) quad[i][j].esVoid = true;
+            }
+        }
+        afegirVeins();
+        Node s = buscarInicial();
+        Node t = buscarFinal(s);
+        if (s == null || t == null) return false;
+        
+        Node ndp = s;
+        s.posat = true;
+        int Psize = 1;
+        boolean solucio;
+        
+        while (true) {
+            ++iteracions;
+            // 2
+            // a
+            if (Psize == totalCaselles-1) {
+                if (ndp.veins.contains(t)) {
+                    ndp.seg = t;
+                    t.ant = ndp;
+                    solucio = true;
+                    break;
+                }
+            }
+            // b
+            Node v = select(ndp);
+            // i
+            if (v == null) {
+                solucio = false;
+                break;
+            }
+            // ii
+            if (!v.equals(t) && !v.posat) {
+                v.posat = true;
+                ++Psize;
+                ndp.seg = v;
+                v.ant = ndp;
+                ndp = v;
+            }
+            // iii
+            else if (!v.equals(t) && v.posat) {
+                Node u = v.seg;
+                Node aux;
+                
+                ndp.seg = v;
+                u.ant = null;
+                while (u != v) {
+                    aux = u.seg;
+                    u.seg = u.ant;
+                    u.ant = aux;
+                    u = u.ant;
+                }
+                u = v.seg;
+                v.seg = ndp;
+                ndp = u;
+            }
+            // iv
+            else {
+                // no fer res (i tornem a 2)
+            }
+        }
+        
+        if (solucio) {
+            int val = 1;
+            Node v = s;
+            while (v != null) {
+                h.getCell(v.x, v.y).setVal(val++);
+                v = v.seg;
+            }
+            return true;
+        }
+        
+        return false;
+    }
+    
+    private void afegirVeins() {
+        for (int x = 0; x < n; ++x) {
+            for (int y = 0; y < m; ++y) {
+                if (quad[x][y].esVoid) continue;
+                for (int i = Math.max(0, x-1); i <= Math.min(n-1, x+1); ++i) {
+                    for (int j = Math.max(0, y-1); j <= Math.min(m-1, y+1); ++j) {
+                        if (i == x && j == y) continue;
+                        if (quad[i][j].esVoid) continue;
+                        quad[x][y].veins.add(quad[i][j]);
+                    }
+                }
+            }
+        }
+    }
+    
+    private Node buscarInicial() {
+        int vegades = 100;
+        while (vegades-- > 0) {
+            Node inicial = llista.get(randomNum(0,n*m-1));
+            if (!inicial.esVoid) return inicial;
+        }
+        for (Node inicial : llista) {
+            if (inicial.esVoid == false) return inicial;
+        }
+        System.out.print("incial null\n");
+        return null;
+    }
+    
+    private Node buscarFinal(Node inicial) {
+        int vegades = 100;
+        while (vegades-- > 0) {
+            Node fin = llista.get(randomNum(0,n*m-1));
+            if (!fin.esVoid && fin != inicial) return fin;
+        }
+        for (Node fin : llista) {
+            if (!fin.esVoid && fin != inicial) return fin;
+        }
+        System.out.print("final null\n");
+        return null;
+    }
+    
+    private Node select (Node ndp) {
+        if (ndp.veins.isEmpty()) return null;
+        Node ret = ndp.veins.get(randomNum(0,ndp.veins.size()-1));
+        // ndp.veins.remove(ret);
+        // ret.veins.remove(ndp);
+        return ret;
+    }
 }
