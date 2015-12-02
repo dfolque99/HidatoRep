@@ -47,7 +47,7 @@ public class HidatoManagerController {
      * Pre: sizeX,sizeY >= 0, difficulty != null
      * Post: crea un hidato aleatori i el carrega a tempHidato
      */
-    public void createRandom (int sizeX, int sizeY, Difficulty difficulty) {
+    public void createRandom (int sizeX, int sizeY) {
         GeneratorController hg = new GeneratorController();
         tempHidato = hg.generateHidato(sizeX, sizeY);
     }
@@ -119,7 +119,7 @@ public class HidatoManagerController {
      * Post: si tempHidato es pot completar, ho fa a tempHidato i retorna true;
      *      sino, retorna false
      */
-    public void completeTempHidato (Difficulty difficulty) {
+    public void completeTempHidato () {
         GeneratorController hg = new GeneratorController();
         Hidato completat = hg.generateHidato(tempHidato);
         if (completat != null ) tempHidato = completat;

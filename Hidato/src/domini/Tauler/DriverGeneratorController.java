@@ -27,9 +27,9 @@ public class DriverGeneratorController {
         long t1, t2;
         int acc;
         do {
-            print(    "1) Generar hidato aleatori\n"
-                    + "2) Generar hidato amb condicions\n"
-                    + "3) Sortir\n");
+            print(    "              |  1) Generar hidato aleatori         |\n"
+                    + "              |  2) Generar hidato amb condicions   |\n"
+                    + "              |  3) Sortir                          |\n");
             acc = s.nextInt();
             switch(acc) {
                 case 1:
@@ -41,9 +41,12 @@ public class DriverGeneratorController {
                     hg = new GeneratorController();
                     h = hg.generateHidato(sizeX,sizeY);
                     t2 = System.currentTimeMillis();
-                    print(Utils.toString(h));
-                    print(Utils.toStringWithZeros(h));
-                    System.out.printf("Generat en %d milisegons\n\n\n", t2-t1);
+                    if (h != null) {
+                        print(Utils.toString(h));
+                        print(Utils.toStringWithZeros(h));
+                        System.out.printf("Generat en %d milisegons\n\n\n", t2-t1);
+                    }
+                    else System.out.printf("No generat\n");
                     break;
                 case 2:
                     print ("Files: ");

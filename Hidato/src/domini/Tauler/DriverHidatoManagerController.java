@@ -36,8 +36,8 @@ public class DriverHidatoManagerController {
             acc = s.nextInt();
             switch (acc) {
                 case 11:
-                    n = s.nextInt(); m = s.nextInt(); d = s.nextInt();
-                    hm.createRandom(n,m,diff[d-1]);
+                    n = s.nextInt(); m = s.nextInt();
+                    hm.createRandom(n,m);
                     break;
                 case 12:
                     n = s.nextInt(); m = s.nextInt();
@@ -57,8 +57,7 @@ public class DriverHidatoManagerController {
                     hm.setTempCellType(n, m, tipus[val-1]);
                     break;
                 case 4:
-                    d = s.nextInt();
-                    hm.completeTempHidato(diff[d-1]);
+                    hm.completeTempHidato();
                     break;
                 case 5:
                     if (hm.solveTempHidato()) System.out.print("Resolt correctament\n");
@@ -108,15 +107,13 @@ public class DriverHidatoManagerController {
     
     private static void usage() {
         System.out.printf("USAGE:\n");
-        System.out.printf("11 n m d => crea nou hidato aleatori de mida nxm "
-                + "i dificultat d (1 = EASY, 2 = MEDIUM, 3 = HARD)\n");
+        System.out.printf("11 n m => crea nou hidato aleatori de mida nxm\n");
         System.out.printf("12 n m => crea nou hidato buit de mida nxm\n");
         System.out.printf("2 name => obre el hidato amb nom name\n");
         System.out.printf("31 x y v => canvia el valor de (x,y) per v\n");
         System.out.printf("32 x y t => canvia el tipus de (x,y) per t "
                 + "(1 = BLANK, 2 = GIVEN, 3 = VOID)\n");
-        System.out.printf("4 d => acaba de generar el hidato posant-li "
-                + "dificultat d (1 = EASY, 2 = MEDIUM, 3 = HARD)\n");
+        System.out.printf("4 => acaba de generar el hidato\n");
         System.out.printf("5 => soluciona el hidato temporal\n");
         System.out.printf("6 name => mira si el nom name ja esta utilitzat\n");
         System.out.printf("7 name => guarda el hidato temporal amb nom name\n");
