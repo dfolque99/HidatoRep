@@ -142,10 +142,11 @@ public class CurrentGameController {
                     game.incrementChangesMade();
                     hidato.getCell(x,y).setVal(value);
                 return 0;
-            }else {
+            }else if (value != 0){
                 hidato.getCell(x,y).setVal(0);
                 return -2;
             } // -2 = HI HA DOS NOMBRES CONSECUTIUS SEPARATS
+            else return 0;
         }else return 0;
     }
     

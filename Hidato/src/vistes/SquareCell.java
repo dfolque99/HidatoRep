@@ -22,15 +22,15 @@ import javax.swing.border.SoftBevelBorder;
  */
 public class SquareCell extends JPanel{
     
-    private final int a;
-    private final int b;
-    private int val;
-    private Type type;
+    private final int a; //dimensio x
+    private final int b; //dimensio y
+    private int val; //valor de la cell
+    private Type type; //tipus de la cell
     private final Color color_normal, color_highlight, color_given, color_void;
-    private final JLabel label;
+    private final JLabel label; //etiqueta que contindra el valor de la cell
     private final String font_nom = "Tahoma";
-    private boolean light;
-    private boolean modificable;
+    private boolean light; //si esta iluminat perque el ratoli hi passa per sobre
+    private boolean modificable; //si l'usuari pot modificar el valor
     
     
     public SquareCell (int a, int b, int val, Type type, Color cn, Color ch, Color cg, Color cv, int font_num, boolean mod) {
@@ -52,7 +52,7 @@ public class SquareCell extends JPanel{
         else label.setText(Integer.toString(val));
         label.setFont(new Font(font_nom, Font.PLAIN, font_num));
         setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
-        setBackground(color_normal);
+        changeType(type);
         
         addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
