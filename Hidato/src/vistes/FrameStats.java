@@ -9,7 +9,8 @@ import javax.swing.JPanel;
 /**
  * @author felix.axel.gimeno
  */
-public class FrameStats extends javax.swing.JFrame {
+@SuppressWarnings("serial")
+public final class FrameStats extends javax.swing.JFrame {
     private static String[] getStats(UserController uc) {
         UserStatsController usc = new UserStatsController((HidatoUser)uc.getLoggedUser());
         return new String[]{"Statistics of user: "+uc.getLoggedUser().getUsername(),
@@ -26,14 +27,11 @@ public class FrameStats extends javax.swing.JFrame {
     }
     
     public static void main(String args[]){
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                
-                HidatoUserController uc = new HidatoUserController();
-                uc.createUser("gu","gu");
-                uc.login("gu","gu");
-                new FrameStats(uc).setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            HidatoUserController uc = new HidatoUserController();
+            uc.createUser("gu","gu");
+            uc.login("gu","gu");
+            new FrameStats(uc).setVisible(true);
         });
     }
     
