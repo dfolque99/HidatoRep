@@ -3,8 +3,9 @@ import domini.Usuari.HidatoUser;
 import domini.Usuari.HidatoUserController;
 import domini.Usuari.UserController;
 import domini.Usuari.UserStatsController;
-import java.awt.*;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 /**
  * @author felix.axel.gimeno
  */
@@ -83,38 +84,27 @@ public class FrameStats extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         
         JButton buttonDelete = new JButton("Delete User");
-        buttonDelete.addActionListener(new java.awt.event.ActionListener(){public void actionPerformed(java.awt.event.ActionEvent evt){buttonDeleteActionPerformed();}});
+        buttonDelete.addActionListener((java.awt.event.ActionEvent evt) -> {buttonDeleteActionPerformed();});
  
         JButton buttonModifyPassword = new JButton("Modify Password User");
-        buttonModifyPassword.addActionListener(new java.awt.event.ActionListener(){public void actionPerformed(java.awt.event.ActionEvent evt){buttonModifyPasswordActionPerformed();}});
+        buttonModifyPassword.addActionListener((java.awt.event.ActionEvent evt) -> {buttonModifyPasswordActionPerformed();});
   
         JButton buttonSelectHidatoToEdit = new JButton("Edit Already Created Hidato");
-        buttonSelectHidatoToEdit.addActionListener(new java.awt.event.ActionListener(){public void actionPerformed(java.awt.event.ActionEvent evt){buttonSelectHidatoToEditActionPerformed();}});
-
-                
+        buttonSelectHidatoToEdit.addActionListener((java.awt.event.ActionEvent evt) -> {buttonSelectHidatoToEditActionPerformed();});
+         
         JPanel myButtonPanel = new JPanel();
-      //  myButtonPanel.setLayout(new BoxLayout(myButtonPanel,BoxLayout.Y_AXIS)); 
-      //  myButtonPanel.add(Box.createVerticalGlue());
-        
         
         myButtonPanel.add(buttonDelete);
         myButtonPanel.add(buttonModifyPassword);
         myButtonPanel.add(buttonSelectHidatoToEdit);
         
-        
-        
-        /*layout.setHorizontalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(buttonDelete)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-        );*/
         layout.setHorizontalGroup(
                 layout.createParallelGroup()
                         .addComponent(myButtonPanel)
                         .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
-                layout.createSequentialGroup(/*javax.swing.GroupLayout.Alignment.LEADING*/)
+                layout.createSequentialGroup()
                         .addComponent(myButtonPanel)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
