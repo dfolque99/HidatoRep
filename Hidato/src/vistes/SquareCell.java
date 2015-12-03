@@ -28,7 +28,7 @@ public class SquareCell extends JPanel{
     private Type type; //tipus de la cell
     private final Color color_normal, color_highlight, color_given, color_void;
     private final JLabel label; //etiqueta que contindra el valor de la cell
-    private final String font_nom = "Tahoma";
+    private final String font_nom = "YU Gothic UI Semilight";
     private boolean light; //si esta iluminat perque el ratoli hi passa per sobre
     private boolean modificable; //si l'usuari pot modificar el valor
     
@@ -79,12 +79,12 @@ public class SquareCell extends JPanel{
             setBackground(color_void);
         }
         else if (type == Type.GIVEN) {
-            label.setFont(new Font("Tahoma", Font.BOLD, label.getFont().getSize()));
+            label.setFont(new Font(font_nom, Font.BOLD, label.getFont().getSize()));
             setBackground(color_given);
         }
         else {
             setBackground(color_normal);
-            label.setFont(new Font("Tahoma", Font.PLAIN, label.getFont().getSize()));
+            label.setFont(new Font(font_nom, Font.PLAIN, label.getFont().getSize()));
         }
     }
     

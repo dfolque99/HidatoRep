@@ -36,7 +36,7 @@ public class FrameEditor extends javax.swing.JFrame {
      */
     public FrameEditor() {
         initComponents();
-        inici(7,10);
+        inici(8,8);
     }
     
 
@@ -66,9 +66,9 @@ public class FrameEditor extends javax.swing.JFrame {
         spinner_num_actual = new javax.swing.JSpinner();
         l_num_actual = new javax.swing.JLabel();
         panel_nom = new javax.swing.JPanel();
-        label_nom = new javax.swing.JLabel();
         textfield_nom = new javax.swing.JTextField();
         b_canvia_nom = new javax.swing.JButton();
+        label_nom = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -191,18 +191,12 @@ public class FrameEditor extends javax.swing.JFrame {
 
         panel_nom.setBorder(javax.swing.BorderFactory.createTitledBorder("Canvi de nom"));
 
-        label_nom.setText("Nom del hidato:");
-
-        b_canvia_nom.setBackground(new java.awt.Color(153, 255, 153));
         b_canvia_nom.setText("Canvia el nom");
 
         javax.swing.GroupLayout panel_nomLayout = new javax.swing.GroupLayout(panel_nom);
         panel_nom.setLayout(panel_nomLayout);
         panel_nomLayout.setHorizontalGroup(
             panel_nomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_nomLayout.createSequentialGroup()
-                .addComponent(label_nom)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(panel_nomLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel_nomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,8 +207,7 @@ public class FrameEditor extends javax.swing.JFrame {
         panel_nomLayout.setVerticalGroup(
             panel_nomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_nomLayout.createSequentialGroup()
-                .addComponent(label_nom)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(20, 20, 20)
                 .addComponent(textfield_nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(b_canvia_nom)
@@ -228,10 +221,10 @@ public class FrameEditor extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel_type, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panel_num, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel_nom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(panel_nom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_type, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,8 +236,11 @@ public class FrameEditor extends javax.swing.JFrame {
                 .addComponent(panel_num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel_nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
+
+        label_nom.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 36)); // NOI18N
+        label_nom.setText("Hidato:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -252,19 +248,24 @@ public class FrameEditor extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addComponent(label_nom)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -282,6 +283,7 @@ public class FrameEditor extends javax.swing.JFrame {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
+                    
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -362,7 +364,7 @@ public class FrameEditor extends javax.swing.JFrame {
         M2 = M + M1;
         jPanel1.setLayout(new GridLayout(maxim, maxim));
         
-        
+        System.out.print(label_nom.getFont().getFontName()+"\n");
         for (int i0 = 0; i0 < maxim; ++i0) {
             panels.add(new ArrayList<>());
             for (int j0 = 0; j0 < maxim; ++j0) {
@@ -370,7 +372,7 @@ public class FrameEditor extends javax.swing.JFrame {
                     int i = i0-N1, j = j0-M1;
                     int val = hmc.getTempCellVal(i,j);
                     domini.Tauler.Type type = hmc.getTempCellType(i,j);
-                    SquareCell p = new SquareCell(i,j,val,type,blanc,Color.GRAY,color1,Colors.negre, 500/maxim/2,true);
+                    SquareCell p = new SquareCell(i,j,val,type,blanc,Color.GRAY,color1,Colors.negre, 500/maxim*5/10,true);
                     panels.get(i).add(p);
                     jPanel1.add(p, i0*maxim+j0);
                     p.changeType(hmc.getTempCellType(i,j));
@@ -466,7 +468,7 @@ public class FrameEditor extends javax.swing.JFrame {
                 }
                 else {
                     nomHidato = name;
-                    label_nom.setText("Nom del hidato: "+name);
+                    label_nom.setText("Hidato: "+name);
                 }
             }
         });
