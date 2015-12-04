@@ -247,4 +247,28 @@ public class CurrentGameController {
         unpause();
         return 0;
     }
+   
+    public int getCellVal(int i, int j){
+        Hidato hidato = game.getHidato();
+        Cell c = hidato.getCell(i,j);
+        return c.getVal();
+    }
+    
+    public domini.Tauler.Type getCellType(int i, int j){
+        Hidato hidato = game.getHidato();
+        Cell c = hidato.getCell(i,j);
+        return c.getType();
+    }
+    
+    public int getSizeX(){
+        return game.getHidato().getSizeX();
+    }
+    
+    public int getSizeY(){
+        return game.getHidato().getSizeY();
+    }
+    
+    public int getValidCells(){
+        return ctrHidato.countValidCells();
+    }
 }

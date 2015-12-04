@@ -5,6 +5,7 @@
  */
 package vistes;
 
+import domini.Misc.Colors;
 import domini.Partida.CurrentGameController;
 import domini.Partida.Difficulty;
 import domini.Partida.Game;
@@ -15,6 +16,7 @@ import domini.Rank.RankingController;
 import domini.Tauler.Cell;
 import domini.Tauler.GeneratorController;
 import domini.Tauler.Hidato;
+import domini.Tauler.HidatoController;
 import domini.Tauler.HidatoSet;
 import domini.Tauler.SolverController;
 import domini.Usuari.HidatoUserController;
@@ -47,26 +49,37 @@ public class FrameGame extends javax.swing.JFrame {
     Color blankColor;
     Color hintColor;
     Color voidColor;
-    Color hoverColor;
+    Color startColor;
+    Color clickColor;
     CurrentGameController currentGameCtr;
     /**
      * Creates new form FrameGame
      */
     
-    void refreshCell(SquareCell sc, Cell c){
-        
-    }
     
     private void msgError(String text) {
         JOptionPane.showMessageDialog(this,text,"Error",JOptionPane.ERROR_MESSAGE);
     }
     
+    private void msgFi(String text) {
+        JOptionPane.showMessageDialog(this,text,"Ueeeeeee!",JOptionPane.PLAIN_MESSAGE);
+    }
+    
+    
+    
+    private int nextNumber(int ini){
+        Hidato hidato = currentGameCtr.getGame().getHidato();
+        HidatoController hc = new HidatoController(hidato);
+        for (int i = ini; i <= hc.countValidCells(); i++){
+            if (hc.getCellPositionFromValue(i, 1) == -1){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
     public FrameGame() {
         initComponents();
-        blankColor = new Color(0xFFFFFF);
-        hintColor = new Color(0xFFE0E0);
-        voidColor = new Color(0x000000);
-        hoverColor = new Color(0xDFDFDF);
         
         HidatoSet hidatoSet = new HidatoSet();       
         GameDBController ctrDBGame = new GameDBController();
@@ -76,10 +89,8 @@ public class FrameGame extends javax.swing.JFrame {
         GameManagerController ctrGameManager = new GameManagerController(hidatoSet, ctrDBGame, solver, ctrRanking, hidatoUserController);
         Help help = Help.MEDIUM;
         GeneratorController hidatoGenerator = new GeneratorController();
-        Hidato solvedHidato = hidatoGenerator.generateHidato(3,10);
+        Hidato solvedHidato = hidatoGenerator.generateHidato(6,6);
         currentGameCtr = ctrGameManager.createGame("Nou joc", solvedHidato, help);
-        Game game = currentGameCtr.getGame();
-        Hidato hidato = game.getHidato();
         //Hidato hidato = game.getHidato();
         
         /*Game game = new Game();
@@ -88,7 +99,7 @@ public class FrameGame extends javax.swing.JFrame {
         currentGame = newCurrentGameController(game,null,solver,null,hidatoUserController);
         */
         
-        int x = hidato.getSizeX(), y = hidato.getSizeY();
+        int x = currentGameCtr.getSizeX(), y = currentGameCtr.getSizeY();
         int maxim, x1, x2, y1, y2;
         maxim = Math.max(x,y);
         x1 = (maxim-x)/2; 
@@ -105,11 +116,18 @@ public class FrameGame extends javax.swing.JFrame {
             for (int j0 = 0; j0 < maxim; ++j0) {
                 if (x1 <= i0 && i0 < x2 && y1 <= j0 && j0 < y2) {
                     int i = i0 - x1, j = j0-y1; //i, j van de 0 a x-1 i de 0 a y-1 respectivament
-                    Cell c = hidato.getCell(i, j);
-                    int valor = c.getVal();
-                    domini.Tauler.Type type = c.getType();
+                    int valor = currentGameCtr.getCellVal(i, j);
+                    domini.Tauler.Type type = currentGameCtr.getCellType(i, j);
                     int fontSize = 250/maxim;
-                    SquareCell p = new SquareCell(i,j, valor, type, blankColor, hoverColor, hintColor, voidColor, fontSize, type == domini.Tauler.Type.BLANK);
+                    
+                    voidColor = Colors.c(0);
+                    if (valor == 1 || valor == currentGameCtr.getValidCells()){
+                        hintColor = Colors.c(3);
+                    }else hintColor = Colors.c(1);
+                    blankColor = Colors.c(2);
+                    clickColor = Colors.c(4);
+                    
+                    SquareCell p = new SquareCell(i,j, valor, type, blankColor, clickColor, hintColor, voidColor, fontSize, type == domini.Tauler.Type.BLANK);
                    
                     panels.get(i).add(p);
                     //p.setPreferredSize(new Dimension(cellsize,cellsize));
@@ -123,7 +141,9 @@ public class FrameGame extends javax.swing.JFrame {
                         @Override
                         public void mouseReleased(java.awt.event.MouseEvent evt){
                             if (p.getLight()){
-                                int v = (Integer) newValue.getValue();
+                                int v;
+                                if (evt.isControlDown()) v = 0;
+                                else v = (Integer) newValue.getValue();
                                 int errCode = currentGameCtr.putValue(v, p.getA(), p.getB());
                                 if (errCode == -1){
                                     msgError("No s'ha colocat el numero perque el hidato ja no te solucio");
@@ -137,6 +157,13 @@ public class FrameGame extends javax.swing.JFrame {
                                     msgError("La posicio no es valida!");
                                 }else{
                                     p.changeVal(v);
+                                    if (nextNumber(1) == -1){
+                                        msgFi("Felicitats, hidato completat!");
+                                    }else{
+                                        if((int) newValue.getValue() != 0){
+                                            newValue.setValue(nextNumber(v));
+                                        } 
+                                    }
                                 }
                             }
                         }
@@ -158,24 +185,72 @@ public class FrameGame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        boardPanel = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         newValue = new javax.swing.JSpinner();
-        boardPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(740, 580));
 
-        jLabel1.setText("Nombre a colocar:");
+        boardPanel.setPreferredSize(new java.awt.Dimension(500, 500));
 
         javax.swing.GroupLayout boardPanelLayout = new javax.swing.GroupLayout(boardPanel);
         boardPanel.setLayout(boardPanelLayout);
         boardPanelLayout.setHorizontalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 405, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
         );
         boardPanelLayout.setVerticalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Modificar valors"));
+
+        jLabel2.setText("Ctrl + Click esborra el número");
+
+        jLabel1.setText("Nombre a colocar:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(newValue, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(newValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 438, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -185,24 +260,17 @@ public class FrameGame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(newValue, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(459, 459, 459)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(newValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
@@ -219,7 +287,7 @@ public class FrameGame extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -246,6 +314,9 @@ public class FrameGame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel boardPanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JSpinner newValue;
     // End of variables declaration//GEN-END:variables
 }

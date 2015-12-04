@@ -12,21 +12,17 @@ import java.awt.Color;
  * @author David
  */
 public class Colors {
-    public static final Color verd = new Color(0x84F56C);
-    public static final Color verd_fluix = new Color(aclarir(0x84F56C));
-    public static final Color vermell = new Color(0xD73628);
-    public static final Color vermell_fluix = new Color(aclarir(0xD73628));
-    public static final Color blau = new Color(0x2843A6);
-    public static final Color blau_fluix = new Color(aclarir(aclarir(0x2843A6)));
-    public static final Color blau_fosc = new Color(0x1E273D);
-    public static final Color blanc = new Color(0xF3F3F3);
-    public static final Color negre = new Color(0x0D0D0D);
+    public static Color cVoid;
+    public static Color cGiven;
+    public static Color cBlank;
+    public static Color cStart;
+    public static Color cClick;
+    public static int[][] tema_int = new int[][] {
+        {0x33332D, 0xCCCC9F, 0xFFF8E3, 0x9FB4CC, 0xDB4105}
+    };
     
     
-    private static int aclarir(int a) {
-        int m1 = 0xFF0000;
-        int m2 = 0x00FF00;
-        int m3 = 0x0000FF;
-        return (((a&m1)+m1)/2)&m1 | (((a&m2)+m2)/2)&m2 | (((a&m3)+m3)/2)&m3;
+    public static Color c (int i) {
+        return new Color(tema_int[0][i]);
     }
 }
