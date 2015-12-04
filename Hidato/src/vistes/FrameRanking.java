@@ -20,8 +20,6 @@ import javax.swing.JOptionPane;
  */
 public class FrameRanking extends javax.swing.JFrame {
     
-    private RankingController rc;
-
     /**
      * Creates new form FrameRanking
      */
@@ -94,11 +92,7 @@ public class FrameRanking extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void msgError(String text) {
-        JOptionPane.showMessageDialog(this,text,"On vas flipat!",JOptionPane.ERROR_MESSAGE);
-    }
-    
+ 
     private void selectorDificultatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectorDificultatActionPerformed
         String selection = selectorDificultat.getSelectedItem().toString();
         switch (selection) {
@@ -161,7 +155,17 @@ public class FrameRanking extends javax.swing.JFrame {
     private javax.swing.JComboBox selectorDificultat;
     // End of variables declaration//GEN-END:variables
 
-    private ArrayList <ArrayList <JLabel> > entrades;
+    
+    
+    
+    
+    //===============================MI CODIGO==================================
+    
+    private void msgError(String text) {
+        JOptionPane.showMessageDialog(this,text,"On vas flipat!",JOptionPane.ERROR_MESSAGE);
+    }
+    
+    private RankingController rc;
     
     private final int N;
     
@@ -172,22 +176,17 @@ public class FrameRanking extends javax.swing.JFrame {
     private void inicialitza() {
         rc = new RankingController(); //Solo para debugar (luego se elimina)
         rc.init(); //Solo para debugar (luego se elimina)
-        rankingPanel.setLayout(new GridLayout(N,3));
-        for (int i = 0; i < N; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                rankingPanel.add(new JLabel)
-            }
-        }
+        setVisibleRanking(Difficulty.EASY);
     }
     
     private void setVisibleRanking(Difficulty dif) {
-        rankingPanel.setLayout(new GridLayout(20,1));
-        ArrayList <String> rank = rc.getRankingInfo(dif);
-        for (int i = 0; i < rank.size(); ++i) {
-            rankingPanel.add(new JLabel((i+1) + ". " + rank.get(i)));
-        }
-        for (int i = rank.size(); i < 20; ++i) {
-            rankingPanel.add(new JLabel(""));
+        rankingPanel.setLayout(new GridLayout(N,3));
+        ArrayList <String> ranking = rc.getRankingInfo(dif);
+        for (int i = 0; i < ranking.size(); ++i) {
+            String[] infoEntrada = ranking.get(i).split("/");
+            for(int j = 0; j < 3; ++j) {
+                rankingPanel.add(new JLabel(infoEntrada[j]));
+            }
         }
     }
     
