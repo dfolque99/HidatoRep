@@ -6,7 +6,7 @@
 
 package domini.Tauler;
 
-import domini.Partida.Difficulty;
+
 import domini.Partida.GameManagerController;
 import domini.Partida.CurrentGameController;
 import domini.Partida.Help;
@@ -103,6 +103,13 @@ public class HidatoManagerController {
         return true;
     }
     
+    public boolean validateTempHidato() {
+        SolverController solver = new SolverController();
+        boolean teSolucio = solver.solve(tempHidato);
+        if (!teSolucio) return false;
+        return true;
+    }
+    
     /**
      * Pre: name != null
      * Post: guarda el tempHidato a hset amb nom name (sobreescriu si cal)
@@ -119,10 +126,12 @@ public class HidatoManagerController {
      * Post: si tempHidato es pot completar, ho fa a tempHidato i retorna true;
      *      sino, retorna false
      */
-    public void completeTempHidato () {
+    public boolean completeTempHidato () {
         GeneratorController hg = new GeneratorController();
         Hidato completat = hg.generateHidato(tempHidato);
-        if (completat != null ) tempHidato = completat;
+        if (completat == null ) return false;
+        tempHidato = completat;
+        return true;
     }
     
     /**

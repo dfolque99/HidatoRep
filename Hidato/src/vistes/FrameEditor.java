@@ -11,6 +11,7 @@ import domini.Tauler.HidatoManagerController;
 import domini.Tauler.HidatoSet;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Event;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -69,6 +70,12 @@ public class FrameEditor extends javax.swing.JFrame {
         textfield_nom = new javax.swing.JTextField();
         b_canvia_nom = new javax.swing.JButton();
         label_nom = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        b_autocompletar = new javax.swing.JButton();
+        b_validar = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        b_sortir = new javax.swing.JButton();
+        b_desar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -172,7 +179,7 @@ public class FrameEditor extends javax.swing.JFrame {
                     .addComponent(b_esborrar_num)
                     .addComponent(b_preguntar_num)
                     .addComponent(b_seq_num))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         panel_numLayout.setVerticalGroup(
             panel_numLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,7 +214,7 @@ public class FrameEditor extends javax.swing.JFrame {
         panel_nomLayout.setVerticalGroup(
             panel_nomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_nomLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
                 .addComponent(textfield_nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(b_canvia_nom)
@@ -236,11 +243,47 @@ public class FrameEditor extends javax.swing.JFrame {
                 .addComponent(panel_num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel_nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         label_nom.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 36)); // NOI18N
         label_nom.setText("Hidato:");
+
+        b_autocompletar.setText("Autocompletar");
+
+        b_validar.setText("Validar");
+
+        jPanel5.setLayout(new java.awt.GridLayout(1, 0, 2, 0));
+
+        b_sortir.setText("Sortir");
+        jPanel5.add(b_sortir);
+
+        b_desar.setText("Desar");
+        jPanel5.add(b_desar);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(b_autocompletar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(b_validar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(b_autocompletar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(b_validar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -253,7 +296,9 @@ public class FrameEditor extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -262,9 +307,12 @@ public class FrameEditor extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(label_nom)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -309,19 +357,25 @@ public class FrameEditor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b_autocompletar;
     private javax.swing.JRadioButton b_blank;
     private javax.swing.JRadioButton b_canvi_num;
     private javax.swing.JRadioButton b_canvi_prop;
     private javax.swing.JRadioButton b_canvi_type;
     private javax.swing.JButton b_canvia_nom;
+    private javax.swing.JButton b_desar;
     private javax.swing.JRadioButton b_esborrar_num;
     private javax.swing.JRadioButton b_given;
     private javax.swing.JRadioButton b_preguntar_num;
     private javax.swing.JRadioButton b_seq_num;
+    private javax.swing.JButton b_sortir;
+    private javax.swing.JButton b_validar;
     private javax.swing.JRadioButton b_void;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel l_num_actual;
     private javax.swing.JLabel label_nom;
     private javax.swing.JPanel panel_nom;
@@ -337,6 +391,7 @@ public class FrameEditor extends javax.swing.JFrame {
     
     private ArrayList<ArrayList<SquareCell>> panels;
     private ArrayList<ArrayList<JLabel>> labels;
+    private int N, M;
     private HidatoManagerController hmc;
     private ButtonGroup g1, g2, g3;
     private String nomHidato;
@@ -350,11 +405,14 @@ public class FrameEditor extends javax.swing.JFrame {
     
     
     public void inici(int N, int M) {
+        this.N = N;
+        this.M = M;
         HidatoSet hs = new HidatoSet();
         hmc = new HidatoManagerController(hs, null);
         hmc.createRandom(N, M);
         label_nom.setText("Hidato sense nom");
         panels = new ArrayList<>();
+        nomHidato = null;
         
         int maxim, N1, N2, M1, M2;
         maxim = Math.max(N,M);
@@ -364,7 +422,7 @@ public class FrameEditor extends javax.swing.JFrame {
         M2 = M + M1;
         jPanel1.setLayout(new GridLayout(maxim, maxim));
         
-        System.out.print(label_nom.getFont().getFontName()+"\n");
+        
         for (int i0 = 0; i0 < maxim; ++i0) {
             panels.add(new ArrayList<>());
             for (int j0 = 0; j0 < maxim; ++j0) {
@@ -395,6 +453,13 @@ public class FrameEditor extends javax.swing.JFrame {
             }
         }
         
+        configurarRadioButtons();
+        configurarBotons();
+        //canviarColors(this);
+        
+    }
+    
+    private void configurarRadioButtons() {
         g1 = new ButtonGroup();
         g1.add(b_canvi_num); g1.add(b_canvi_type); g1.add(b_canvi_prop);
         g2 = new ButtonGroup();
@@ -455,7 +520,6 @@ public class FrameEditor extends javax.swing.JFrame {
         });
         spinner_num_actual.setValue(1);
         
-        
         b_canvia_nom.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -472,9 +536,51 @@ public class FrameEditor extends javax.swing.JFrame {
                 }
             }
         });
-        
         totInvisible();
-        //canviarColors(this);
+    }
+    
+    
+    private void configurarBotons() {
+        b_autocompletar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                boolean completat = hmc.completeTempHidato();
+                if (completat) {
+                    for (int i = 0; i < N; ++i) {
+                        for (int j = 0; j < M; ++j) {
+                            panels.get(i).get(j).changeType(hmc.getTempCellType(i, j));
+                            panels.get(i).get(j).changeVal(hmc.getTempCellVal(i, j));
+                        }
+                    }
+                }
+                else {
+                    msgError ("No s'ha pogut completar el hidato");
+                }
+            }
+        });
+        b_validar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                boolean completat = hmc.validateTempHidato();
+                if (completat) {
+                    msgError ("S'ha validat (tot i que no estic molt segur que ho faci be)");
+                }
+                else {
+                    msgError ("No s'ha pogut validar el hidato");
+                }
+            }
+        });
+        b_desar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                if (nomHidato != null) {
+                    hmc.saveTempHidato(nomHidato);
+                }
+                else {
+                    msgError("El hidato encara no té nom");
+                }
+            }
+        });
     }
     
     private void canviarColors(Container c) {
@@ -483,31 +589,32 @@ public class FrameEditor extends javax.swing.JFrame {
         }
         catch(Exception e1) {
             try {
-                ((Container)c).setBackground(blanc);
+                ((Container)c).setBackground(fons);
             }
             catch (Exception e) {}
             try {
-                ((Container)c).setForeground(fons);
+                ((Container)c).setForeground(blanc);
             }
             catch (Exception e) {}
             try {
                 Border d = ((JPanel)c).getBorder();
-                ((TitledBorder)d).setTitleColor(fons);
+                ((TitledBorder)d).setTitleColor(blanc);
             }
             catch (Exception e) {}
             try {
                 ((JButton)c).setForeground(fons);
             }
             catch(Exception e) {}
+            int n = c.getComponentCount();
+            for (int i = 0; i < n; ++i) {
+                try {
+                    canviarColors((Container)c.getComponent(i));
+                }
+                catch(Exception e) {}
+            }
         }
         
-        int n = c.getComponentCount();
-        for (int i = 0; i < n; ++i) {
-            try {
-                canviarColors((Container)c.getComponent(i));
-            }
-            catch(Exception e) {}
-        }
+        
     }
     
     private void totInvisible() {
