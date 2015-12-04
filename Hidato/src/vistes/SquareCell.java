@@ -33,15 +33,15 @@ public class SquareCell extends JPanel{
     private boolean modificable; //si l'usuari pot modificar el valor
     
     
-    public SquareCell (int a, int b, int val, Type type, Color cn, Color ch, Color cg, Color cv, int font_num, boolean mod) {
+    public SquareCell (int a, int b, int val, Type type, Color blankColor, Color clickColor, Color givenColor, Color voidColor, int font_num, boolean mod) {
         this.a = a;
         this.b = b;
         this.val = val;
         this.type = type;
-        color_normal = cn;
-        color_highlight = ch;
-        color_given = cg;
-        color_void = cv;
+        color_normal = blankColor;
+        color_highlight = clickColor;
+        color_given = givenColor;
+        color_void = voidColor;
         modificable = mod;
         light = false;
         
