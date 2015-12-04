@@ -94,17 +94,17 @@ public class CurrentGameController {
      * @return 0 si s'ha colocat la pista, 
      * -1 si no s'ha colocat degut a que el hidato no tenia solucio
      */
-    public int requestHint(){
+    public ArrayList<Integer> requestHint(){
         game.incrementHints();
         Hidato hidato = ctrHidato.getHidato();
         ArrayList<Integer> hint = solver.getHint(hidato); //x y value
-        if (hint == null) return -1; //-1 = el hidato no te solucio
+        if (hint == null) return null; //El hidato no te solucio
         int x = hint.get(0);
         int y = hint.get(1);
         int value = hint.get(2);
         Cell cell = hidato.getCell(x,y);
         cell.setVal(value);
-        return 0;
+        return hint;
     }
     
     /**

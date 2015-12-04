@@ -61,8 +61,8 @@ public class FrameGame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this,text,"Error",JOptionPane.ERROR_MESSAGE);
     }
     
-    private void msgFi(String text) {
-        JOptionPane.showMessageDialog(this,text,"Ueeeeeee!",JOptionPane.PLAIN_MESSAGE);
+    private void msg(String text, String title) {
+        JOptionPane.showMessageDialog(this,text,title,JOptionPane.PLAIN_MESSAGE);
     }
     
     
@@ -87,7 +87,7 @@ public class FrameGame extends javax.swing.JFrame {
         RankingController ctrRanking = new RankingController();
         HidatoUserController hidatoUserController = new HidatoUserController();
         GameManagerController ctrGameManager = new GameManagerController(hidatoSet, ctrDBGame, solver, ctrRanking, hidatoUserController);
-        Help help = Help.MEDIUM;
+        Help help = Help.LOW;
         GeneratorController hidatoGenerator = new GeneratorController();
         Hidato solvedHidato = hidatoGenerator.generateHidato(6,6);
         currentGameCtr = ctrGameManager.createGame("Nou joc", solvedHidato, help);
@@ -110,6 +110,10 @@ public class FrameGame extends javax.swing.JFrame {
         //int cellsize = 80;
         //boardPanel.setPreferredSize(new Dimension(cellsize*x, cellsize*y));
 
+        if (help == Help.HIGH){
+            checkButton.setVisible(false);
+        }
+        
         panels = new ArrayList<>();
         for (int i0 = 0; i0 < maxim; ++i0) {
             panels.add(new ArrayList<>());
@@ -141,9 +145,10 @@ public class FrameGame extends javax.swing.JFrame {
                         @Override
                         public void mouseReleased(java.awt.event.MouseEvent evt){
                             if (p.getLight()){
+                                p.setLight(false);
                                 int v;
+                                v = (Integer) newValue.getValue();
                                 if (evt.isControlDown()) v = 0;
-                                else v = (Integer) newValue.getValue();
                                 int errCode = currentGameCtr.putValue(v, p.getA(), p.getB());
                                 if (errCode == -1){
                                     msgError("No s'ha colocat el numero perque el hidato ja no te solucio");
@@ -158,7 +163,7 @@ public class FrameGame extends javax.swing.JFrame {
                                 }else{
                                     p.changeVal(v);
                                     if (nextNumber(1) == -1){
-                                        msgFi("Felicitats, hidato completat!");
+                                        msg("Felicitats, hidato completat!","Yeeeeeee!!!");
                                     }else{
                                         if((int) newValue.getValue() != 0){
                                             newValue.setValue(nextNumber(v));
@@ -186,11 +191,19 @@ public class FrameGame extends javax.swing.JFrame {
     private void initComponents() {
 
         boardPanel = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        buttonsPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         newValue = new javax.swing.JSpinner();
+        jPanel2 = new javax.swing.JPanel();
+        checkButton = new javax.swing.JButton();
+        hintButton = new javax.swing.JButton();
+        solveButton = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        pauseButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
+        restartButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(740, 580));
@@ -240,17 +253,117 @@ public class FrameGame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Accions"));
+
+        checkButton.setText("Comprova");
+        checkButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                checkButtonMouseReleased(evt);
+            }
+        });
+
+        hintButton.setText("Pista");
+        hintButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                hintButtonMouseReleased(evt);
+            }
+        });
+
+        solveButton.setText("Resol");
+        solveButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                solveButtonMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(checkButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(hintButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(solveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(checkButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(hintButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(solveButton)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Opcions de partida"));
+
+        pauseButton.setText("Pausa (P)");
+        pauseButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                pauseButtonMouseReleased(evt);
+            }
+        });
+
+        saveButton.setText("Guarda");
+        saveButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                saveButtonMouseReleased(evt);
+            }
+        });
+
+        restartButton.setText("Reinicia");
+        restartButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                restartButtonMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pauseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(restartButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pauseButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(saveButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(restartButton)
+                .addContainerGap(60, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout buttonsPanelLayout = new javax.swing.GroupLayout(buttonsPanel);
+        buttonsPanel.setLayout(buttonsPanelLayout);
+        buttonsPanelLayout.setHorizontalGroup(
+            buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        buttonsPanelLayout.setVerticalGroup(
+            buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonsPanelLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 438, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 159, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -261,7 +374,7 @@ public class FrameGame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -269,12 +382,57 @@ public class FrameGame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
+                    .addComponent(buttonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void checkButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkButtonMouseReleased
+        //falta fer que no es cliqui si el ratoli no hi es a sobre
+        if(currentGameCtr.check()){
+            msg("El hidato encara te solucio","");
+        }else{
+            msgError("El hidato no te solucio");
+        }
+    }//GEN-LAST:event_checkButtonMouseReleased
+
+    private void hintButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hintButtonMouseReleased
+        //falta fer que no es cliqui si el ratoli no hi es a sobre
+        ArrayList<Integer> hint = currentGameCtr.requestHint();
+        if (hint == null){
+            msgError("El hidato no te solucio");
+            return;
+        }
+        int x = hint.get(0);
+        int y = hint.get(1);
+        int value = hint.get(2);
+        panels.get(x).get(y).changeVal(value);
+    }//GEN-LAST:event_hintButtonMouseReleased
+
+    private void solveButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_solveButtonMouseReleased
+        // TODO add your handling code here:
+        currentGameCtr.solve();
+        for(int i = 0; i < currentGameCtr.getSizeX(); i++){
+            for(int j = 0; j < currentGameCtr.getSizeY(); j++){
+                int value = currentGameCtr.getCellVal(i, j);
+                panels.get(i).get(j).changeVal(value);
+            }
+        }
+    }//GEN-LAST:event_solveButtonMouseReleased
+
+    private void pauseButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pauseButtonMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pauseButtonMouseReleased
+
+    private void saveButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveButtonMouseReleased
+
+    private void restartButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restartButtonMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_restartButtonMouseReleased
 
     /**
      * @param args the command line arguments
@@ -313,10 +471,18 @@ public class FrameGame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel boardPanel;
+    private javax.swing.JPanel buttonsPanel;
+    private javax.swing.JButton checkButton;
+    private javax.swing.JButton hintButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JSpinner newValue;
+    private javax.swing.JButton pauseButton;
+    private javax.swing.JButton restartButton;
+    private javax.swing.JButton saveButton;
+    private javax.swing.JButton solveButton;
     // End of variables declaration//GEN-END:variables
 }
