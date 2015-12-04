@@ -68,6 +68,10 @@ public class RankingController {
         }
     }
     
+    public static int getRankingMaxSize() {
+        return Ranking.getMaxSize();
+    }
+    
     /**
      * Funcion para pasar la informacion de un ranking a la vista
      * @return Un arraylist de strings donde cada string representa una entrada
@@ -75,7 +79,7 @@ public class RankingController {
      * por un caracter '/'
      * Pre: Hacer init()
      */
-    ArrayList <String> getRankingInfo(Difficulty difficulty) {
+    public ArrayList <String> getRankingInfo(Difficulty difficulty) {
         ArrayList <String> res = new ArrayList<>();
         switch(difficulty) {
             case EASY:
