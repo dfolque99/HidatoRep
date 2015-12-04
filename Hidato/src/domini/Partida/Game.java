@@ -260,7 +260,7 @@ public class Game {
      * @return 0
      */
     public int incrementDuration(long time){
-        this.duration.plusMillis(time);
+        this.duration = this.duration.plusMillis(time);
         return 0;
     }
 }

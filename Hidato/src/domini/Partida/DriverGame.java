@@ -19,6 +19,7 @@ import domini.Tauler.SolverController;
 import domini.Misc.Utils;
 import domini.Tauler.Cell;
 import domini.Tauler.Type;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -153,8 +154,8 @@ public class DriverGame {
                                         }
                                         break;
                                     case 2:
-                                        int errCode2 = ctrCurrentGame.requestHint();
-                                        if (errCode2 == -1) System.out.println("No s'ha posat pista perque el hidato no te solucio");
+                                        ArrayList<Integer> list = ctrCurrentGame.requestHint();
+                                        if (list == null) System.out.println("No s'ha posat pista perque el hidato no te solucio");
                                         else System.out.println("S'ha colocat la pista");
                                         break;
                                     case 3:

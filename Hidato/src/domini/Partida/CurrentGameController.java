@@ -7,6 +7,7 @@ import domini.Usuari.HidatoUser;
 import domini.Usuari.HidatoUserController;
 import domini.Tauler.SolverController;
 import domini.Tauler.Type;
+import java.time.Duration;
 import java.util.ArrayList;
 
 /**
@@ -69,6 +70,7 @@ public class CurrentGameController {
         this.solver = solver;
         this.ctrRanking = ctrRanking;
         this.hidatoUserController = hidatoUserController;
+        this.time0 = (long) System.currentTimeMillis();
     }
 
     /**
@@ -166,6 +168,7 @@ public class CurrentGameController {
      */
     public int unpause(){
         time0 = System.currentTimeMillis();
+        System.out.println("Retorn: temps = "+game.getDuration().toMinutes());
         return 0;
     }
     
@@ -270,5 +273,9 @@ public class CurrentGameController {
     
     public int getValidCells(){
         return ctrHidato.countValidCells();
+    }
+    
+    public Duration getDuration(){
+        return game.getDuration();
     }
 }

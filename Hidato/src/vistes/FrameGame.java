@@ -23,13 +23,17 @@ import domini.Usuari.HidatoUserController;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.time.Duration;
 import java.util.ArrayList;
 import javafx.scene.layout.Border;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.Timer;
 
 
 //https://www.youtube.com/watch?v=FKJxPlWQp9Y
@@ -52,6 +56,8 @@ public class FrameGame extends javax.swing.JFrame {
     Color startColor;
     Color clickColor;
     CurrentGameController currentGameCtr;
+    Boolean isGamePaused;
+    int timeSincePause;
     /**
      * Creates new form FrameGame
      */
@@ -113,6 +119,23 @@ public class FrameGame extends javax.swing.JFrame {
         if (help == Help.HIGH){
             checkButton.setVisible(false);
         }
+        
+        ActionListener taskPerformer = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent evt){
+                int duration;
+                if (!isGamePaused) timeSincePause++;
+                duration = (int)currentGameCtr.getDuration().toMillis()/1000+timeSincePause;
+                System.out.println(currentGameCtr.getDuration().toMillis()/1000);
+                timeLabel.setText("Temps: "+duration+"s");
+            }
+        };
+        
+        Timer timer = new Timer(1000,taskPerformer);
+        timer.start();
+        
+        isGamePaused = false;
+        timeSincePause = 0;
         
         panels = new ArrayList<>();
         for (int i0 = 0; i0 < maxim; ++i0) {
@@ -190,6 +213,8 @@ public class FrameGame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         boardPanel = new javax.swing.JPanel();
         buttonsPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -204,9 +229,10 @@ public class FrameGame extends javax.swing.JFrame {
         pauseButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         restartButton = new javax.swing.JButton();
+        timeLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(740, 580));
+        setPreferredSize(new java.awt.Dimension(740, 620));
 
         boardPanel.setPreferredSize(new java.awt.Dimension(500, 500));
 
@@ -218,7 +244,7 @@ public class FrameGame extends javax.swing.JFrame {
         );
         boardPanelLayout.setVerticalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 569, Short.MAX_VALUE)
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Modificar valors"));
@@ -234,11 +260,12 @@ public class FrameGame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(newValue, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(newValue, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -250,7 +277,7 @@ public class FrameGame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(newValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Accions"));
@@ -344,8 +371,11 @@ public class FrameGame extends javax.swing.JFrame {
                 .addComponent(saveButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(restartButton)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        timeLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        timeLabel.setText("Temps: ");
 
         javax.swing.GroupLayout buttonsPanelLayout = new javax.swing.GroupLayout(buttonsPanel);
         buttonsPanel.setLayout(buttonsPanelLayout);
@@ -354,6 +384,10 @@ public class FrameGame extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(buttonsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(timeLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         buttonsPanelLayout.setVerticalGroup(
             buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -363,7 +397,9 @@ public class FrameGame extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 159, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(timeLabel)
+                .addGap(0, 91, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -381,9 +417,9 @@ public class FrameGame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
-                    .addComponent(buttonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
@@ -424,6 +460,12 @@ public class FrameGame extends javax.swing.JFrame {
 
     private void pauseButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pauseButtonMouseReleased
         // TODO add your handling code here:
+        currentGameCtr.pause();
+        isGamePaused = true;
+        timeSincePause = 0;          
+        msg("Joc pausat. Prem OK per continuar","Pausa");
+        currentGameCtr.unpause();
+        isGamePaused = false;      
     }//GEN-LAST:event_pauseButtonMouseReleased
 
     private void saveButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseReleased
@@ -432,6 +474,14 @@ public class FrameGame extends javax.swing.JFrame {
 
     private void restartButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restartButtonMouseReleased
         // TODO add your handling code here:
+        currentGameCtr.restartGame();
+        timeSincePause = 0;
+        for(int i = 0; i < currentGameCtr.getSizeX(); i++){
+            for(int j = 0; j < currentGameCtr.getSizeY(); j++){
+                int value = currentGameCtr.getCellVal(i, j);
+                panels.get(i).get(j).changeVal(value);
+            }
+        }
     }//GEN-LAST:event_restartButtonMouseReleased
 
     /**
@@ -471,6 +521,8 @@ public class FrameGame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel boardPanel;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JPanel buttonsPanel;
     private javax.swing.JButton checkButton;
     private javax.swing.JButton hintButton;
@@ -484,5 +536,6 @@ public class FrameGame extends javax.swing.JFrame {
     private javax.swing.JButton restartButton;
     private javax.swing.JButton saveButton;
     private javax.swing.JButton solveButton;
+    private javax.swing.JLabel timeLabel;
     // End of variables declaration//GEN-END:variables
 }
