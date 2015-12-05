@@ -127,7 +127,7 @@ public final class FrameStats extends javax.swing.JFrame {
     @SuppressWarnings(value = "unchecked")
     private void initComponents(final UserController uc) {
         //javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
-        javax.swing.JLabel jScrollPane1 = new javax.swing.JLabel(convertToMultiline( convertToString(FrameStats.getStats(uc)) ) ,  javax.swing.SwingConstants.CENTER);
+        javax.swing.JLabel jScrollPane1 = new javax.swing.JLabel(convertToMultiline( convertToString(FrameStats.getStats(uc)) ) ,  javax.swing.SwingConstants.CENTER); //SwingConstants.CENTER is for centering the jlabel text
         
         this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         this.setPreferredSize(new java.awt.Dimension(sizeX,sizeY));
