@@ -13,7 +13,7 @@ import javax.swing.JPanel;
  * where uc is a valida usercontroller
  * 
  * @author felix.axel.gimeno
- * @version 0.2
+ * @version 0.21
  * @since 05-12-2015
  */
 @SuppressWarnings("serial")
@@ -122,7 +122,7 @@ public final class FrameStats extends javax.swing.JFrame {
         JButton buttonDelete = createButton("Delete User",(java.awt.event.ActionEvent evt) -> {buttonDeleteActionPerformed(uc);});   
         JButton buttonModifyPassword = createButton("Modify Password User",(java.awt.event.ActionEvent evt) -> {buttonModifyPasswordActionPerformed(uc);});
         JButton buttonSelectHidatoToEdit = createButton("Edit Already Created Hidato", (java.awt.event.ActionEvent evt) -> {buttonSelectHidatoToEditActionPerformed(uc);});
-        
+        /*
         JPanel myButtonPanel = new JPanel();
         myButtonPanel.setLayout(new java.awt.GridLayout(0,1));
 
@@ -139,24 +139,36 @@ public final class FrameStats extends javax.swing.JFrame {
                 .addComponent(buttonModifyPassword)
                 .addComponent(buttonSelectHidatoToEdit)
                 );
-
+        */        
         //myButtonPanel.add(buttonDelete);
         //myButtonPanel.add(buttonModifyPassword);
         //myButtonPanel.add(buttonSelectHidatoToEdit);
-        
+        /*
         JPanel myPanelForButtons = new JPanel();
         myPanelForButtons.setLayout(new java.awt.BorderLayout());
         myPanelForButtons.add(myButtonPanel,java.awt.BorderLayout.CENTER);
-        
+        */
         layout.setHorizontalGroup(
                 layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
-                        .addComponent(myButtonPanel/*, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-          javax.swing.GroupLayout.PREFERRED_SIZE*/)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                .addComponent(buttonDelete)
+                                .addComponent(buttonModifyPassword)
+                                .addComponent(buttonSelectHidatoToEdit)
+                        )
+                         //.addComponent(myButtonPanel
+                                /*, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.PREFERRED_SIZE*/
+                         //)
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup()
-                        .addComponent(myButtonPanel)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(buttonDelete)
+                                .addComponent(buttonModifyPassword)
+                                .addComponent(buttonSelectHidatoToEdit)
+                        )
+                        //.addComponent(myButtonPanel)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
     
