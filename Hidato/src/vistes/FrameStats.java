@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 public final class FrameStats extends javax.swing.JFrame {
     private static String[] getStats(UserController uc) {
         UserStatsController usc = new UserStatsController((HidatoUser)uc.getLoggedUser());
+        //return new String[]{"No va"};
         return new String[]{"Statistics of user: "+uc.getLoggedUser().getUsername(),
             "getAverageScore: "+String.valueOf(usc.getAverageScore()),
             "getAverageTimePerSolve: "+String.valueOf(usc.getAverageTimePerSolve().getSeconds()),
@@ -28,10 +29,11 @@ public final class FrameStats extends javax.swing.JFrame {
     
     public static void main(String args[]){
         java.awt.EventQueue.invokeLater(() -> {
-            HidatoUserController uc = new HidatoUserController();
-            uc.createUser("gu","gu");
-            uc.login("gu","gu");
-            new FrameStats(uc).setVisible(true);
+            HidatoUserController huc = new HidatoUserController();
+            huc.createUser("zu","zu");
+            huc.login("zu","zu");
+            huc.updateUser();
+            new FrameStats(huc).setVisible(true);
         });
     }
     
@@ -46,19 +48,30 @@ public final class FrameStats extends javax.swing.JFrame {
 
     
     public FrameStats(UserController uc) {
+        super("Statistics and others");
         initComponents(uc);
     }
 
-    private void buttonDeleteActionPerformed() {
+    private void buttonDeleteActionPerformed(UserController uc) {
         JOptionPane.showMessageDialog(this,"No implementada todavía","No encara",JOptionPane.ERROR_MESSAGE);
         /*JDialog d = new JDialog(this, "No implementada todavía", true);
         d.setLocationRelativeTo(this);
         d.setVisible(true);*/
     }
-    private void buttonModifyPasswordActionPerformed(){
-        JOptionPane.showMessageDialog(this,"No implementada todavía","Not yet",JOptionPane.ERROR_MESSAGE);
+    private void buttonModifyPasswordActionPerformed(UserController uc){
+        String OldPassword = JOptionPane.showInputDialog(this,"Introduce current password",null); 
+        Boolean truePass = uc.getLoggedUser().getPassword().equals(OldPassword);
+        if (truePass) {
+            String NewPassword = JOptionPane.showInputDialog(this,"Introduce new password",null); 
+            uc.modifyPassword(OldPassword, NewPassword);
+            JOptionPane.showMessageDialog(this,"Change done correctly","Change done correctly",JOptionPane.PLAIN_MESSAGE);
+            
+        } else if (null != OldPassword) {
+            JOptionPane.showMessageDialog(this,"Invalid password for this user","Invalid password for this user",JOptionPane.ERROR_MESSAGE);
+        }
+        
     }
-    private void buttonSelectHidatoToEditActionPerformed(){
+    private void buttonSelectHidatoToEditActionPerformed(UserController uc){
         JOptionPane.showMessageDialog(this,"No implementada todavía","To do",JOptionPane.ERROR_MESSAGE);
     } 
     
@@ -82,13 +95,13 @@ public final class FrameStats extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         
         JButton buttonDelete = new JButton("Delete User");
-        buttonDelete.addActionListener((java.awt.event.ActionEvent evt) -> {buttonDeleteActionPerformed();});
+        buttonDelete.addActionListener((java.awt.event.ActionEvent evt) -> {buttonDeleteActionPerformed(uc);});
  
         JButton buttonModifyPassword = new JButton("Modify Password User");
-        buttonModifyPassword.addActionListener((java.awt.event.ActionEvent evt) -> {buttonModifyPasswordActionPerformed();});
+        buttonModifyPassword.addActionListener((java.awt.event.ActionEvent evt) -> {buttonModifyPasswordActionPerformed(uc);});
   
         JButton buttonSelectHidatoToEdit = new JButton("Edit Already Created Hidato");
-        buttonSelectHidatoToEdit.addActionListener((java.awt.event.ActionEvent evt) -> {buttonSelectHidatoToEditActionPerformed();});
+        buttonSelectHidatoToEdit.addActionListener((java.awt.event.ActionEvent evt) -> {buttonSelectHidatoToEditActionPerformed(uc);});
          
         JPanel myButtonPanel = new JPanel();
         
