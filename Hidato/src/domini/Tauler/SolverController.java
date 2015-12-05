@@ -10,12 +10,10 @@ import java.util.Map;
 import java.util.NavigableMap;
 import java.util.Random;
 import java.util.TreeMap;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 /**
  * hidoku, hidato, king's tour, hamiltonian path, longest simple path ...
  * Hidato is NP-complete
- * if numbrix, and if grid is rectangular then ...
  * @author felix.axel.gimeno
  * @version 0.4
  * @since 2015-11-07
@@ -186,19 +184,24 @@ public class SolverController {
         Random rand = new Random();
         for (int count = 0; count < 100; count += 1) {
 
-            int x = rand.nextInt(board.getSizeX());
-            int y = rand.nextInt(board.getSizeY());
-            if (board.getCell(x, y).getType() == Type.BLANK) {
+            int x = rand.nextInt(hidato.getSizeX());
+            int y = rand.nextInt(hidato.getSizeY());
+            if (hidato.getCell(x, y).getType() == Type.BLANK && 0 == hidato.getCell(x, y).getVal()) {
                 return new ArrayList<>(Arrays.asList(x, y, board.getCell(x, y).getVal()));
             }
         }
-        for (int i = 0; i < board.getSizeX(); i+=1){
-            for (int j = 0; j < board.getSizeY(); j += 1){
-                if (board.getCell(i, j).getType() == Type.BLANK) {
+        for (int i = 0; i < hidato.getSizeX(); i+=1){
+            for (int j = 0; j < hidato.getSizeY(); j += 1){
+                //System.out.println("debug gethint inside loop " +((board.getCell(i, j).getType() == Type.BLANK) ?"BLANK" :"NOT BLANK") );
+                //System.out.println("debug gethint inside loop " +((board.getCell(i, j).getType() == Type.VOID)  ?"VOID" :"NOT VOID") );
+                //System.out.println("debug gethint inside loop " +((board.getCell(i, j).getType() == Type.GIVEN)  ?"GIVEN" :"NOT GIVEN") );
+                
+            if (hidato.getCell(i, j).getType() == Type.BLANK && 0 == hidato.getCell(i, j).getVal()) {
                     return new ArrayList<>(Arrays.asList(i, j, board.getCell(i, j).getVal()));
                 }               
             }
         }
+        //System.out.println("debug: gethint");
         return null;
     }
 
