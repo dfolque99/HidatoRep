@@ -177,10 +177,11 @@ public class SolverController {
      * to hidato H, if not possible returns null
      */
     public ArrayList<Integer> getHint(final Hidato hidato) {
-        upload(new Hidato(hidato));
+        /*upload(new Hidato(hidato));
         if (!solve()) {
             return null;
-        }
+        }*/
+        if (!solve(hidato)) {return null;}
         Random rand = new Random();
         for (int count = 0; count < 100; count += 1) {
 
