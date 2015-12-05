@@ -60,12 +60,14 @@ public class FrameEditor extends javax.swing.JFrame {
         b_blank = new javax.swing.JRadioButton();
         b_given = new javax.swing.JRadioButton();
         b_void = new javax.swing.JRadioButton();
+        b_esborrar_tipus = new javax.swing.JButton();
         panel_num = new javax.swing.JPanel();
         b_esborrar_num = new javax.swing.JRadioButton();
         b_preguntar_num = new javax.swing.JRadioButton();
         b_seq_num = new javax.swing.JRadioButton();
         spinner_num_actual = new javax.swing.JSpinner();
         l_num_actual = new javax.swing.JLabel();
+        b_esborrar_numeros = new javax.swing.JButton();
         panel_nom = new javax.swing.JPanel();
         textfield_nom = new javax.swing.JTextField();
         b_canvia_nom = new javax.swing.JButton();
@@ -91,7 +93,7 @@ public class FrameEditor extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGap(0, 502, Short.MAX_VALUE)
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Opcions d'edició"));
@@ -132,6 +134,8 @@ public class FrameEditor extends javax.swing.JFrame {
 
         b_void.setText("Cel·la no vàlida");
 
+        b_esborrar_tipus.setText("Esborrar tipus");
+
         javax.swing.GroupLayout panel_typeLayout = new javax.swing.GroupLayout(panel_type);
         panel_type.setLayout(panel_typeLayout);
         panel_typeLayout.setHorizontalGroup(
@@ -139,10 +143,14 @@ public class FrameEditor extends javax.swing.JFrame {
             .addGroup(panel_typeLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel_typeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(b_blank)
-                    .addComponent(b_given)
-                    .addComponent(b_void))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(b_esborrar_tipus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panel_typeLayout.createSequentialGroup()
+                        .addGroup(panel_typeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(b_blank)
+                            .addComponent(b_given)
+                            .addComponent(b_void))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         panel_typeLayout.setVerticalGroup(
             panel_typeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,7 +159,10 @@ public class FrameEditor extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(b_given)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_void))
+                .addComponent(b_void)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(b_esborrar_tipus)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panel_num.setBorder(javax.swing.BorderFactory.createTitledBorder("Acció:"));
@@ -164,6 +175,8 @@ public class FrameEditor extends javax.swing.JFrame {
 
         l_num_actual.setText("Número actual:");
 
+        b_esborrar_numeros.setText("Esborrar números");
+
         javax.swing.GroupLayout panel_numLayout = new javax.swing.GroupLayout(panel_num);
         panel_num.setLayout(panel_numLayout);
         panel_numLayout.setHorizontalGroup(
@@ -171,15 +184,19 @@ public class FrameEditor extends javax.swing.JFrame {
             .addGroup(panel_numLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel_numLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(b_esborrar_numeros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panel_numLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(l_num_actual)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spinner_num_actual, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(b_esborrar_num)
-                    .addComponent(b_preguntar_num)
-                    .addComponent(b_seq_num))
-                .addContainerGap(51, Short.MAX_VALUE))
+                        .addGroup(panel_numLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panel_numLayout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(l_num_actual)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spinner_num_actual, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(b_esborrar_num)
+                            .addComponent(b_preguntar_num)
+                            .addComponent(b_seq_num))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         panel_numLayout.setVerticalGroup(
             panel_numLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,6 +210,8 @@ public class FrameEditor extends javax.swing.JFrame {
                 .addGroup(panel_numLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_num_actual)
                     .addComponent(spinner_num_actual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(b_esborrar_numeros)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -238,10 +257,10 @@ public class FrameEditor extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panel_type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panel_num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panel_type, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panel_num, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panel_nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -265,18 +284,18 @@ public class FrameEditor extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(b_autocompletar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(b_validar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                    .addComponent(b_autocompletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(b_validar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(b_autocompletar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(b_validar)
@@ -308,9 +327,9 @@ public class FrameEditor extends javax.swing.JFrame {
                 .addComponent(label_nom)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -365,6 +384,8 @@ public class FrameEditor extends javax.swing.JFrame {
     private javax.swing.JButton b_canvia_nom;
     private javax.swing.JButton b_desar;
     private javax.swing.JRadioButton b_esborrar_num;
+    private javax.swing.JButton b_esborrar_numeros;
+    private javax.swing.JButton b_esborrar_tipus;
     private javax.swing.JRadioButton b_given;
     private javax.swing.JRadioButton b_preguntar_num;
     private javax.swing.JRadioButton b_seq_num;
@@ -390,17 +411,10 @@ public class FrameEditor extends javax.swing.JFrame {
     
     
     private ArrayList<ArrayList<SquareCell>> panels;
-    private ArrayList<ArrayList<JLabel>> labels;
     private int N, M;
     private HidatoManagerController hmc;
     private ButtonGroup g1, g2, g3;
     private String nomHidato;
-    private Color fons = new Color(0x0C0C0C); // negre
-    private Color blanc = new Color(fons.getRGB()^0xFFFFFF);
-    private Color color1 = new Color(0xC40D2A); // granate
-    private Color color2 = new Color(0x780088); // lila fluix
-    private Color color3 = new Color(0x550088); // lila fort
-    private Color color4 = new Color(0x3E88DE); // blau fluix
     
     
     
@@ -430,7 +444,7 @@ public class FrameEditor extends javax.swing.JFrame {
                     int i = i0-N1, j = j0-M1;
                     int val = hmc.getTempCellVal(i,j);
                     domini.Tauler.Type type = hmc.getTempCellType(i,j);
-                    SquareCell p = new SquareCell(i,j,val,type,blanc,Color.GRAY,color1,Colors.negre, 500/maxim*5/10,true);
+                    SquareCell p = new SquareCell(i,j,val,type,Colors.c(2),Colors.c(4),Colors.c(1),Colors.c(0), 500/maxim*5/10,true);
                     panels.get(i).add(p);
                     jPanel1.add(p, i0*maxim+j0);
                     p.changeType(hmc.getTempCellType(i,j));
@@ -541,6 +555,28 @@ public class FrameEditor extends javax.swing.JFrame {
     
     
     private void configurarBotons() {
+        b_esborrar_numeros.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                for (int i = 0; i < N; ++i) {
+                    for (int j = 0; j < M; ++j) {
+                        hmc.setTempCellVal(i, j, 0);
+                        panels.get(i).get(j).changeVal(0);
+                    }
+                }
+            }
+        });
+        b_esborrar_tipus.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                for (int i = 0; i < N; ++i) {
+                    for (int j = 0; j < M; ++j) {
+                        hmc.setTempCellType(i, j, domini.Tauler.Type.BLANK);
+                        panels.get(i).get(j).changeType(domini.Tauler.Type.BLANK);
+                    }
+                }
+            }
+        });
         b_autocompletar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -561,8 +597,14 @@ public class FrameEditor extends javax.swing.JFrame {
         b_validar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                boolean completat = hmc.validateTempHidato();
+                boolean completat = hmc.solveTempHidato();
                 if (completat) {
+                    for (int i = 0; i < N; ++i) {
+                        for (int j = 0; j < M; ++j) {
+                            panels.get(i).get(j).changeType(hmc.getTempCellType(i, j));
+                            panels.get(i).get(j).changeVal(hmc.getTempCellVal(i, j));
+                        }
+                    }
                     msgError ("S'ha validat (tot i que no estic molt segur que ho faci be)");
                 }
                 else {
@@ -584,6 +626,8 @@ public class FrameEditor extends javax.swing.JFrame {
     }
     
     private void canviarColors(Container c) {
+        Color fons = new Color(0x0C0C0C); // negre
+        Color blanc = new Color(fons.getRGB()^0xFFFFFF);
         try {
             ((SquareCell) c).getA();
         }
@@ -682,7 +726,6 @@ public class FrameEditor extends javax.swing.JFrame {
         }
         if (b_void.isSelected()) {
             hmc.setTempCellType(p.getA(), p.getB(), domini.Tauler.Type.VOID);
-            hmc.setTempCellVal(p.getA(), p.getB(), -1);
             p.changeType(domini.Tauler.Type.VOID);
             p.changeVal(0);
         }
