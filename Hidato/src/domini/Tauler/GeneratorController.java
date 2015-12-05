@@ -61,7 +61,7 @@ public class GeneratorController {
             if (completarCami() == false) return null;
         }
         
-        posarPistes();
+        //posarPistes();
         return this.h;
     }
     
