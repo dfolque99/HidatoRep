@@ -23,9 +23,9 @@ final public class DriverSolverController {
             System.out.println("7 : get random hint, overwrites hidato with hint");
             System.out.println("8 : clean hidato : every blank cell other than user input are set to zero");
             //System.out.println("9 : go to HidatoGeneratorDriver");
-            System.out.println("10 x y: try solve2 method");
-            System.out.println("11 n  : try solve3 method");
-            System.out.println("12 : solve and save");
+            //System.out.println("10 x y: try solve2 method");
+            //System.out.println("11 n  : try solve3 method");
+            //System.out.println("12 : solve and save");
             System.out.println("Example: 1 5 7 : Creates Hidato 5x7");
             System.out.println("Example: 2 1 1 30 : Overwrites cell (1,1) to value 30");
             System.out.println("Example: 3 4 5 : Get solution, plus print hidato, plus exit ");
@@ -79,7 +79,7 @@ final public class DriverSolverController {
                         HidatoGeneratorDriver.main(new String[0]);
                         return;
                     }*/
-                    if (10 == foo){ 
+                    /*if (10 == foo){ 
                         final boolean b = solver.solve2(hidato,user_input.nextInt(),user_input.nextInt());
                         System.out.println(b ? "Has solution" : "No solution");
                     }
@@ -90,7 +90,7 @@ final public class DriverSolverController {
                     if (12 == foo){
                         final boolean b = SolverWithMemoryController.solve(hidato);
                         System.out.println(b ? "Has solution" : "No solution");                 
-                    }
+                    }*/
                 }
             }
         }
