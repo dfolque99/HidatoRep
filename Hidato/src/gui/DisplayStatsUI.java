@@ -1,5 +1,6 @@
 package gui;
-import domini.Usuari.*;
+import CapaDomini.Usuari.UserStatsController;
+import CapaDomini.Usuari.HidatoUser;
 /**
  * @author felix.axel.gimeno
  */

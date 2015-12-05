@@ -1,5 +1,5 @@
 package gui;
-import domini.Usuari.HidatoUser;
+import CapaDomini.Usuari.HidatoUser;
 /**
  * SingletonPattern 
  * @author felix.axel.gimeno
