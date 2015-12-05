@@ -48,7 +48,7 @@ public class SquareCell extends JPanel{
         setLayout(new GridBagLayout());
         label = new JLabel();
         add(label);
-        if (val == 0) label.setText("");
+        if (val <= 0) label.setText("");
         else label.setText(Integer.toString(val));
         label.setFont(new Font(font_nom, Font.PLAIN, font_num));
         setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
