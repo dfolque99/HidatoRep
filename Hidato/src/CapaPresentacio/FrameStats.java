@@ -37,9 +37,14 @@ public final class FrameStats extends javax.swing.JFrame {
     public static void main(String args[]){
         java.awt.EventQueue.invokeLater(() -> {
             HidatoUserController huc = new HidatoUserController();
-            huc.createUser("chuu","chuu");
-            huc.login("chuu","chuu");
-            huc.updateUser();
+            try {
+                final String foo = "zhu";
+                huc.createUser(foo,foo);
+                huc.login(foo,foo);
+                huc.updateUser();
+            } catch (Exception e){
+                System.out.println("Couldn't do login");
+            }
             new FrameStats(huc).setVisible(true);
         });
     }
@@ -82,11 +87,23 @@ public final class FrameStats extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Incorrect password","Incorrect password",JOptionPane.ERROR_MESSAGE);
         }
         
-    }   
+    }
+    
+    private static final Object[] getHidatos(final UserController uc){
+        return new Object[]{"Hidato1","Hidato2"};
+    }
     private void buttonSelectHidatoToEditActionPerformed(final UserController uc){
         //JOptionPane.showOptionDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,new Object[]{"Hidato1","Hidato2"}, "Hidato1");
-        JOptionPane.showInputDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.QUESTION_MESSAGE, null,new Object[]{"Hidato1","Hidato2"}, "Hidato1");
-        //JOptionPane.showMessageDialog(this,"No implementada todavía","To do",JOptionPane.ERROR_MESSAGE);
+        Object[] myList = FrameStats.getHidatos(uc);
+        if (myList.length > 0) {
+            String hidatoName = (String)JOptionPane.showInputDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.QUESTION_MESSAGE, null,myList,myList[0]);
+            this.setVisible(false);
+            FrameEditor fe = new FrameEditor();
+            //fe.inici(hidato);
+            this.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this,"No hidatoa found","The logged user has no hidatos",JOptionPane.ERROR_MESSAGE);
+        }
     }
     @SuppressWarnings(value = "unchecked")
     private void initComponents(final UserController uc) {
