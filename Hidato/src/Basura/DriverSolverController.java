@@ -3,7 +3,7 @@ import CapaDomini.Misc.Utils;
 import CapaDomini.Tauler.Cell;
 import CapaDomini.Tauler.Hidato;
 import CapaDomini.Tauler.SolverController;
-import CapaDomini.Tauler.SolverWithMemoryController;
+//import CapaDomini.Tauler.SolverWithMemoryController;
 import CapaDomini.Tauler.Type;
 import java.util.ArrayList;
 import java.util.Scanner;
