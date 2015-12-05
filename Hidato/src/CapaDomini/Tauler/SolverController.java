@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 /**
  * hidoku, hidato, king's tour, hamiltonian path, longest simple path ...
  * Hidato is NP-complete
+ * current algorithm is greedy aproximmation of longest simple path between two given cells
  * @author felix.axel.gimeno
  * @version 0.4
  * @since 2015-11-07
@@ -298,18 +299,17 @@ public class SolverController {
     }
 
     /**
+     * Warnsdoff's rule
      * @param x	x-position of cell base
      * @param y	y-position of cell base
      * @param n	number to try in neighbour cells
      * @return	list of available neighbours of cell base sorted using
-     * Warnsdoff's rule
      */
     private ArrayList<int[]> getNeighboursSorted(final int x, final int y, final int n) {
         ArrayList<int[]> result = getNeighboursUnsorted(x, y, n);
         Map<int[], Integer> Values = new HashMap<>(8);
         result.stream().forEach(s-> {Values.put(s,getNeighboursUnsorted(s[0], s[1], s[2]).size());});
-        Collections.sort(result, (final int[] a, final int[] b) -> -Values.get(b)
-                + Values.get(a));
+        Collections.sort(result, (final int[] a, final int[] b) -> -Values.get(b) + Values.get(a));
         return result;
     }
     /**
@@ -325,8 +325,7 @@ public class SolverController {
         ArrayList<int[]> result = getNeighboursSorted(x, y, n);
         Map<int[], Integer> Values = new HashMap<>(8);
         result.stream().forEach(s-> {Values.put(s,Position.distance(givenCells[next[n]],new Position(s[0],s[1])));});
-        Collections.sort(result, (final int[] a, final int[] b) -> +Values.get(b)
-                -Values.get(a));
+        Collections.sort(result, (final int[] a, final int[] b) -> +Values.get(b) -Values.get(a));
         return result;
     }
     /**
@@ -377,4 +376,5 @@ public class SolverController {
         }
         return false;
     }
+    
 }
