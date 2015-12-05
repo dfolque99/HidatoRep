@@ -13,7 +13,7 @@ import javax.swing.JPanel;
  * where uc is a valida usercontroller
  * 
  * @author felix.axel.gimeno
- * @version 0.21
+ * @version 0.22
  * @since 05-12-2015
  */
 @SuppressWarnings("serial")
@@ -94,7 +94,7 @@ public final class FrameStats extends javax.swing.JFrame {
         
     }
     
-    private static final Object[] getHidatos(final UserController uc){
+    private static Object[] getHidatos(final UserController uc){
         return new Object[]{"Hidato1","Hidato2"}; // <- TO DO
     }
     private void buttonSelectHidatoToEditActionPerformed(final UserController uc){
@@ -148,13 +148,18 @@ public final class FrameStats extends javax.swing.JFrame {
         myPanelForButtons.setLayout(new java.awt.BorderLayout());
         myPanelForButtons.add(myButtonPanel,java.awt.BorderLayout.CENTER);
         */
+        
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+        
         layout.setHorizontalGroup(
                 layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                .addComponent(buttonDelete)
-                                .addComponent(buttonModifyPassword)
-                                .addComponent(buttonSelectHidatoToEdit)
+                        .addGap(30) //to separate the list scroll from the buttons, to beautify
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER, false) //center alignment;  false for not enabling resizing the group to expand all it can
+                                .addComponent(buttonDelete,             javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(buttonModifyPassword,     javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(buttonSelectHidatoToEdit, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         )
                          //.addComponent(myButtonPanel
                                 /*, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
