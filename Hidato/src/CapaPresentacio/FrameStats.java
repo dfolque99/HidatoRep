@@ -67,7 +67,7 @@ public final class FrameStats extends javax.swing.JFrame {
      */
     public FrameStats(final UserController uc) {
         super("Profile management use case");
-        initComponents(uc);
+        this.initComponents(uc);
     }
     private void buttonDeleteActionPerformed(final UserController uc){
         String Password = JOptionPane.showInputDialog(this,"Introduce current password \nand press okay to delete current logged user, \npress cancel to cancel",null);
@@ -95,6 +95,7 @@ public final class FrameStats extends javax.swing.JFrame {
     }
     
     private static Object[] getHidatos(final UserController uc){
+        System.out.println("FrameStats.getHidatos() : Falta por implementar");
         return new Object[]{"Hidato1","Hidato2"}; // <- TO DO
     }
     private void buttonSelectHidatoToEditActionPerformed(final UserController uc){
@@ -102,10 +103,12 @@ public final class FrameStats extends javax.swing.JFrame {
         Object[] myList = FrameStats.getHidatos(uc);
         if (myList.length > 0) {
             String hidatoName = (String)JOptionPane.showInputDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.QUESTION_MESSAGE, null,myList,myList[0]);
-            this.setVisible(false);
-            FrameEditor fe = new FrameEditor();
-            //fe.inici(hidato); // <- TO DO
-            this.setVisible(true);
+            if (null != hidatoName) {
+                this.setVisible(false);
+                FrameEditor fe = new FrameEditor();
+                //fe.inici(hidato); // <- TO DO
+                this.setVisible(true);
+            }
         } else {
             JOptionPane.showMessageDialog(this,"No hidatoa found","The logged user has no hidatos",JOptionPane.ERROR_MESSAGE);
         }
@@ -117,7 +120,7 @@ public final class FrameStats extends javax.swing.JFrame {
         this.setPreferredSize(new java.awt.Dimension(sizeX,sizeY));
         jScrollPane1.setViewportView(new javax.swing.JList<String>(FrameStats.getStats(uc)));
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        this.getContentPane().setLayout(layout);
         
         JButton buttonDelete = createButton("Delete User",(java.awt.event.ActionEvent evt) -> {buttonDeleteActionPerformed(uc);});   
         JButton buttonModifyPassword = createButton("Modify Password User",(java.awt.event.ActionEvent evt) -> {buttonModifyPasswordActionPerformed(uc);});
@@ -177,6 +180,6 @@ public final class FrameStats extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
     
-        pack();
+        this.pack();
     }
 }
