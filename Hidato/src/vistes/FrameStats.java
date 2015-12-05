@@ -84,7 +84,9 @@ public final class FrameStats extends javax.swing.JFrame {
         
     }   
     private void buttonSelectHidatoToEditActionPerformed(final UserController uc){
-        JOptionPane.showMessageDialog(this,"No implementada todavía","To do",JOptionPane.ERROR_MESSAGE);
+        //JOptionPane.showOptionDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,new Object[]{"Hidato1","Hidato2"}, "Hidato1");
+        JOptionPane.showInputDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.QUESTION_MESSAGE, null,new Object[]{"Hidato1","Hidato2"}, "Hidato1");
+        //JOptionPane.showMessageDialog(this,"No implementada todavía","To do",JOptionPane.ERROR_MESSAGE);
     }
     @SuppressWarnings(value = "unchecked")
     private void initComponents(final UserController uc) {
