@@ -8,6 +8,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 /**
  * Profile management use case
+ * <p>
+ * To use do: new FrameStats(uc).setVisible(true); 
+ * where uc is a valida usercontroller
  * 
  * @author felix.axel.gimeno
  * @version 0.2
@@ -90,7 +93,7 @@ public final class FrameStats extends javax.swing.JFrame {
     }
     
     private static final Object[] getHidatos(final UserController uc){
-        return new Object[]{"Hidato1","Hidato2"};
+        return new Object[]{"Hidato1","Hidato2"}; // <- TO DO
     }
     private void buttonSelectHidatoToEditActionPerformed(final UserController uc){
         //JOptionPane.showOptionDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,new Object[]{"Hidato1","Hidato2"}, "Hidato1");
@@ -99,7 +102,7 @@ public final class FrameStats extends javax.swing.JFrame {
             String hidatoName = (String)JOptionPane.showInputDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.QUESTION_MESSAGE, null,myList,myList[0]);
             this.setVisible(false);
             FrameEditor fe = new FrameEditor();
-            //fe.inici(hidato);
+            //fe.inici(hidato); // <- TO DO
             this.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this,"No hidatoa found","The logged user has no hidatos",JOptionPane.ERROR_MESSAGE);
