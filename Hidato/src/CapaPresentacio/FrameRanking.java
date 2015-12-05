@@ -7,12 +7,14 @@ package CapaPresentacio;
 
 import CapaDomini.Partida.Difficulty;
 import CapaDomini.Rank.RankingController;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -25,7 +27,6 @@ public class FrameRanking extends javax.swing.JFrame {
      */
     public FrameRanking() {
         initComponents();
-        N = RankingController.getRankingMaxSize();
         inicialitza();
     }
 
@@ -41,12 +42,13 @@ public class FrameRanking extends javax.swing.JFrame {
         selectorDificultat = new javax.swing.JComboBox();
         labelDificultat = new javax.swing.JLabel();
         rankingPanel = new javax.swing.JPanel();
+        posPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ranking");
         setResizable(false);
 
-        selectorDificultat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fàcil", "Mitjà", "Dificil" }));
+        selectorDificultat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fàcil", "Mitjà", "Difícil" }));
         selectorDificultat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selectorDificultatActionPerformed(evt);
@@ -56,7 +58,28 @@ public class FrameRanking extends javax.swing.JFrame {
         labelDificultat.setText("Selecciona la dificultat:");
 
         rankingPanel.setName("Ranking"); // NOI18N
-        rankingPanel.setLayout(new java.awt.GridLayout(20, 0));
+
+        javax.swing.GroupLayout rankingPanelLayout = new javax.swing.GroupLayout(rankingPanel);
+        rankingPanel.setLayout(rankingPanelLayout);
+        rankingPanelLayout.setHorizontalGroup(
+            rankingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 703, Short.MAX_VALUE)
+        );
+        rankingPanelLayout.setVerticalGroup(
+            rankingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 578, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout posPanelLayout = new javax.swing.GroupLayout(posPanel);
+        posPanel.setLayout(posPanelLayout);
+        posPanelLayout.setHorizontalGroup(
+            posPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+        posPanelLayout.setVerticalGroup(
+            posPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,9 +92,11 @@ public class FrameRanking extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(selectorDificultat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rankingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(22, 22, 22)
+                .addComponent(posPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rankingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,7 +108,9 @@ public class FrameRanking extends javax.swing.JFrame {
                 .addContainerGap(472, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(rankingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(posPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(rankingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -91,28 +118,28 @@ public class FrameRanking extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
- 
+
     private void selectorDificultatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectorDificultatActionPerformed
         String selection = selectorDificultat.getSelectedItem().toString();
         switch (selection) {
 
-            case "Fàcil": 
-                setVisibleRanking(Difficulty.EASY);
-                break;
+            case "Fàcil":
+            setVisibleRanking(Difficulty.EASY);
+            break;
 
             case "Mitjà":
-                setVisibleRanking(Difficulty.MEDIUM);
-                break;
+            setVisibleRanking(Difficulty.MEDIUM);
+            break;
 
             case "Dificil":
-                setVisibleRanking(Difficulty.HARD);
-                break;
-                
+            setVisibleRanking(Difficulty.HARD);
+            break;
+
             default:
-                setVisibleRanking(Difficulty.HARD);
+            setVisibleRanking(Difficulty.HARD);
         }
     }//GEN-LAST:event_selectorDificultatActionPerformed
-
+ 
     /**
      * @param args the command line arguments
      */
@@ -150,6 +177,7 @@ public class FrameRanking extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel labelDificultat;
+    private javax.swing.JPanel posPanel;
     private javax.swing.JPanel rankingPanel;
     private javax.swing.JComboBox selectorDificultat;
     // End of variables declaration//GEN-END:variables
@@ -165,27 +193,47 @@ public class FrameRanking extends javax.swing.JFrame {
     }
     
     private RankingController rc;
-    
-    private final int N;
+    private final int N = RankingController.getRankingMaxSize();
     
     public void setRc(RankingController rc) {
         this.rc = rc;
     }
     
     private void inicialitza() {
-        rc = new RankingController(); //Solo para debugar (luego se elimina)
-        rc.init(); //Solo para debugar (luego se elimina)
+        //ESTE CODIGO ES SOLO PARA DEBUGAR (LUEGO HAY QUE BORRARLO)
+        rc = new RankingController();
+        rc.init();
+        //HASTA AQUI
+        posPanel.setLayout(new GridLayout(N,1));
+        for (int i = 1; i <= N; ++i) {
+            posPanel.add(new JLabel(Integer.toString(i) + ". "));
+        }
         setVisibleRanking(Difficulty.EASY);
     }
     
     private void setVisibleRanking(Difficulty dif) {
-        rankingPanel.setLayout(new GridLayout(N,3));
+        int M = 3;
+        rankingPanel.setLayout(new GridLayout(N,M));
         ArrayList <String> ranking = rc.getRankingInfo(dif);
         for (int i = 0; i < ranking.size(); ++i) {
             String[] infoEntrada = ranking.get(i).split("/");
-            for(int j = 0; j < 3; ++j) {
-                rankingPanel.add(new JLabel(infoEntrada[j]));
+            for(int j = 0; j < M; ++j) {
+                rankingPanel.add(new JLabel(infoEntrada[perm(j)],SwingConstants.CENTER));
             }
+        }
+        for (int i = ranking.size(); i < N; ++i) {
+            for (int j = 0; j < M; ++j) {
+                rankingPanel.add(new JLabel(""));
+            }
+        }
+    }
+    
+    private static int perm(int i) {
+        switch(i) {
+            case 0: return 1;
+            case 1: return 0;
+            case 2: return 2;
+            default: return 0;
         }
     }
     
