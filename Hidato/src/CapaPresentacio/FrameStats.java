@@ -18,6 +18,17 @@ import javax.swing.JPanel;
  */
 @SuppressWarnings("serial")
 public final class FrameStats extends javax.swing.JFrame {
+    
+    private static String convertToMultiline(String orig)
+    {
+        return "<html>" + orig.replaceAll("\n", "<br>");
+    }
+    private static String convertToString(String[] myArray){
+        String ret = "";
+        for (String s : myArray) {ret = ret.concat(s).concat("\n\n");}
+        return ret;
+    }
+    
     private final static Integer sizeX = 800; 
     private final static Integer sizeY = 600; 
     private static String[] getStats(final UserController uc) {
@@ -115,10 +126,15 @@ public final class FrameStats extends javax.swing.JFrame {
     }
     @SuppressWarnings(value = "unchecked")
     private void initComponents(final UserController uc) {
-        javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
+        //javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
+        javax.swing.JLabel jScrollPane1 = new javax.swing.JLabel(convertToMultiline( convertToString(FrameStats.getStats(uc)) ) ,  javax.swing.SwingConstants.CENTER);
+        
         this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         this.setPreferredSize(new java.awt.Dimension(sizeX,sizeY));
-        jScrollPane1.setViewportView(new javax.swing.JList<String>(FrameStats.getStats(uc)));
+        
+        //jScrollPane1.setViewportView(new javax.swing.JList<String>(FrameStats.getStats(uc)));
+        //jScrollPane1.setText();
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         this.getContentPane().setLayout(layout);
         
