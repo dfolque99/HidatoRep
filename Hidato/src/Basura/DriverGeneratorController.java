@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package CapaDomini.Tauler;
+package Basura;
 
 
 import CapaDomini.Misc.Utils;
+import CapaDomini.Tauler.GeneratorController;
+import CapaDomini.Tauler.Hidato;
+import CapaDomini.Tauler.Type;
 import java.util.Scanner;
 
 /**

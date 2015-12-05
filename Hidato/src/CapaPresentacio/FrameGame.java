@@ -9,7 +9,7 @@ import CapaDomini.Misc.Colors;
 import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.Difficulty;
 import CapaDomini.Partida.Game;
-import CapaDomini.Partida.GameDBController;
+import CapaPersistencia.GameDBController;
 import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Partida.Help;
 import CapaDomini.Rank.RankingController;

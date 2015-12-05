@@ -1,5 +1,6 @@
 package CapaDomini.Partida;
 
+import CapaPersistencia.GameDBController;
 import CapaDomini.Tauler.HidatoController;
 import CapaDomini.Rank.RankingController;
 import CapaDomini.Tauler.Hidato;

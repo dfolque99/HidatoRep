@@ -1,5 +1,6 @@
-package CapaDomini.Partida;
+package CapaPersistencia;
 
+import CapaDomini.Partida.Game;
 import CapaDomini.Usuari.HidatoUser;
 
 /**

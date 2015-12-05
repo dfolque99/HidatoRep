@@ -5,6 +5,7 @@
  */
 package CapaDomini.Rank;
 
+import CapaPersistencia.RankingDBController;
 import CapaDomini.Partida.Difficulty;
 import java.util.ArrayList;
 import java.util.Date;

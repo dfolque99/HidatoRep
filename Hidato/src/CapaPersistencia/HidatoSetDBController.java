@@ -1,4 +1,5 @@
-package CapaDomini.Tauler;
+package CapaPersistencia;
+import CapaDomini.Tauler.HidatoSet;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

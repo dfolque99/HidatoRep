@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package CapaDomini.Rank;
+package CapaPersistencia;
 
 import CapaDomini.Partida.Difficulty;
+import CapaDomini.Rank.Ranking;
 import java.io.*;
 
 /**

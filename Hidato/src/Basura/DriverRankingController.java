@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package CapaDomini.Rank;
+package Basura;
 
 import java.util.Scanner;
 import java.util.ArrayList;
 import CapaDomini.Partida.Difficulty;
+import CapaDomini.Rank.RankingController;
 
 /**
  *

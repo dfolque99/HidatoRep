@@ -5,6 +5,8 @@
  */
 package CapaDomini.Usuari;
 
+import CapaPersistencia.UserDBController;
+
 /**
  *
  * @author Guillem

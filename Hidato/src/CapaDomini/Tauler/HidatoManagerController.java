@@ -7,6 +7,7 @@
 package CapaDomini.Tauler;
 
 
+import CapaPersistencia.HidatoSetDBController;
 import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.Help;

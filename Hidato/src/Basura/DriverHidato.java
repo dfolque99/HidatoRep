@@ -4,11 +4,14 @@
  * and open the template in the editor.
  */
 
-package CapaDomini.Tauler;
+package Basura;
 
 import CapaDomini.Misc.Utils;
 import java.util.Scanner;
 import CapaDomini.Partida.Difficulty;
+import CapaDomini.Tauler.Cell;
+import CapaDomini.Tauler.Hidato;
+import CapaDomini.Tauler.Type;
 
 /**
  *

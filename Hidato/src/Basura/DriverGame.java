@@ -1,4 +1,4 @@
-package CapaDomini.Partida;
+package Basura;
 
 /**
  * Nota: hi ha funcionalitats que no funcionen perquè les classes de la capa de 
@@ -8,6 +8,7 @@ package CapaDomini.Partida;
  * - No es poden guardar partides, ni carregar-ne, ni esborrar-ne
  */
 
+import CapaPersistencia.GameDBController;
 import CapaDomini.Tauler.HidatoController;
 import CapaDomini.Rank.RankingController;
 import CapaDomini.Tauler.Hidato;
@@ -17,6 +18,11 @@ import CapaDomini.Usuari.HidatoUser;
 import CapaDomini.Usuari.HidatoUserController;
 import CapaDomini.Tauler.SolverController;
 import CapaDomini.Misc.Utils;
+import CapaDomini.Partida.CurrentGameController;
+import CapaDomini.Partida.Difficulty;
+import CapaDomini.Partida.Game;
+import CapaDomini.Partida.GameManagerController;
+import CapaDomini.Partida.Help;
 import CapaDomini.Tauler.Cell;
 import CapaDomini.Tauler.Type;
 import java.util.ArrayList;

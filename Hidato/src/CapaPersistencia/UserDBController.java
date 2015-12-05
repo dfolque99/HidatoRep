@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package CapaDomini.Usuari;
+package CapaPersistencia;
 
+import CapaDomini.Usuari.User;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

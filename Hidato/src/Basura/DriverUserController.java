@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package CapaDomini.Usuari;
+package Basura;
 
+import CapaDomini.Usuari.User;
+import CapaDomini.Usuari.UserController;
 import java.util.Scanner;
 
 /**
