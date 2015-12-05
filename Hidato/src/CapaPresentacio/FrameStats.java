@@ -8,6 +8,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 /**
  * Profile management use case
+ * <p>
+ * To use do: new FrameStats(uc).setVisible(true); 
+ * where uc is a valida usercontroller
  * 
  * @author felix.axel.gimeno
  * @version 0.2
@@ -15,6 +18,8 @@ import javax.swing.JPanel;
  */
 @SuppressWarnings("serial")
 public final class FrameStats extends javax.swing.JFrame {
+    private final static Integer sizeX = 800; 
+    private final static Integer sizeY = 600; 
     private static String[] getStats(final UserController uc) {
         CapaDomini.Usuari.User myUser = uc.getLoggedUser();
         if (myUser instanceof CapaDomini.Usuari.HidatoUser){
@@ -38,7 +43,7 @@ public final class FrameStats extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             HidatoUserController huc = new HidatoUserController();
             try {
-                final String foo = "zhu";
+                final String foo = "ghu";
                 huc.createUser(foo,foo);
                 huc.login(foo,foo);
                 huc.updateUser();
@@ -90,7 +95,7 @@ public final class FrameStats extends javax.swing.JFrame {
     }
     
     private static final Object[] getHidatos(final UserController uc){
-        return new Object[]{"Hidato1","Hidato2"};
+        return new Object[]{"Hidato1","Hidato2"}; // <- TO DO
     }
     private void buttonSelectHidatoToEditActionPerformed(final UserController uc){
         //JOptionPane.showOptionDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,new Object[]{"Hidato1","Hidato2"}, "Hidato1");
@@ -99,7 +104,7 @@ public final class FrameStats extends javax.swing.JFrame {
             String hidatoName = (String)JOptionPane.showInputDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.QUESTION_MESSAGE, null,myList,myList[0]);
             this.setVisible(false);
             FrameEditor fe = new FrameEditor();
-            //fe.inici(hidato);
+            //fe.inici(hidato); // <- TO DO
             this.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this,"No hidatoa found","The logged user has no hidatos",JOptionPane.ERROR_MESSAGE);
@@ -108,7 +113,8 @@ public final class FrameStats extends javax.swing.JFrame {
     @SuppressWarnings(value = "unchecked")
     private void initComponents(final UserController uc) {
         javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        this.setPreferredSize(new java.awt.Dimension(sizeX,sizeY));
         jScrollPane1.setViewportView(new javax.swing.JList<String>(FrameStats.getStats(uc)));
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,18 +123,39 @@ public final class FrameStats extends javax.swing.JFrame {
         JButton buttonModifyPassword = createButton("Modify Password User",(java.awt.event.ActionEvent evt) -> {buttonModifyPasswordActionPerformed(uc);});
         JButton buttonSelectHidatoToEdit = createButton("Edit Already Created Hidato", (java.awt.event.ActionEvent evt) -> {buttonSelectHidatoToEditActionPerformed(uc);});
         
-        JPanel myButtonPanel = new JPanel(); 
-        myButtonPanel.add(buttonDelete);
-        myButtonPanel.add(buttonModifyPassword);
-        myButtonPanel.add(buttonSelectHidatoToEdit);
+        JPanel myButtonPanel = new JPanel();
+        myButtonPanel.setLayout(new java.awt.GridLayout(0,1));
+
+        javax.swing.GroupLayout buttonLayout = new javax.swing.GroupLayout(myButtonPanel);
+        buttonLayout.setHorizontalGroup( 
+            buttonLayout.createSequentialGroup()
+                .addComponent(buttonDelete)
+                .addComponent(buttonModifyPassword)
+                .addComponent(buttonSelectHidatoToEdit)
+                );
+        buttonLayout.setVerticalGroup( 
+            buttonLayout.createSequentialGroup()
+                .addComponent(buttonDelete)
+                .addComponent(buttonModifyPassword)
+                .addComponent(buttonSelectHidatoToEdit)
+                );
+
+        //myButtonPanel.add(buttonDelete);
+        //myButtonPanel.add(buttonModifyPassword);
+        //myButtonPanel.add(buttonSelectHidatoToEdit);
+        
+        JPanel myPanelForButtons = new JPanel();
+        myPanelForButtons.setLayout(new java.awt.BorderLayout());
+        myPanelForButtons.add(myButtonPanel,java.awt.BorderLayout.CENTER);
         
         layout.setHorizontalGroup(
-                layout.createParallelGroup()
-                        .addComponent(myButtonPanel)
+                layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
+                        .addComponent(myButtonPanel/*, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+          javax.swing.GroupLayout.PREFERRED_SIZE*/)
         );
         layout.setVerticalGroup(
-                layout.createSequentialGroup()
+                layout.createParallelGroup()
                         .addComponent(myButtonPanel)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
