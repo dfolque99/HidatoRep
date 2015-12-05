@@ -50,7 +50,6 @@ public class GeneratorController {
         comptaCaselles();
         
         iteracions = 0;
-        
         if (hidatoValid() == false) return null;
         
         System.out.print("Factor 5/10...\n");
