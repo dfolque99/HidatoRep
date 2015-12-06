@@ -10,6 +10,7 @@ import CapaDomini.Misc.Colors;
 import CapaDomini.Misc.Fonts;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
+import CapaDomini.Usuari.HidatoUserController;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Event;
@@ -37,9 +38,9 @@ public class FrameEditor extends javax.swing.JFrame {
     /**
      * Creates new form FrameEditor
      */
-    public FrameEditor() {
+    public FrameEditor(HidatoManagerController hmc) {
         initComponents();
-        inici(8,8);
+        inici(hmc);
     }
     
 
@@ -395,7 +396,11 @@ public class FrameEditor extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new FrameEditor().setVisible(true);
+                HidatoUserController uc = new HidatoUserController();
+                uc.createUser("Usuari", "password");
+                uc.login("Usuari", "password");
+                HidatoManagerController hmc = new HidatoManagerController(new HidatoSet(), null, uc);
+                new FrameEditor(hmc).setVisible(true);
             }
         });
     }
@@ -444,11 +449,9 @@ public class FrameEditor extends javax.swing.JFrame {
     
     
     
-    public void inici(int N, int M) {
-        this.N = N;
-        this.M = M;
-        HidatoSet hs = new HidatoSet();
-        hmc = new HidatoManagerController(hs, null);
+    public void inici(HidatoManagerController hmc) {
+        this.N = hmc.getTempSizeX();
+        this.M = hmc.getTempSizeY();
         hmc.createRandom(N, M);
         label_nom.setText("Hidato sense nom");
         label_nom.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 48));

@@ -11,6 +11,8 @@ import CapaPersistencia.HidatoSetDBController;
 import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.Help;
+import CapaDomini.Usuari.HidatoUser;
+import CapaDomini.Usuari.HidatoUserController;
 
 /**
  *
@@ -30,6 +32,11 @@ public class HidatoManagerController {
     GameManagerController cgm;
     
     /**
+     * Controlador HidatoUserController per enviar queries
+     */
+    HidatoUserController uc;
+    
+    /**
      * Hidato sobre el qual anirem aplicant els canvis
      */
     Hidato tempHidato;
@@ -39,9 +46,10 @@ public class HidatoManagerController {
      * @param hset
      * @param cgm
      */
-    public HidatoManagerController (HidatoSet hset, GameManagerController cgm) {
+    public HidatoManagerController (HidatoSet hset, GameManagerController cgm, HidatoUserController uc) {
         this.hset = hset;
         this.cgm = cgm;
+        this.uc = uc;
     }
     
     /**
@@ -118,8 +126,12 @@ public class HidatoManagerController {
     public void saveTempHidato(String name) {
         Hidato guardat = new Hidato(tempHidato);
         guardat.setBoardName(name);
-        if (hset.getHidatoByName(name) == null) hset.addHidato(guardat);
-        else hset.addHidato(guardat);
+        if (hset.getHidatoByName(name) == null) {
+            HidatoUser user = (HidatoUser) uc.getLoggedUser();
+            user.addHidato(name);
+            user.incrementTotalCreatedBoards();
+        }
+        hset.addHidato(guardat);
     }
     
     /**
