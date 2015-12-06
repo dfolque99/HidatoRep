@@ -28,6 +28,13 @@ public class Domini {
     GameManagerController gmc;
     RankingController rc;
     
+    public Domini(HidatoUserController uc, RankingController rc, GameManagerController gmc, HidatoManagerController hmc){
+        this.uc = uc;
+        this.rc = rc;
+        this.gmc = gmc;
+        this.hmc = hmc;   
+    }
+    
     public void adelanteee() {
         this.uc = new HidatoUserController();
         this.rc = new RankingController();
