@@ -27,7 +27,7 @@ public class Domini {
     HidatoSet hs;
     GameManagerController gmc;
     RankingController rc;
-    
+    public Domini(){}
     public Domini(HidatoUserController uc, RankingController rc, GameManagerController gmc, HidatoManagerController hmc){
         this.uc = uc;
         this.rc = rc;
