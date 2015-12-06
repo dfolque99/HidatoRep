@@ -42,7 +42,10 @@ public class FrameStatsDriver {
                 hs.addHidato(h);
                 */
                 System.out.println(hmc.loadHidato(name));
-                new FrameStats(new CapaDomini.Domini(), huc, hmc).setVisible(true);
+                //CapaDomini.Domini d = ;
+                //d.hmc = hmc;
+                new FrameStats(new CapaDomini.Domini(huc,null,null,hmc), huc, hmc).setVisible(true);
+		//hacer new CapaDomini.Domini() hace que FrameEditor tenga hmc distinto del de esta funcion  
             } catch (Exception e){
                 System.out.println("Couldn't do login");               
             }
