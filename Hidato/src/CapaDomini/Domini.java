@@ -35,25 +35,29 @@ public class Domini {
         this.hmc = new HidatoManagerController(hs, gmc, uc);
         hmc.loadAll();
         FrameLogin fl = new FrameLogin(this, uc);
+        fl.setLocationByPlatform(true);
         fl.setVisible(true);
         hmc.veure();
     }
     
     public void obrirMenu(JFrame antic) {
-        antic.dispose();
         FrameMenu fm = new FrameMenu(this, uc.getLoggedUser().getUsername());
         fm.setVisible(true);
+        fm.setLocation(antic.getLocation());
+        antic.dispose();
     }
     
     public void obrirEditor(JFrame antic) {
-        antic.dispose();
         FrameEditor fe = new FrameEditor(this, hmc);
         fe.setVisible(true);
+        fe.setLocation(antic.getLocation());
+        antic.dispose();
     }
     
     public void obrirStats(JFrame antic) {
-        antic.dispose();
         FrameStats fs = new FrameStats(this, uc, hmc);
         fs.setVisible(true);
+        fs.setLocation(antic.getLocation());
+        antic.dispose();
     }
 }
