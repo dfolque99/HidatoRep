@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * TO DO: getStats beautify, 
  * 
  * @author felix.axel.gimeno
- * @version 0.26
+ * @version 0.27
  * @since 05-12-2015
  */
 @SuppressWarnings("serial")
