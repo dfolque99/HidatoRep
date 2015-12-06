@@ -6,7 +6,7 @@ import CapaDomini.Usuari.HidatoUser;
 import CapaDomini.Usuari.HidatoUserController;
 
 /**
- *
+ * @version 3
  * @author felix.axel.gimeno
  */
 public class FrameStatsDriver {
@@ -15,26 +15,39 @@ public class FrameStatsDriver {
         final String name =  "Hidato->"+foo+"<-1";
         
         java.awt.EventQueue.invokeLater(() -> {
-            HidatoUserController huc = new HidatoUserController();
-            HidatoSet hs = new HidatoSet(); 
-            HidatoManagerController hmc = new HidatoManagerController(hs, null, huc);
+            HidatoUserController huc;
+            HidatoManagerController hmc;
+
             try {
+                huc = new HidatoUserController();
                 
                 huc.createUser(foo,foo);
                 huc.login(foo,foo);
                 huc.updateUser();
                 
-                ((HidatoUser)huc.getLoggedUser()).addHidato(name);
+                ((HidatoUser)huc.getLoggedUser()).addHidato(name);   
+                
+                hmc = new HidatoManagerController(new HidatoSet(), null, huc); 
+                
+                hmc.loadAll();
+                hmc.createRandom(3,3);
+                hmc.saveTempHidato(name);
+                hmc.saveAll();
+                hmc.loadAll();
+                
+
                 //((HidatoUser)huc.getLoggedUser()).addHidato("felix");
-                CapaDomini.Tauler.Hidato h = new CapaDomini.Tauler.Hidato(5,5);
+                /*CapaDomini.Tauler.Hidato h = new CapaDomini.Tauler.Hidato(5,5);
                 h.setBoardName(name);
                 hs.addHidato(h);
-                System.out.println(hs.getHidatoByName(name));
+                */
+                System.out.println(hmc.loadHidato(name));
+                new FrameStats(new CapaDomini.Domini(), huc, hmc).setVisible(true);
             } catch (Exception e){
-                System.out.println("Couldn't do login");
+                System.out.println("Couldn't do login");               
             }
             
-            new FrameStats(new CapaDomini.Domini(), huc, hmc).setVisible(true);
+            
         });    
     
     }
