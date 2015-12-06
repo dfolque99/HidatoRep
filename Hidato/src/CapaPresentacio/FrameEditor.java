@@ -359,11 +359,11 @@ public class FrameEditor extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -409,6 +409,7 @@ public class FrameEditor extends javax.swing.JFrame {
                 //uc.createUser("Usuari", "password");
                 uc.login("david", "david");
                 HidatoManagerController hmc = new HidatoManagerController(new HidatoSet(), null, uc);
+                hmc.loadAll();
                 hmc.createRandom(10, 10);
                 new FrameEditor(hmc).setVisible(true);
             }
@@ -549,6 +550,7 @@ public class FrameEditor extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent evt) {
                 l_num_actual.setEnabled(false);
                 spinner_num_actual.setEnabled(false);
+                hmc.veure();
             }
         });
         b_preguntar_num.addActionListener(new ActionListener() {

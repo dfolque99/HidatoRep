@@ -154,4 +154,8 @@ public class Hidato extends Board implements Serializable{
     public void setBoardName(String newName) {
         boardName = newName;
     }
+    
+    public void setUsername (String name) {
+        this.username = name;
+    }
 }

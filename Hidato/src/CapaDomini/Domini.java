@@ -30,15 +30,13 @@ public class Domini {
     
     public void adelanteee() {
         this.uc = new HidatoUserController();
-        this.hs = new HidatoSet();
         this.rc = new RankingController();
-        this.gmc = new GameManagerController(hs, null, null, rc, uc);
+        this.gmc = new GameManagerController(null, null, null, rc, uc);
         this.hmc = new HidatoManagerController(hs, gmc, uc);
         hmc.loadAll();
-        FrameLogin fl = new FrameLogin(this);
-        fl.setUc(uc);
+        FrameLogin fl = new FrameLogin(this, uc);
         fl.setVisible(true);
-        System.out.printf("%d hidatos\n",hs.getTotalHidatos());
+        hmc.veure();
     }
     
     public void obrirMenu(JFrame antic) {
@@ -55,7 +53,7 @@ public class Domini {
     
     public void obrirStats(JFrame antic) {
         antic.dispose();
-        FrameStats fs = new FrameStats(uc, hmc);
+        FrameStats fs = new FrameStats(this, uc, hmc);
         fs.setVisible(true);
     }
 }

@@ -6,6 +6,7 @@
 package CapaPresentacio;
 
 import CapaDomini.Domini;
+import CapaDomini.Usuari.HidatoUserController;
 import CapaDomini.Usuari.UserController;
 import javax.swing.JOptionPane;
 
@@ -23,8 +24,9 @@ public class FrameLogin extends javax.swing.JFrame {
     private UserController uc;
     private Domini parent;
     
-    public FrameLogin(Domini parent) {
+    public FrameLogin(Domini parent, HidatoUserController uc) {
         this.parent = parent;
+        this.uc = uc;
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
@@ -44,9 +46,6 @@ public class FrameLogin extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void setUc(UserController uc) {
-        this.uc = uc;
-    }
     
     
 
@@ -249,7 +248,7 @@ public class FrameLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameLogin(null).setVisible(true);
+                new FrameLogin(null, new HidatoUserController()).setVisible(true);
             }
         });
     }

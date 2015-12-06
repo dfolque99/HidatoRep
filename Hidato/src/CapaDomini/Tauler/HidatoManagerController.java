@@ -130,11 +130,13 @@ public class HidatoManagerController {
      */
     public void saveTempHidato(String name) {
         Hidato guardat = new Hidato(tempHidato);
+        HidatoUser user = (HidatoUser) uc.getLoggedUser();
         guardat.setBoardName(name);
+        guardat.setUsername(user.getUsername());
         if (hset.getHidatoByName(name) == null) {
-            HidatoUser user = (HidatoUser) uc.getLoggedUser();
             user.addHidato(name);
             user.incrementTotalCreatedBoards();
+            uc.updateUser();
         }
         hset.addHidato(guardat);
     }
@@ -200,5 +202,8 @@ public class HidatoManagerController {
         tempHidato.getCell(x, y).setType(type);
     }
     
-    
+    public void veure() {
+        System.out.printf("%d hidatos:\n", hset.getTotalHidatos());
+        hset.veure();
+    }
 }

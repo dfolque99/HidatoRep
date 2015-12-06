@@ -102,5 +102,10 @@ public class HidatoSet implements Serializable {
         this.H = H;
     }
     
+    public void veure() {
+        for (Hidato h : H) {
+            System.out.print("Hidato " + h.getBoardName() + ", de l'usuari " + h.getUsername() + "\n");
+        }
+    }
     
 }

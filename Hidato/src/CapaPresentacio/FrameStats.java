@@ -1,4 +1,5 @@
 package CapaPresentacio;
+import CapaDomini.Domini;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUser;
@@ -36,6 +37,7 @@ public final class FrameStats extends javax.swing.JFrame {
     
     private HidatoUserController uc;
     private HidatoManagerController hmc;
+    private Domini parent;
     
     
     private static String[] getStats(final UserController uc) {
@@ -70,7 +72,7 @@ public final class FrameStats extends javax.swing.JFrame {
                 System.out.println("Couldn't do login");
             }
             HidatoManagerController hmc = new HidatoManagerController(new HidatoSet(), null, huc);
-            new FrameStats(huc, hmc).setVisible(true);
+            new FrameStats(null, huc, hmc).setVisible(true);
         });
     }
     
@@ -89,10 +91,12 @@ public final class FrameStats extends javax.swing.JFrame {
      * @param uc UserController of current logged (hidato)user
      */
     
-    public FrameStats(final UserController uc, HidatoManagerController hmc) {
+    public FrameStats(Domini parent, final HidatoUserController uc, HidatoManagerController hmc) {
         super("Profile management use case");
+        this.parent = parent;
         this.hmc = hmc;
-        this.initComponents(uc);
+        this.uc = uc;
+        this.initComponents();
     }
     
     private void buttonDeleteActionPerformed(final UserController uc){
@@ -122,7 +126,7 @@ public final class FrameStats extends javax.swing.JFrame {
     }
     
     private Object[] getHidatos(final UserController uc){
-        System.out.println("FrameStats.getHidatos() : Falta por implementar");
+        //System.out.println("FrameStats.getHidatos() : Falta por implementar");
         String[] ret = hmc.getHidatoList().toArray(new String[]{});
         return ret;
     }
@@ -134,17 +138,15 @@ public final class FrameStats extends javax.swing.JFrame {
         if (myList.length > 0) {
             String hidatoName = (String)JOptionPane.showInputDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.QUESTION_MESSAGE, null,myList,myList[0]);
             if (null != hidatoName) {
-                this.setVisible(false);
-                //FrameEditor fe = new FrameEditor();
-                //fe.inici(hidato); // <- TO DO
-                this.setVisible(true);
+                boolean result = hmc.loadHidato(hidatoName);
+                if (result) parent.obrirEditor(this);
             }
         } else {
-            JOptionPane.showMessageDialog(this,"No hidatoa found","The logged user has no hidatos",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,"No hidatos found","The logged user has no hidatos",JOptionPane.ERROR_MESSAGE);
         }
     }
     @SuppressWarnings(value = "unchecked")
-    private void initComponents(final UserController uc) {
+    private void initComponents() {
         //javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
         javax.swing.JLabel jScrollPane1 = new javax.swing.JLabel(convertToMultiline( convertToString(FrameStats.getStats(uc)) ) ,  javax.swing.SwingConstants.CENTER); //SwingConstants.CENTER is for centering the jlabel text
         
