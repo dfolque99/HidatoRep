@@ -5,6 +5,7 @@
  */
 package CapaPresentacio;
 
+import CapaDomini.Domini;
 import CapaDomini.Usuari.UserController;
 import javax.swing.JOptionPane;
 
@@ -19,9 +20,11 @@ public class FrameLogin extends javax.swing.JFrame {
      * Creates new form FrameLogin
      */
     
-    UserController uc;
+    private UserController uc;
+    private Domini parent;
     
-    public FrameLogin() {
+    public FrameLogin(Domini parent) {
+        this.parent = parent;
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
@@ -187,10 +190,7 @@ public class FrameLogin extends javax.swing.JFrame {
             else if (result == -3) msgError("Error desconegut");
             else {
                 JOptionPane.showMessageDialog(this,"Has entrat correctament","Fantàstic!",JOptionPane.INFORMATION_MESSAGE);
-                FrameMenu fm = new FrameMenu();
-                fm.setVisible(true);
-                fm.escriuNom(username);
-                this.setVisible(false);
+                parent.obrirMenu(this);
             }
         }
     }
@@ -210,11 +210,7 @@ public class FrameLogin extends javax.swing.JFrame {
             if (result == -1) msgError("L'usuari ja existeix");
             else if (result == -2) msgError("Error desconegut");
             else {
-                JOptionPane.showMessageDialog(this,"Has entrat correctament","Fantàstic!",JOptionPane.INFORMATION_MESSAGE);
-                FrameMenu fm = new FrameMenu();
-                fm.setVisible(true);
-                fm.escriuNom(username);
-                this.setVisible(false);
+                JOptionPane.showMessageDialog(this,"Usuari creat correctament","Fantàstic!",JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
@@ -253,7 +249,7 @@ public class FrameLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameLogin().setVisible(true);
+                new FrameLogin(null).setVisible(true);
             }
         });
     }
