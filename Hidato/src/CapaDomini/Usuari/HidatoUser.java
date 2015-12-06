@@ -6,6 +6,7 @@
 package CapaDomini.Usuari;
 
 import java.time.Duration;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,12 +17,14 @@ public class HidatoUser extends User {
     private int totalScore;
     private int bestScore;
     private Duration bestTime;
+    private ArrayList<String> createdHidatos;
     
     public HidatoUser(String username, String password) {
         super(username,password);
         totalScore = 0;
         bestScore = 0;
         bestTime = null;
+        createdHidatos = new ArrayList<>();
     }
     
     public void incrementTotalScore(int score) {
@@ -64,4 +67,24 @@ public class HidatoUser extends User {
         else return getTotalTimePlayed().dividedBy((long)getSolvedGames());
     }
     
+    public ArrayList<String> getCreatedHidato() {
+        return createdHidatos;
+    }
+    
+    public String getCreatedHidato(int pos) {
+        return createdHidatos.get(pos);
+    }
+    
+    @Override
+    public int getActualCreatedBoard() {
+        return createdHidatos.size();
+    }
+    
+    public void addHidato (String name) {
+        createdHidatos.add(name);
+    }
+    
+    public void deleteHidato (int pos) {
+        createdHidatos.remove(pos);
+    }
 }
