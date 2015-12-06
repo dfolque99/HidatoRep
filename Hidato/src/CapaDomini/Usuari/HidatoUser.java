@@ -67,7 +67,7 @@ public class HidatoUser extends User {
         else return getTotalTimePlayed().dividedBy((long)getSolvedGames());
     }
     
-    public ArrayList<String> getCreatedHidato() {
+    public ArrayList<String> getCreatedHidatos() {
         return createdHidatos;
     }
     

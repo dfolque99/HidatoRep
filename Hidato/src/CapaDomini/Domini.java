@@ -34,9 +34,11 @@ public class Domini {
         this.rc = new RankingController();
         this.gmc = new GameManagerController(hs, null, null, rc, uc);
         this.hmc = new HidatoManagerController(hs, gmc, uc);
+        hmc.loadAll();
         FrameLogin fl = new FrameLogin(this);
         fl.setUc(uc);
         fl.setVisible(true);
+        System.out.printf("%d hidatos\n",hs.getTotalHidatos());
     }
     
     public void obrirMenu(JFrame antic) {
@@ -53,7 +55,7 @@ public class Domini {
     
     public void obrirStats(JFrame antic) {
         antic.dispose();
-        FrameStats fs = new FrameStats(uc);
+        FrameStats fs = new FrameStats(uc, hmc);
         fs.setVisible(true);
     }
 }

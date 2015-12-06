@@ -86,6 +86,11 @@ public class FrameEditor extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(0, 0, 800, 600));
         setSize(new java.awt.Dimension(800, 600));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -364,6 +369,10 @@ public class FrameEditor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        tancant();
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
@@ -397,9 +406,10 @@ public class FrameEditor extends javax.swing.JFrame {
             @Override
             public void run() {
                 HidatoUserController uc = new HidatoUserController();
-                uc.createUser("Usuari", "password");
-                uc.login("Usuari", "password");
+                //uc.createUser("Usuari", "password");
+                uc.login("david", "david");
                 HidatoManagerController hmc = new HidatoManagerController(new HidatoSet(), null, uc);
+                hmc.createRandom(10, 10);
                 new FrameEditor(hmc).setVisible(true);
             }
         });
@@ -452,6 +462,7 @@ public class FrameEditor extends javax.swing.JFrame {
     public void inici(HidatoManagerController hmc) {
         this.N = hmc.getTempSizeX();
         this.M = hmc.getTempSizeY();
+        this.hmc = hmc;
         hmc.createRandom(N, M);
         label_nom.setText("Hidato sense nom");
         label_nom.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 48));
@@ -647,12 +658,20 @@ public class FrameEditor extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent evt) {
                 if (nomHidato != null) {
                     hmc.saveTempHidato(nomHidato);
+                    System.out.printf("%d hidatos actualment\n", hmc.getHidatoList().size());
                 }
                 else {
                     msgError("El hidato encara no té nom");
                 }
             }
         });
+        b_sortir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                tancant();
+            }
+        });
+        
     }
     
     private void canviarColors(Container c) {
@@ -763,5 +782,9 @@ public class FrameEditor extends javax.swing.JFrame {
     
     private void msgError(String text) {
         JOptionPane.showMessageDialog(this,text,"Error",JOptionPane.ERROR_MESSAGE);
+    }
+    
+    private void tancant() {
+        hmc.saveAll();
     }
 }

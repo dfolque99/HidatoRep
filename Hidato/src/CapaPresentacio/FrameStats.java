@@ -1,4 +1,6 @@
 package CapaPresentacio;
+import CapaDomini.Tauler.HidatoManagerController;
+import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUser;
 import CapaDomini.Usuari.HidatoUserController;
 import CapaDomini.Usuari.UserController;
@@ -31,6 +33,11 @@ public final class FrameStats extends javax.swing.JFrame {
     
     private final static Integer sizeX = 800; 
     private final static Integer sizeY = 600; 
+    
+    private HidatoUserController uc;
+    private HidatoManagerController hmc;
+    
+    
     private static String[] getStats(final UserController uc) {
         CapaDomini.Usuari.User myUser = uc.getLoggedUser();
         if (myUser instanceof CapaDomini.Usuari.HidatoUser){
@@ -50,6 +57,7 @@ public final class FrameStats extends javax.swing.JFrame {
             return new String[]{"El cast a HidatoUSer ha fallado"};
         }
     }
+    
     public static void main(String args[]){
         java.awt.EventQueue.invokeLater(() -> {
             HidatoUserController huc = new HidatoUserController();
@@ -61,25 +69,32 @@ public final class FrameStats extends javax.swing.JFrame {
             } catch (Exception e){
                 System.out.println("Couldn't do login");
             }
-            new FrameStats(huc).setVisible(true);
+            HidatoManagerController hmc = new HidatoManagerController(new HidatoSet(), null, huc);
+            new FrameStats(huc, hmc).setVisible(true);
         });
     }
+    
     private static javax.swing.JButton createButton(final String text, final java.awt.event.ActionListener l) {
         javax.swing.JButton myButton = new javax.swing.JButton(text);
         myButton.addActionListener(l);
         return myButton;
     }
+    
     private FrameStats() {
         throw new UnsupportedOperationException();
     }
+    
     /**
      *Profile management use case : Graphical USer Interface
      * @param uc UserController of current logged (hidato)user
      */
-    public FrameStats(final UserController uc) {
+    
+    public FrameStats(final UserController uc, HidatoManagerController hmc) {
         super("Profile management use case");
+        this.hmc = hmc;
         this.initComponents(uc);
     }
+    
     private void buttonDeleteActionPerformed(final UserController uc){
         String Password = JOptionPane.showInputDialog(this,"Introduce current password \nand press okay to delete current logged user, \npress cancel to cancel",null);
         Boolean truePass = uc.getLoggedUser().getPassword().equals(Password);
@@ -91,6 +106,7 @@ public final class FrameStats extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Incorrect password","Incorrect password",JOptionPane.ERROR_MESSAGE);
         }
     }
+    
     private void buttonModifyPasswordActionPerformed(final UserController uc){
         String OldPassword = JOptionPane.showInputDialog(this,"Introduce current password",null); 
         Boolean truePass = uc.getLoggedUser().getPassword().equals(OldPassword);
@@ -105,13 +121,16 @@ public final class FrameStats extends javax.swing.JFrame {
         
     }
     
-    private static Object[] getHidatos(final UserController uc){
+    private Object[] getHidatos(final UserController uc){
         System.out.println("FrameStats.getHidatos() : Falta por implementar");
-        return new Object[]{"Hidato1","Hidato2"}; // <- TO DO
+        String[] ret = hmc.getHidatoList().toArray(new String[]{});
+        return ret;
     }
+    
     private void buttonSelectHidatoToEditActionPerformed(final UserController uc){
         //JOptionPane.showOptionDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,new Object[]{"Hidato1","Hidato2"}, "Hidato1");
-        Object[] myList = FrameStats.getHidatos(uc);
+        Object[] myList = getHidatos(uc);
+        
         if (myList.length > 0) {
             String hidatoName = (String)JOptionPane.showInputDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.QUESTION_MESSAGE, null,myList,myList[0]);
             if (null != hidatoName) {

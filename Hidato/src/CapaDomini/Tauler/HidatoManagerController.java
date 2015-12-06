@@ -13,6 +13,7 @@ import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.Help;
 import CapaDomini.Usuari.HidatoUser;
 import CapaDomini.Usuari.HidatoUserController;
+import java.util.ArrayList;
 
 /**
  *
@@ -50,6 +51,10 @@ public class HidatoManagerController {
         this.hset = hset;
         this.cgm = cgm;
         this.uc = uc;
+    }
+    
+    public ArrayList<String> getHidatoList() {
+        return ((HidatoUser) uc.getLoggedUser()).getCreatedHidatos();
     }
     
     /**
