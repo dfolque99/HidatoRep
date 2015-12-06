@@ -108,15 +108,19 @@ public final class FrameStats extends javax.swing.JFrame {
                     b = hmc.loadHidato(hidatoName);
                     if (b) {
                         try {hmc.getTempSizeX();} 
-                        catch (java.lang.NullPointerException e) {LOG.log(Level.SEVERE,"buttonSelectHidatoToEditActionPerformed  hmc.getTempSizeX");}
+                        catch (java.lang.NullPointerException e) {LOG.log(Level.SEVERE,"buttonSelectHidatoToEditActionPerformed  hmc.getTempSizeX"); return;}
                         try {parent.obrirEditor(this);} 
-                        catch (Exception e){LOG.log(Level.SEVERE,"buttonSelectHidatoToEditActionPerformed ",e);}
-                        JOptionPane.showMessageDialog(this,"There was an error: See log","There was an error: See log",JOptionPane.PLAIN_MESSAGE);
+                        catch (Exception e){
+                            LOG.log(Level.SEVERE,"buttonSelectHidatoToEditActionPerformed ",e); 
+                            JOptionPane.showMessageDialog(this,"There was an error: See log","There was an error: See log",JOptionPane.PLAIN_MESSAGE);
+                            return;
+                        }
+                        
                     } else {
                         JOptionPane.showMessageDialog(this,"The selecte Hidato couldn't be loaded correctly","The selecte Hidato couldn't be loaded correctly",JOptionPane.PLAIN_MESSAGE);    
                     }
                 } catch (Exception e) {
-                    LOG.log(Level.SEVERE,"Edición de Hidato falló: b "+b,e);
+                    LOG.log(Level.SEVERE,"Edición de Hidato falló: b "+b,e); return;
                 }
             } else {
                 //JOptionPane.showMessageDialog(this,"You didn't select anything","You didn't select anything",JOptionPane.PLAIN_MESSAGE);
