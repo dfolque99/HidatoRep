@@ -116,7 +116,7 @@ public final class FrameStats extends javax.swing.JFrame {
             String hidatoName = (String)JOptionPane.showInputDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.QUESTION_MESSAGE, null,myList,myList[0]);
             if (null != hidatoName) {
                 this.setVisible(false);
-                FrameEditor fe = new FrameEditor();
+                //FrameEditor fe = new FrameEditor();
                 //fe.inici(hidato); // <- TO DO
                 this.setVisible(true);
             }
