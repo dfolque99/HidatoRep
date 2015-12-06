@@ -137,8 +137,11 @@ public class HidatoManagerController {
             user.addHidato(name);
             user.incrementTotalCreatedBoards();
             uc.updateUser();
+            hset.addHidato(guardat);
         }
-        hset.addHidato(guardat);
+        else {
+            hset.replaceHidatoByName(name, guardat);
+        }
     }
     
     /**
@@ -177,6 +180,10 @@ public class HidatoManagerController {
     /**
      * Getters i setters sobre el hidato tempHidato
      */
+    
+    public String getTempBoardName () {
+        return tempHidato.getBoardName();
+    }
     
     public int getTempCellVal (int x, int y) {
         return tempHidato.getCell(x, y).getVal();

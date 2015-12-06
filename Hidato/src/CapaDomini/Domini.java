@@ -47,7 +47,7 @@ public class Domini {
     
     public void obrirEditor(JFrame antic) {
         antic.dispose();
-        FrameEditor fe = new FrameEditor(hmc);
+        FrameEditor fe = new FrameEditor(this, hmc);
         fe.setVisible(true);
     }
     

@@ -6,6 +6,7 @@
 package CapaPresentacio;
 
 
+import CapaDomini.Domini;
 import CapaDomini.Misc.Colors;
 import CapaDomini.Misc.Fonts;
 import CapaDomini.Tauler.HidatoManagerController;
@@ -38,9 +39,9 @@ public class FrameEditor extends javax.swing.JFrame {
     /**
      * Creates new form FrameEditor
      */
-    public FrameEditor(HidatoManagerController hmc) {
+    public FrameEditor(Domini parent, HidatoManagerController hmc) {
         initComponents();
-        inici(hmc);
+        inici(parent, hmc);
     }
     
 
@@ -72,8 +73,6 @@ public class FrameEditor extends javax.swing.JFrame {
         l_num_actual = new javax.swing.JLabel();
         b_esborrar_numeros = new javax.swing.JButton();
         panel_nom = new javax.swing.JPanel();
-        textfield_nom = new javax.swing.JTextField();
-        b_canvia_nom = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         b_autocompletar = new javax.swing.JButton();
         b_validar = new javax.swing.JButton();
@@ -228,27 +227,15 @@ public class FrameEditor extends javax.swing.JFrame {
 
         panel_nom.setBorder(javax.swing.BorderFactory.createTitledBorder("Canvi de nom"));
 
-        b_canvia_nom.setText("Canvia el nom");
-
         javax.swing.GroupLayout panel_nomLayout = new javax.swing.GroupLayout(panel_nom);
         panel_nom.setLayout(panel_nomLayout);
         panel_nomLayout.setHorizontalGroup(
             panel_nomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_nomLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panel_nomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textfield_nom)
-                    .addComponent(b_canvia_nom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addGap(0, 259, Short.MAX_VALUE)
         );
         panel_nomLayout.setVerticalGroup(
             panel_nomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_nomLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(textfield_nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_canvia_nom)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 71, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -359,18 +346,18 @@ public class FrameEditor extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        tancant();
+        hmc.saveAll();
     }//GEN-LAST:event_formWindowClosing
 
     /**
@@ -411,7 +398,7 @@ public class FrameEditor extends javax.swing.JFrame {
                 HidatoManagerController hmc = new HidatoManagerController(new HidatoSet(), null, uc);
                 hmc.loadAll();
                 hmc.createRandom(10, 10);
-                new FrameEditor(hmc).setVisible(true);
+                new FrameEditor(null, hmc).setVisible(true);
             }
         });
     }
@@ -422,7 +409,6 @@ public class FrameEditor extends javax.swing.JFrame {
     private javax.swing.JRadioButton b_canvi_num;
     private javax.swing.JRadioButton b_canvi_prop;
     private javax.swing.JRadioButton b_canvi_type;
-    private javax.swing.JButton b_canvia_nom;
     private javax.swing.JButton b_desar;
     private javax.swing.JRadioButton b_esborrar_num;
     private javax.swing.JButton b_esborrar_numeros;
@@ -445,7 +431,6 @@ public class FrameEditor extends javax.swing.JFrame {
     private javax.swing.JPanel panel_num;
     private javax.swing.JPanel panel_type;
     private javax.swing.JSpinner spinner_num_actual;
-    private javax.swing.JTextField textfield_nom;
     // End of variables declaration//GEN-END:variables
 
     // =============================AQUI LO MEU=================================
@@ -455,20 +440,22 @@ public class FrameEditor extends javax.swing.JFrame {
     private ArrayList<ArrayList<SquareCell>> panels;
     private int N, M;
     private HidatoManagerController hmc;
+    private Domini parent;
     private ButtonGroup g1, g2, g3;
     private String nomHidato;
     
     
     
-    public void inici(HidatoManagerController hmc) {
+    public void inici(Domini parent, HidatoManagerController hmc) {
         this.N = hmc.getTempSizeX();
         this.M = hmc.getTempSizeY();
         this.hmc = hmc;
-        hmc.createRandom(N, M);
-        label_nom.setText("Hidato sense nom");
+        this.parent = parent;
+        nomHidato = hmc.getTempBoardName();
+        if (nomHidato == null) label_nom.setText("Hidato sense nom");
+        else label_nom.setText("Hidato: "+nomHidato);
         label_nom.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 48));
         panels = new ArrayList<>();
-        nomHidato = null;
         
         int maxim, N1, N2, M1, M2;
         maxim = Math.max(N,M);
@@ -550,7 +537,6 @@ public class FrameEditor extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent evt) {
                 l_num_actual.setEnabled(false);
                 spinner_num_actual.setEnabled(false);
-                hmc.veure();
             }
         });
         b_preguntar_num.addActionListener(new ActionListener() {
@@ -577,22 +563,6 @@ public class FrameEditor extends javax.swing.JFrame {
         });
         spinner_num_actual.setValue(1);
         
-        b_canvia_nom.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                String name = textfield_nom.getText();
-                if (hmc.usedName(name)) {
-                    msgError("Ja existeix un hidato amb aquest nom");
-                }
-                else if (name.replace(" ", "").equals("")) {
-                    msgError("Nom no vàlid");
-                }
-                else {
-                    nomHidato = name;
-                    label_nom.setText("Hidato: "+name);
-                }
-            }
-        });
         totInvisible();
     }
     
@@ -658,22 +628,31 @@ public class FrameEditor extends javax.swing.JFrame {
         b_desar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                if (nomHidato != null) {
-                    hmc.saveTempHidato(nomHidato);
-                    System.out.printf("%d hidatos actualment\n", hmc.getHidatoList().size());
-                }
-                else {
-                    msgError("El hidato encara no té nom");
-                }
+                desar();
             }
         });
         b_sortir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                tancant();
+                tancar();
             }
         });
         
+    }
+    
+    private void desar() {
+        if (nomHidato != null) {
+            hmc.saveTempHidato(nomHidato);
+        }
+        else {
+            String newName = JOptionPane.showInputDialog(this,"Introdueix un nom per al hidato",null);
+            if (hmc.usedName(newName)) msgError("Ja existeix un hidato amb aquest nom");
+            else {
+                hmc.saveTempHidato(newName);
+                msgInfo("Hidato " + newName + " desat correctament");
+                nomHidato = newName;
+            }
+        }
     }
     
     private void canviarColors(Container c) {
@@ -786,7 +765,12 @@ public class FrameEditor extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this,text,"Error",JOptionPane.ERROR_MESSAGE);
     }
     
-    private void tancant() {
+    private void msgInfo(String text) {
+        JOptionPane.showMessageDialog(this,text,"",JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void tancar() {
         hmc.saveAll();
+        parent.obrirMenu(this);
     }
 }
