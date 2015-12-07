@@ -397,7 +397,7 @@ public class FrameEditor extends javax.swing.JFrame {
                 uc.login("david", "david");
                 HidatoManagerController hmc = new HidatoManagerController(new HidatoSet(), null, uc);
                 hmc.loadAll();
-                hmc.createRandom(10, 10);
+                hmc.createRandom(8,12);
                 new FrameEditor(null, hmc).setVisible(true);
             }
         });
@@ -492,7 +492,6 @@ public class FrameEditor extends javax.swing.JFrame {
                     JPanel p = new JPanel();
                     jPanel1.add(p,i0*maxim+j0);
                 }
-                
             }
         }
         

@@ -185,6 +185,10 @@ public class HidatoManagerController {
         return tempHidato.getBoardName();
     }
     
+    public String getTempUsername () {
+        return tempHidato.getUsername();
+    }
+    
     public int getTempCellVal (int x, int y) {
         return tempHidato.getCell(x, y).getVal();
     }
