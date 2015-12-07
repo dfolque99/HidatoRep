@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * Hidato is NP-complete
  * current algorithm is greedy aproximmation of longest simple path between two given cells
  * @author felix.axel.gimeno
- * @version 0.4
+ * @version 0.41
  * @since 2015-11-07
  * @see <a href="https://en.wikipedia.org/wiki/Hidato">Hidato</a>
  * @see <a href="https://en.wikipedia.org/wiki/Knight%27s_tour#Warnsdorf.27s_rule">Warnsdorf's rule</a>
@@ -35,7 +35,6 @@ public class SolverController {
      * the instance of hidato that will be modified and solved
      */
     private Hidato board;
-
 
     /**
      * Current used cells of Hidato board
@@ -59,46 +58,10 @@ public class SolverController {
      * value of finishing cell
      */
     private Integer finish; 
+    
     /**
-     * Distinguishes whether cell input is available for number n
-     *
-     * @param x	x-position of cell input
-     * @param y y-position of cell input
-     * @param n number to try for cell input
-     * @return true if cell can be assigned number n, false otherwise
-     */
-    /*private boolean validPosition(final int x, final int y, final int n) { //to do: can i split this, mnemoize this ...
-    if (n > finish) {return false;}
-    if ((Math.min(x, y) < 0) || (Math.max(x - board.getSizeX(), y - board.getSizeY()) >= 0)) {
-    return false;
-    }
-    final Position positionOfValueN = givenCells[n];
-    if (positionOfValueN != null){
-    return positionOfValueN.equals(new Position(x, y));
-    }
-    if (Position.notEnoughDistance(next[n], givenCells[next[n]], n, new Position(x, y))) {
-    return false;
-    }
-    if (board.getCell(x, y).getType() == Type.VOID){return false;}
-    boolean isValid = true;
-    if (used[x][y]
-    || (board.getCell(x, y).getType() == Type.GIVEN && board.getCell(x, y).getVal() != n)
-    ) {
-    isValid = false;
-    }
-    return isValid;
-    }*/
-    /*public class PositionValue {
-    private final Position p;
-    private final Integer n;
-    private PositionValue() {throw new UnsupportedOperationException();}
-    public PositionValue(Position p,Integer n){this.p=p;this.n=n;}
-    public PositionValue(final int x, final int y, final int n){this.p = new Position(x,y); this.n = n;}
-    public Position getP(){return this.p;}
-    public Integer  getN(){return this.n;}
-    }
-     */
-    //private Map<PositionValue, Boolean> cache;
+     * cache of function uncachedValidPosition for function cachedValidPosition
+     */ 
     private boolean[][][] myCache;
     
     /**
@@ -109,7 +72,7 @@ public class SolverController {
     }
 
     /**
-     *
+     * Returns the internal board, warning, blank input cells with non zero values become given cells internally 
      * @return this.board
      */
     public Hidato getHidato() {
@@ -146,7 +109,7 @@ public class SolverController {
 
         }
         myCache = new boolean[board.getSizeX()+1][board.getSizeY()+1][finish+1];
-        presolve();
+        preprocessBeforeBacktracking();
         
     }
 
@@ -167,7 +130,7 @@ public class SolverController {
      * @return true if hidato can be solved,
      */
     private boolean solve() {
-        return solve(givenCells[start].getX(), givenCells[start].getY(), start);
+        return solveWithBacktracking(givenCells[start].getX(), givenCells[start].getY(), start);
     }
 
     /**
@@ -206,14 +169,16 @@ public class SolverController {
         //System.out.println("debug: gethint");
         return null;
     }
-
-    private void presolve(){
+    /**
+    * recursively solves the easy bits of the internal hidato 
+    */
+    private void preprocessBeforeBacktracking(){
         for (int i = 0; i < board.getSizeX(); i+=1){
             for (int j = 0; j < board.getSizeY(); j+=1 ){
                 Integer count = 0;
                 Integer n = -1;
                 for (int k = start; k <= finish; k+=1){
-                    boolean b = f(i,j,k);
+                    boolean b = uncachedValidPosition(i,j,k);
                     myCache[i][j][k]= b;
                     if (Type.GIVEN != board.getCell(i, j).getType()) {
                         count += b ? 1 : 0;
@@ -235,7 +200,7 @@ public class SolverController {
             Integer y = -1;
             for (int i = 0; i < board.getSizeX(); i+=1){
                 for (int j = 0; j < board.getSizeY(); j+=1 ){
-                    boolean b = f(i,j,k);
+                    boolean b = uncachedValidPosition(i,j,k);
                     myCache[i][j][k]= b;
                     if (Type.GIVEN != board.getCell(i, j).getType()) {
                         count += b ? 1 : 0;
@@ -255,7 +220,7 @@ public class SolverController {
         }
         
     }
-    private boolean f(final int x, final int y, final int n){
+    private boolean uncachedValidPosition(final int x, final int y, final int n){
         if (n > finish) {return false;}
         if ((Math.min(x, y) < 0) || (Math.max(x - board.getSizeX(), y - board.getSizeY()) >= 0)) {
             return false;
@@ -272,8 +237,7 @@ public class SolverController {
         }
         return true;
     }
-    private boolean g(final int x, final int y, final int n){
-        //Boolean b = /*f(pv); // */ cache.computeIfAbsent(new PositionValue(x,y,n), t -> f(t.getP().getX(),t.getP().getY(),t.getN()));
+    private boolean cachedValidPosition(final int x, final int y, final int n){
         if (n > finish) {return false;}
         if ((Math.min(x, y) < 0) || (Math.max(x - board.getSizeX(), y - board.getSizeY()) >= 0)) {
             return false;
@@ -291,9 +255,7 @@ public class SolverController {
      */
     private ArrayList<int[]> getNeighboursUnsorted(final int x, final int y, final int n) {
         return Arrays.stream(Moore)
-                //.filter(p -> validPosition(x + p.getX(), y + p.getY(), n + 1))
-                .filter(p -> g(x + p.getX(), y + p.getY(), n + 1) /*&& !used[x + p.getX()][y + p.getY()]*/)
-                //.filter(p ->g(new PositionValue( new Position(x + p.getX(), y + p.getY()), n + 1)))
+                .filter(p -> cachedValidPosition(x + p.getX(), y + p.getY(), n + 1))
                 .map(p -> new int[]{p.getX(), p.getY(), n + 1})
                 .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -321,7 +283,7 @@ public class SolverController {
      * @return 
      */
     private ArrayList<int[]> getNeighboursSortedWorst(final int x, final int y, final int n) { //worst first search ?
-        //ArrayList<int[]> result = getNeighboursUnsorted(x, y, n);
+        //ArrayList<int[]> result = getNeighboursUnsorted(x, y, n); //does this make any noticiable difference?
         ArrayList<int[]> result = getNeighboursSorted(x, y, n);
         Map<int[], Integer> Values = new HashMap<>(8);
         result.stream().forEach(s-> {Values.put(s,Position.distance(givenCells[next[n]],new Position(s[0],s[1])));});
@@ -338,43 +300,19 @@ public class SolverController {
      * @return true if current Hidato board can be solved with cell in (x,y)
      * with number n, otherwise false
      */
-    private boolean solve(final int x, final int y, final int n) {
+    private boolean solveWithBacktracking(final int x, final int y, final int n) {
         if (n == finish) { //exit case
             return board.getCell(x, y).getVal() == n;
         }
         //recursion case
         board.getCell(x, y).setVal(n);    
         used[x][y] = true;
-        if (getNeighboursSortedWorst(x, y, n).stream().anyMatch((s) -> (solve(x + s[0], y + s[1], n + 1)))) {
+        if (getNeighboursSortedWorst(x, y, n).stream().anyMatch((s) -> (solveWithBacktracking(x + s[0], y + s[1], n + 1)))) {
             return true;
         }
         used[x][y] = false;
         return false;
     }
-    
-    public boolean solve2(Hidato h, Integer x, Integer y){
-        upload(h);
-        for (int m = finish; m >= start; m-=1 ){
-            if (f(x,y,m)){
-                board.setCell(x,y,new Cell(m,Type.GIVEN));
-                if ( new SolverController().solve(board) ){return true;}
-                board.setCell(x,y,new Cell(0,Type.BLANK));
-            }
-        }
-        return false;
-    }    
-    public boolean solve3(Hidato h, Integer n){
-        upload(h);
-        for (int i = 0; i < board.getSizeX(); i += 1) {
-            for (int j = 0; j < board.getSizeY(); j += 1) {
-                if (f(i,j,n)){
-                    board.setCell(i,j,new Cell(n,Type.GIVEN));
-                    if ( new SolverController().solve(board) ){return true;}
-                    board.setCell(i,j,new Cell(0,Type.BLANK));
-                }
-            }
-        }
-        return false;
-    }
+
     
 }

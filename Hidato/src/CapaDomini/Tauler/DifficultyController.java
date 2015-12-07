@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 /**
+ * To calculate the difficulty of a hidato board
  * @since 07-12-2015
  * @author felix.axel.gimeno
  */
