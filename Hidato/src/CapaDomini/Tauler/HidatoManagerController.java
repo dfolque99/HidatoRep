@@ -206,6 +206,7 @@ public class HidatoManagerController {
     }
     
     public String getTempDifficulty () {
+        if (tempHidato.getDifficulty() == null) return "";
         return tempHidato.getDifficulty().toString();
     }
     

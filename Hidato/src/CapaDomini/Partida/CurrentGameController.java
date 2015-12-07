@@ -217,6 +217,7 @@ public class CurrentGameController {
         game.incrementDuration(time1 - time0);
         
         HidatoUser user = game.getUser();
+        if (user == null) System.out.println("usuari null en el current game");
         user.incrementSolvedGames();
         user.incrementTotalTimePlayed(game.getDuration());
         user.updateBestTime(game.getDuration());
@@ -228,6 +229,7 @@ public class CurrentGameController {
         
         hidatoUserController.updateUser();
         
+        System.out.println("El resultat es "+username);
         ctrRanking.addScoreToRanking(score, username, game.getDifficulty());
         return 0;
     }
@@ -282,5 +284,9 @@ public class CurrentGameController {
     
     public Duration getDuration(){
         return game.getDuration();
+    }
+    
+    public Boolean isSolved(){
+        return ctrHidato.isSolved();
     }
 }
