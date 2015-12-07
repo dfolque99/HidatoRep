@@ -58,25 +58,25 @@ public class FrameRanking extends javax.swing.JFrame {
 
         labelDificultat.setText("Selecciona la dificultat:");
 
-        rankingPanel.setMaximumSize(new java.awt.Dimension(670, 550));
-        rankingPanel.setMinimumSize(new java.awt.Dimension(670, 550));
+        rankingPanel.setMaximumSize(new java.awt.Dimension(650, 530));
+        rankingPanel.setMinimumSize(new java.awt.Dimension(650, 530));
         rankingPanel.setName("Ranking"); // NOI18N
-        rankingPanel.setPreferredSize(new java.awt.Dimension(670, 550));
+        rankingPanel.setPreferredSize(new java.awt.Dimension(650, 530));
 
         javax.swing.GroupLayout rankingPanelLayout = new javax.swing.GroupLayout(rankingPanel);
         rankingPanel.setLayout(rankingPanelLayout);
         rankingPanelLayout.setHorizontalGroup(
             rankingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
+            .addGap(0, 650, Short.MAX_VALUE)
         );
         rankingPanelLayout.setVerticalGroup(
             rankingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 530, Short.MAX_VALUE)
         );
 
-        posPanel.setMaximumSize(new java.awt.Dimension(20, 550));
-        posPanel.setMinimumSize(new java.awt.Dimension(20, 550));
-        posPanel.setPreferredSize(new java.awt.Dimension(20, 550));
+        posPanel.setMaximumSize(new java.awt.Dimension(20, 530));
+        posPanel.setMinimumSize(new java.awt.Dimension(20, 530));
+        posPanel.setPreferredSize(new java.awt.Dimension(20, 530));
 
         javax.swing.GroupLayout posPanelLayout = new javax.swing.GroupLayout(posPanel);
         posPanel.setLayout(posPanelLayout);
@@ -86,7 +86,7 @@ public class FrameRanking extends javax.swing.JFrame {
         );
         posPanelLayout.setVerticalGroup(
             posPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 530, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -118,8 +118,8 @@ public class FrameRanking extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(posPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rankingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(posPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rankingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
