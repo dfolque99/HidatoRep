@@ -61,9 +61,6 @@ public class FrameGame extends javax.swing.JFrame {
     CurrentGameController currentGameCtr;
     Boolean isGamePaused;
     int timeSincePause;
-    HidatoSet hidatoSet;
-    GameDBController ctrDBGame;
-    SolverController solver;
     RankingController ctrRanking;
     HidatoUserController hidatoUserController;
     GameManagerController ctrGameManager;
@@ -84,14 +81,8 @@ public class FrameGame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this,text,title,JOptionPane.PLAIN_MESSAGE);
     }
     
-    private void inicialitzaParametres(Domini parent, HidatoSet hs, RankingController rc, HidatoUserController uc, GameManagerController gmc, Help h){
+    private void inicialitzaParametres(Domini parent, RankingController rc, HidatoUserController uc, GameManagerController gmc, Help h, String gameName){
         this.parent = parent;
-        
-        if (hs == null) hidatoSet = new HidatoSet();  
-        else hidatoSet = hs;
-        
-        ctrDBGame = new GameDBController();
-        solver = new SolverController();
         
         if (rc == null) {
             ctrRanking = new RankingController();
@@ -103,14 +94,18 @@ public class FrameGame extends javax.swing.JFrame {
             hidatoUserController.login("hola", "adeu");
         }else hidatoUserController = uc;
         
-        if (gmc == null) ctrGameManager = new GameManagerController(hidatoSet, ctrDBGame, solver, ctrRanking, hidatoUserController);
+        if (gmc == null) ctrGameManager = new GameManagerController(ctrRanking, hidatoUserController);
         else ctrGameManager = gmc;
         
         if (h == null) help = Help.LOW;
         else help = h;
         
         hidatoGenerator = new GeneratorController();
-        currentGameCtr = ctrGameManager.createGame("Nou joc", hidatoGenerator.generateHidato(6,6), help);
+        
+        String name;
+        if (gameName == null) name = "Nou joc";
+        else name = gameName;
+        currentGameCtr = ctrGameManager.createGame(name, hidatoGenerator.generateHidato(6,6), help);
     }
     
     private void acabaPartida(){
@@ -132,9 +127,9 @@ public class FrameGame extends javax.swing.JFrame {
         return -1;
     }
     
-    public FrameGame(Domini parent, HidatoSet hs, RankingController rc, HidatoUserController uc, GameManagerController gmc, Help h) {
+    public FrameGame(Domini parent, RankingController rc, HidatoUserController uc, GameManagerController gmc, Help h, String gameName) {
         initComponents();
-        inicialitzaParametres(parent,hs,rc,uc,gmc,h);
+        inicialitzaParametres(parent,rc,uc,gmc,h,gameName);
         
         
         //Hidato hidato = game.getHidato();
@@ -584,7 +579,7 @@ public class FrameGame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameGame(null).setVisible(true);
+                new FrameGame(null, null, null, null, null, null).setVisible(true);
             }
         });
     }

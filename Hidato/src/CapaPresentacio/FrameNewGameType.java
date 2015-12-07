@@ -6,6 +6,8 @@
 package CapaPresentacio;
 
 import CapaDomini.Domini;
+import CapaDomini.Partida.Help;
+import CapaDomini.Tauler.GeneratorController;
 import java.util.Random;
 import javax.swing.JOptionPane;
 
@@ -21,7 +23,8 @@ public class FrameNewGameType extends javax.swing.JFrame {
      */
     public FrameNewGameType(Domini parent) {
         initComponents();
-        this.parent = parent;
+        if (parent == null) this.parent = new Domini();
+        else this.parent = parent;
     }
 
     /**
@@ -37,6 +40,8 @@ public class FrameNewGameType extends javax.swing.JFrame {
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
         buttonGroup4 = new javax.swing.ButtonGroup();
+        buttonGroup5 = new javax.swing.ButtonGroup();
+        buttonGroup6 = new javax.swing.ButtonGroup();
         manualButton = new javax.swing.JButton();
         randomButton = new javax.swing.JButton();
         xSize = new javax.swing.JTextField();
@@ -87,7 +92,7 @@ public class FrameNewGameType extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(256, 256, 256)
+                .addGap(232, 232, 232)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(manualButton)
                     .addComponent(sizeLabel)
@@ -95,7 +100,7 @@ public class FrameNewGameType extends javax.swing.JFrame {
                     .addComponent(ySize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(randomButton)
-                .addContainerGap(292, Short.MAX_VALUE))
+                .addContainerGap(316, Short.MAX_VALUE))
         );
 
         pack();
@@ -112,7 +117,15 @@ public class FrameNewGameType extends javax.swing.JFrame {
         try{
             x = Integer.parseInt(xSize.getText());
             y = Integer.parseInt(ySize.getText());
-            if (x < 1 || y < 1 || x > 10 || y > 10) msgError("Introdueix valors correctes (mides entre 1 i 10)");
+            System.out.println("x,y = "+x+","+y);
+            while (x < 1 || y < 1 || x > 10 || y > 10) {
+                msgError("Introdueix valors correctes (mides entre 1 i 10)");
+                x = Integer.parseInt(xSize.getText());
+                y = Integer.parseInt(ySize.getText());
+            }
+            GeneratorController hg = new GeneratorController();
+            hg.generateHidato(x, y);
+            asdf
         }
         catch(Exception e ){
             msgError("Introdueix valors correctes!");
@@ -171,6 +184,8 @@ public class FrameNewGameType extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
+    private javax.swing.ButtonGroup buttonGroup5;
+    private javax.swing.ButtonGroup buttonGroup6;
     private javax.swing.JButton manualButton;
     private javax.swing.JButton randomButton;
     private javax.swing.JLabel sizeLabel;

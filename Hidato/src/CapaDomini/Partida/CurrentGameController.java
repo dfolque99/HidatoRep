@@ -64,11 +64,11 @@ public class CurrentGameController {
      * @param ctrRanking controlador del ranking per enviar-li les dades de la partida acabada
      * @param hidatoUserController controlador de l'usuari que juga la partida
      */    
-    public CurrentGameController(Game game, GameDBController ctrDBGame, SolverController solver, RankingController ctrRanking, HidatoUserController hidatoUserController){
+    public CurrentGameController(Game game, GameDBController ctrDBGame, RankingController ctrRanking, HidatoUserController hidatoUserController){
         this.game = game;
         this.ctrDBGame = ctrDBGame;
         this.ctrHidato = new HidatoController(game.getHidato());
-        this.solver = solver;
+        this.solver = new SolverController();
         this.ctrRanking = ctrRanking;
         this.hidatoUserController = hidatoUserController;
         this.time0 = (long) System.currentTimeMillis();
