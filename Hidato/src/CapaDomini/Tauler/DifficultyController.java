@@ -21,6 +21,7 @@ public class DifficultyController {
     static final double medium_low = 2;
     static final double medium_high = 3;
     private static Difficulty doubleToDifficulty(final double d){
+        LOG.log(Level.SEVERE, "Dificultad d {0}", d);
         if (d < medium_low) { 
             return Difficulty.EASY;
         } else if (d > medium_high) {
@@ -40,8 +41,6 @@ public class DifficultyController {
         }
         return sum/count;
     }
-    
-    
     private boolean validPosition(PositionValue now,PositionValue next,boolean[][] used, final Hidato hidato){
         if (now.getValue() > next.getValue()) {return false;}
         final Integer x = now.getX();
@@ -56,8 +55,6 @@ public class DifficultyController {
         }
         return !used[x][y];      
     }
-
-    
     private ArrayList<PositionValue> Neighbours(PositionValue start,PositionValue next,boolean[][] used, final Hidato hidato){
         final Position[] Moore ={ 
             new Position(-1,-1), new Position(-1,0), new Position(0,-1),
