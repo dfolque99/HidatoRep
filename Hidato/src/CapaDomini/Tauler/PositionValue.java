@@ -36,5 +36,8 @@ class PositionValue extends Position{
     public static Position add(final Position p1, final Position p2){
         throw new UnsupportedOperationException("PositionValued add from Position");
     }
+    public static boolean notEnoughDistance(PositionValue pv1, PositionValue pv2) {
+        return Position.notEnoughDistance(pv1.getValue(),pv1,pv2.getValue(),pv2);
+    }    
     
 }
