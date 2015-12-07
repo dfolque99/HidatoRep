@@ -451,8 +451,9 @@ public class FrameEditor extends javax.swing.JFrame {
         this.M = hmc.getTempSizeY();
         this.hmc = hmc;
         this.parent = parent;
+        b_desar.setEnabled(false);
         nomHidato = hmc.getTempBoardName();
-        if (nomHidato == null) label_nom.setText("Hidato sense nom");
+        if (nomHidato == null) label_nom.setText("Hidato no guardat");
         else label_nom.setText("Hidato: "+nomHidato);
         label_nom.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 48));
         panels = new ArrayList<>();
@@ -592,6 +593,10 @@ public class FrameEditor extends javax.swing.JFrame {
         b_autocompletar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
+                if (!hmc.tempHasOrigin()) {
+                    msgError ("No s'ha pogut completar el hidato perquè no té casella inicial");
+                    return;
+                }
                 boolean completat = hmc.completeTempHidato();
                 if (completat) {
                     for (int i = 0; i < N; ++i) {
@@ -609,6 +614,14 @@ public class FrameEditor extends javax.swing.JFrame {
         b_validar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
+                if (!hmc.tempHasOrigin()) {
+                    msgError ("No s'ha pogut completar el hidato perquè no té casella inicial");
+                    return;
+                }
+                if (!hmc.tempHasFinal()) {
+                    msgError ("No s'ha pogut completar el hidato perquè no té casella final");
+                    return;
+                }
                 boolean completat = hmc.solveTempHidato();
                 if (completat) {
                     for (int i = 0; i < N; ++i) {
@@ -617,7 +630,8 @@ public class FrameEditor extends javax.swing.JFrame {
                             panels.get(i).get(j).changeVal(hmc.getTempCellVal(i, j));
                         }
                     }
-                    msgError ("S'ha validat (tot i que no estic molt segur que ho faci be)");
+                    b_desar.setEnabled(true);
+                    msgInfo ("S'ha validat el hidato. Ara ja es pot desar");
                 }
                 else {
                     msgError ("No s'ha pogut validar el hidato");
@@ -708,9 +722,11 @@ public class FrameEditor extends javax.swing.JFrame {
         if (p.getLight()) {
             if (b_canvi_num.isSelected() && p.getType() != CapaDomini.Tauler.Type.VOID) {
                 canviarNum(p);
+                b_desar.setEnabled(false);
             }
             else if (b_canvi_type.isSelected()) {
                 canviarType(p);
+                b_desar.setEnabled(false);
             }
             p.setLight(false);
         }

@@ -113,7 +113,7 @@ public class HidatoManagerController {
         SolverController solver = new SolverController();
         boolean teSolucio = solver.solve(tempHidato);
         if (!teSolucio) return false;
-        tempHidato = solver.getHidato();
+        tempHidato = solver.getHidato(tempHidato);
         return true;
     }
     
@@ -155,6 +155,16 @@ public class HidatoManagerController {
         if (completat == null ) return false;
         tempHidato = completat;
         return true;
+    }
+    
+    public boolean tempHasFinal() {
+        HidatoController hc = new HidatoController(tempHidato);
+        return hc.hasFinal();
+    }
+    
+    public boolean tempHasOrigin() {
+        HidatoController hc = new HidatoController(tempHidato);
+        return hc.hasOrigin();
     }
     
     /**
