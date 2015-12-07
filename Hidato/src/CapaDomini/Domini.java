@@ -6,11 +6,13 @@
 package CapaDomini;
 
 import CapaDomini.Partida.GameManagerController;
+import CapaDomini.Partida.Help;
 import CapaDomini.Rank.RankingController;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUserController;
 import CapaPresentacio.FrameEditor;
+import CapaPresentacio.FrameGame;
 import CapaPresentacio.FrameLogin;
 import CapaPresentacio.FrameMenu;
 import CapaPresentacio.FrameStats;
@@ -66,5 +68,16 @@ public class Domini {
         fs.setVisible(true);
         fs.setLocation(antic.getLocation());
         antic.dispose();
+    }
+    
+    public void obrirPartida(JFrame antic, Help h) {
+        FrameGame fg = new FrameGame(this, hs, rc, uc, gmc, h);
+        fg.setVisible(true);
+        fg.setLocation(antic.getLocation());
+        antic.dispose();
+    }
+    
+    public void obrirRanking(JFrame antic){
+        
     }
 }
