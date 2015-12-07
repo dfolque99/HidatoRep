@@ -5,6 +5,7 @@
  */
 package CapaDomini.Usuari;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author Guillem
  */
-public class HidatoUser extends User {
+public class HidatoUser extends User implements Serializable {
     
     private int totalScore;
     private int bestScore;
