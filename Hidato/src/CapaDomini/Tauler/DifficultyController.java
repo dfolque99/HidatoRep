@@ -66,26 +66,30 @@ public class DifficultyController {
                 .filter(pv -> validPosition(pv,next,used,hidato))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
-    private Integer countPathForGiven(final PositionValue start, final PositionValue next, boolean[][] used, final Integer[][] count, final Hidato hidato){
+    private Integer countPathForGiven(final PositionValue start, final PositionValue next, boolean[][] used, final Object[][] count, final Hidato hidato){
+        LOG.log(Level.SEVERE, "start.value {2} x {0} y {1}", new Object[]{start.getX(), start.getY(),start.getValue()});
         if (start.equals(next)) {
             return 1;
         } else if (start.getValue().equals(next.getValue())) {
             return 0;
         } else {
             used[start.getX()][start.getY()] = true;
-            final Integer myCount = 
+            Integer myCount = 0;
+            try {
                     Neighbours(start,next,used,hidato)
                     .stream()
                     .mapToInt((PositionValue s)->countPathForGiven(s,next,used,count,hidato)
                     )
                     .reduce(Integer::sum).getAsInt();
-            
+            } catch (java.util.NoSuchElementException e){}
+            if (myCount == null) {myCount = 0;}
             used[start.getX()][start.getY()] = false;
-            count[start.getX()][start.getY()] += myCount;
+            //LOG.log(Level.SEVERE, "x {0} y {1}", new Object[]{start.getX(), start.getY()});
+            count[start.getX()][start.getY()] = +myCount;//-----------------------------------------------------------------------
             return myCount;
         }
     }
-    private PositionValue[] getGivenCells(Hidato hidato){
+    private ArrayList<PositionValue> getGivenCells(Hidato hidato){
         ArrayList<PositionValue> PV = new ArrayList<>(10);
         for (int i = 0; i < hidato.getSizeX(); i += 1) {
             for (int j = 0; j < hidato.getSizeY(); j += 1) {
@@ -95,18 +99,35 @@ public class DifficultyController {
             }
         }
         PV.sort((CapaDomini.Tauler.PositionValue a,CapaDomini.Tauler.PositionValue b)->a.getValue()-b.getValue());//o al reves
-        LOG.log(Level.SEVERE,"Recordar comprobar que el sort sea así");
-        return (PositionValue[]) PV.toArray();
+        //LOG.log(Level.SEVERE,"Recordar comprobar que el sort sea así");
+        return PV;
     }
     public static Difficulty getDifficulty(final Hidato hidato){
         DifficultyController myDC = new DifficultyController();
         boolean[][] used = new boolean[hidato.getSizeX()][hidato.getSizeY()];
         Integer[][] count = new Integer[hidato.getSizeX()][hidato.getSizeY()];
-        PositionValue[] myGivenCells = myDC.getGivenCells(hidato);
-        for (int i = 0; i + 1 < myGivenCells.length; i+=1){
-            myDC.countPathForGiven(myGivenCells[i],myGivenCells[i+1],used,count,hidato);
+        for (int i = 0; i < hidato.getSizeX(); i +=1){
+            Arrays.fill(count[i],0);
         }
-        return doubleToDifficulty(arrayToDouble(count));
+        
+        ArrayList<PositionValue> myGivenCells = myDC.getGivenCells(hidato);
+        for (int i = 0; i + 1 < myGivenCells.size(); i+=1){
+            myDC.countPathForGiven(myGivenCells.get(i),myGivenCells.get(i+1),used,count,hidato);
+        }
+        //return doubleToDifficulty(arrayToDouble(count));
+        System.out.print(Utils.toString(hidato));
+        for (Integer[] s : count){
+            for (Integer ss : s){
+                System.out.print(ss);
+                System.out.print(" ");
+            }
+            System.out.println("");
+        }
+        return Difficulty.EASY;
     }
     private static final Logger LOG = Logger.getLogger(DifficultyController.class.getName());
+    public static void main(String[] args){
+        Hidato h = new GeneratorController().generateHidato(2,8);
+        System.out.println(DifficultyController.getDifficulty(h));
+    }
 }
