@@ -10,6 +10,7 @@ package CapaDomini.Tauler;
 import CapaPersistencia.HidatoSetDBController;
 import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Partida.CurrentGameController;
+import CapaDomini.Partida.Difficulty;
 import CapaDomini.Partida.Help;
 import CapaDomini.Usuari.HidatoUser;
 import CapaDomini.Usuari.HidatoUserController;
@@ -113,7 +114,7 @@ public class HidatoManagerController {
         SolverController solver = new SolverController();
         boolean teSolucio = solver.solve(tempHidato);
         if (!teSolucio) return false;
-        tempHidato = solver.getHidato();
+        tempHidato = solver.getHidato(tempHidato);
         return true;
     }
     
@@ -157,6 +158,21 @@ public class HidatoManagerController {
         return true;
     }
     
+    public boolean tempHasFinal() {
+        HidatoController hc = new HidatoController(tempHidato);
+        return hc.hasFinal();
+    }
+    
+    public boolean tempHasOrigin() {
+        HidatoController hc = new HidatoController(tempHidato);
+        return hc.hasOrigin();
+    }
+    
+    public void calcTempDifficulty () {
+        DifficultyController dc = new DifficultyController();
+        tempHidato.setDifficulty(dc.getDifficulty(tempHidato));
+    }
+    
     /**
      * Pre: cert
      * Post: guarda l'estat de hset al disc
@@ -188,6 +204,11 @@ public class HidatoManagerController {
     public String getTempUsername () {
         return tempHidato.getUsername();
     }
+    
+    public String getTempDifficulty () {
+        return tempHidato.getDifficulty().toString();
+    }
+    
     
     public int getTempCellVal (int x, int y) {
         return tempHidato.getCell(x, y).getVal();

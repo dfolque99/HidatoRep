@@ -118,4 +118,28 @@ public class HidatoController {
         }
         return true;
     }
+    
+    public Boolean hasOrigin() {
+        for (int i = 0; i < hidato.getSizeX(); ++i) {
+            for (int j = 0; j < hidato.getSizeY(); ++j) {
+                if (hidato.getCell(i, j).getVal() == 1) return true;
+            }
+        }
+        return false;
+    }
+    
+    public Boolean hasFinal() {
+        int total = 0;
+        for (int i = 0; i < hidato.getSizeX(); ++i) {
+            for (int j = 0; j < hidato.getSizeY(); ++j) {
+                if (!hidato.getCell(i, j).getType().equals(Type.VOID)) ++total;
+            }
+        }
+        for (int i = 0; i < hidato.getSizeX(); ++i) {
+            for (int j = 0; j < hidato.getSizeY(); ++j) {
+                if (hidato.getCell(i, j).getVal() == total) return true;
+            }
+        }
+        return false;
+    }
 }

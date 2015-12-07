@@ -190,7 +190,7 @@ public class CurrentGameController {
     public int solve(){
         game.setLegitSolve(false);
         if (solver.solve(game.getHidato())){
-            game.setHidato(solver.getHidato());
+            game.setHidato(solver.getHidato(game.getHidato()));
         }else game.solve();
         
         this.ctrHidato = new HidatoController(game.getHidato());

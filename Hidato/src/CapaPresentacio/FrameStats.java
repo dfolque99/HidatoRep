@@ -57,6 +57,7 @@ public final class FrameStats extends javax.swing.JFrame {
     }
     private HidatoManagerController hmc;
     private CapaDomini.Domini parent;
+    private String hidatoName;
     private FrameStats(){throw new UnsupportedOperationException();}
     
     public FrameStats(CapaDomini.Domini parent, final UserController uc, HidatoManagerController hmc){
@@ -101,35 +102,50 @@ public final class FrameStats extends javax.swing.JFrame {
         Object[] myList = getHidatos(uc);
         
         if (myList.length > 0) {
-            String hidatoName = (String)JOptionPane.showInputDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.QUESTION_MESSAGE, null,myList,myList[0]);
-            if (null != hidatoName) {
-                boolean b = false;
-                try {
-                    b = hmc.loadHidato(hidatoName);
-                    if (b) {
-                        try {hmc.getTempSizeX();} 
-                        catch (java.lang.NullPointerException e) {LOG.log(Level.SEVERE,"buttonSelectHidatoToEditActionPerformed  hmc.getTempSizeX"); return;}
-                        try {parent.obrirEditor(this);} 
-                        catch (Exception e){
-                            LOG.log(Level.SEVERE,"buttonSelectHidatoToEditActionPerformed ",e); 
-                            JOptionPane.showMessageDialog(this,"There was an error: See log","There was an error: See log",JOptionPane.PLAIN_MESSAGE);
-                            return;
-                        }
-                        
-                    } else {
-                        JOptionPane.showMessageDialog(this,"The selecte Hidato couldn't be loaded correctly","The selecte Hidato couldn't be loaded correctly",JOptionPane.PLAIN_MESSAGE);    
-                    }
-                } catch (Exception e) {
-                    LOG.log(Level.SEVERE,"Edición de Hidato falló: b "+b,e); return;
+            //String hidatoName = (String)JOptionPane.showInputDialog(this,"Select Hidato To Edit","Select Hidato To Edit",JOptionPane.QUESTION_MESSAGE, null,myList,myList[0]);
+            hidatoName = null;
+            FrameLlista fll = new FrameLlista( new RetornadorString() {
+                @Override
+                public void retorna(String s) {
+                    obreHidato(s);
                 }
-            } else {
-                //JOptionPane.showMessageDialog(this,"You didn't select anything","You didn't select anything",JOptionPane.PLAIN_MESSAGE);
-            }
+            }, hmc);
+            fll.setLocation(this.getLocation());
+            fll.loadHidatosUsuari();
+            fll.setVisible(true);
+            this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this,"No hidatos found","The logged user has no hidatos",JOptionPane.ERROR_MESSAGE);
         }
     }
 
+    private void obreHidato(String s) {
+        hidatoName = s;
+        if (null != hidatoName) {
+            boolean b = false;
+            try {
+                b = hmc.loadHidato(hidatoName);
+                if (b) {
+                    try {hmc.getTempSizeX();} 
+                    catch (java.lang.NullPointerException e) {LOG.log(Level.SEVERE,"buttonSelectHidatoToEditActionPerformed  hmc.getTempSizeX"); return;}
+                    try {parent.obrirEditor(this);} 
+                    catch (Exception e){
+                        LOG.log(Level.SEVERE,"buttonSelectHidatoToEditActionPerformed ",e); 
+                        JOptionPane.showMessageDialog(this,"There was an error: See log","There was an error: See log",JOptionPane.PLAIN_MESSAGE);
+                        return;
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(this,"The selecte Hidato couldn't be loaded correctly","The selecte Hidato couldn't be loaded correctly",JOptionPane.PLAIN_MESSAGE);    
+                }
+            } catch (Exception e) {
+                LOG.log(Level.SEVERE,"Edición de Hidato falló: b "+b,e); return;
+            }
+        } else {
+            //JOptionPane.showMessageDialog(this,"You didn't select anything","You didn't select anything",JOptionPane.PLAIN_MESSAGE);
+        }
+    }
+    
     @SuppressWarnings(value = "unchecked")
     private void initComponents(final UserController uc) {
         javax.swing.JLabel myJLabel = new javax.swing.JLabel(convertToMultiline( convertToString(FrameStats.getStats(uc)) ) ,  javax.swing.SwingConstants.CENTER); //SwingConstants.CENTER is for centering the jlabel text

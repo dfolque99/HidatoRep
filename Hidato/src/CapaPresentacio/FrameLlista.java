@@ -198,7 +198,7 @@ public class FrameLlista extends javax.swing.JFrame {
                 FrameLlista fll = new FrameLlista(new RetornadorString() {
                     @Override
                     public void retorna (String s) {
-                        System.out.print("Hola\n");
+                        System.out.print("Retornaria la string " + s + "\n");
                     }
                 }, hmc);
                 fll.setVisible(true);
@@ -248,9 +248,14 @@ public class FrameLlista extends javax.swing.JFrame {
         jButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent evt) {
-                ret.retorna(jList1.getSelectedValue());
+                retorna();
             }
         });
+    }
+    
+    private void retorna() {
+        ret.retorna(jList1.getSelectedValue());
+        this.dispose();
     }
     
     public void loadHidatosUsuari () {

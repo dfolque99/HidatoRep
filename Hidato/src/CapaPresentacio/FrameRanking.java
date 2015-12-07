@@ -46,6 +46,7 @@ public class FrameRanking extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ranking");
+        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
 
         selectorDificultat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fàcil", "Mitjà", "Difícil" }));
@@ -63,7 +64,7 @@ public class FrameRanking extends javax.swing.JFrame {
         rankingPanel.setLayout(rankingPanelLayout);
         rankingPanelLayout.setHorizontalGroup(
             rankingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 703, Short.MAX_VALUE)
+            .addGap(0, 818, Short.MAX_VALUE)
         );
         rankingPanelLayout.setVerticalGroup(
             rankingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,18 +122,22 @@ public class FrameRanking extends javax.swing.JFrame {
 
     private void selectorDificultatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectorDificultatActionPerformed
         String selection = selectorDificultat.getSelectedItem().toString();
+        msgError(selection);
         switch (selection) {
 
             case "Fàcil":
             setVisibleRanking(Difficulty.EASY);
+            msgError("1");
             break;
 
             case "Mitjà":
             setVisibleRanking(Difficulty.MEDIUM);
+            msgError("2");
             break;
 
-            case "Dificil":
+            case "Difícil":
             setVisibleRanking(Difficulty.HARD);
+            msgError("3");
             break;
 
             default:
@@ -194,6 +199,9 @@ public class FrameRanking extends javax.swing.JFrame {
     
     private RankingController rc;
     private final int N = RankingController.getRankingMaxSize();
+    //Numero de informacion proporcionada por cada entrada del ranking
+    //Es decir, numero de columnas del gridlayout
+    private final static int M = 3; 
     
     public void setRc(RankingController rc) {
         this.rc = rc;
@@ -212,7 +220,6 @@ public class FrameRanking extends javax.swing.JFrame {
     }
     
     private void setVisibleRanking(Difficulty dif) {
-        int M = 3;
         rankingPanel.setLayout(new GridLayout(N,M));
         ArrayList <String> ranking = rc.getRankingInfo(dif);
         for (int i = 0; i < ranking.size(); ++i) {

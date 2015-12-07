@@ -70,15 +70,26 @@ public class SolverController {
     public SolverController() {
 
     }
-
+    
     /**
      * Returns the internal board, warning, blank input cells with non zero values become given cells internally 
      * @return this.board
      */
-    public Hidato getHidato() {
+    private Hidato getHidato() {
         return this.board;
     }
 
+    public Hidato getHidato(Hidato toCompare){
+        Hidato mine = new Hidato(getHidato());
+        for (int i = 0; i < mine.getSizeX(); i+=1){
+            for (int j = 0; j < mine.getSizeY();j+=1){
+                Type f = toCompare.getCell(i, j).getType();
+                mine.setCell(i, j, new Cell(mine.getCell(i, j).getVal(),f));
+            }
+        }
+        return mine;
+    }
+    
     /**
      * sets the environment for solve
      *
