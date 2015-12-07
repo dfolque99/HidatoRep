@@ -10,6 +10,7 @@ package CapaDomini.Tauler;
 import CapaPersistencia.HidatoSetDBController;
 import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Partida.CurrentGameController;
+import CapaDomini.Partida.Difficulty;
 import CapaDomini.Partida.Help;
 import CapaDomini.Usuari.HidatoUser;
 import CapaDomini.Usuari.HidatoUserController;
@@ -167,6 +168,11 @@ public class HidatoManagerController {
         return hc.hasOrigin();
     }
     
+    public void calcTempDifficulty () {
+        DifficultyController dc = new DifficultyController();
+        tempHidato.setDifficulty(dc.getDifficulty(tempHidato));
+    }
+    
     /**
      * Pre: cert
      * Post: guarda l'estat de hset al disc
@@ -198,6 +204,11 @@ public class HidatoManagerController {
     public String getTempUsername () {
         return tempHidato.getUsername();
     }
+    
+    public String getTempDifficulty () {
+        return tempHidato.getDifficulty().toString();
+    }
+    
     
     public int getTempCellVal (int x, int y) {
         return tempHidato.getCell(x, y).getVal();
