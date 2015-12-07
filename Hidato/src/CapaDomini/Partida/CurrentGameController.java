@@ -188,7 +188,11 @@ public class CurrentGameController {
      * @return 0
      */
     public int solve(){
-        game.solve();
+        game.setLegitSolve(false);
+        if (solver.solve(game.getHidato())){
+            game.setHidato(solver.getHidato());
+        }else game.solve();
+        
         this.ctrHidato = new HidatoController(game.getHidato());
         return 0;
     }

@@ -9,7 +9,7 @@ import java.util.Objects;
  * @author felix.axel.gimeno
  * @since 2015-11-14 position class, stores x,y position
  */
-public final class Position {
+public class Position {
 
     /**
      * x position
