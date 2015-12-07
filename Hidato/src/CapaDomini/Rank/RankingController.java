@@ -45,8 +45,12 @@ public class RankingController {
         db.modifyRanking(Difficulty.HARD,hardRanking);
     }
     
-    /**
+    /** 
      * Añade una entrada al ranking correspondiente con la informacion proporcionada.
+     * @param score Informacion sobre la entrada a añadir
+     * @param username Informacion sobre la entrada a añadir
+     * @param difficulty Sirve para indicar a que ranking se debe añadir la entrada
+     * con la informacion proporcionada.
      * Este metodo debe ser invocado cada vez que se finaliza una partida. La fecha
      * que se pone a la entrada del ranking es la fecha de creacion de esta (es decir,
      * la fecha en la que un record entra al ranking)
@@ -75,6 +79,7 @@ public class RankingController {
     
     /**
      * Funcion para pasar la informacion de un ranking a la vista
+     * @param difficulty Sirve para indicar que ranking se quiere consultar
      * @return Un arraylist de strings donde cada string representa una entrada
      * del ranking. Cada parametro de las entradas del ranking esta separado
      * por un caracter '/'

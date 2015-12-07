@@ -6,7 +6,9 @@
 package CapaDomini.Rank;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * @author Guillem
@@ -42,7 +44,21 @@ public class RankingEntry implements Serializable {
 
     @Override
     public String toString() {
-        return date + "/" + username + "/" + score;
+        
+        Calendar c = new GregorianCalendar();
+        c.setTime(date);
+        int d = c.get(Calendar.DAY_OF_MONTH);
+        int m = c.get(Calendar.MONTH) + 1; //Enero == 0
+        int y = c.get(Calendar.YEAR);
+        
+        String formattedDate;
+        if (d < 10) formattedDate = "0";
+        else formattedDate = "";
+        formattedDate = formattedDate + Integer.toString(d) + "-";
+        if (m < 10) formattedDate = formattedDate + "0";
+        formattedDate = formattedDate + Integer.toString(m) + "-" + Integer.toString(y);
+        
+        return formattedDate + "/" + username + "/" + score;
     }
     
 }
