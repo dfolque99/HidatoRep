@@ -25,6 +25,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -71,7 +73,9 @@ public class FrameGame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this,text,title,JOptionPane.PLAIN_MESSAGE);
     }
     
-    
+    private void acabaPartida(){
+        msg("Felicitats, hidato completat!","Yeeeeeeee!!");
+    }
     
     private int nextNumber(int ini){
         Hidato hidato = currentGameCtr.getGame().getHidato();
@@ -126,7 +130,6 @@ public class FrameGame extends javax.swing.JFrame {
                 int duration;
                 if (!isGamePaused) timeSincePause++;
                 duration = (int)currentGameCtr.getDuration().toMillis()/1000+timeSincePause;
-                System.out.println(currentGameCtr.getDuration().toMillis()/1000);
                 timeLabel.setText("Temps: "+duration+"s");
             }
         };
@@ -136,6 +139,25 @@ public class FrameGame extends javax.swing.JFrame {
         
         isGamePaused = false;
         timeSincePause = 0;
+        
+        this.setFocusable(true);
+        /*KeyListener kl = new KeyListener(){
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent evt){
+                System.out.println("Pressed key "+evt.getKeyCode());
+            }
+            
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt){
+                System.out.println("Released key "+evt.getKeyCode());
+            }
+
+            @Override
+            public void keyTyped(KeyEvent evt) {
+                System.out.println("Typed key "+evt.getKeyCode());
+            }
+        };*/
+        
         
         panels = new ArrayList<>();
         for (int i0 = 0; i0 < maxim; ++i0) {
@@ -186,10 +208,13 @@ public class FrameGame extends javax.swing.JFrame {
                                 }else{
                                     p.changeVal(v);
                                     if (nextNumber(1) == -1){
-                                        msg("Felicitats, hidato completat!","Yeeeeeee!!!");
+                                        acabaPartida();
                                     }else{
                                         if((int) newValue.getValue() != 0){
                                             newValue.setValue(nextNumber(v));
+                                            if ((int) newValue.getValue() == -1){
+                                                newValue.setValue(nextNumber(1));
+                                            }
                                         } 
                                     }
                                 }
@@ -444,6 +469,9 @@ public class FrameGame extends javax.swing.JFrame {
         int y = hint.get(1);
         int value = hint.get(2);
         panels.get(x).get(y).changeVal(value);
+        if(nextNumber(1) == -1){
+            acabaPartida();
+        }
     }//GEN-LAST:event_hintButtonMouseReleased
 
     private void solveButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_solveButtonMouseReleased

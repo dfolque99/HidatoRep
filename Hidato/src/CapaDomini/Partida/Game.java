@@ -130,6 +130,10 @@ public class Game {
         return new Hidato(solvedHidato);
     }
     
+    public void setHidato(Hidato hidato){
+        this.hidato = hidato;
+    }
+    
     /**
      * Getter de l'usuari
      * @return l'usuari de la partida
@@ -194,6 +198,10 @@ public class Game {
         return this.legitSolve;
     }
     
+    public void setLegitSolve(Boolean b){
+        this.legitSolve = b;
+    }
+    
     /**
      * Setter del nom de la partida
      * @param name nou nom de la partida
@@ -223,7 +231,6 @@ public class Game {
      */
     public int solve(){
         this.hidato = new Hidato(this.solvedHidato);
-        this.legitSolve = false;
         return 0;
     }
     
