@@ -5,6 +5,7 @@
  */
 package CapaPresentacio;
 
+import CapaDomini.Domini;
 import CapaDomini.Misc.Colors;
 import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.Difficulty;
@@ -41,9 +42,9 @@ import javax.swing.Timer;
 //https://www.youtube.com/watch?v=FKJxPlWQp9Y
 
 /**
- * canvis en squarecell:
- * posar el color que toca ja a la creadora? (no posar el blank per defecte)
- * si ho canviem, ho haig de treure d'aqui
+ * TO DO:
+ * canviar en GameManagerController la dificultat per defecte, quan estigui el difficulty controller
+ * canviar mouse listeners per action listeners (actionperformed)
  */
 /**
  *
@@ -60,6 +61,16 @@ public class FrameGame extends javax.swing.JFrame {
     CurrentGameController currentGameCtr;
     Boolean isGamePaused;
     int timeSincePause;
+    HidatoSet hidatoSet;
+    GameDBController ctrDBGame;
+    SolverController solver;
+    RankingController ctrRanking;
+    HidatoUserController hidatoUserController;
+    GameManagerController ctrGameManager;
+    Help help;
+    GeneratorController hidatoGenerator;
+    Domini parent;
+        
     /**
      * Creates new form FrameGame
      */
@@ -73,8 +84,41 @@ public class FrameGame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this,text,title,JOptionPane.PLAIN_MESSAGE);
     }
     
+    private void inicialitzaParametres(Domini parent, HidatoSet hs, RankingController rc, HidatoUserController uc, GameManagerController gmc, Help h){
+        this.parent = parent;
+        
+        if (hs == null) hidatoSet = new HidatoSet();  
+        else hidatoSet = hs;
+        
+        ctrDBGame = new GameDBController();
+        solver = new SolverController();
+        
+        if (rc == null) {
+            ctrRanking = new RankingController();
+            ctrRanking.init();
+        }else ctrRanking = rc;
+        
+        if (uc == null) {
+            hidatoUserController = new HidatoUserController();
+            hidatoUserController.login("hola", "adeu");
+        }else hidatoUserController = uc;
+        
+        if (gmc == null) ctrGameManager = new GameManagerController(hidatoSet, ctrDBGame, solver, ctrRanking, hidatoUserController);
+        else ctrGameManager = gmc;
+        
+        if (h == null) help = Help.LOW;
+        else help = h;
+        
+        hidatoGenerator = new GeneratorController();
+        currentGameCtr = ctrGameManager.createGame("Nou joc", hidatoGenerator.generateHidato(6,6), help);
+    }
+    
     private void acabaPartida(){
         msg("Felicitats, hidato completat!","Yeeeeeeee!!");
+        currentGameCtr.finishGame();
+        this.setVisible(false);
+        FrameRanking fr = new FrameRanking();
+        fr.setVisible(true);
     }
     
     private int nextNumber(int ini){
@@ -88,19 +132,11 @@ public class FrameGame extends javax.swing.JFrame {
         return -1;
     }
     
-    public FrameGame() {
+    public FrameGame(Domini parent, HidatoSet hs, RankingController rc, HidatoUserController uc, GameManagerController gmc, Help h) {
         initComponents();
+        inicialitzaParametres(parent,hs,rc,uc,gmc,h);
         
-        HidatoSet hidatoSet = new HidatoSet();       
-        GameDBController ctrDBGame = new GameDBController();
-        SolverController solver = new SolverController();
-        RankingController ctrRanking = new RankingController();
-        HidatoUserController hidatoUserController = new HidatoUserController();
-        GameManagerController ctrGameManager = new GameManagerController(hidatoSet, ctrDBGame, solver, ctrRanking, hidatoUserController);
-        Help help = Help.LOW;
-        GeneratorController hidatoGenerator = new GeneratorController();
-        Hidato solvedHidato = hidatoGenerator.generateHidato(6,6);
-        currentGameCtr = ctrGameManager.createGame("Nou joc", solvedHidato, help);
+        
         //Hidato hidato = game.getHidato();
         
         /*Game game = new Game();
@@ -158,6 +194,7 @@ public class FrameGame extends javax.swing.JFrame {
             }
         };*/
         
+        newValue.setValue(nextNumber(1));
         
         panels = new ArrayList<>();
         for (int i0 = 0; i0 < maxim; ++i0) {
@@ -208,7 +245,7 @@ public class FrameGame extends javax.swing.JFrame {
                                 }else{
                                     p.changeVal(v);
                                     if (nextNumber(1) == -1){
-                                        acabaPartida();
+                                        if (currentGameCtr.isSolved()) acabaPartida();
                                     }else{
                                         if((int) newValue.getValue() != 0){
                                             newValue.setValue(nextNumber(v));
@@ -257,6 +294,7 @@ public class FrameGame extends javax.swing.JFrame {
         timeLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         boardPanel.setPreferredSize(new java.awt.Dimension(500, 500));
 
@@ -264,11 +302,11 @@ public class FrameGame extends javax.swing.JFrame {
         boardPanel.setLayout(boardPanelLayout);
         boardPanelLayout.setHorizontalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGap(0, 560, Short.MAX_VALUE)
         );
         boardPanelLayout.setVerticalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 569, Short.MAX_VALUE)
+            .addGap(0, 540, Short.MAX_VALUE)
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Modificar valors"));
@@ -423,7 +461,7 @@ public class FrameGame extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(timeLabel)
-                .addGap(0, 91, Short.MAX_VALUE))
+                .addGap(0, 93, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -432,18 +470,22 @@ public class FrameGame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(buttonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(buttonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(86, 86, 86))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31))))
         );
 
         pack();
@@ -509,6 +551,7 @@ public class FrameGame extends javax.swing.JFrame {
                 panels.get(i).get(j).changeVal(value);
             }
         }
+        newValue.setValue(nextNumber(1));
     }//GEN-LAST:event_restartButtonMouseReleased
 
     /**
@@ -541,7 +584,7 @@ public class FrameGame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameGame().setVisible(true);
+                new FrameGame(null).setVisible(true);
             }
         });
     }
