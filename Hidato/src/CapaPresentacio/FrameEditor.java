@@ -680,18 +680,20 @@ public class FrameEditor extends javax.swing.JFrame {
     }
     
     private void desar() {
-        if (nomHidato != null) {
-            hmc.saveTempHidato(nomHidato);
-        }
-        else {
+        if (nomHidato == null) {
             String newName = JOptionPane.showInputDialog(this,"Introdueix un nom per al hidato",null);
-            if (hmc.usedName(newName)) msgError("Ja existeix un hidato amb aquest nom");
-            else {
-                hmc.saveTempHidato(newName);
-                msgInfo("Hidato " + newName + " desat correctament");
-                nomHidato = newName;
+            if (hmc.usedName(newName)) {
+                msgError("Ja existeix un hidato amb aquest nom");
+                return;
             }
+            nomHidato = newName;
         }
+        if (label_dificultat.getText().equals("")) {
+            hmc.calcTempDifficulty();
+            label_dificultat.setText(hmc.getTempDifficulty());
+        }
+        hmc.saveTempHidato(nomHidato);
+        msgInfo("Hidato " + nomHidato + " desat correctament");
     }
     
     private void canviarColors(Container c) {
