@@ -157,6 +157,16 @@ public class HidatoManagerController {
         return true;
     }
     
+    public boolean tempHasFinal() {
+        HidatoController hc = new HidatoController(tempHidato);
+        return hc.hasFinal();
+    }
+    
+    public boolean tempHasOrigin() {
+        HidatoController hc = new HidatoController(tempHidato);
+        return hc.hasOrigin();
+    }
+    
     /**
      * Pre: cert
      * Post: guarda l'estat de hset al disc

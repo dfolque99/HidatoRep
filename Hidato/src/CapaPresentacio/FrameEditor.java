@@ -592,6 +592,10 @@ public class FrameEditor extends javax.swing.JFrame {
         b_autocompletar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
+                if (!hmc.tempHasOrigin()) {
+                    msgError ("No s'ha pogut completar el hidato perquè no té casella inicial");
+                    return;
+                }
                 boolean completat = hmc.completeTempHidato();
                 if (completat) {
                     for (int i = 0; i < N; ++i) {
@@ -609,6 +613,14 @@ public class FrameEditor extends javax.swing.JFrame {
         b_validar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
+                if (!hmc.tempHasOrigin()) {
+                    msgError ("No s'ha pogut completar el hidato perquè no té casella inicial");
+                    return;
+                }
+                if (!hmc.tempHasFinal()) {
+                    msgError ("No s'ha pogut completar el hidato perquè no té casella final");
+                    return;
+                }
                 boolean completat = hmc.solveTempHidato();
                 if (completat) {
                     for (int i = 0; i < N; ++i) {
