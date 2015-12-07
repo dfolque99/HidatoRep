@@ -17,11 +17,13 @@ import java.util.stream.Collectors;
  * @author felix.axel.gimeno
  */
 public class DifficultyController {
-    private  DifficultyController(){}
+
     static final double medium_low = 2;
     static final double medium_high = 3;
-    private static Difficulty doubleToDifficulty(final double d){
-        LOG.log(Level.SEVERE, "Dificultad d {0}", d);
+    private static final Logger LOG = Logger.getLogger(DifficultyController.class.getName());
+    private static final Level myLevel = Level.OFF;
+    private static Difficulty doubleToDifficulty(final double d) {
+        LOG.log(myLevel, "Dificultad d {0}", String.valueOf(d));
         if (d < medium_low) { 
             return Difficulty.EASY;
         } else if (d > medium_high) {
@@ -30,19 +32,44 @@ public class DifficultyController {
             return Difficulty.MEDIUM;
         }
     }
-    private static double arrayToDouble(final Integer[][] cells){
+    private static double arrayToDouble(final Integer[][] cells) {
         double sum = 0;
         double count = 0;
         for (int i = 0; i < cells.length;i+=1){
-           for (int j = 0; j < cells[0].length; j+=1){
-               sum += cells[i][j];
-               count += 1;
-           } 
+            for (int j = 0; j < cells[0].length; j+=1){
+                sum += cells[i][j];
+                count += 1;
+            } 
         }
         return sum/count;
+    } 
+    /*
+    private static <T> void printArray(T[] t){
+        System.out.print("[");
+        for(T tt:t) {
+            if (tt instanceof PositionValue) {
+                PositionValue pv = (PositionValue) tt;
+                System.out.print("Value "+pv.getValue()+" X "+pv.getX()+" Y "+pv.getY());
+            } else {System.out.print(tt);}
+            System.out.print(", ");
+        }
+        System.out.print("]\n");
     }
-    private boolean validPosition(PositionValue now,PositionValue next,boolean[][] used, final Hidato hidato){
+    private static <T> void printArray(T[][] t){
+        System.out.print("[\n");
+        for(T[] tt:t) {
+            printArray(tt);
+        }
+        System.out.print("]\n");
+    }
+    */
+    public static void main(String[] args) {System.out.println(new DifficultyController().getDifficulty(new Hidato(3,2)));}
+    private boolean[][] used;
+    private Integer[][] count;
+    private Hidato hidato;
+    private boolean validPosition(PositionValue now, PositionValue next){
         if (now.getValue() > next.getValue()) {return false;}
+        if (now.equals(next)) {return true;}
         final Integer x = now.getX();
         final Integer y = now.getY();
         if ((Math.min(x, y) < 0) || (Math.max(x - hidato.getSizeX(), y - hidato.getSizeY()) >= 0)) {
@@ -50,42 +77,48 @@ public class DifficultyController {
         }
         if (hidato.getCell(x, y).getType() == Type.VOID){return false;}
         if (hidato.getCell(x, y).getType() == Type.GIVEN){return false;}
+        /*
         if (PositionValue.notEnoughDistance(now,next)) {
-            return false;
+        return false;
         }
+        */
         return !used[x][y];      
     }
-    private ArrayList<PositionValue> Neighbours(PositionValue start,PositionValue next,boolean[][] used, final Hidato hidato){
+    private ArrayList<PositionValue> Neighbours(PositionValue start, PositionValue next){
         final Position[] Moore ={ 
             new Position(-1,-1), new Position(-1,0), new Position(0,-1),
             new Position(-1,+1), new Position(+1,-1),
             new Position(+1,+1), new Position(+1,0), new Position(0,+1),
         };
-        return Arrays.stream(Moore)
+        ArrayList<PositionValue> apv ;
+        apv = Arrays.stream(Moore)
                 .map(p -> PositionValue.addValue(start,p))
-                .filter(pv -> validPosition(pv,next,used,hidato))
+                .filter(pv -> validPosition(pv,next))
                 .collect(Collectors.toCollection(ArrayList::new));
+        //apv.stream().forEach(p->System.out.println(p.getX()+" "+p.getY()+" "+p.getValue()));
+        return apv;
     }
-    private Integer countPathForGiven(final PositionValue start, final PositionValue next, boolean[][] used, final Object[][] count, final Hidato hidato){
-        LOG.log(Level.SEVERE, "start.value {2} x {0} y {1}", new Object[]{start.getX(), start.getY(),start.getValue()});
-        if (start.equals(next)) {
+    private Integer countPathForGiven(final PositionValue start, final PositionValue next){
+        if (Objects.equals(start.getX(), next.getX()) && Objects.equals(start.getY(), next.getY()) && Objects.equals(next.getValue(), start.getValue())  ) {
+            LOG.log(myLevel,"Camino con Solucion");
             return 1;
         } else if (start.getValue().equals(next.getValue())) {
+            LOG.log(myLevel,"No deberia pasar");
             return 0;
         } else {
             used[start.getX()][start.getY()] = true;
-            Integer myCount = 0;
+            int myCount = 0;
             try {
-                    Neighbours(start,next,used,hidato)
-                    .stream()
-                    .mapToInt((PositionValue s)->countPathForGiven(s,next,used,count,hidato)
-                    )
-                    .reduce(Integer::sum).getAsInt();
-            } catch (java.util.NoSuchElementException e){}
-            if (myCount == null) {myCount = 0;}
+                myCount = Neighbours(start,next)
+                        .stream()
+                        .mapToInt((PositionValue s)->countPathForGiven(s,next))
+                        .reduce(Integer::sum).getAsInt();
+                        LOG.log(myLevel,"myCount "+myCount);
+            } catch (java.util.NoSuchElementException e){
+                LOG.log(myLevel,e.getMessage());
+            }
             used[start.getX()][start.getY()] = false;
-            //LOG.log(Level.SEVERE, "x {0} y {1}", new Object[]{start.getX(), start.getY()});
-            count[start.getX()][start.getY()] = +myCount;//-----------------------------------------------------------------------
+            count[start.getX()][start.getY()] += myCount;
             return myCount;
         }
     }
@@ -99,35 +132,29 @@ public class DifficultyController {
             }
         }
         PV.sort((CapaDomini.Tauler.PositionValue a,CapaDomini.Tauler.PositionValue b)->a.getValue()-b.getValue());//o al reves
-        //LOG.log(Level.SEVERE,"Recordar comprobar que el sort sea así");
         return PV;
     }
-    public static Difficulty getDifficulty(final Hidato hidato){
-        DifficultyController myDC = new DifficultyController();
-        boolean[][] used = new boolean[hidato.getSizeX()][hidato.getSizeY()];
-        Integer[][] count = new Integer[hidato.getSizeX()][hidato.getSizeY()];
+    public double getDifficultyAsDouble(Hidato hidato){
+            LOG.setUseParentHandlers(false);//to deactivate the logger
+        this.used = new boolean[hidato.getSizeX()][hidato.getSizeY()];
+        this.count = new Integer[hidato.getSizeX()][hidato.getSizeY()];  
+        this.hidato = hidato;
         for (int i = 0; i < hidato.getSizeX(); i +=1){
             Arrays.fill(count[i],0);
         }
         
-        ArrayList<PositionValue> myGivenCells = myDC.getGivenCells(hidato);
+        ArrayList<PositionValue> myGivenCells = this.getGivenCells(hidato);
+        //printArray(myGivenCells.toArray());
         for (int i = 0; i + 1 < myGivenCells.size(); i+=1){
-            myDC.countPathForGiven(myGivenCells.get(i),myGivenCells.get(i+1),used,count,hidato);
+            this.countPathForGiven(myGivenCells.get(i),myGivenCells.get(i+1));
         }
-        //return doubleToDifficulty(arrayToDouble(count));
-        System.out.print(Utils.toString(hidato));
-        for (Integer[] s : count){
-            for (Integer ss : s){
-                System.out.print(ss);
-                System.out.print(" ");
-            }
-            System.out.println("");
-        }
-        return Difficulty.EASY;
+        
+        return arrayToDouble(count);
+        //System.out.print(Utils.toString(hidato));
+        //printArray(count);
+        //return Difficulty.EASY;
     }
-    private static final Logger LOG = Logger.getLogger(DifficultyController.class.getName());
-    public static void main(String[] args){
-        Hidato h = new GeneratorController().generateHidato(2,8);
-        System.out.println(DifficultyController.getDifficulty(h));
+    public Difficulty getDifficulty(Hidato hidato){
+        return doubleToDifficulty(getDifficultyAsDouble(hidato));    
     }
 }
