@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @author keur
  */
-class PositionValue extends Position {
+class PositionValue extends Position{
     private final Integer value;
 
     PositionValue(Integer x, Integer y, Integer value) {
@@ -28,9 +28,13 @@ class PositionValue extends Position {
         return super.equals(pv) && Objects.equals(this.value, pv.value);
     }
     
-    public static PositionValue add(PositionValue a, PositionValue b) {
+    public static PositionValue addValue(PositionValue a, Position b) {
         Position p = Position.add(a,b);
-        return new PositionValue(p.getX(),p.getY(),a.getValue()+b.getValue());
+        return new PositionValue(p.getX(),p.getY(),a.getValue()+1);
+    }
+    @Deprecated
+    public static Position add(final Position p1, final Position p2){
+        throw new UnsupportedOperationException("PositionValued add from Position");
     }
     
 }
