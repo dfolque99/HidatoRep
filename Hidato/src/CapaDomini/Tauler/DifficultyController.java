@@ -6,9 +6,13 @@
 package CapaDomini.Tauler;
 import CapaDomini.Partida.*;
 import CapaDomini.Misc.*;
+import java.util.AbstractQueue;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -44,7 +48,7 @@ public class DifficultyController {
         }
         return sum/count;
     } 
-    /*
+   
     private static <T> void printArray(T[] t){
         System.out.print("[");
         for(T tt:t) {
@@ -63,8 +67,8 @@ public class DifficultyController {
         }
         System.out.print("]\n");
     }
-    */
-    public static void main(String[] args) {System.out.println(new DifficultyController().getDifficulty(new Hidato(3,2)));}
+    
+    public static void main(String[] args) {System.out.println(new DifficultyController().getDifficulty(new Hidato(3,6)));}
     private boolean[][] used;
     private Integer[][] count;
     private Hidato hidato;
@@ -136,7 +140,7 @@ public class DifficultyController {
         return PV;
     }
     public double getDifficultyAsDouble(Hidato hidato){
-            LOG.setUseParentHandlers(false);//to deactivate the logger
+        LOG.setUseParentHandlers(false);//to deactivate the logger
         this.used = new boolean[hidato.getSizeX()][hidato.getSizeY()];
         this.count = new Integer[hidato.getSizeX()][hidato.getSizeY()];  
         this.hidato = hidato;
@@ -147,7 +151,8 @@ public class DifficultyController {
         ArrayList<PositionValue> myGivenCells = this.getGivenCells(hidato);
         //printArray(myGivenCells.toArray());
         for (int i = 0; i + 1 < myGivenCells.size(); i+=1){
-            this.countPathForGiven(myGivenCells.get(i),myGivenCells.get(i+1));
+            //this.countPathForGiven(myGivenCells.get(i),myGivenCells.get(i+1));
+            this.countPossibilityOfBeingInAPAth(myGivenCells.get(i),myGivenCells.get(i+1));
         }
         
         return arrayToDouble(count);
@@ -157,5 +162,60 @@ public class DifficultyController {
     }
     public Difficulty getDifficulty(Hidato hidato){
         return doubleToDifficulty(getDifficultyAsDouble(hidato));    
+    }
+    private Integer[][] bfs(PositionValue pv, Integer n){
+         
+        Queue<PositionValue> qp = new LinkedList<PositionValue>(); 
+        Integer[][] myArray = new Integer[hidato.getSizeX()][hidato.getSizeY()];
+        for (int i = 0; i < hidato.getSizeX(); i +=1){
+            Arrays.fill(myArray[i],0);
+        }        
+        qp.add(new PositionValue(pv.getX(),pv.getY(),0));
+        while (!qp.isEmpty()){
+            PositionValue pvHere = qp.remove();
+            if (0 == myArray[pvHere.getX()][pvHere.getY()]){
+                myArray[pvHere.getX()][pvHere.getY()] = pvHere.getValue();
+                final Position[] Moore ={ 
+                    new Position(-1,-1), new Position(-1,0), new Position(0,-1),
+                    new Position(-1,+1), new Position(+1,-1),
+                    new Position(+1,+1), new Position(+1,0), new Position(0,+1),
+                };
+                Arrays.stream(Moore)
+                    .map(p -> PositionValue.addValue(pvHere,p))
+                    .filter(p -> validPosition(p))
+                    //.map(p -> new PositionValue(p.getX(),p.getY(),p.getValue()))
+                    .forEach(p -> qp.add(p));                
+                
+            } else {
+                
+            }
+            
+        }
+        printArray(myArray);
+        return myArray;
+    }
+    private boolean validPosition(PositionValue now){
+        final Integer x = now.getX();
+        final Integer y = now.getY();
+        if ((Math.min(x, y) < 0) || (Math.max(x - hidato.getSizeX(), y - hidato.getSizeY()) >= 0)) {
+            return false;
+        }
+        if (hidato.getCell(x, y).getType() == Type.VOID){return false;}
+        if (hidato.getCell(x, y).getType() == Type.GIVEN){return false;}
+        return !used[x][y];      
+    }    
+    private void countPossibilityOfBeingInAPAth(PositionValue start, PositionValue next){
+        Integer v = next.getValue()-start.getValue(); 
+        Integer[][] bfsStart = bfs(start,v/2+1);
+        Integer[][] bfsNext = bfs(next,v/2+1);
+        for (int i = 0; i < hidato.getSizeX(); i+= 1){
+            for (int j = 0; j < hidato.getSizeY(); j+=1){
+                if (bfsStart[i][j]+bfsNext[i][j] < v) {
+                    count[i][j] += 1;
+                }
+            }
+        }
+        printArray(count);
+        
     }
 }
