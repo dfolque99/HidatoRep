@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 /**
  * To calculate the difficulty of a hidato board
  * @since 07-12-2015
+ * @version 0.7
  * @author felix.axel.gimeno
  */
 public class DifficultyController {
@@ -68,7 +69,7 @@ public class DifficultyController {
         System.out.print("]\n");
     }
     
-    public static void main(String[] args) {System.out.println(new DifficultyController().getDifficulty(new Hidato(3,6)));}
+    public static void main(String[] args) {System.out.println(new DifficultyController().getDifficulty(new Hidato(10,10)));}
     private boolean[][] used;
     private Integer[][] count;
     private Hidato hidato;
