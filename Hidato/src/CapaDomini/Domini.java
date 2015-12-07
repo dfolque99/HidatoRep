@@ -15,6 +15,8 @@ import CapaPresentacio.FrameEditor;
 import CapaPresentacio.FrameGame;
 import CapaPresentacio.FrameLogin;
 import CapaPresentacio.FrameMenu;
+import CapaPresentacio.FrameNewGameType;
+import CapaPresentacio.FrameRanking;
 import CapaPresentacio.FrameStats;
 import javax.swing.JFrame;
 
@@ -78,6 +80,16 @@ public class Domini {
     }
     
     public void obrirRanking(JFrame antic){
-        
+        FrameRanking fr = new FrameRanking();
+        fr.setVisible(true);
+        fr.setLocation(antic.getLocation());
+        antic.dispose();
+    }
+    
+    public void obrirNewGameType(JFrame antic){
+        FrameNewGameType fngt = new FrameNewGameType(this);
+        fngt.setVisible(true);
+        fngt.setLocation(antic.getLocation());
+        antic.dispose();
     }
 }
