@@ -218,8 +218,7 @@ public class FrameRanking extends javax.swing.JFrame {
         
         this.rc = rc;
        
-        //HACE FALTA TENER LA IMAGEN "icon.png" (DESCOMENTAR MAS TARDE)
-        //setIconImage((new ImageIcon("icon.png")).getImage());
+        setIconImage((new ImageIcon("icon.png")).getImage());
         
         posPanel.setLayout(new GridLayout(N,1));
         for (int i = 1; i <= N; ++i) {
