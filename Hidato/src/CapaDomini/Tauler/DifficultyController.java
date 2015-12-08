@@ -47,6 +47,7 @@ public class DifficultyController {
                 count += 1;
             } 
         }
+        System.out.println("sum "+sum+" quantity "+count);
         return sum/count;
     } 
    
@@ -104,6 +105,7 @@ public class DifficultyController {
         //apv.stream().forEach(p->System.out.println(p.getX()+" "+p.getY()+" "+p.getValue()));
         return apv;
     }
+    /*
     private Integer countPathForGiven(final PositionValue start, final PositionValue next){
         if (Objects.equals(start.getX(), next.getX()) && Objects.equals(start.getY(), next.getY()) && Objects.equals(next.getValue(), start.getValue())  ) {
             LOG.log(myLevel,"Camino con Solucion");
@@ -128,6 +130,7 @@ public class DifficultyController {
             return myCount;
         }
     }
+    */
     private ArrayList<PositionValue> getGivenCells(Hidato hidato){
         ArrayList<PositionValue> PV = new ArrayList<>(10);
         for (int i = 0; i < hidato.getSizeX(); i += 1) {
@@ -153,9 +156,11 @@ public class DifficultyController {
         //printArray(myGivenCells.toArray());
         for (int i = 0; i + 1 < myGivenCells.size(); i+=1){
             //this.countPathForGiven(myGivenCells.get(i),myGivenCells.get(i+1));
-            this.countPossibilityOfBeingInAPAth(myGivenCells.get(i),myGivenCells.get(i+1));
+            if (-myGivenCells.get(i).getValue() +myGivenCells.get(i+1).getValue() > 1){
+                this.countPossibilityOfBeingInAPAth(myGivenCells.get(i),myGivenCells.get(i+1));
+            }
         }
-        //printArray(count);
+        printArray(count);
         final double d = arrayToDouble(count);
         //LOG.log(myLevel,"Difficulty is: "+String.valueOf(d));
         System.out.println("Difficulty is: "+String.valueOf(d));
