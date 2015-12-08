@@ -43,6 +43,7 @@ public class FrameRanking extends javax.swing.JFrame {
         labelDificultat = new javax.swing.JLabel();
         rankingPanel = new javax.swing.JPanel();
         posPanel = new javax.swing.JPanel();
+        tagPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ranking");
@@ -89,6 +90,21 @@ public class FrameRanking extends javax.swing.JFrame {
             .addGap(0, 530, Short.MAX_VALUE)
         );
 
+        tagPanel.setMaximumSize(new java.awt.Dimension(32767, 20));
+        tagPanel.setMinimumSize(new java.awt.Dimension(100, 20));
+        tagPanel.setPreferredSize(new java.awt.Dimension(100, 20));
+
+        javax.swing.GroupLayout tagPanelLayout = new javax.swing.GroupLayout(tagPanel);
+        tagPanel.setLayout(tagPanelLayout);
+        tagPanelLayout.setHorizontalGroup(
+            tagPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        tagPanelLayout.setVerticalGroup(
+            tagPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,7 +119,9 @@ public class FrameRanking extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(posPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rankingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tagPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+                    .addComponent(rankingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -116,7 +134,8 @@ public class FrameRanking extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(selectorDificultat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
+                        .addComponent(tagPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(posPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(rankingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -189,6 +208,7 @@ public class FrameRanking extends javax.swing.JFrame {
     private javax.swing.JPanel posPanel;
     private javax.swing.JPanel rankingPanel;
     private javax.swing.JComboBox selectorDificultat;
+    private javax.swing.JPanel tagPanel;
     // End of variables declaration//GEN-END:variables
 
     
@@ -216,10 +236,17 @@ public class FrameRanking extends javax.swing.JFrame {
         rc = new RankingController();
         rc.init();
         //HASTA AQUI
+        
         posPanel.setLayout(new GridLayout(N,1));
         for (int i = 1; i <= N; ++i) {
             posPanel.add(new JLabel(Integer.toString(i) + ". "));
         }
+        
+        tagPanel.setLayout(new GridLayout(1,M));
+        tagPanel.add(new JLabel("Nom usuari",SwingConstants.CENTER));
+        tagPanel.add(new JLabel("Data",SwingConstants.CENTER));
+        tagPanel.add(new JLabel("Puntuació",SwingConstants.CENTER));
+        
         rankingPanel.setLayout(new GridLayout(N,M));
         setVisibleRanking(Difficulty.EASY);
     }
