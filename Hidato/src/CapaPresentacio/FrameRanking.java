@@ -156,12 +156,13 @@ public class FrameRanking extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(selectorDificultat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(tagPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(posPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rankingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                            .addComponent(rankingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(posPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         labelDificultat.getAccessibleContext().setAccessibleName("jLabel1");
@@ -244,8 +245,8 @@ public class FrameRanking extends javax.swing.JFrame {
         this.rc = rc;
         
         //SOLO PARA DEBUGAR (ELIMINAR MAS TARDE)
-        this.rc = new RankingController();
-        this.rc.init();
+        //this.rc = new RankingController();
+        //this.rc.init();
         //HASTA AQUI
        
         setIconImage((new ImageIcon("icon.png")).getImage());
@@ -261,16 +262,16 @@ public class FrameRanking extends javax.swing.JFrame {
         
         JLabel aux;
         
-        aux = new JLabel("Nom usuari",SwingConstants.CENTER);
-        aux.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        aux = new JLabel("<html><u>Nom usuari</u></html>",SwingConstants.CENTER);
+        aux.setFont(Fonts.getFont("OpenSans-Light", Font.BOLD, 18));
         tagPanel.add(aux);
         
-        aux = new JLabel("Data",SwingConstants.CENTER);
-        aux.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        aux = new JLabel("<html><u>Data</u><html>",SwingConstants.CENTER);
+        aux.setFont(Fonts.getFont("OpenSans-Light", Font.BOLD, 18));
         tagPanel.add(aux);
         
-        aux = new JLabel("Puntuació",SwingConstants.CENTER);
-        aux.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        aux = new JLabel("<html><u>Puntuació</u></html>",SwingConstants.CENTER);
+        aux.setFont(Fonts.getFont("OpenSans-Light", Font.BOLD, 18));
         tagPanel.add(aux);
         
         rankingPanel.setLayout(new GridLayout(N,M));
