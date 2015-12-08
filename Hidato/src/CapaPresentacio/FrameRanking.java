@@ -12,6 +12,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -149,23 +150,7 @@ public class FrameRanking extends javax.swing.JFrame {
 
     private void selectorDificultatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectorDificultatActionPerformed
         String selection = selectorDificultat.getSelectedItem().toString();
-        switch (selection) {
-
-            case "Fàcil":
-            setVisibleRanking(Difficulty.EASY);
-            break;
-
-            case "Mitjà":
-            setVisibleRanking(Difficulty.MEDIUM);
-            break;
-
-            case "Difícil":
-            setVisibleRanking(Difficulty.HARD);
-            break;
-
-            default:
-            setVisibleRanking(Difficulty.HARD);
-        }
+        setVisibleRanking(string2diff(selection));
     }//GEN-LAST:event_selectorDificultatActionPerformed
  
     /**
@@ -217,9 +202,12 @@ public class FrameRanking extends javax.swing.JFrame {
     
     //===============================MI CODIGO==================================
     
+    
+    //NO SE USA (SE PUEDE BORRAR)
     private void msgError(String text) {
         JOptionPane.showMessageDialog(this,text,"On vas flipat!",JOptionPane.ERROR_MESSAGE);
     }
+    //HASTA AQUI
     
     private RankingController rc;
     private final int N = RankingController.getRankingMaxSize();
@@ -231,11 +219,16 @@ public class FrameRanking extends javax.swing.JFrame {
         this.rc = rc;
     }
     
+    //Funcio per inicialitzar el frame
     private void inicialitza() {
         //ESTE CODIGO ES SOLO PARA DEBUGAR (LUEGO HAY QUE BORRARLO)
         rc = new RankingController();
         rc.init();
         //HASTA AQUI
+        
+        
+        //HACE FALTA TENER LA IMAGEN "icon.png" (DESCOMENTAR MAS TARDE)
+        //setIconImage((new ImageIcon("icon.png")).getImage());
         
         posPanel.setLayout(new GridLayout(N,1));
         for (int i = 1; i <= N; ++i) {
@@ -251,6 +244,7 @@ public class FrameRanking extends javax.swing.JFrame {
         setVisibleRanking(Difficulty.EASY);
     }
     
+    //Mostra el ranking de dificultat dif
     private void setVisibleRanking(Difficulty dif) {
         rankingPanel.removeAll();
         ArrayList <String> ranking = rc.getRankingInfo(dif);
@@ -268,12 +262,24 @@ public class FrameRanking extends javax.swing.JFrame {
         rankingPanel.updateUI();
     }
     
+    //Serveix per reordenar l'ordre de les columnes del ranking (canviar l'ordre
+    //en que es dona l'informacio de cada entrada)
     private static int perm(int i) {
         switch(i) {
             case 0: return 1;
             case 1: return 0;
             case 2: return 2;
             default: return 0;
+        }
+    }
+    
+    //Converteix una dificultat donada com un string en una del tipus Difficulty
+    private static Difficulty string2diff(String s) {
+        switch(s) {
+            case "Fàcil": return Difficulty.EASY;
+            case "Mitjà": return Difficulty.MEDIUM;
+            case "Difícil": return Difficulty.HARD;
+            default: return Difficulty.EASY;
         }
     }
     
