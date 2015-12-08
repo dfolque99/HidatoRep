@@ -155,10 +155,13 @@ public class DifficultyController {
             //this.countPathForGiven(myGivenCells.get(i),myGivenCells.get(i+1));
             this.countPossibilityOfBeingInAPAth(myGivenCells.get(i),myGivenCells.get(i+1));
         }
-        
-        return arrayToDouble(count);
-        //System.out.print(Utils.toString(hidato));
         //printArray(count);
+        final double d = arrayToDouble(count);
+        //LOG.log(myLevel,"Difficulty is: "+String.valueOf(d));
+        System.out.println("Difficulty is: "+String.valueOf(d));
+        return d;        
+        //System.out.print(Utils.toString(hidato));
+        //
         //return Difficulty.EASY;
     }
     public Difficulty getDifficulty(Hidato hidato){
@@ -192,7 +195,7 @@ public class DifficultyController {
             }
             
         }
-        printArray(myArray);
+        //printArray(myArray);
         return myArray;
     }
     private boolean validPosition(PositionValue now){
@@ -211,12 +214,12 @@ public class DifficultyController {
         Integer[][] bfsNext = bfs(next,v/2+1);
         for (int i = 0; i < hidato.getSizeX(); i+= 1){
             for (int j = 0; j < hidato.getSizeY(); j+=1){
-                if (bfsStart[i][j]+bfsNext[i][j] < v) {
+                if (hidato.getCell(i,j).getType() == Type.BLANK && bfsStart[i][j]+bfsNext[i][j] < v) {
                     count[i][j] += 1;
                 }
             }
         }
-        printArray(count);
+        //printArray(count);
         
     }
 }
