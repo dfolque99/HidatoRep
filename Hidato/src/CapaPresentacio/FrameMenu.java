@@ -7,6 +7,7 @@ package CapaPresentacio;
 
 import CapaDomini.Domini;
 import CapaDomini.Misc.Fonts;
+import java.awt.Button;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 
 /**
  *
@@ -45,9 +47,9 @@ public class FrameMenu extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        b_jugar = new javax.swing.JButton();
+        b_crear = new javax.swing.JButton();
+        b_ranking = new javax.swing.JButton();
         b_perfil = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
@@ -85,11 +87,11 @@ public class FrameMenu extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton4.setText("Jugar");
+        b_jugar.setText("Jugar");
 
-        jButton5.setText("Crear");
+        b_crear.setText("Crear");
 
-        jButton6.setText("Ranking");
+        b_ranking.setText("Ranking");
 
         b_perfil.setText("Perfil");
 
@@ -101,9 +103,9 @@ public class FrameMenu extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(b_jugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(b_crear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(b_ranking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(b_perfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
             .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -111,11 +113,11 @@ public class FrameMenu extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jButton4)
+                .addComponent(b_jugar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5)
+                .addComponent(b_crear)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6)
+                .addComponent(b_ranking)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(b_perfil)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -204,10 +206,10 @@ public class FrameMenu extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b_crear;
+    private javax.swing.JButton b_jugar;
     private javax.swing.JButton b_perfil;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton b_ranking;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
@@ -232,17 +234,32 @@ public class FrameMenu extends javax.swing.JFrame {
         jLabel2.setFont(f);
         jLabel2.setText("Benvingut "+name);
         
-        b_perfil.addActionListener(new ActionListener() {
+        ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent evt) {
-                obrePerfil();
+                picarBoto((JButton) evt.getSource());
             }
-        });
+        };
+        b_jugar.addActionListener(al);
+        b_crear.addActionListener(al);
+        b_ranking.addActionListener(al);
+        b_perfil.addActionListener(al);
+        
     }
     
-    private void obrePerfil() {
-        parent.obrirStats(this);
+    private void picarBoto(JButton b) {
+        if (b.equals(b_jugar)) {
+            
+        }
+        else if (b.equals(b_crear)) {
+            
+        }
+        else if (b.equals(b_ranking)) {
+            parent.obrirRanking(this);
+        }
+        else if (b.equals(b_perfil)) {
+            parent.obrirStats(this);
+        }
     }
-    
     
 }
