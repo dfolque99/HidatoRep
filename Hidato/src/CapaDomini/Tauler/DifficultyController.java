@@ -59,13 +59,13 @@ public class DifficultyController {
      * @param cells rectangular array
      * @return average of all the values in cells 
      */
-    private static double arrayToDouble(final Integer[][] cells) {
+    private double arrayToDouble(final Integer[][] cells) {
         double sum = 0;
         double count = 0;
         for (int i = 0; i < cells.length;i+=1){
             for (int j = 0; j < cells[i].length; j+=1){
                 sum += cells[i][j];
-                count += 1;
+                if (hidato.getCell(i, j).getType() == Type.BLANK) count += 1;
             } 
         }
         System.out.println("sum "+sum+" quantity "+count);
