@@ -24,8 +24,10 @@ import javax.swing.SwingConstants;
 public class FrameRanking extends javax.swing.JFrame {
     
     //Creates new form FrameRanking
-    public FrameRanking() {
+    public FrameRanking(RankingController rc) {
         initComponents();
+        this.rc = rc;
+        inicialitza();
     }
 
     /**
@@ -180,7 +182,7 @@ public class FrameRanking extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameRanking().setVisible(true);
+                new FrameRanking(null).setVisible(true);
             }
         });
     }
@@ -214,9 +216,7 @@ public class FrameRanking extends javax.swing.JFrame {
     
     //Funcio per inicialitzar el frame (assignar ranking controller, mostrar ranking
     //inicial, etc.)
-    public void inicialitza(RankingController rc) {
-        
-        this.rc = rc;
+    public void inicialitza() {
        
         setIconImage((new ImageIcon("icon.png")).getImage());
         
