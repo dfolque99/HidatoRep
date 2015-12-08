@@ -227,7 +227,7 @@ public class FrameLogin extends javax.swing.JFrame {
             msgError("Falta nom d'usuari");
         }
         else if (username.contains("/")) {
-            msgError("El caracter / no és valid pel nom");
+            msgError("El caracter '/' no és valid pel nom");
         }
         else if (username.equals("Convidat")) {
             msgError("Nom d'usuari no disponible");
