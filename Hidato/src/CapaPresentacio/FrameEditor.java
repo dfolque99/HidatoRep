@@ -11,10 +11,10 @@ import CapaDomini.Misc.Colors;
 import CapaDomini.Misc.Fonts;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
+import CapaDomini.Tauler.Type;
 import CapaDomini.Usuari.HidatoUserController;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Event;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -55,24 +55,6 @@ public class FrameEditor extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        b_canvi_num = new javax.swing.JRadioButton();
-        b_canvi_type = new javax.swing.JRadioButton();
-        b_canvi_prop = new javax.swing.JRadioButton();
-        panel_type = new javax.swing.JPanel();
-        b_blank = new javax.swing.JRadioButton();
-        b_given = new javax.swing.JRadioButton();
-        b_void = new javax.swing.JRadioButton();
-        b_esborrar_tipus = new javax.swing.JButton();
-        panel_num = new javax.swing.JPanel();
-        b_esborrar_num = new javax.swing.JRadioButton();
-        b_preguntar_num = new javax.swing.JRadioButton();
-        b_seq_num = new javax.swing.JRadioButton();
-        spinner_num_actual = new javax.swing.JSpinner();
-        l_num_actual = new javax.swing.JLabel();
-        b_esborrar_numeros = new javax.swing.JButton();
-        panel_nom = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         b_autocompletar = new javax.swing.JButton();
         b_validar = new javax.swing.JButton();
@@ -82,8 +64,13 @@ public class FrameEditor extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         b_sortir1 = new javax.swing.JButton();
         label_dificultat = new javax.swing.JLabel();
+        b_esborrar_tot = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         label_nom = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        b_esborrar = new javax.swing.JRadioButton();
+        b_posar = new javax.swing.JRadioButton();
+        b_void = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(0, 0, 800, 600));
@@ -109,163 +96,6 @@ public class FrameEditor extends javax.swing.JFrame {
             .addGap(0, 470, Short.MAX_VALUE)
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Opcions d'edició"));
-
-        b_canvi_num.setText("Canviar número");
-
-        b_canvi_type.setText("Canviar tipus de cel·la");
-
-        b_canvi_prop.setText("Canviar propietats");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(b_canvi_num)
-                    .addComponent(b_canvi_type)
-                    .addComponent(b_canvi_prop))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(b_canvi_num)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_canvi_type)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_canvi_prop))
-        );
-
-        panel_type.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipus de cel·la"));
-
-        b_blank.setText("Cel·la blanca");
-
-        b_given.setText("Cel·la donada");
-
-        b_void.setText("Cel·la no vàlida");
-
-        b_esborrar_tipus.setText("Esborrar tipus");
-
-        javax.swing.GroupLayout panel_typeLayout = new javax.swing.GroupLayout(panel_type);
-        panel_type.setLayout(panel_typeLayout);
-        panel_typeLayout.setHorizontalGroup(
-            panel_typeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_typeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panel_typeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(b_esborrar_tipus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panel_typeLayout.createSequentialGroup()
-                        .addGroup(panel_typeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(b_blank)
-                            .addComponent(b_given)
-                            .addComponent(b_void))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        panel_typeLayout.setVerticalGroup(
-            panel_typeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_typeLayout.createSequentialGroup()
-                .addComponent(b_blank)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_given)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_void)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_esborrar_tipus)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        panel_num.setBorder(javax.swing.BorderFactory.createTitledBorder("Acció:"));
-
-        b_esborrar_num.setText("Esborrar número");
-
-        b_preguntar_num.setText("Preguntar número");
-
-        b_seq_num.setText("Seqüència de números");
-
-        l_num_actual.setText("Número actual:");
-
-        b_esborrar_numeros.setText("Esborrar números");
-
-        javax.swing.GroupLayout panel_numLayout = new javax.swing.GroupLayout(panel_num);
-        panel_num.setLayout(panel_numLayout);
-        panel_numLayout.setHorizontalGroup(
-            panel_numLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_numLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panel_numLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(b_esborrar_numeros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panel_numLayout.createSequentialGroup()
-                        .addGroup(panel_numLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_numLayout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addComponent(l_num_actual)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spinner_num_actual, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(b_esborrar_num)
-                            .addComponent(b_preguntar_num)
-                            .addComponent(b_seq_num))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        panel_numLayout.setVerticalGroup(
-            panel_numLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_numLayout.createSequentialGroup()
-                .addComponent(b_esborrar_num)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_preguntar_num)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_seq_num)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panel_numLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(l_num_actual)
-                    .addComponent(spinner_num_actual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_esborrar_numeros)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        panel_nom.setBorder(javax.swing.BorderFactory.createTitledBorder("Canvi de nom"));
-
-        javax.swing.GroupLayout panel_nomLayout = new javax.swing.GroupLayout(panel_nom);
-        panel_nom.setLayout(panel_nomLayout);
-        panel_nomLayout.setHorizontalGroup(
-            panel_nomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 259, Short.MAX_VALUE)
-        );
-        panel_nomLayout.setVerticalGroup(
-            panel_nomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 71, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panel_num, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel_nom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel_type, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panel_type, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panel_num, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panel_nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         b_autocompletar.setText("Autocompletar");
 
         b_validar.setText("Validar");
@@ -286,6 +116,8 @@ public class FrameEditor extends javax.swing.JFrame {
         label_dificultat.setText("jLabel1");
         jPanel7.add(label_dificultat);
 
+        b_esborrar_tot.setText("Esborrar tot");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -296,14 +128,18 @@ public class FrameEditor extends javax.swing.JFrame {
                     .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
                     .addComponent(b_autocompletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(b_validar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(b_esborrar_tot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addComponent(b_esborrar_tot)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(b_autocompletar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(b_validar)
@@ -330,6 +166,36 @@ public class FrameEditor extends javax.swing.JFrame {
                 .addComponent(label_nom, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
         );
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Opcions d'edició"));
+
+        b_esborrar.setText("Esborrar número");
+
+        b_posar.setText("Posar número");
+
+        b_void.setText("Casella no vàlida");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(b_esborrar)
+                    .addComponent(b_posar)
+                    .addComponent(b_void))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(b_esborrar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(b_posar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(b_void))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -345,9 +211,12 @@ public class FrameEditor extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(21, 21, 21))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(21, 21, 21))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,7 +226,7 @@ public class FrameEditor extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -416,35 +285,22 @@ public class FrameEditor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_autocompletar;
-    private javax.swing.JRadioButton b_blank;
-    private javax.swing.JRadioButton b_canvi_num;
-    private javax.swing.JRadioButton b_canvi_prop;
-    private javax.swing.JRadioButton b_canvi_type;
     private javax.swing.JButton b_desar;
-    private javax.swing.JRadioButton b_esborrar_num;
-    private javax.swing.JButton b_esborrar_numeros;
-    private javax.swing.JButton b_esborrar_tipus;
-    private javax.swing.JRadioButton b_given;
-    private javax.swing.JRadioButton b_preguntar_num;
-    private javax.swing.JRadioButton b_seq_num;
+    private javax.swing.JRadioButton b_esborrar;
+    private javax.swing.JButton b_esborrar_tot;
+    private javax.swing.JRadioButton b_posar;
     private javax.swing.JButton b_sortir;
     private javax.swing.JButton b_sortir1;
     private javax.swing.JButton b_validar;
     private javax.swing.JRadioButton b_void;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JLabel l_num_actual;
     private javax.swing.JLabel label_dificultat;
     private javax.swing.JLabel label_nom;
-    private javax.swing.JPanel panel_nom;
-    private javax.swing.JPanel panel_num;
-    private javax.swing.JPanel panel_type;
-    private javax.swing.JSpinner spinner_num_actual;
     // End of variables declaration//GEN-END:variables
 
     // =============================AQUI LO MEU=================================
@@ -515,95 +371,23 @@ public class FrameEditor extends javax.swing.JFrame {
                 }
             }
         }
+        g1 = new ButtonGroup();
+        g1.add(b_esborrar); g1.add(b_posar); g1.add(b_void);
         
-        configurarRadioButtons();
         configurarBotons();
         //canviarColors(this);
         
     }
     
-    private void configurarRadioButtons() {
-        g1 = new ButtonGroup();
-        g1.add(b_canvi_num); g1.add(b_canvi_type); g1.add(b_canvi_prop);
-        g2 = new ButtonGroup();
-        g2.add(b_blank); g2.add(b_given); g2.add(b_void);
-        g3 = new ButtonGroup();
-        g3.add(b_esborrar_num); g3.add(b_preguntar_num); g3.add(b_seq_num);
-        
-        b_canvi_num.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                totInvisible();
-                panel_num.setVisible(true);
-            }
-        });
-        b_canvi_type.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                totInvisible();
-                panel_type.setVisible(true);
-            }
-        });
-        b_canvi_prop.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                totInvisible();
-                panel_nom.setVisible(true);
-            }
-        });
-        
-        b_esborrar_num.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                l_num_actual.setEnabled(false);
-                spinner_num_actual.setEnabled(false);
-            }
-        });
-        b_preguntar_num.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                l_num_actual.setEnabled(false);
-                spinner_num_actual.setEnabled(false);
-            }
-        });
-        b_seq_num.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                l_num_actual.setEnabled(true);
-                spinner_num_actual.setEnabled(true);
-            }
-        });
-        spinner_num_actual.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent evt) {
-                if ((Integer) spinner_num_actual.getValue() <= 0) {
-                    spinner_num_actual.setValue(1);
-                }
-            }
-        });
-        spinner_num_actual.setValue(1);
-        
-        totInvisible();
-    }
-    
     
     private void configurarBotons() {
-        b_esborrar_numeros.addActionListener(new ActionListener() {
+        b_esborrar_tot.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 for (int i = 0; i < N; ++i) {
                     for (int j = 0; j < M; ++j) {
                         hmc.setTempCellVal(i, j, 0);
                         panels.get(i).get(j).changeVal(0);
-                    }
-                }
-            }
-        });
-        b_esborrar_tipus.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                for (int i = 0; i < N; ++i) {
-                    for (int j = 0; j < M; ++j) {
                         hmc.setTempCellType(i, j, CapaDomini.Tauler.Type.BLANK);
                         panels.get(i).get(j).changeType(CapaDomini.Tauler.Type.BLANK);
                     }
@@ -732,77 +516,49 @@ public class FrameEditor extends javax.swing.JFrame {
         
     }
     
-    private void totInvisible() {
-        panel_type.setVisible(false);
-        g2.clearSelection();
-        panel_num.setVisible(false);
-        g3.clearSelection();
-        l_num_actual.setEnabled(false);
-        spinner_num_actual.setEnabled(false);
-        panel_nom.setVisible(false);
-    } 
-    
     private void mousePress (SquareCell p) {
-        if (b_canvi_num.isSelected() || b_canvi_type.isSelected()) p.setLight(true);
+        p.setLight(true);
     }
     
     private void mouseRelease (SquareCell p) {
         if (p.getLight()) {
-            if (b_canvi_num.isSelected() && p.getType() != CapaDomini.Tauler.Type.VOID) {
-                canviarNum(p);
+            if (b_esborrar.isSelected()) {
+                hmc.setTempCellType(p.getA(), p.getB(), CapaDomini.Tauler.Type.BLANK);
+                p.changeType(CapaDomini.Tauler.Type.BLANK);
+                hmc.setTempCellVal(p.getA(), p.getB(), 0);
+                p.changeVal(0);
                 b_desar.setEnabled(false);
                 label_dificultat.setText("");
             }
-            else if (b_canvi_type.isSelected()) {
-                canviarType(p);
+            else if (b_posar.isSelected()) {
+                int num;
+                try {
+                    String input = JOptionPane.showInputDialog("Escriu un número:");
+                    if (input == null) return;
+                    num = Integer.parseInt(input);
+                    if (num <= 0) throw new Exception();
+                    
+                }
+                catch (Exception e) {
+                    msgError("Número no vàlid");
+                    return;
+                }
+                hmc.setTempCellVal(p.getA(), p.getB(), num);
+                p.changeVal(num);
+                CapaDomini.Tauler.Type t;
+                if (num == 0) t = CapaDomini.Tauler.Type.BLANK;
+                else t = CapaDomini.Tauler.Type.GIVEN;
+                hmc.setTempCellType(p.getA(), p.getB(), t);
+                p.changeType(t);
                 b_desar.setEnabled(false);
                 label_dificultat.setText("");
+            }
+            else if (b_void.isSelected()) {
+                hmc.setTempCellType(p.getA(), p.getB(), CapaDomini.Tauler.Type.VOID);
+                p.changeType(CapaDomini.Tauler.Type.VOID);
+                p.changeVal(0);
             }
             p.setLight(false);
-        }
-    }
-    
-    private void canviarNum (SquareCell p) {
-        int num = -2;
-        if (b_esborrar_num.isSelected()) {
-            num = 0;
-        }
-        else if (b_preguntar_num.isSelected()) {
-            try {
-                String input = JOptionPane.showInputDialog("Escriu un número:");
-                if (input == null) return;
-                num = Integer.parseInt(input);
-                if (num <= 0) num = -1;
-            }
-            catch (Exception e) {
-                num = -1;
-            }
-        }
-        else if (b_seq_num.isSelected()) {
-            num = (Integer) spinner_num_actual.getValue();
-            spinner_num_actual.setValue(num+1);
-        }
-        if (num == -1) msgError("Número no vàlid");
-        else if (num == -2) msgError("Selecciona una opció");
-        else {
-            hmc.setTempCellVal(p.getA(), p.getB(), num);
-            p.changeVal(num);
-        }
-    }
-    
-    private void canviarType (SquareCell p) {
-        if (b_blank.isSelected()) {
-            hmc.setTempCellType(p.getA(), p.getB(), CapaDomini.Tauler.Type.BLANK);
-            p.changeType(CapaDomini.Tauler.Type.BLANK);
-        }
-        else if (b_given.isSelected()) {
-            hmc.setTempCellType(p.getA(), p.getB(), CapaDomini.Tauler.Type.GIVEN);
-            p.changeType(CapaDomini.Tauler.Type.GIVEN);
-        }
-        if (b_void.isSelected()) {
-            hmc.setTempCellType(p.getA(), p.getB(), CapaDomini.Tauler.Type.VOID);
-            p.changeType(CapaDomini.Tauler.Type.VOID);
-            p.changeVal(0);
         }
     }
     
