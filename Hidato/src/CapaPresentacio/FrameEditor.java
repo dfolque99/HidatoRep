@@ -350,6 +350,7 @@ public class FrameEditor extends javax.swing.JFrame {
                     int i = i0-N1, j = j0-M1;
                     int val = hmc.getTempCellVal(i,j);
                     CapaDomini.Tauler.Type type = hmc.getTempCellType(i,j);
+                    if (type != CapaDomini.Tauler.Type.GIVEN) val = 0;
                     SquareCell p = new SquareCell(i,j,val,type,Colors.c(2),Colors.c(4),Colors.c(1),Colors.c(0), 500/maxim*5/10,true);
                     panels.get(i).add(p);
                     jPanel1.add(p, i0*maxim+j0);
@@ -405,10 +406,15 @@ public class FrameEditor extends javax.swing.JFrame {
                 if (completat) {
                     for (int i = 0; i < N; ++i) {
                         for (int j = 0; j < M; ++j) {
-                            panels.get(i).get(j).changeType(hmc.getTempCellType(i, j));
-                            panels.get(i).get(j).changeVal(hmc.getTempCellVal(i, j));
+                            CapaDomini.Tauler.Type t = hmc.getTempCellType(i, j);
+                            panels.get(i).get(j).changeType(t);
+                            int val = hmc.getTempCellVal(i, j);
+                            if (t != CapaDomini.Tauler.Type.GIVEN) val = 0;
+                            panels.get(i).get(j).changeVal(val);
                         }
                     }
+                    b_desar.setEnabled(true);
+                    msgInfo ("S'ha completat el hidato. Ara ja es pot desar");
                 }
                 else {
                     msgError ("No s'ha pogut completar el hidato");
@@ -426,14 +432,8 @@ public class FrameEditor extends javax.swing.JFrame {
                     msgError ("No s'ha pogut completar el hidato perquè no té casella final");
                     return;
                 }
-                boolean completat = hmc.solveTempHidato();
+                boolean completat = hmc.validateTempHidato();
                 if (completat) {
-                    for (int i = 0; i < N; ++i) {
-                        for (int j = 0; j < M; ++j) {
-                            panels.get(i).get(j).changeType(hmc.getTempCellType(i, j));
-                            panels.get(i).get(j).changeVal(hmc.getTempCellVal(i, j));
-                        }
-                    }
                     b_desar.setEnabled(true);
                     msgInfo ("S'ha validat el hidato. Ara ja es pot desar");
                 }
