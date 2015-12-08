@@ -262,15 +262,15 @@ public class FrameRanking extends javax.swing.JFrame {
         
         JLabel aux;
         
-        aux = new JLabel("<html><u>Nom usuari</u></html>",SwingConstants.CENTER);
+        aux = new JLabel("Nom usuari",SwingConstants.CENTER);
         aux.setFont(Fonts.getFont("OpenSans-Light", Font.BOLD, 18));
         tagPanel.add(aux);
         
-        aux = new JLabel("<html><u>Data</u><html>",SwingConstants.CENTER);
+        aux = new JLabel("Data",SwingConstants.CENTER);
         aux.setFont(Fonts.getFont("OpenSans-Light", Font.BOLD, 18));
         tagPanel.add(aux);
         
-        aux = new JLabel("<html><u>Puntuació</u></html>",SwingConstants.CENTER);
+        aux = new JLabel("Puntuació",SwingConstants.CENTER);
         aux.setFont(Fonts.getFont("OpenSans-Light", Font.BOLD, 18));
         tagPanel.add(aux);
         
