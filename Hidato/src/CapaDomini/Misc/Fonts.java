@@ -21,7 +21,8 @@ public class Fonts {
         try {
             f = Font.createFont(Font.TRUETYPE_FONT, fil);
         } catch (FontFormatException | IOException ex) {
-            f = Font.getFont("Tahoma");
+            f = new Font("Tahoma", Font.PLAIN, 18);
+            System.out.print("Hola\n");
         }
         
         f = f.deriveFont(style, (float)num);

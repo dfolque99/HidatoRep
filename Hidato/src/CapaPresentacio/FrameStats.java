@@ -1,10 +1,12 @@
 package CapaPresentacio;
+import CapaDomini.Misc.Fonts;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUser;
 import CapaDomini.Usuari.HidatoUserController;
 import CapaDomini.Usuari.UserController;
 import CapaDomini.Usuari.UserStatsController;
+import java.awt.Font;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -52,6 +54,7 @@ public final class FrameStats extends javax.swing.JFrame {
     }
     private static javax.swing.JButton createButton(final String text, final java.awt.event.ActionListener l) {
         javax.swing.JButton myButton = new javax.swing.JButton(text);
+        myButton.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         myButton.addActionListener(l);
         return myButton;
     }
