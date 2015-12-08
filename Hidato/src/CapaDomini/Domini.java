@@ -45,6 +45,7 @@ public class Domini {
     public void adelanteee() {
         this.uc = new HidatoUserController();
         this.rc = new RankingController();
+        rc.init();
         this.gmc = new GameManagerController(rc, uc);
         this.hmc = new HidatoManagerController(hs, gmc, uc);
         hmc.loadAll();
@@ -105,6 +106,7 @@ public class Domini {
     
     public void obrirRanking(JFrame antic){
         FrameRanking fr = new FrameRanking();
+        fr.inicialitza(rc);
         fr.setVisible(true);
         fr.setLocation(antic.getLocation());
         antic.dispose();

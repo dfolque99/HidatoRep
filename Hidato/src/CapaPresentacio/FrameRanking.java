@@ -23,12 +23,9 @@ import javax.swing.SwingConstants;
  */
 public class FrameRanking extends javax.swing.JFrame {
     
-    /**
-     * Creates new form FrameRanking
-     */
+    //Creates new form FrameRanking
     public FrameRanking() {
         initComponents();
-        inicialitza();
     }
 
     /**
@@ -215,18 +212,12 @@ public class FrameRanking extends javax.swing.JFrame {
     //Es decir, numero de columnas del gridlayout
     private final static int M = 3; 
     
-    public void setRc(RankingController rc) {
+    //Funcio per inicialitzar el frame (assignar ranking controller, mostrar ranking
+    //inicial, etc.)
+    public void inicialitza(RankingController rc) {
+        
         this.rc = rc;
-    }
-    
-    //Funcio per inicialitzar el frame
-    private void inicialitza() {
-        //ESTE CODIGO ES SOLO PARA DEBUGAR (LUEGO HAY QUE BORRARLO)
-        rc = new RankingController();
-        rc.init();
-        //HASTA AQUI
-        
-        
+       
         //HACE FALTA TENER LA IMAGEN "icon.png" (DESCOMENTAR MAS TARDE)
         //setIconImage((new ImageIcon("icon.png")).getImage());
         
