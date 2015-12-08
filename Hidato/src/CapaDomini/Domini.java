@@ -105,7 +105,7 @@ public class Domini {
     }
     
     public void obrirRanking(JFrame antic){
-        FrameRanking fr = new FrameRanking(rc);
+        FrameRanking fr = new FrameRanking(this,rc);
         fr.setVisible(true);
         fr.setLocation(antic.getLocation());
         antic.dispose();

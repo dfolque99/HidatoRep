@@ -5,6 +5,7 @@
  */
 package CapaPresentacio;
 
+import CapaDomini.Domini;
 import CapaDomini.Partida.Difficulty;
 import CapaDomini.Rank.RankingController;
 import java.awt.FlowLayout;
@@ -26,7 +27,7 @@ import CapaDomini.Misc.Fonts;
 public class FrameRanking extends javax.swing.JFrame {
     
     //Creates new form FrameRanking
-    public FrameRanking(RankingController rc) {
+    public FrameRanking(Domini dom, RankingController rc) {
         
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -46,7 +47,7 @@ public class FrameRanking extends javax.swing.JFrame {
         }
         
         initComponents();
-        inicialitza(rc);
+        inicialitza(dom,rc);
         
     }
 
@@ -64,6 +65,7 @@ public class FrameRanking extends javax.swing.JFrame {
         rankingPanel = new javax.swing.JPanel();
         posPanel = new javax.swing.JPanel();
         tagPanel = new javax.swing.JPanel();
+        backToMenu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ranking");
@@ -127,16 +129,28 @@ public class FrameRanking extends javax.swing.JFrame {
             .addGap(0, 20, Short.MAX_VALUE)
         );
 
+        backToMenu.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        backToMenu.setText("Tornar al menu");
+        backToMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backToMenuActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelDificultat)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addContainerGap()
+                        .addComponent(labelDificultat))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(backToMenu))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
                         .addComponent(selectorDificultat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(posPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -144,25 +158,26 @@ public class FrameRanking extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tagPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
                     .addComponent(rankingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE))
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tagPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(labelDificultat)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(selectorDificultat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(tagPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rankingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(posPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(rankingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(posPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(33, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(labelDificultat)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(selectorDificultat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(backToMenu)
+                .addGap(60, 60, 60))
         );
 
         labelDificultat.getAccessibleContext().setAccessibleName("jLabel1");
@@ -174,6 +189,11 @@ public class FrameRanking extends javax.swing.JFrame {
         String selection = selectorDificultat.getSelectedItem().toString();
         setVisibleRanking(string2diff(selection));
     }//GEN-LAST:event_selectorDificultatActionPerformed
+
+    private void backToMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToMenuActionPerformed
+        // TODO add your handling code here:
+        dom.obrirMenu(this);
+    }//GEN-LAST:event_backToMenuActionPerformed
  
     /**
      * @param args the command line arguments
@@ -205,12 +225,13 @@ public class FrameRanking extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameRanking(null).setVisible(true);
+                new FrameRanking(null,null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backToMenu;
     private javax.swing.JLabel labelDificultat;
     private javax.swing.JPanel posPanel;
     private javax.swing.JPanel rankingPanel;
@@ -224,14 +245,9 @@ public class FrameRanking extends javax.swing.JFrame {
     
     //===============================MI CODIGO==================================
     
-    
-    //NO SE USA (SE PUEDE BORRAR)
-    private void msgError(String text) {
-        JOptionPane.showMessageDialog(this,text,"On vas flipat!",JOptionPane.ERROR_MESSAGE);
-    }
-    //HASTA AQUI
-    
     private RankingController rc;
+    private Domini dom;
+    
     private final int N = RankingController.getRankingMaxSize();
     //Numero de informacion proporcionada por cada entrada del ranking
     //Es decir, numero de columnas del gridlayout
@@ -240,15 +256,15 @@ public class FrameRanking extends javax.swing.JFrame {
     //Funcio per inicialitzar el frame (assignar ranking controller, mostrar ranking
     //inicial, etc.)
     //Es final para evitar un warning (call to overridable method in constructor)
-    public final void inicialitza(RankingController rc) {
+    public final void inicialitza(Domini dom, RankingController rc) {
         
+        this.dom = dom;
         this.rc = rc;
         
-        //SOLO PARA DEBUGAR (ELIMINAR MAS TARDE)
-        //this.rc = new RankingController();
-        //this.rc.init();
-        //HASTA AQUI
-       
+        /* DESCOMENTAR PARA DEBUGAR
+        this.rc = new RankingController();
+        this.rc.init();
+        */
         setIconImage((new ImageIcon("icon.png")).getImage());
         
         posPanel.setLayout(new GridLayout(N,1));
