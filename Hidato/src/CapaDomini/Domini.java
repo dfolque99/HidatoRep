@@ -27,11 +27,12 @@ import javax.swing.JFrame;
  */
 public class Domini {
     
-    HidatoUserController uc;
-    HidatoManagerController hmc;
-    HidatoSet hs;
-    GameManagerController gmc;
-    RankingController rc;
+    private HidatoUserController uc;
+    private HidatoManagerController hmc;
+    private HidatoSet hs;
+    private GameManagerController gmc;
+    private RankingController rc;
+    private boolean convidat;
     public Domini(){}
     public Domini(HidatoUserController uc, RankingController rc, GameManagerController gmc, HidatoManagerController hmc){
         this.uc = uc;
@@ -46,14 +47,26 @@ public class Domini {
         this.gmc = new GameManagerController(rc, uc);
         this.hmc = new HidatoManagerController(hs, gmc, uc);
         hmc.loadAll();
+        convidat = false;
         FrameLogin fl = new FrameLogin(this, uc);
         fl.setLocationByPlatform(true);
         fl.setVisible(true);
         hmc.veure();
     }
     
+    public void setConvidat() {
+        convidat = true;
+        uc = null;
+    }
+    
     public void obrirMenu(JFrame antic) {
-        FrameMenu fm = new FrameMenu(this, uc.getLoggedUser().getUsername());
+        FrameMenu fm;
+        if (convidat) {
+            fm = new FrameMenu(this, "Convidat");
+        }
+        else {
+            fm = new FrameMenu(this, uc.getLoggedUser().getUsername());
+        }
         fm.setVisible(true);
         fm.setLocation(antic.getLocation());
         antic.dispose();
@@ -95,6 +108,6 @@ public class Domini {
     }
     
     public void obrirLlistaHidatos(JFrame antic){
-        FrameLlista flh = new FrameLlista();
+        //FrameLlista flh = new FrameLlista();
     }
 }

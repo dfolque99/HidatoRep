@@ -31,6 +31,7 @@ public class FrameMenu extends javax.swing.JFrame {
         this.parent = parent;
         initComponents();
         inici(name);
+        if (name == "Convidat") fesConvidat();
     }
 
     /**
@@ -234,6 +235,11 @@ public class FrameMenu extends javax.swing.JFrame {
         b_ranking.addActionListener(al);
         b_perfil.addActionListener(al);
         
+    }
+    
+    private void fesConvidat() {
+        b_crear.setEnabled(false);
+        b_perfil.setEnabled(false);
     }
     
     private void picarBoto(JButton b) {

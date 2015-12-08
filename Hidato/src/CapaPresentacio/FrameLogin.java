@@ -176,7 +176,7 @@ public class FrameLogin extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        msgError("Encara no està implementat (i a saber si ho farem)");
+        entraConvidat();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -206,12 +206,21 @@ public class FrameLogin extends javax.swing.JFrame {
         }
     }
     
+    private void entraConvidat() {
+        JOptionPane.showMessageDialog(this,"Entraràs com a convidat. Algunes funcions no estaran disponibles.","Fantàstic!",JOptionPane.INFORMATION_MESSAGE);
+        parent.setConvidat();
+        parent.obrirMenu(this);
+    }
+    
     private void registrar() {
         String username = jTextField1.getText();
         String password = new String(jPasswordField1.getPassword());
         jPasswordField1.setText("");
         if (username.equals("")) {
             msgError("Falta nom d'usuari");
+        }
+        else if (username.equals("Convidat")) {
+            msgError("Nom d'usuari no disponible");
         }
         else if (password.equals("")) {
             msgError("Falta contrasenya");
