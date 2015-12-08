@@ -222,16 +222,16 @@ public class DifficultyController {
      * @return 
      */
     private Integer[][] bfs(PositionValue pv, Integer n){
-         
+        int infinity = hidato.getSizeX()*hidato.getSizeY() + 10;
         Queue<PositionValue> qp = new LinkedList<PositionValue>(); 
         Integer[][] myArray = new Integer[hidato.getSizeX()][hidato.getSizeY()];
         for (int i = 0; i < hidato.getSizeX(); i +=1){
-            Arrays.fill(myArray[i],0);
+            Arrays.fill(myArray[i],infinity);
         }        
         qp.add(new PositionValue(pv.getX(),pv.getY(),0));
         while (!qp.isEmpty()){
             PositionValue pvHere = qp.remove();
-            if (0 == myArray[pvHere.getX()][pvHere.getY()]){
+            if (infinity == myArray[pvHere.getX()][pvHere.getY()]){
                 myArray[pvHere.getX()][pvHere.getY()] = pvHere.getValue();
                 final Position[] Moore ={ 
                     new Position(-1,-1), new Position(-1,0), new Position(0,-1),
@@ -249,7 +249,7 @@ public class DifficultyController {
             }
             
         }
-        //printArray(myArray);
+        //System.out.print("bfs:\n");printArray(myArray);
         return myArray;
     }
     /**
@@ -278,7 +278,7 @@ public class DifficultyController {
         Integer[][] bfsNext = bfs(next,v/2+1);
         for (int i = 0; i < hidato.getSizeX(); i+= 1){
             for (int j = 0; j < hidato.getSizeY(); j+=1){
-                if (hidato.getCell(i,j).getType() == Type.BLANK && bfsStart[i][j]+bfsNext[i][j] < v) {
+                if (hidato.getCell(i,j).getType() == Type.BLANK && bfsStart[i][j]+bfsNext[i][j] <= v) {
                     count[i][j] += 1;
                 }
             }
