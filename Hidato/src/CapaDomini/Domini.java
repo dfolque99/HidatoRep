@@ -19,6 +19,7 @@ import CapaPresentacio.FrameMenu;
 import CapaPresentacio.FrameNewGameType;
 import CapaPresentacio.FrameRanking;
 import CapaPresentacio.FrameStats;
+import java.awt.Point;
 import javax.swing.JFrame;
 
 /**
@@ -68,7 +69,16 @@ public class Domini {
             fm = new FrameMenu(this, uc.getLoggedUser().getUsername());
         }
         fm.setVisible(true);
-        fm.setLocation(antic.getLocation());
+        Point location = antic.getLocation();
+        try {
+            if (antic.getClass() == Class.forName("CapaPresentacio.FrameLogin")) {
+                location.translate(-390/2, -295/2);
+                location.x = Math.max(location.x,30);
+                location.y = Math.max(location.y,30);
+            }
+        }
+        catch (Exception e) {}
+        fm.setLocation(location);
         antic.dispose();
     }
     

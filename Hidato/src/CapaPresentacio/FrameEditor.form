@@ -37,22 +37,17 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="36" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Component id="jPanel1" min="-2" pref="470" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jPanel4" max="32767" attributes="0"/>
-                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="jPanel3" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="panel_edicio" max="32767" attributes="0"/>
+                          <Component id="jPanel4" max="32767" attributes="0"/>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -65,8 +60,8 @@
               <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="panel_edicio" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -112,11 +107,19 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel5" alignment="1" pref="261" max="32767" attributes="0"/>
                       <Component id="b_autocompletar" alignment="0" max="32767" attributes="0"/>
                       <Component id="b_validar" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jPanel7" alignment="1" max="32767" attributes="0"/>
                       <Component id="b_esborrar_tot" alignment="0" max="32767" attributes="0"/>
+                      <Component id="b_desar" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="b_sortir" min="-2" pref="272" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="label_dificultat" min="-2" pref="261" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="b_solucio" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -125,16 +128,21 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace pref="38" max="32767" attributes="0"/>
-                  <Component id="b_esborrar_tot" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel7" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="label_dificultat" min="-2" pref="23" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="b_esborrar_tot" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="b_autocompletar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="b_validar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel5" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="b_solucio" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="b_desar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="b_sortir" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -142,7 +150,7 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="b_autocompletar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Autocompletar"/>
+            <Property name="text" type="java.lang.String" value="Autocompletar i validar"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="b_validar">
@@ -150,49 +158,29 @@
             <Property name="text" type="java.lang.String" value="Validar"/>
           </Properties>
         </Component>
-        <Container class="javax.swing.JPanel" name="jPanel5">
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-            <Property name="columns" type="int" value="0"/>
-            <Property name="horizontalGap" type="int" value="2"/>
-            <Property name="rows" type="int" value="1"/>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JButton" name="b_sortir">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Sortir"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="b_desar">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Desar"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="jPanel7">
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-            <Property name="columns" type="int" value="0"/>
-            <Property name="horizontalGap" type="int" value="7"/>
-            <Property name="rows" type="int" value="1"/>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JButton" name="b_sortir1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Calcula dificultat"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="label_dificultat">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel1"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
         <Component class="javax.swing.JButton" name="b_esborrar_tot">
           <Properties>
             <Property name="text" type="java.lang.String" value="Esborrar tot"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="label_dificultat">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Dificultat no calculada"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="b_desar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Desar"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="b_sortir">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Sortir"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="b_solucio">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Mostrar soluci&#xf3;"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -229,7 +217,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="jPanel3">
+    <Container class="javax.swing.JPanel" name="panel_edicio">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -244,9 +232,10 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="b_esborrar" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="b_posar" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="b_buida_esborrar" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="b_pista_posar" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="b_void" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="b_buida_posar" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -255,9 +244,11 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="b_esborrar" min="-2" max="-2" attributes="0"/>
+                  <Component id="b_buida_esborrar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="b_posar" min="-2" max="-2" attributes="0"/>
+                  <Component id="b_buida_posar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="b_pista_posar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="b_void" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -265,19 +256,24 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JRadioButton" name="b_esborrar">
+        <Component class="javax.swing.JRadioButton" name="b_buida_esborrar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Esborrar n&#xfa;mero"/>
+            <Property name="text" type="java.lang.String" value="Casella buida (esborrar n&#xfa;mero)"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="b_posar">
+        <Component class="javax.swing.JRadioButton" name="b_pista_posar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Posar n&#xfa;mero"/>
+            <Property name="text" type="java.lang.String" value="Casella amb pista (posar n&#xfa;mero)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="b_void">
           <Properties>
             <Property name="text" type="java.lang.String" value="Casella no v&#xe0;lida"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="b_buida_posar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Casella buida (posar n&#xfa;mero)"/>
           </Properties>
         </Component>
       </SubComponents>
