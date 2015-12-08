@@ -11,7 +11,7 @@ import CapaDomini.Usuari.HidatoUserController;
  */
 public class FrameStatsDriver {
     public static void main(String[] args){
-        final String foo = "fy";
+        final String foo = "ghyy";
         final String name =  "Hidato->"+foo+"<-1";
         
         java.awt.EventQueue.invokeLater(() -> {

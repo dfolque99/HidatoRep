@@ -19,15 +19,31 @@ import java.util.stream.Collectors;
 /**
  * To calculate the difficulty of a hidato board
  * @since 07-12-2015
- * @version 0.7
+ * @version 0.8
  * @author felix.axel.gimeno
  */
 public class DifficultyController {
-
+    /**
+     * 
+     */
     static final double medium_low = 2;
+    /**
+     * 
+     */
     static final double medium_high = 3;
+    /**
+     * deactivated logger, for debug purposes
+     */
     private static final Logger LOG = Logger.getLogger(DifficultyController.class.getName());
+    /**
+     * level of the log
+     */
     private static final Level myLevel = Level.OFF;
+    /**
+     * converts double to Difficulty usign medium_low and medium_high
+     * @param d double
+     * @return difficulty corresponding to d
+     */
     private static Difficulty doubleToDifficulty(final double d) {
         LOG.log(myLevel, "Dificultad d {0}", String.valueOf(d));
         if (d < medium_low) { 
@@ -38,11 +54,16 @@ public class DifficultyController {
             return Difficulty.MEDIUM;
         }
     }
+    /**
+     * 
+     * @param cells rectangular array
+     * @return average of all the values in cells 
+     */
     private static double arrayToDouble(final Integer[][] cells) {
         double sum = 0;
         double count = 0;
         for (int i = 0; i < cells.length;i+=1){
-            for (int j = 0; j < cells[0].length; j+=1){
+            for (int j = 0; j < cells[i].length; j+=1){
                 sum += cells[i][j];
                 count += 1;
             } 
@@ -50,7 +71,11 @@ public class DifficultyController {
         System.out.println("sum "+sum+" quantity "+count);
         return sum/count;
     } 
-   
+    /**
+     * Print array
+     * @param <T>
+     * @param t 
+     */
     private static <T> void printArray(T[] t){
         System.out.print("[");
         for(T tt:t) {
@@ -62,6 +87,11 @@ public class DifficultyController {
         }
         System.out.print("]\n");
     }
+    /**
+     * Print array of arrays
+     * @param <T>
+     * @param t 
+     */
     private static <T> void printArray(T[][] t){
         System.out.print("[\n");
         for(T[] tt:t) {
@@ -69,11 +99,29 @@ public class DifficultyController {
         }
         System.out.print("]\n");
     }
-    
+    /**
+     * 
+     * @param args 
+     */
     public static void main(String[] args) {System.out.println(new DifficultyController().getDifficulty(new Hidato(10,10)));}
+    /**
+     * 
+     */
     private boolean[][] used;
+    /**
+     * 
+     */
     private Integer[][] count;
+    /**
+     * 
+     */
     private Hidato hidato;
+    /**
+     * 
+     * @param now
+     * @param next
+     * @return 
+     */
     private boolean validPosition(PositionValue now, PositionValue next){
         if (now.getValue() > next.getValue()) {return false;}
         if (now.equals(next)) {return true;}
@@ -91,6 +139,12 @@ public class DifficultyController {
         */
         return !used[x][y];      
     }
+    /**
+     * 
+     * @param start
+     * @param next
+     * @return 
+     */
     private ArrayList<PositionValue> Neighbours(PositionValue start, PositionValue next){
         final Position[] Moore ={ 
             new Position(-1,-1), new Position(-1,0), new Position(0,-1),
@@ -105,32 +159,11 @@ public class DifficultyController {
         //apv.stream().forEach(p->System.out.println(p.getX()+" "+p.getY()+" "+p.getValue()));
         return apv;
     }
-    /*
-    private Integer countPathForGiven(final PositionValue start, final PositionValue next){
-        if (Objects.equals(start.getX(), next.getX()) && Objects.equals(start.getY(), next.getY()) && Objects.equals(next.getValue(), start.getValue())  ) {
-            LOG.log(myLevel,"Camino con Solucion");
-            return 1;
-        } else if (start.getValue().equals(next.getValue())) {
-            LOG.log(myLevel,"No deberia pasar");
-            return 0;
-        } else {
-            used[start.getX()][start.getY()] = true;
-            int myCount = 0;
-            try {
-                myCount = Neighbours(start,next)
-                        .stream()
-                        .mapToInt((PositionValue s)->countPathForGiven(s,next))
-                        .reduce(Integer::sum).getAsInt();
-                        LOG.log(myLevel,"myCount "+myCount);
-            } catch (java.util.NoSuchElementException e){
-                LOG.log(myLevel,e.getMessage());
-            }
-            used[start.getX()][start.getY()] = false;
-            count[start.getX()][start.getY()] += myCount;
-            return myCount;
-        }
-    }
-    */
+    /**
+     * 
+     * @param hidato
+     * @return 
+     */
     private ArrayList<PositionValue> getGivenCells(Hidato hidato){
         ArrayList<PositionValue> PV = new ArrayList<>(10);
         for (int i = 0; i < hidato.getSizeX(); i += 1) {
@@ -143,6 +176,11 @@ public class DifficultyController {
         PV.sort((CapaDomini.Tauler.PositionValue a,CapaDomini.Tauler.PositionValue b)->a.getValue()-b.getValue());//o al reves
         return PV;
     }
+    /**
+     * 
+     * @param hidato
+     * @return 
+     */
     public double getDifficultyAsDouble(Hidato hidato){
         LOG.setUseParentHandlers(false);//to deactivate the logger
         this.used = new boolean[hidato.getSizeX()][hidato.getSizeY()];
@@ -169,9 +207,20 @@ public class DifficultyController {
         //
         //return Difficulty.EASY;
     }
+    /**
+     * 
+     * @param hidato
+     * @return 
+     */
     public Difficulty getDifficulty(Hidato hidato){
         return doubleToDifficulty(getDifficultyAsDouble(hidato));    
     }
+    /**
+     * 
+     * @param pv
+     * @param n
+     * @return 
+     */
     private Integer[][] bfs(PositionValue pv, Integer n){
          
         Queue<PositionValue> qp = new LinkedList<PositionValue>(); 
@@ -203,6 +252,11 @@ public class DifficultyController {
         //printArray(myArray);
         return myArray;
     }
+    /**
+     * 
+     * @param now
+     * @return 
+     */
     private boolean validPosition(PositionValue now){
         final Integer x = now.getX();
         final Integer y = now.getY();
@@ -212,7 +266,12 @@ public class DifficultyController {
         if (hidato.getCell(x, y).getType() == Type.VOID){return false;}
         if (hidato.getCell(x, y).getType() == Type.GIVEN){return false;}
         return !used[x][y];      
-    }    
+    }
+    /**
+     * 
+     * @param start
+     * @param next 
+     */
     private void countPossibilityOfBeingInAPAth(PositionValue start, PositionValue next){
         Integer v = next.getValue()-start.getValue(); 
         Integer[][] bfsStart = bfs(start,v/2+1);

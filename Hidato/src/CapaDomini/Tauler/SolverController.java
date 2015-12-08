@@ -78,7 +78,12 @@ public class SolverController {
     private Hidato getHidato() {
         return this.board;
     }
-
+    /**
+     * precondition: do solve(hidato)
+     * 
+     * @param toCompare original hidato
+     * @return original hidato with its blank cells filled with the solution's values
+     */
     public Hidato getHidato(Hidato toCompare){
         Hidato mine = new Hidato(getHidato());
         for (int i = 0; i < mine.getSizeX(); i+=1){
@@ -193,7 +198,7 @@ public class SolverController {
                     myCache[i][j][k]= b;
                     if (Type.GIVEN != board.getCell(i, j).getType()) {
                         count += b ? 1 : 0;
-                        n = b ? k : n;
+                        n = (b ? k : n);
                     }
                     
                 }
@@ -231,6 +236,13 @@ public class SolverController {
         }
         
     }
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param n
+     * @return 
+     */
     private boolean uncachedValidPosition(final int x, final int y, final int n){
         if (n > finish) {return false;}
         if ((Math.min(x, y) < 0) || (Math.max(x - board.getSizeX(), y - board.getSizeY()) >= 0)) {
@@ -248,6 +260,13 @@ public class SolverController {
         }
         return true;
     }
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param n
+     * @return 
+     */
     private boolean cachedValidPosition(final int x, final int y, final int n){
         if (n > finish) {return false;}
         if ((Math.min(x, y) < 0) || (Math.max(x - board.getSizeX(), y - board.getSizeY()) >= 0)) {
