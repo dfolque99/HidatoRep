@@ -16,6 +16,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import java.awt.Font;
+import CapaDomini.Misc.Fonts;
 
 /**
  *
@@ -25,9 +27,27 @@ public class FrameRanking extends javax.swing.JFrame {
     
     //Creates new form FrameRanking
     public FrameRanking(RankingController rc) {
+        
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        
         initComponents();
-        this.rc = rc;
-        inicialitza();
+        inicialitza(rc);
+        
     }
 
     /**
@@ -50,6 +70,7 @@ public class FrameRanking extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
 
+        selectorDificultat.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         selectorDificultat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fàcil", "Mitjà", "Difícil" }));
         selectorDificultat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -57,18 +78,19 @@ public class FrameRanking extends javax.swing.JFrame {
             }
         });
 
+        labelDificultat.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         labelDificultat.setText("Selecciona la dificultat:");
 
-        rankingPanel.setMaximumSize(new java.awt.Dimension(650, 530));
-        rankingPanel.setMinimumSize(new java.awt.Dimension(650, 530));
+        rankingPanel.setMaximumSize(new java.awt.Dimension(400, 530));
+        rankingPanel.setMinimumSize(new java.awt.Dimension(400, 530));
         rankingPanel.setName("Ranking"); // NOI18N
-        rankingPanel.setPreferredSize(new java.awt.Dimension(650, 530));
+        rankingPanel.setPreferredSize(new java.awt.Dimension(400, 530));
 
         javax.swing.GroupLayout rankingPanelLayout = new javax.swing.GroupLayout(rankingPanel);
         rankingPanel.setLayout(rankingPanelLayout);
         rankingPanelLayout.setHorizontalGroup(
             rankingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         rankingPanelLayout.setVerticalGroup(
             rankingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,7 +105,7 @@ public class FrameRanking extends javax.swing.JFrame {
         posPanel.setLayout(posPanelLayout);
         posPanelLayout.setHorizontalGroup(
             posPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 20, Short.MAX_VALUE)
+            .addGap(0, 32, Short.MAX_VALUE)
         );
         posPanelLayout.setVerticalGroup(
             posPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,7 +120,7 @@ public class FrameRanking extends javax.swing.JFrame {
         tagPanel.setLayout(tagPanelLayout);
         tagPanelLayout.setHorizontalGroup(
             tagPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 550, Short.MAX_VALUE)
         );
         tagPanelLayout.setVerticalGroup(
             tagPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,13 +138,13 @@ public class FrameRanking extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(selectorDificultat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(22, 22, 22)
-                .addComponent(posPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(posPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tagPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
-                    .addComponent(rankingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tagPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+                    .addComponent(rankingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,19 +238,40 @@ public class FrameRanking extends javax.swing.JFrame {
     
     //Funcio per inicialitzar el frame (assignar ranking controller, mostrar ranking
     //inicial, etc.)
-    public void inicialitza() {
+    //Es final para evitar un warning (call to overridable method in constructor)
+    public final void inicialitza(RankingController rc) {
+        
+        this.rc = rc;
+        
+        //SOLO PARA DEBUGAR (ELIMINAR MAS TARDE)
+        this.rc = new RankingController();
+        this.rc.init();
+        //HASTA AQUI
        
         setIconImage((new ImageIcon("icon.png")).getImage());
         
         posPanel.setLayout(new GridLayout(N,1));
         for (int i = 1; i <= N; ++i) {
-            posPanel.add(new JLabel(Integer.toString(i) + ". "));
+            JLabel aux = new JLabel(Integer.toString(i) + ". ");
+            aux.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+            posPanel.add(aux);
         }
         
         tagPanel.setLayout(new GridLayout(1,M));
-        tagPanel.add(new JLabel("Nom usuari",SwingConstants.CENTER));
-        tagPanel.add(new JLabel("Data",SwingConstants.CENTER));
-        tagPanel.add(new JLabel("Puntuació",SwingConstants.CENTER));
+        
+        JLabel aux;
+        
+        aux = new JLabel("Nom usuari",SwingConstants.CENTER);
+        aux.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        tagPanel.add(aux);
+        
+        aux = new JLabel("Data",SwingConstants.CENTER);
+        aux.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        tagPanel.add(aux);
+        
+        aux = new JLabel("Puntuació",SwingConstants.CENTER);
+        aux.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        tagPanel.add(aux);
         
         rankingPanel.setLayout(new GridLayout(N,M));
         setVisibleRanking(Difficulty.EASY);
@@ -241,7 +284,10 @@ public class FrameRanking extends javax.swing.JFrame {
         for (int i = 0; i < ranking.size(); ++i) {
             String[] infoEntrada = ranking.get(i).split("/");
             for(int j = 0; j < M; ++j) {
-                rankingPanel.add(new JLabel(infoEntrada[perm(j)],SwingConstants.CENTER));
+                JLabel aux = new JLabel(infoEntrada[perm(j)]);
+                aux.setHorizontalAlignment(SwingConstants.CENTER);
+                aux.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+                rankingPanel.add(aux);
             }
         }
         for (int i = ranking.size(); i < N; ++i) {
