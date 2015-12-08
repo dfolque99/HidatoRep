@@ -42,108 +42,76 @@ public class FrameNewGameType extends javax.swing.JFrame {
         buttonGroup4 = new javax.swing.ButtonGroup();
         buttonGroup5 = new javax.swing.ButtonGroup();
         buttonGroup6 = new javax.swing.ButtonGroup();
-        manualButton = new javax.swing.JButton();
-        randomButton = new javax.swing.JButton();
-        xSize = new javax.swing.JTextField();
-        ySize = new javax.swing.JTextField();
-        sizeLabel = new javax.swing.JLabel();
+        savedHidatoButton = new javax.swing.JButton();
+        savedGameButton = new javax.swing.JButton();
+        randomHidatoButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        manualButton.setText("Crear manualment");
-        manualButton.addActionListener(new java.awt.event.ActionListener() {
+        savedHidatoButton.setText("Jugar hidato guardat");
+        savedHidatoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                manualButtonActionPerformed(evt);
+                savedHidatoButtonActionPerformed(evt);
             }
         });
 
-        randomButton.setText("Crear aleatori");
-        randomButton.addActionListener(new java.awt.event.ActionListener() {
+        savedGameButton.setText("Continuar partida guardada");
+        savedGameButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                randomButtonActionPerformed(evt);
+                savedGameButtonActionPerformed(evt);
             }
         });
 
-        ySize.addActionListener(new java.awt.event.ActionListener() {
+        randomHidatoButton.setText("Jugar hidato aleatori");
+        randomHidatoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ySizeActionPerformed(evt);
+                randomHidatoButtonActionPerformed(evt);
             }
         });
-
-        sizeLabel.setText("Mida del hidato:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(328, Short.MAX_VALUE)
+                .addContainerGap(319, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(manualButton)
-                    .addComponent(randomButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sizeLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(xSize, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ySize, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(201, 201, 201))
+                    .addComponent(savedHidatoButton)
+                    .addComponent(savedGameButton)
+                    .addComponent(randomHidatoButton))
+                .addGap(316, 316, 316))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(232, 232, 232)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(manualButton)
-                    .addComponent(sizeLabel)
-                    .addComponent(xSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ySize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(207, 207, 207)
+                .addComponent(savedHidatoButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(randomButton)
-                .addContainerGap(316, Short.MAX_VALUE))
+                .addComponent(savedGameButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(randomHidatoButton)
+                .addContainerGap(312, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void savedHidatoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savedHidatoButtonActionPerformed
+        
+    }//GEN-LAST:event_savedHidatoButtonActionPerformed
+
+    private void savedGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savedGameButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_savedGameButtonActionPerformed
+
+    private void randomHidatoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_randomHidatoButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_randomHidatoButtonActionPerformed
+
     private void msgError(String text) {
         JOptionPane.showMessageDialog(this,text,"Error",JOptionPane.ERROR_MESSAGE);
     }
     
-    private void manualButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manualButtonActionPerformed
-        // TODO add your handling code here:
-        int x;
-        int y;
-        try{
-            x = Integer.parseInt(xSize.getText());
-            y = Integer.parseInt(ySize.getText());
-            System.out.println("x,y = "+x+","+y);
-            while (x < 1 || y < 1 || x > 10 || y > 10) {
-                msgError("Introdueix valors correctes (mides entre 1 i 10)");
-                x = Integer.parseInt(xSize.getText());
-                y = Integer.parseInt(ySize.getText());
-            }
-            GeneratorController hg = new GeneratorController();
-            hg.generateHidato(x, y);
-            asdf
-        }
-        catch(Exception e ){
-            msgError("Introdueix valors correctes!");
-        }
-        
-    }//GEN-LAST:event_manualButtonActionPerformed
-
-    private void randomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_randomButtonActionPerformed
-        // TODO add your handling code here:
-        Random x = new Random();
-        Random y = new Random();
-        
-    }//GEN-LAST:event_randomButtonActionPerformed
-
-    private void ySizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ySizeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ySizeActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -186,10 +154,8 @@ public class FrameNewGameType extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup4;
     private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.ButtonGroup buttonGroup6;
-    private javax.swing.JButton manualButton;
-    private javax.swing.JButton randomButton;
-    private javax.swing.JLabel sizeLabel;
-    private javax.swing.JTextField xSize;
-    private javax.swing.JTextField ySize;
+    private javax.swing.JButton randomHidatoButton;
+    private javax.swing.JButton savedGameButton;
+    private javax.swing.JButton savedHidatoButton;
     // End of variables declaration//GEN-END:variables
 }

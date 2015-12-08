@@ -13,6 +13,7 @@ import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUserController;
 import CapaPresentacio.FrameEditor;
 import CapaPresentacio.FrameGame;
+import CapaPresentacio.FrameLlista;
 import CapaPresentacio.FrameLogin;
 import CapaPresentacio.FrameMenu;
 import CapaPresentacio.FrameNewGameType;
@@ -91,5 +92,9 @@ public class Domini {
         fngt.setVisible(true);
         fngt.setLocation(antic.getLocation());
         antic.dispose();
+    }
+    
+    public void obrirLlistaHidatos(JFrame antic){
+        FrameLlista flh = new FrameLlista();
     }
 }

@@ -91,11 +91,14 @@ public class FrameGame extends javax.swing.JFrame {
         
         if (uc == null) {
             hidatoUserController = new HidatoUserController();
+            System.out.println("abans del login");
             hidatoUserController.login("hola", "adeu");
+            System.out.println("despres del login");
         }else hidatoUserController = uc;
-        
+        System.out.println("abans del game manager");
         if (gmc == null) ctrGameManager = new GameManagerController(ctrRanking, hidatoUserController);
         else ctrGameManager = gmc;
+        System.out.println("despres del game manager");
         
         if (h == null) help = Help.LOW;
         else help = h;
@@ -131,6 +134,7 @@ public class FrameGame extends javax.swing.JFrame {
         initComponents();
         inicialitzaParametres(parent,rc,uc,gmc,h,gameName);
         
+        System.out.println("despres d'inicialitzar tot");
         
         //Hidato hidato = game.getHidato();
         
@@ -289,7 +293,6 @@ public class FrameGame extends javax.swing.JFrame {
         timeLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         boardPanel.setPreferredSize(new java.awt.Dimension(500, 500));
 
@@ -340,23 +343,23 @@ public class FrameGame extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Accions"));
 
         checkButton.setText("Comprova");
-        checkButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                checkButtonMouseReleased(evt);
+        checkButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkButtonActionPerformed(evt);
             }
         });
 
         hintButton.setText("Pista");
-        hintButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                hintButtonMouseReleased(evt);
+        hintButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hintButtonActionPerformed(evt);
             }
         });
 
         solveButton.setText("Resol");
-        solveButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                solveButtonMouseReleased(evt);
+        solveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                solveButtonActionPerformed(evt);
             }
         });
 
@@ -368,9 +371,9 @@ public class FrameGame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(checkButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(hintButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(solveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(solveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(hintButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,24 +389,24 @@ public class FrameGame extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Opcions de partida"));
 
-        pauseButton.setText("Pausa (P)");
-        pauseButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                pauseButtonMouseReleased(evt);
+        pauseButton.setText("Pausa");
+        pauseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pauseButtonActionPerformed(evt);
             }
         });
 
         saveButton.setText("Guarda");
-        saveButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                saveButtonMouseReleased(evt);
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
             }
         });
 
         restartButton.setText("Reinicia");
-        restartButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                restartButtonMouseReleased(evt);
+        restartButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                restartButtonActionPerformed(evt);
             }
         });
 
@@ -416,7 +419,7 @@ public class FrameGame extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pauseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(restartButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(restartButton, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -473,7 +476,7 @@ public class FrameGame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(buttonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -486,17 +489,16 @@ public class FrameGame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void checkButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkButtonMouseReleased
-        //falta fer que no es cliqui si el ratoli no hi es a sobre
+    private void checkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkButtonActionPerformed
         if(currentGameCtr.check()){
             msg("El hidato encara te solucio","");
         }else{
             msgError("El hidato no te solucio");
         }
-    }//GEN-LAST:event_checkButtonMouseReleased
+    }//GEN-LAST:event_checkButtonActionPerformed
 
-    private void hintButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hintButtonMouseReleased
-        //falta fer que no es cliqui si el ratoli no hi es a sobre
+    private void hintButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hintButtonActionPerformed
+        // TODO add your handling code here:
         ArrayList<Integer> hint = currentGameCtr.requestHint();
         if (hint == null){
             msgError("El hidato no te solucio");
@@ -509,10 +511,9 @@ public class FrameGame extends javax.swing.JFrame {
         if(nextNumber(1) == -1){
             acabaPartida();
         }
-    }//GEN-LAST:event_hintButtonMouseReleased
+    }//GEN-LAST:event_hintButtonActionPerformed
 
-    private void solveButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_solveButtonMouseReleased
-        // TODO add your handling code here:
+    private void solveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solveButtonActionPerformed
         currentGameCtr.solve();
         for(int i = 0; i < currentGameCtr.getSizeX(); i++){
             for(int j = 0; j < currentGameCtr.getSizeY(); j++){
@@ -520,24 +521,22 @@ public class FrameGame extends javax.swing.JFrame {
                 panels.get(i).get(j).changeVal(value);
             }
         }
-    }//GEN-LAST:event_solveButtonMouseReleased
+    }//GEN-LAST:event_solveButtonActionPerformed
 
-    private void pauseButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pauseButtonMouseReleased
-        // TODO add your handling code here:
+    private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseButtonActionPerformed
         currentGameCtr.pause();
         isGamePaused = true;
         timeSincePause = 0;          
         msg("Joc pausat. Prem OK per continuar","Pausa");
         currentGameCtr.unpause();
-        isGamePaused = false;      
-    }//GEN-LAST:event_pauseButtonMouseReleased
+        isGamePaused = false; 
+    }//GEN-LAST:event_pauseButtonActionPerformed
 
-    private void saveButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseReleased
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_saveButtonMouseReleased
+    }//GEN-LAST:event_saveButtonActionPerformed
 
-    private void restartButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restartButtonMouseReleased
-        // TODO add your handling code here:
+    private void restartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartButtonActionPerformed
         currentGameCtr.restartGame();
         timeSincePause = 0;
         for(int i = 0; i < currentGameCtr.getSizeX(); i++){
@@ -547,7 +546,7 @@ public class FrameGame extends javax.swing.JFrame {
             }
         }
         newValue.setValue(nextNumber(1));
-    }//GEN-LAST:event_restartButtonMouseReleased
+    }//GEN-LAST:event_restartButtonActionPerformed
 
     /**
      * @param args the command line arguments
