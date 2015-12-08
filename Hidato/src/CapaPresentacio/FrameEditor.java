@@ -634,6 +634,7 @@ public class FrameEditor extends javax.swing.JFrame {
         b_validar.setEnabled(!b);
         if (b) {
             hmc.calcTempDifficulty();
+            label_dificultat.setText("Dificultat: " + hmc.getTempDifficulty());
             b_validar.setText("Hidato validat!");
         }
         else {
