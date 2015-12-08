@@ -13,6 +13,7 @@ import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUserController;
 import CapaPresentacio.FrameEditor;
 import CapaPresentacio.FrameGame;
+import CapaPresentacio.FrameLlista;
 import CapaPresentacio.FrameLogin;
 import CapaPresentacio.FrameMenu;
 import CapaPresentacio.FrameNewGameType;
@@ -42,7 +43,7 @@ public class Domini {
     public void adelanteee() {
         this.uc = new HidatoUserController();
         this.rc = new RankingController();
-        this.gmc = new GameManagerController(null, null, null, rc, uc);
+        this.gmc = new GameManagerController(rc, uc);
         this.hmc = new HidatoManagerController(hs, gmc, uc);
         hmc.loadAll();
         FrameLogin fl = new FrameLogin(this, uc);
@@ -72,8 +73,8 @@ public class Domini {
         antic.dispose();
     }
     
-    public void obrirPartida(JFrame antic, Help h) {
-        FrameGame fg = new FrameGame(this, hs, rc, uc, gmc, h);
+    public void obrirPartida(JFrame antic, Help h, String gameName) {
+        FrameGame fg = new FrameGame(this, rc, uc, gmc, h, gameName);
         fg.setVisible(true);
         fg.setLocation(antic.getLocation());
         antic.dispose();
@@ -91,5 +92,9 @@ public class Domini {
         fngt.setVisible(true);
         fngt.setLocation(antic.getLocation());
         antic.dispose();
+    }
+    
+    public void obrirLlistaHidatos(JFrame antic){
+        FrameLlista flh = new FrameLlista();
     }
 }
