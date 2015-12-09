@@ -19,7 +19,7 @@ public class GameDBController {
 
     public void deleteGame(String name, HidatoUser loggedUser) {}
     
-    public void getAllGames(String username){
+    public void getAllGames(HidatoUser loggedUser){
         
     }
     
