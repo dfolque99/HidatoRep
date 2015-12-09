@@ -8,6 +8,7 @@ import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUser;
 import CapaDomini.Usuari.HidatoUserController;
 import CapaDomini.Tauler.SolverController;
+import java.util.ArrayList;
 
 /**
  * Controlador de totes les partides. Quan la vista vol crear/recuperar una partida,
@@ -34,6 +35,8 @@ public class GameManagerController {
      */
     private final HidatoUserController hidatoUserController;
     
+    private GameSet gameSet;
+    
     /**
      * Creadora
      * @param hidatoSet conjunt amb tots els hidatos (taulers)
@@ -46,6 +49,7 @@ public class GameManagerController {
         this.hidatoUserController = hidatoUserController;
         this.ctrDBGame = new GameDBController();
         this.ctrRanking = ctrRanking;
+        this.gameSet = new GameSet();
     }
     
     /**
@@ -102,5 +106,22 @@ public class GameManagerController {
         HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
         ctrDBGame.deleteGame(name, loggedUser);
         return 0;
+    }
+    
+    public void loadAllGames(){
+        gameSet = ctrDBGame.getAllGames((HidatoUser) hidatoUserController.getLoggedUser());
+    }
+    
+    public ArrayList<String> getGameList(){
+        ArrayList<String> ret = new ArrayList<>();
+        if (gameSet == null) System.out.println("gameset null");
+        for(int i = 0; i < gameSet.getSize();i++){
+            ret.add((gameSet.getGameByPos(i)).getName());
+        }
+        return ret;
+    }
+    
+    public Game getGame(String name){
+        return ctrDBGame.getGame(name, (HidatoUser) hidatoUserController.getLoggedUser());
     }
 }

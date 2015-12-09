@@ -1,6 +1,7 @@
 package CapaPersistencia;
 
 import CapaDomini.Partida.Game;
+import CapaDomini.Partida.GameSet;
 import CapaDomini.Usuari.HidatoUser;
 
 /**
@@ -19,8 +20,8 @@ public class GameDBController {
 
     public void deleteGame(String name, HidatoUser loggedUser) {}
     
-    public void getAllGames(HidatoUser loggedUser){
-        
+    public GameSet getAllGames(HidatoUser loggedUser){
+        return null;
     }
     
 }

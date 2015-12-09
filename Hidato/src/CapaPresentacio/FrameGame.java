@@ -91,14 +91,14 @@ public class FrameGame extends javax.swing.JFrame {
         
         if (uc == null) {
             hidatoUserController = new HidatoUserController();
-            System.out.println("abans del login");
+            //System.out.println("abans del login");
             hidatoUserController.login("hola", "adeu");
-            System.out.println("despres del login");
+            //System.out.println("despres del login");
         }else hidatoUserController = uc;
-        System.out.println("abans del game manager");
+        //System.out.println("abans del game manager");
         if (gmc == null) ctrGameManager = new GameManagerController(ctrRanking, hidatoUserController);
         else ctrGameManager = gmc;
-        System.out.println("despres del game manager");
+        //System.out.println("despres del game manager");
         
         if (h == null) help = Help.LOW;
         else help = h;
@@ -108,14 +108,14 @@ public class FrameGame extends javax.swing.JFrame {
         String name;
         if (gameName == null) name = "Nou joc";
         else name = gameName;
-        currentGameCtr = ctrGameManager.createGame(name, hidatoGenerator.generateHidato(6,6), help);
+        currentGameCtr = ctrGameManager.createGame(name, hidatoGenerator.generateHidato(10,10), help);
     }
     
     private void acabaPartida(){
         msg("Felicitats, hidato completat!","Yeeeeeeee!!");
         currentGameCtr.finishGame();
         this.setVisible(false);
-        FrameRanking fr = new FrameRanking();
+        FrameRanking fr = new FrameRanking(parent, ctrRanking);
         fr.setVisible(true);
     }
     
@@ -134,7 +134,7 @@ public class FrameGame extends javax.swing.JFrame {
         initComponents();
         inicialitzaParametres(parent,rc,uc,gmc,h,gameName);
         
-        System.out.println("despres d'inicialitzar tot");
+        //System.out.println("despres d'inicialitzar tot");
         
         //Hidato hidato = game.getHidato();
         
