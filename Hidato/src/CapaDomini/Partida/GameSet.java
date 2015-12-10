@@ -18,6 +18,10 @@ public class GameSet {
         g = new ArrayList<>();
     }
     
+    public GameSet(ArrayList<Game> llista){
+        g = llista;
+    }
+    
     public Game getGameByName (String name) {
         for (int i = 0; i < g.size(); ++i){
             if (g.get(i).getName().equals(name)) return g.get(i);

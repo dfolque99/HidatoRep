@@ -62,7 +62,7 @@ public class GameManagerController {
     public CurrentGameController createGame(String name, Hidato solvedHidato, Help help){
         Boolean error = false;
         HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
-        Game game_aux = ctrDBGame.getGame(name, loggedUser);
+        Game game_aux = ctrDBGame.getGame(name, loggedUser.getUsername());
         if (game_aux != null) {
             error = true;
         }
@@ -88,8 +88,8 @@ public class GameManagerController {
      */
     public CurrentGameController restoreGame(String name){
         HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
-        Game game = ctrDBGame.getGame(name, loggedUser);
-        ctrDBGame.deleteGame(name, loggedUser);
+        Game game = ctrDBGame.getGame(name, loggedUser.getUsername());
+        ctrDBGame.deleteGame(name, loggedUser.getUsername());
         if (game == null) return null;
         CurrentGameController ctrCurrentGame = new CurrentGameController(game, ctrDBGame, ctrRanking, hidatoUserController);
         return ctrCurrentGame;
@@ -104,12 +104,12 @@ public class GameManagerController {
      */
     public int deleteGame(String name){
         HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
-        ctrDBGame.deleteGame(name, loggedUser);
+        ctrDBGame.deleteGame(name, loggedUser.getUsername());
         return 0;
     }
     
     public void loadAllGames(){
-        gameSet = ctrDBGame.getAllGames((HidatoUser) hidatoUserController.getLoggedUser());
+        gameSet = new GameSet(ctrDBGame.getAllGames(hidatoUserController.getLoggedUser().getUsername()));
     }
     
     public ArrayList<String> getGameList(){
@@ -122,6 +122,6 @@ public class GameManagerController {
     }
     
     public Game getGame(String name){
-        return ctrDBGame.getGame(name, (HidatoUser) hidatoUserController.getLoggedUser());
+        return ctrDBGame.getGame(name, hidatoUserController.getLoggedUser().getUsername());
     }
 }
