@@ -7,6 +7,7 @@ package CapaPresentacio;
 
 import CapaDomini.Domini;
 import CapaDomini.Misc.Fonts;
+import CapaDomini.Tauler.HidatoManagerController;
 import java.awt.Button;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -20,6 +21,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -28,10 +31,12 @@ import javax.swing.JButton;
 public class FrameMenu extends javax.swing.JFrame {
 
     
-    public Domini parent;
+    private Domini parent;
+    private HidatoManagerController hmc;
     
-    public FrameMenu(Domini parent, String name) {
+    public FrameMenu(Domini parent, HidatoManagerController hmc, String name) {
         this.parent = parent;
+        this.hmc = hmc;
         initComponents();
         inici(name);
         if (name == "Convidat") fesConvidat();
@@ -57,10 +62,10 @@ public class FrameMenu extends javax.swing.JFrame {
         b_perfil = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        spin_files = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jSpinner2 = new javax.swing.JSpinner();
+        spin_columnes = new javax.swing.JSpinner();
         b_editar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -133,7 +138,7 @@ public class FrameMenu extends javax.swing.JFrame {
         jLabel3.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         jLabel3.setText("Escull la mida del hidato:");
 
-        jSpinner1.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        spin_files.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
 
         jLabel5.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         jLabel5.setText("nº de files:");
@@ -141,7 +146,7 @@ public class FrameMenu extends javax.swing.JFrame {
         jLabel6.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         jLabel6.setText("nº de columnes:");
 
-        jSpinner2.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        spin_columnes.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
 
         b_editar.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         b_editar.setText("Comença a editar!");
@@ -161,11 +166,11 @@ public class FrameMenu extends javax.swing.JFrame {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSpinner2, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
+                                .addComponent(spin_columnes, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(spin_files, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(96, 96, 96))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(b_editar)
@@ -178,11 +183,11 @@ public class FrameMenu extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spin_files, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spin_columnes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(b_editar)
@@ -268,7 +273,7 @@ public class FrameMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameMenu(null, "Usuari").setVisible(true);
+                new FrameMenu(null, null, "Usuari").setVisible(true);
             }
         });
     }
@@ -289,8 +294,8 @@ public class FrameMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
+    private javax.swing.JSpinner spin_columnes;
+    private javax.swing.JSpinner spin_files;
     // End of variables declaration//GEN-END:variables
 
     private Animacio anim;
@@ -322,6 +327,32 @@ public class FrameMenu extends javax.swing.JFrame {
         b_perfil.addActionListener(al);
         b_editar.addActionListener(al);
         
+        int min_files = 2;
+        int max_files = 20;
+        int min_columnes = 2;
+        int max_columnes = 20;
+        spin_files.setValue(8);
+        spin_columnes.setValue(8);
+        spin_files.addChangeListener(new ChangeListener() {
+            public void stateChanged (ChangeEvent evt) {
+                if ((Integer)spin_files.getValue() < min_files) {
+                    spin_files.setValue(min_files);
+                }
+                else if ((Integer)spin_files.getValue() > max_files) {
+                    spin_files.setValue(max_files);
+                }
+            }
+        });
+        spin_columnes.addChangeListener(new ChangeListener() {
+            public void stateChanged (ChangeEvent evt) {
+                if ((Integer)spin_columnes.getValue() < min_columnes) {
+                    spin_columnes.setValue(min_columnes);
+                }
+                else if ((Integer)spin_columnes.getValue() > max_columnes) {
+                    spin_columnes.setValue(max_columnes);
+                }
+            }
+        });
         
         p3a = new Point(300,11);
         p3b = new Point(200,11);
@@ -359,7 +390,10 @@ public class FrameMenu extends javax.swing.JFrame {
             parent.obrirStats(this);
         }
         else if (b.equals(b_editar)) {
-            
+            int files = (Integer)spin_files.getValue();
+            int columnes = (Integer) spin_columnes.getValue();
+            hmc.createManual(files, columnes);
+            parent.obrirEditor(this);
         }
     }
     

@@ -64,10 +64,10 @@ public class Domini {
     public void obrirMenu(JFrame antic) {
         FrameMenu fm;
         if (convidat) {
-            fm = new FrameMenu(this, "Convidat");
+            fm = new FrameMenu(this, hmc, "Convidat");
         }
         else {
-            fm = new FrameMenu(this, uc.getLoggedUser().getUsername());
+            fm = new FrameMenu(this, hmc, uc.getLoggedUser().getUsername());
         }
         fm.setVisible(true);
         Point location = antic.getLocation();
