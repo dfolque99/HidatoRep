@@ -35,6 +35,8 @@ public class RankingDBController {
     }
     
     public void modifyRanking(Difficulty difficulty,Ranking ranking) {
+        File f = new File(directory);
+        f.mkdir();
         try {
             FileOutputStream fos = new FileOutputStream(getDirectory(difficulty));
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -48,7 +50,7 @@ public class RankingDBController {
     }
     
     private String getDirectory(Difficulty difficulty) {
-        return directory+difficulty.toString()+extension;
+        return directory + difficulty.toString() + extension;
     }
     
 }
