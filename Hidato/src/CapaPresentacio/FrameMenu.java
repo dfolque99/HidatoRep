@@ -354,10 +354,10 @@ public class FrameMenu extends javax.swing.JFrame {
             }
         });
         
-        p3a = new Point(300,11);
-        p3b = new Point(200,11);
+        p3a = new Point(305,11);
+        p3b = new Point(150,11);
         p4a = new Point(900,11);
-        p4b = new Point(400,11);
+        p4b = new Point(350,11);
         
         anim = new Animacio(1);
         anim.addElement(jPanel3);
