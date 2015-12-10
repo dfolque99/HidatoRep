@@ -58,7 +58,7 @@ public class GameDBController {
     }
     
     public ArrayList<Game> getAllGames(String username){
-        ArrayList<Game> ret = new ArrayList();
+        ArrayList<Game> ret = new ArrayList<>();
         File f = new File(directory + username);
         ArrayList<String> games = new ArrayList(Arrays.asList(f.list()));
         for (int i = 0; i < games.size(); ++i) {
