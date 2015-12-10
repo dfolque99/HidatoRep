@@ -8,6 +8,7 @@ package CapaPresentacio;
 import CapaDomini.Domini;
 import CapaDomini.Misc.Colors;
 import CapaDomini.Misc.Fonts;
+import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUserController;
@@ -209,7 +210,7 @@ public class FrameLlista extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JList<String> jList1;
+    protected javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -230,8 +231,7 @@ public class FrameLlista extends javax.swing.JFrame {
         this.hmc = hmc;
         label_nom.setText("");
         label_nom.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 48));
-        label_autor.setText("");
-        label_autor.setFont(Fonts.getFont("OpenSans-Light", Font.ITALIC, 24));
+        posaLabelAutor();
         selected = null;
         jList1.setSelectionBackground(Colors.c(1));
         jList1.addListSelectionListener(new ListSelectionListener() {
@@ -253,6 +253,11 @@ public class FrameLlista extends javax.swing.JFrame {
         });
     }
     
+    private void posaLabelAutor(){
+        label_autor.setText("");
+        label_autor.setFont(Fonts.getFont("OpenSans-Light", Font.ITALIC, 24));
+    }
+    
     private void retorna() {
         ret.retorna(jList1.getSelectedValue());
         this.dispose();
@@ -268,7 +273,7 @@ public class FrameLlista extends javax.swing.JFrame {
         seguir = false;
         boolean result = hmc.loadHidato(selected);
         if (!result) {
-            msgError("No s'ha trobat el hidato");
+            msgError("No s'ha trobat l'element");
             return;
         }
         label_nom.setText(selected);

@@ -108,7 +108,7 @@ public class FrameGame extends javax.swing.JFrame {
         String name;
         if (gameName == null) name = "Nou joc";
         else name = gameName;
-        currentGameCtr = ctrGameManager.createGame(name, hidatoGenerator.generateHidato(10,10), help);
+        currentGameCtr = ctrGameManager.createGame(name, hidatoGenerator.generateHidato(5,7), help);
     }
     
     private void acabaPartida(){
