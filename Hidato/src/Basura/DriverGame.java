@@ -67,7 +67,7 @@ public class DriverGame {
             SolverController solver = new SolverController();
             RankingController ctrRanking = new RankingController();
            // GeneratorController hidatoGenerator = new GeneratorController(4,5); //tamany del hidato
-            GameManagerController ctrGameManager = new GameManagerController(hidatoSet, ctrDBGame, solver, ctrRanking, hidatoUserController);
+            GameManagerController ctrGameManager = new GameManagerController(ctrRanking, hidatoUserController);
             CurrentGameController ctrCurrentGame = null;
             hidatoUserController.login(username, password);
 
