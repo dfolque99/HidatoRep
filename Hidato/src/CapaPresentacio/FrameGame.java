@@ -43,8 +43,8 @@ import javax.swing.Timer;
 
 /**
  * TO DO:
- * canviar en GameManagerController la dificultat per defecte, quan estigui el difficulty controller
- * canviar mouse listeners per action listeners (actionperformed)
+ * acabar de parlar com fem lo de la llista de partides, amb la llista(public, private?)
+ * keylistener sempre dona 0?
  */
 /**
  *
@@ -67,10 +67,6 @@ public class FrameGame extends javax.swing.JFrame {
     Help help;
     GeneratorController hidatoGenerator;
     Domini parent;
-        
-    /**
-     * Creates new form FrameGame
-     */
     
     
     private void msgError(String text) {
@@ -81,7 +77,7 @@ public class FrameGame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this,text,title,JOptionPane.PLAIN_MESSAGE);
     }
     
-    private void inicialitzaParametres(Domini parent, RankingController rc, HidatoUserController uc, GameManagerController gmc, Help h, String gameName){
+    private void inicialitzaParametres(Domini parent, RankingController rc, HidatoUserController uc, GameManagerController gmc, Help h, String gameName,Hidato hidato){
         this.parent = parent;
         
         if (rc == null) {
@@ -108,7 +104,13 @@ public class FrameGame extends javax.swing.JFrame {
         String name;
         if (gameName == null) name = "Nou joc";
         else name = gameName;
-        currentGameCtr = ctrGameManager.createGame(name, hidatoGenerator.generateHidato(5,7), help);
+        
+        currentGameCtr = ctrGameManager.restoreGame(name);
+        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createGame(name, hidato, help);
+        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createGame(name, hidatoGenerator.generateHidato(8,8), help);
+        
+        helpLabel.setText("Nivell d'ajuda: "+currentGameCtr.getGame().getHelp());
+        diffLabel.setText("Dificultat: "+currentGameCtr.getGame().getDifficulty());
     }
     
     private void acabaPartida(){
@@ -130,9 +132,9 @@ public class FrameGame extends javax.swing.JFrame {
         return -1;
     }
     
-    public FrameGame(Domini parent, RankingController rc, HidatoUserController uc, GameManagerController gmc, Help h, String gameName) {
+    public FrameGame(Domini parent, RankingController rc, HidatoUserController uc, GameManagerController gmc, Help h, String gameName,Hidato hidato) {
         initComponents();
-        inicialitzaParametres(parent,rc,uc,gmc,h,gameName);
+        inicialitzaParametres(parent,rc,uc,gmc,h,gameName,hidato);
         
         //System.out.println("despres d'inicialitzar tot");
         
@@ -291,8 +293,15 @@ public class FrameGame extends javax.swing.JFrame {
         saveButton = new javax.swing.JButton();
         restartButton = new javax.swing.JButton();
         timeLabel = new javax.swing.JLabel();
+        helpLabel = new javax.swing.JLabel();
+        diffLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                formKeyTyped(evt);
+            }
+        });
 
         boardPanel.setPreferredSize(new java.awt.Dimension(500, 500));
 
@@ -437,6 +446,12 @@ public class FrameGame extends javax.swing.JFrame {
         timeLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         timeLabel.setText("Temps: ");
 
+        helpLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        helpLabel.setText("Nivell d'ajuda:");
+
+        diffLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        diffLabel.setText("Dificultat:");
+
         javax.swing.GroupLayout buttonsPanelLayout = new javax.swing.GroupLayout(buttonsPanel);
         buttonsPanel.setLayout(buttonsPanelLayout);
         buttonsPanelLayout.setHorizontalGroup(
@@ -446,7 +461,10 @@ public class FrameGame extends javax.swing.JFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(buttonsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(timeLabel)
+                .addGroup(buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(timeLabel)
+                    .addComponent(helpLabel)
+                    .addComponent(diffLabel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         buttonsPanelLayout.setVerticalGroup(
@@ -459,7 +477,11 @@ public class FrameGame extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(timeLabel)
-                .addGap(0, 93, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(helpLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(diffLabel)
+                .addGap(0, 53, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -548,6 +570,10 @@ public class FrameGame extends javax.swing.JFrame {
         newValue.setValue(nextNumber(1));
     }//GEN-LAST:event_restartButtonActionPerformed
 
+    private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
+        System.out.println("Typed key "+evt.getKeyCode());
+    }//GEN-LAST:event_formKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -578,7 +604,7 @@ public class FrameGame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameGame(null, null, null, null, null, null).setVisible(true);
+                new FrameGame(null, null, null, null, null, null,null).setVisible(true);
             }
         });
     }
@@ -589,6 +615,8 @@ public class FrameGame extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JPanel buttonsPanel;
     private javax.swing.JButton checkButton;
+    private javax.swing.JLabel diffLabel;
+    private javax.swing.JLabel helpLabel;
     private javax.swing.JButton hintButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

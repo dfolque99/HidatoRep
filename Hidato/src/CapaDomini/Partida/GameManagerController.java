@@ -3,6 +3,7 @@ package CapaDomini.Partida;
 import CapaPersistencia.GameDBController;
 import CapaDomini.Tauler.HidatoController;
 import CapaDomini.Rank.RankingController;
+import CapaDomini.Tauler.DifficultyController;
 import CapaDomini.Tauler.Hidato;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUser;
@@ -73,7 +74,8 @@ public class GameManagerController {
         Hidato hidato = new Hidato(solvedHidato);
         HidatoController ctrHidato = new HidatoController(hidato);
         ctrHidato.setBlankCellsToZero();
-        Game game = new Game(name, hidato, solvedHidato, loggedUser, help, Difficulty.EASY);
+        DifficultyController diffController = new DifficultyController();
+        Game game = new Game(name, hidato, solvedHidato, loggedUser, help, diffController.getDifficulty(hidato));
         CurrentGameController ctrCurrentGame = new CurrentGameController(game, ctrDBGame, ctrRanking, hidatoUserController);
         
         return ctrCurrentGame;
