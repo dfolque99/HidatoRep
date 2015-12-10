@@ -8,17 +8,20 @@ package CapaDomini;
 import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Partida.Help;
 import CapaDomini.Rank.RankingController;
+import CapaDomini.Tauler.Hidato;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUserController;
 import CapaPresentacio.FrameEditor;
 import CapaPresentacio.FrameGame;
 import CapaPresentacio.FrameLlista;
+import CapaPresentacio.FrameLlistaPartides;
 import CapaPresentacio.FrameLogin;
 import CapaPresentacio.FrameMenu;
 import CapaPresentacio.FrameNewGameType;
 import CapaPresentacio.FrameRanking;
 import CapaPresentacio.FrameStats;
+import CapaPresentacio.RetornadorString;
 import java.awt.Point;
 import javax.swing.JFrame;
 
@@ -97,8 +100,8 @@ public class Domini {
         antic.dispose();
     }
     
-    public void obrirPartida(JFrame antic, Help h, String gameName) {
-        FrameGame fg = new FrameGame(this, rc, uc, gmc, h, gameName);
+    public void obrirPartida(JFrame antic, Help h, String gameName,Hidato hidato) {
+        FrameGame fg = new FrameGame(this, rc, uc, gmc, h, gameName,hidato);
         fg.setVisible(true);
         fg.setLocation(antic.getLocation());
         antic.dispose();
@@ -118,7 +121,27 @@ public class Domini {
         antic.dispose();
     }
     
-    public void obrirLlistaHidatos(JFrame antic){
-        //FrameLlista flh = new FrameLlista();
+    public void obrirLlista(JFrame antic){
+        FrameLlista flh = new FrameLlista(new RetornadorString(){
+            @Override
+            public void retorna(String s){
+                System.out.println("Retorna la string "+s);
+            }
+        },hmc);
+        flh.setVisible(true);
+        flh.setLocation(antic.getLocation());
+        antic.dispose();
+    }
+    
+    public void obrirLlistaPartides(JFrame antic){
+        FrameLlistaPartides flp = new FrameLlistaPartides(new RetornadorString(){
+            @Override
+            public void retorna(String s){
+                System.out.println("Retorna la string "+s);
+            }
+        },gmc,hmc);
+        flp.setVisible(true);
+        flp.setLocation(antic.getLocation());
+        antic.dispose();
     }
 }

@@ -8,6 +8,7 @@ package CapaPresentacio;
 import CapaDomini.Domini;
 import CapaDomini.Partida.Help;
 import CapaDomini.Tauler.GeneratorController;
+import CapaDomini.Tauler.Hidato;
 import java.util.Random;
 import javax.swing.JOptionPane;
 
@@ -36,12 +37,6 @@ public class FrameNewGameType extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
-        buttonGroup3 = new javax.swing.ButtonGroup();
-        buttonGroup4 = new javax.swing.ButtonGroup();
-        buttonGroup5 = new javax.swing.ButtonGroup();
-        buttonGroup6 = new javax.swing.ButtonGroup();
         savedHidatoButton = new javax.swing.JButton();
         savedGameButton = new javax.swing.JButton();
         randomHidatoButton = new javax.swing.JButton();
@@ -97,15 +92,32 @@ public class FrameNewGameType extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void savedHidatoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savedHidatoButtonActionPerformed
-        
+        this.setVisible(false);
+        parent.obrirLlista(this);
     }//GEN-LAST:event_savedHidatoButtonActionPerformed
 
     private void savedGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savedGameButtonActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        parent.obrirLlistaPartides(this);
     }//GEN-LAST:event_savedGameButtonActionPerformed
 
     private void randomHidatoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_randomHidatoButtonActionPerformed
-        // TODO add your handling code here:
+        //public FrameGame(Domini parent, RankingController rc, HidatoUserController uc, GameManagerController gmc, Help h, String gameName)
+        Object[] options = { "Baix", "Mitja","Alt" };
+        int val = JOptionPane.showOptionDialog(null, "Click OK to continue", "Warning",
+        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+        null, options,options[0]);
+        Help h;
+        if (val == 0) h = Help.LOW;
+        else if (val == 1) h = Help.MEDIUM;
+        else h = Help.HIGH;
+        GeneratorController hidatoGen = new GeneratorController();
+        //x, y aleatoris entre 3 i 8 (inclosos)
+        Random rand = new Random();
+        int x = rand.nextInt(5)+3;
+        int y = rand.nextInt(5)+3;
+        Hidato hidato = hidatoGen.generateHidato(x,y);
+        parent.obrirPartida(this, h, "",hidato);
     }//GEN-LAST:event_randomHidatoButtonActionPerformed
 
     private void msgError(String text) {
@@ -123,7 +135,7 @@ public class FrameNewGameType extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -148,12 +160,6 @@ public class FrameNewGameType extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.ButtonGroup buttonGroup3;
-    private javax.swing.ButtonGroup buttonGroup4;
-    private javax.swing.ButtonGroup buttonGroup5;
-    private javax.swing.ButtonGroup buttonGroup6;
     private javax.swing.JButton randomHidatoButton;
     private javax.swing.JButton savedGameButton;
     private javax.swing.JButton savedHidatoButton;
