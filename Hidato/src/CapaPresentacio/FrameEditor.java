@@ -398,6 +398,7 @@ public class FrameEditor extends javax.swing.JFrame {
                         panels.get(i).get(j).changeVal(0);
                         hmc.setTempCellType(i, j, CapaDomini.Tauler.Type.BLANK);
                         panels.get(i).get(j).changeType(CapaDomini.Tauler.Type.BLANK);
+                        fixats.get(i).set(j,0);
                     }
                 }
                 poderDesar(false);
