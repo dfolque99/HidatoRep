@@ -1,8 +1,6 @@
 package CapaPersistencia;
 
 import CapaDomini.Partida.Game;
-import CapaDomini.Partida.GameSet;
-import CapaDomini.Usuari.HidatoUser;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,6 +17,7 @@ public class GameDBController {
     private final static String directory = "Games/";
     private final static String extension = ".obj";
 
+    //Pre: game no es null
     public void saveGame(Game game) {
         //Crea la carpeta raiz "Games/" (si no estaba ya hecho)
         File dir = new File(directory);
@@ -36,6 +35,7 @@ public class GameDBController {
         }
     }
 
+    //Pre: El game identificado por (gameName,username) puede no existir
     public Game getGame(String gameName, String username) {
         Game ret = null;
         try {
@@ -51,7 +51,8 @@ public class GameDBController {
             return ret;
         }
     }
-
+    //Pre: -
+    //Post: Se elimina (en caso de existir) el game identificado por (gameName,username)
     public void deleteGame(String gameName, String username) {
         File f = new File(getDirectory(gameName,username));
         f.delete();
@@ -60,10 +61,11 @@ public class GameDBController {
     public ArrayList<Game> getAllGames(String username){
         ArrayList<Game> ret = new ArrayList<>();
         File f = new File(directory + username);
-        ArrayList<String> games = new ArrayList(Arrays.asList(f.list()));
-        for (int i = 0; i < games.size(); ++i) {
+        f.mkdir();
+        ArrayList<String> gameNames = new ArrayList(Arrays.asList(f.list()));
+        for (int i = 0; i < gameNames.size(); ++i) {
             try {
-                FileInputStream fis = new FileInputStream(directory + username + "/" + games.get(i));
+                FileInputStream fis = new FileInputStream(directory + username + "/" + gameNames.get(i));
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 ret.add((Game)ois.readObject());
                 fis.close();
@@ -86,7 +88,7 @@ public class GameDBController {
     }
     
     private static String getFolder(Game game) {
-        return game.getUser().getUsername();
+        return game.getUsername();
     }
     
     private static String getName(Game game) {
