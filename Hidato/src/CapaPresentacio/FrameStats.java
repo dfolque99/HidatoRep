@@ -181,8 +181,8 @@ public class FrameStats extends javax.swing.JFrame {
         layout.setHorizontalGroup(
                 layout.createSequentialGroup()
                 .addComponent(myJLabel)
-                .addGap(30) //to separate the list scroll from the buttons, to beautify
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER, false) //center alignment;  false for not enabling resizing the group to expand all it can
+                .addGap(30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER, false)
                         .addComponent(buttonReturnToMenu, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonDelete, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonModifyPassword, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
