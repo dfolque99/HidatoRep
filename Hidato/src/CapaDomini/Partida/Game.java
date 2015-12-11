@@ -79,10 +79,12 @@ public class Game implements Serializable {
      */
     private Boolean legitSolve; //OK
     
+    private Boolean isHidatoRandom;
+    
     /**
      *  Crea un nou Game a partir d'un nom, un hidato, un hidato solucio, un usuari, un nivell d'ajuda i una dificultat
      */    
-    public Game(String name, Hidato hidato, Hidato solvedHidato, String username, Help help, Difficulty difficulty){
+    public Game(String name, Hidato hidato, Hidato solvedHidato, String username, Help help, Difficulty difficulty, Boolean isRandom){
         this.name = name;
         this.date = new Date();
         this.hidato = new Hidato(hidato);
@@ -96,6 +98,7 @@ public class Game implements Serializable {
         this.hints = 0;
         this.difficulty = difficulty;
         this.legitSolve = true;
+        this.isHidatoRandom = isRandom;
     }
     
     /**
@@ -197,6 +200,11 @@ public class Game implements Serializable {
     public Boolean getLegitSolved(){
         return this.legitSolve;
     }
+    
+    public Boolean isRandom(){
+        return this.isHidatoRandom;
+    }
+    
     
     public void setLegitSolve(Boolean b){
         this.legitSolve = b;

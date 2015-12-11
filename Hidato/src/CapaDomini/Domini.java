@@ -18,7 +18,6 @@ import CapaPresentacio.FrameLlista;
 import CapaPresentacio.FrameLlistaPartides;
 import CapaPresentacio.FrameLogin;
 import CapaPresentacio.FrameMenu;
-import CapaPresentacio.FrameNewGameType;
 import CapaPresentacio.FrameRanking;
 import CapaPresentacio.FrameStats;
 import CapaPresentacio.RetornadorString;
@@ -103,8 +102,8 @@ public class Domini {
         antic.dispose();
     }
     
-    public void obrirPartida(JFrame antic, Help h, String gameName,Hidato hidato) {
-        FrameGame fg = new FrameGame(this, rc, uc, gmc, h, gameName,hidato);
+    public void obrirPartida(JFrame antic, Help h, String gameName,Hidato hidato,Boolean isRandom) {
+        FrameGame fg = new FrameGame(this, rc, uc, gmc, h, gameName,hidato,hs,isRandom);
         fg.setVisible(true);
         fg.setLocation(antic.getLocation());
         antic.dispose();
@@ -117,12 +116,6 @@ public class Domini {
         antic.dispose();
     }
     
-    public void obrirNewGameType(JFrame antic){
-        FrameNewGameType fngt = new FrameNewGameType(this);
-        fngt.setVisible(true);
-        fngt.setLocation(antic.getLocation());
-        antic.dispose();
-    }
     
     public void obrirLlista(JFrame antic){
         FrameLlista flh = new FrameLlista(new RetornadorString(){

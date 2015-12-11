@@ -450,14 +450,13 @@ public class FrameMenu extends javax.swing.JFrame {
             parent.obrirLlista(this);
         }
         else if (b.equals(b_continuar)) {
-            parent.obrirLlista(this);
+            parent.obrirLlistaPartides(this);
         }
         else if (b.equals(b_jugar_a)) {
             Object[] options = { "Baix", "Mitja","Alt" };
             int val = JOptionPane.showOptionDialog(null, "Tria el nivell d'ajuda", "",
             JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
             null, options,options[0]);
-            System.out.println(val);
             if (val != -1){
                 Help h;
                 if (val == 0) h = Help.LOW;
@@ -469,7 +468,7 @@ public class FrameMenu extends javax.swing.JFrame {
                 int x = rand.nextInt(5)+3;
                 int y = rand.nextInt(5)+3;
                 Hidato hidato = hidatoGen.generateHidato(x,y);
-                parent.obrirPartida(this, h, "",hidato);
+                parent.obrirPartida(this, h, "",hidato,true);
             }
         }
     }

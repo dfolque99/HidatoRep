@@ -308,4 +308,8 @@ public class CurrentGameController {
     public Hidato getHidato(){
         return game.getHidato();
     }
+    
+    public Boolean isRandom(){
+        return game.isRandom();
+    }
 }

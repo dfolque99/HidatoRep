@@ -37,6 +37,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 
 
@@ -65,6 +66,7 @@ public class FrameGame extends javax.swing.JFrame {
     RankingController ctrRanking;
     HidatoUserController hidatoUserController;
     GameManagerController ctrGameManager;
+    HidatoSet hidatoSet;
     Help help;
     GeneratorController hidatoGenerator;
     Domini parent;
@@ -79,8 +81,11 @@ public class FrameGame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this,text,title,JOptionPane.PLAIN_MESSAGE);
     }
     
-    private void inicialitzaParametres(Domini parent, RankingController rc, HidatoUserController uc, GameManagerController gmc, Help h, String gameName,Hidato hidato){
+    private void inicialitzaParametres(Domini parent, RankingController rc, HidatoUserController uc, 
+                                       GameManagerController gmc, Help h, String gameName,Hidato hidato,HidatoSet hs,Boolean isRandom){
         this.parent = parent;
+        hidatoGenerator = new GeneratorController();
+        this.hidatoSet = hs;
         
         if (rc == null) {
             ctrRanking = new RankingController();
@@ -89,27 +94,24 @@ public class FrameGame extends javax.swing.JFrame {
         
         if (uc == null) {
             hidatoUserController = new HidatoUserController();
-            //System.out.println("abans del login");
             hidatoUserController.login("hola", "adeu");
-            //System.out.println("despres del login");
         }else hidatoUserController = uc;
-        //System.out.println("abans del game manager");
+        
         if (gmc == null) ctrGameManager = new GameManagerController(ctrRanking, hidatoUserController);
         else ctrGameManager = gmc;
-        //System.out.println("despres del game manager");
         
         if (h == null) help = Help.LOW;
         else help = h;
         
-        hidatoGenerator = new GeneratorController();
         
         String name;
         if (gameName == null) name = "Nou joc";
         else name = gameName;
         
+        
         currentGameCtr = ctrGameManager.restoreGame(name);
-        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createGame(name, hidato, help);
-        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createGame(name, hidatoGenerator.generateHidato(5,5), help);
+        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createGame(name, hidato, help, isRandom);
+        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createGame(name, hidatoGenerator.generateHidato(3,2), help, true);
         
         helpLabel.setText("Nivell d'ajuda: "+currentGameCtr.getHelp());
         diffLabel.setText("Dificultat: "+currentGameCtr.getDifficulty());
@@ -120,7 +122,12 @@ public class FrameGame extends javax.swing.JFrame {
         currentGameCtr.finishGame();
         timer.stop();
         msg("Felicitats, hidato completat!\n Puntuacio: "+currentGameCtr.calculateScore(),"Yeeeeeeee!!");
-        
+        if (currentGameCtr.isRandom()){
+            String ret = JOptionPane.showInputDialog(this, "Vols guardar el hidato? Escriu el nom:");
+            if (ret != null){
+                hidatoSet.addHidato(currentGameCtr.getHidato());
+            }
+        }
         this.setVisible(false);
         parent.obrirMenu(this);
     }
@@ -151,9 +158,10 @@ public class FrameGame extends javax.swing.JFrame {
         return -1;
     }
     
-    public FrameGame(Domini parent, RankingController rc, HidatoUserController uc, GameManagerController gmc, Help h, String gameName,Hidato hidato) {
+    public FrameGame(Domini parent, RankingController rc, HidatoUserController uc, GameManagerController gmc, 
+                     Help h, String gameName,Hidato hidato,HidatoSet hs,Boolean isRandom) {
         initComponents();
-        inicialitzaParametres(parent,rc,uc,gmc,h,gameName,hidato);
+        inicialitzaParametres(parent,rc,uc,gmc,h,gameName,hidato,hs,isRandom);
         
         //System.out.println("despres d'inicialitzar tot");
         
@@ -629,7 +637,7 @@ public class FrameGame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameGame(new Domini(), null, null, null, null, null,null).setVisible(true);
+                new FrameGame(new Domini(), null, null, null, null, null,null,null,true).setVisible(true);
             }
         });
     }

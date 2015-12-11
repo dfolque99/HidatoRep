@@ -106,7 +106,7 @@ public class DriverGame {
                                     default: hidato = hidatoGenerator.generateHidato(0,0);//Mai s'hauria d'arribar aqui
                                 }
                                 if (hidato == null) System.out.println("hidato nul");
-                                ctrCurrentGame = ctrGameManager.createGame(name, hidato, help);
+                                ctrCurrentGame = ctrGameManager.createGame(name, hidato, help,true);
                                 if (ctrCurrentGame == null){
                                     System.out.println("Error. Possibles causes:");
                                     System.out.println("- Ja existia una partida amb el nom introduit");
@@ -125,7 +125,7 @@ public class DriverGame {
                                 name = "default";
                                 help = Help.LOW;
                                 hidato = defaultHidato();
-                                ctrCurrentGame = ctrGameManager.createGame(name,hidato,help);
+                                ctrCurrentGame = ctrGameManager.createGame(name,hidato,help,true);
                                 break;
                             default: break; //Mai s'hauria d'arribar aqui
                         }

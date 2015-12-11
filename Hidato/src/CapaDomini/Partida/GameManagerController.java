@@ -60,7 +60,7 @@ public class GameManagerController {
      * @param help Nivell d'ajuda (LOW/MEDIUM/HIGH)
      * @return el controlador de la partida creada
      */
-    public CurrentGameController createGame(String name, Hidato solvedHidato, Help help){
+    public CurrentGameController createGame(String name, Hidato solvedHidato, Help help, Boolean isRandom){
         Boolean error = false;
         HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
         Game game_aux = ctrDBGame.getGame(name, loggedUser.getUsername());
@@ -75,7 +75,7 @@ public class GameManagerController {
         HidatoController ctrHidato = new HidatoController(hidato);
         ctrHidato.setBlankCellsToZero();
         DifficultyController diffController = new DifficultyController();
-        Game game = new Game(name, hidato, solvedHidato, loggedUser.getUsername(), help, diffController.getDifficulty(hidato));
+        Game game = new Game(name, hidato, solvedHidato, loggedUser.getUsername(), help, diffController.getDifficulty(hidato), isRandom);
         CurrentGameController ctrCurrentGame = new CurrentGameController(game, ctrDBGame, ctrRanking, hidatoUserController);
         
         return ctrCurrentGame;
