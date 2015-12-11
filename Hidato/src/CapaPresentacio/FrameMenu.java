@@ -79,6 +79,7 @@ public class FrameMenu extends javax.swing.JFrame {
         b_jugar_a = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menú principal");
         setSize(new java.awt.Dimension(800, 600));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 144)); // NOI18N
@@ -350,7 +351,6 @@ public class FrameMenu extends javax.swing.JFrame {
     public void inici(String name) {
         
         setIconImage((new ImageIcon("icon.png")).getImage());
-        
         jLabel1.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 144));
         jLabel2.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 36));
         jLabel2.setText("Benvingut "+name);
