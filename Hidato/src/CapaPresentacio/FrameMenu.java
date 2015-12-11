@@ -454,20 +454,23 @@ public class FrameMenu extends javax.swing.JFrame {
         }
         else if (b.equals(b_jugar_a)) {
             Object[] options = { "Baix", "Mitja","Alt" };
-            int val = JOptionPane.showOptionDialog(null, "Click OK to continue", "Warning",
+            int val = JOptionPane.showOptionDialog(null, "Tria el nivell d'ajuda", "",
             JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
             null, options,options[0]);
-            Help h;
-            if (val == 0) h = Help.LOW;
-            else if (val == 1) h = Help.MEDIUM;
-            else h = Help.HIGH;
-            GeneratorController hidatoGen = new GeneratorController();
-            //x, y aleatoris entre 3 i 8 (inclosos)
-            Random rand = new Random();
-            int x = rand.nextInt(5)+3;
-            int y = rand.nextInt(5)+3;
-            Hidato hidato = hidatoGen.generateHidato(x,y);
-            parent.obrirPartida(this, h, "",hidato);
+            System.out.println(val);
+            if (val != -1){
+                Help h;
+                if (val == 0) h = Help.LOW;
+                else if (val == 1) h = Help.MEDIUM;
+                else h = Help.HIGH;
+                GeneratorController hidatoGen = new GeneratorController();
+                //x, y aleatoris entre 3 i 8 (inclosos)
+                Random rand = new Random();
+                int x = rand.nextInt(5)+3;
+                int y = rand.nextInt(5)+3;
+                Hidato hidato = hidatoGen.generateHidato(x,y);
+                parent.obrirPartida(this, h, "",hidato);
+            }
         }
     }
     
