@@ -216,7 +216,7 @@ public class CurrentGameController {
         long time1 = System.currentTimeMillis();
         game.incrementDuration(time1 - time0);
         
-        HidatoUser user = game.getUser();
+        HidatoUser user = (HidatoUser) hidatoUserController.getLoggedUser();
         if (user == null) System.out.println("usuari null en el current game");
         user.incrementSolvedGames();
         user.incrementTotalTimePlayed(game.getDuration());
@@ -242,8 +242,11 @@ public class CurrentGameController {
         if (!game.getLegitSolved()) return 0;
         int checkPenalty = 60000;
         int changePenalty = 1000;
-        long totalDuration = game.getDuration().toMillis() + checkPenalty*game.getChecksMade() + changePenalty * game.getChangesMade();
-        long score = (long) (1e10 / totalDuration);
+        int hintPenalty = 60000;
+        long totalDuration = game.getDuration().toMillis() + checkPenalty*game.getChecksMade() + changePenalty * game.getChangesMade() + hintPenalty * game.getHints();
+        long score = (long) (1e8 / totalDuration);
+        if (game.getHelp() == Help.MEDIUM) score = score/2;
+        if (game.getHelp() == Help.HIGH) score = score/5;
         return (int) score;
     }
     
@@ -288,5 +291,21 @@ public class CurrentGameController {
     
     public Boolean isSolved(){
         return ctrHidato.isSolved();
+    }
+    
+    public Help getHelp(){
+        return game.getHelp();
+    }
+    
+    public Difficulty getDifficulty(){
+        return game.getDifficulty();
+    }
+    
+    public String getName(){
+        return game.getName();
+    }
+    
+    public Hidato getHidato(){
+        return game.getHidato();
     }
 }
