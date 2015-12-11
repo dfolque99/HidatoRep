@@ -23,6 +23,7 @@ import CapaPresentacio.FrameRanking;
 import CapaPresentacio.FrameStats;
 import CapaPresentacio.RetornadorString;
 import java.awt.Point;
+import java.io.File;
 import javax.swing.JFrame;
 
 /**
@@ -46,6 +47,8 @@ public class Domini {
     }
     
     public void adelanteee() {
+        File f = new File("Users/");
+        f.mkdir();
         this.uc = new HidatoUserController();
         this.rc = new RankingController();
         rc.init();
