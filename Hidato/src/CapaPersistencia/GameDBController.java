@@ -1,8 +1,6 @@
 package CapaPersistencia;
 
 import CapaDomini.Partida.Game;
-import CapaDomini.Partida.GameSet;
-import CapaDomini.Usuari.HidatoUser;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -90,7 +88,7 @@ public class GameDBController {
     }
     
     private static String getFolder(Game game) {
-        return game.getUser().getUsername();
+        return game.getUsername();
     }
     
     private static String getName(Game game) {
