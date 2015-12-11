@@ -11,6 +11,7 @@ import CapaDomini.Usuari.UserController;
 import javax.swing.JOptionPane;
 import CapaDomini.Misc.Fonts;
 import java.awt.Font;
+import javax.swing.ImageIcon;
 
 
 /**
@@ -46,6 +47,7 @@ public class FrameLogin extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         initComponents();
+        setIconImage((new ImageIcon("icon.png")).getImage());
     }
 
     
