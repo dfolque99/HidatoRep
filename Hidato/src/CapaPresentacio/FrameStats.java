@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  * usercontroller
  *
  * @author felix.axel.gimeno
- * @version 0.30
+ * @version 0.31
  * @since 05-12-2015
  */
 @SuppressWarnings("serial")
@@ -26,7 +26,7 @@ public class FrameStats extends javax.swing.JFrame {
     private final static Font myFont = Fonts.getFont("OpenSans-Light", Font.PLAIN, 18);
 
     private static String convertToMultiline(final String orig) {
-        return "<html><font face=\"OpenSans-Light\">" + orig.replaceAll("\n", "<br>") + "</font></html>";
+        return "<html>" + orig.replaceAll("\n", "<br>") + "</font></html>";
     }
 
     private static String convertToString(String[] myArray) {
@@ -42,7 +42,7 @@ public class FrameStats extends javax.swing.JFrame {
         if (myUser instanceof CapaDomini.Usuari.HidatoUser) {
             CapaDomini.Usuari.HidatoUser myHidatoUser = (CapaDomini.Usuari.HidatoUser) myUser;
             UserStatsController usc = new UserStatsController(myHidatoUser);
-            return new String[]{"Estadistiques de l'usuari: " + uc.getLoggedUser().getUsername(),
+            return new String[]{"Estadístiques de l'usuari: " + uc.getLoggedUser().getUsername(),
                 "Puntuació mitjana: " + String.valueOf(usc.getAverageScore()),
                 "Temps mitja per resoldre (en segons): " + String.valueOf(usc.getAverageTimePerSolve().getSeconds()),
                 "Quantitat de hidatos resolts: " + String.valueOf(usc.getSolvedGames()),
@@ -50,7 +50,7 @@ public class FrameStats extends javax.swing.JFrame {
                 "Quantitat de hidatos començats: " + String.valueOf(usc.getStartedGames()),
                 "Quantitat de hidatos creats: " + String.valueOf(usc.getTotalCreatedBoards()),
                 "Puntuació total: " + String.valueOf(usc.getTotalScore()),
-                "Temps total jugant: " + String.valueOf(usc.getTotalTimePlayed().getSeconds())
+                "Temps total jugat: " + String.valueOf(usc.getTotalTimePlayed().getSeconds())
             };
         } else {
             return new String[]{"El cast a HidatoUSer ha fallat"};
@@ -154,7 +154,8 @@ public class FrameStats extends javax.swing.JFrame {
     @SuppressWarnings(value = "unchecked")
     private void initComponents(final UserController uc) {
         javax.swing.JLabel myJLabel = new javax.swing.JLabel(convertToMultiline(convertToString(FrameStats.getStats(uc))), javax.swing.SwingConstants.CENTER); //SwingConstants.CENTER is for centering the jlabel text
-
+        myJLabel.setFont(myFont);
+        
         this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         this.setPreferredSize(new java.awt.Dimension(sizeX, sizeY));
 
