@@ -255,7 +255,7 @@ public class CurrentGameController {
      * @return 0
      */
     public int initialize(){
-        game.getUser().incrementStartedGames();
+        hidatoUserController.getLoggedUser().incrementStartedGames();
         hidatoUserController.updateUser();
         unpause();
         return 0;
