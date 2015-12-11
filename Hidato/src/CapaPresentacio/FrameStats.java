@@ -4,8 +4,6 @@ import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Usuari.UserController;
 import CapaDomini.Usuari.UserStatsController;
 import java.awt.Font;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 /**
@@ -23,7 +21,6 @@ public class FrameStats extends javax.swing.JFrame {
     private final static Integer sizeX = 800; 
     private final static Integer sizeY = 600;
     private final static Font myFont = Fonts.getFont("OpenSans-Light", Font.PLAIN, 18);
-    private static final Logger LOG = Logger.getLogger(FrameStats.class.getName());
     private static String convertToMultiline(final String orig) {return "<html><font face=\"OpenSans-Light\">"+orig.replaceAll("\n", "<br>")+"</font></html>";}
     private static String convertToString(String[] myArray){
         String ret = ""; 
