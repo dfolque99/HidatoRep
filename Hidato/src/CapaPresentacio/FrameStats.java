@@ -26,7 +26,7 @@ public class FrameStats extends javax.swing.JFrame {
     private final static Font myFont = Fonts.getFont("OpenSans-Light", Font.PLAIN, 18);
 
     private static String convertToMultiline(final String orig) {
-        return "<html>" + orig.replaceAll("\n", "<br>") + "</font></html>";
+        return "<html>" + orig.replaceAll("\n", "<br>") + "</html>";
     }
 
     private static String convertToString(String[] myArray) {
