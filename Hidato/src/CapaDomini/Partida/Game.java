@@ -1,7 +1,7 @@
 package CapaDomini.Partida;
 
 import CapaDomini.Tauler.Hidato;
-import CapaDomini.Usuari.HidatoUser;
+import java.io.Serializable;
 import java.time.Duration;
 import java.util.Date;
 
@@ -11,84 +11,84 @@ import java.util.Date;
  * Representa una partida
  * @author Pau Surrell
  */
-public class Game {
+public class Game implements Serializable {
     
     /**
      * Nom de la partida
      */
-    private String name;
+    private String name; //OK
     
     /**
      * Nivell d'ajuda
      */
-    private final Help help;
+    private final Help help; //OK
     
     /**
      * Duracio de la partida, en milisegons
      */
-    private Duration duration;
+    private Duration duration; //OK
     
     /**
      * Nombre de checks fets (un check vol dir comprovar si te solucio)
      */
-    private int checksMade;
+    private int checksMade; //OK
     
     /**
      * Nombre de canvis fets (un canvi es o posar o treure un nombre d'una casella)
      */
-    private int changesMade;
+    private int changesMade; //OK
     
     /**
      * Nombre de pistes demanades (una pista es que la maquina posi un nombre a la seva posicio correcta)
      */
-    private int hints;
+    private int hints; //OK
     
     /**
      * Data de creacio de la partida
      */
-    private final Date date;
+    private final Date date; //OK
     
     /**
      * Hidato (tauler) sobre el qual es juga la partida
      */
-    private Hidato hidato;
+    private Hidato hidato; //OK
     
     /**
      * Hidato resolt a partir de l'inicial (no es solucio unica)
      */
-    private final Hidato solvedHidato;
+    private final Hidato solvedHidato; //OK
     
     /**
      * Hidato igual que l'inicial, que no es pot modificar
      */
-    private final Hidato origHidato;
+    private final Hidato origHidato; //OK
     
     /**
      * Usuari que juga la partida
      */
-    private final HidatoUser user;
+    private final String username; //OK
     
     /**
      * Nivell de dificultat de la partida
      */
-    private final Difficulty difficulty;
+    private final Difficulty difficulty; //OK
     
     /**
      * Boolea que indica si per resoldre la partida s'ha utilitzat la opcio solve
      * (true = no s'ha utilitzat)
      */
-    private Boolean legitSolve;
+    private Boolean legitSolve; //OK
     
     /**
      *  Crea un nou Game a partir d'un nom, un hidato, un hidato solucio, un usuari, un nivell d'ajuda i una dificultat
      */    
-    public Game(String name, Hidato hidato, Hidato solvedHidato, HidatoUser user, Help help, Difficulty difficulty){
+    public Game(String name, Hidato hidato, Hidato solvedHidato, String username, Help help, Difficulty difficulty){
         this.name = name;
         this.date = new Date();
         this.hidato = new Hidato(hidato);
         this.origHidato = new Hidato(hidato);
         this.solvedHidato = new Hidato(solvedHidato);
-        this.user = user;
+        this.username = username;
         this.help = help;
         this.changesMade = 0;
         this.checksMade = 0;
@@ -138,8 +138,8 @@ public class Game {
      * Getter de l'usuari
      * @return l'usuari de la partida
      */
-    public HidatoUser getUser(){
-        return this.user;
+    public String getUsername(){
+        return this.username;
     }
     
     /**
