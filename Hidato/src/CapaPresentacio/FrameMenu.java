@@ -7,6 +7,9 @@ package CapaPresentacio;
 
 import CapaDomini.Domini;
 import CapaDomini.Misc.Fonts;
+import CapaDomini.Partida.Help;
+import CapaDomini.Tauler.GeneratorController;
+import CapaDomini.Tauler.Hidato;
 import CapaDomini.Tauler.HidatoManagerController;
 import java.awt.Button;
 import java.awt.Font;
@@ -18,9 +21,12 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -67,6 +73,10 @@ public class FrameMenu extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         spin_columnes = new javax.swing.JSpinner();
         b_editar = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        b_jugar_g = new javax.swing.JButton();
+        b_continuar = new javax.swing.JButton();
+        b_jugar_a = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(800, 600));
@@ -194,6 +204,34 @@ public class FrameMenu extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        b_jugar_g.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        b_jugar_g.setText("Jugar hidato guardat");
+
+        b_continuar.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        b_continuar.setText("Continuar partida");
+
+        b_jugar_a.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        b_jugar_a.setText("Jugar aleatori");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(b_jugar_g, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(b_continuar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(b_jugar_a, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(b_jugar_g, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(b_continuar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(b_jugar_a, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 41, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -203,17 +241,21 @@ public class FrameMenu extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addContainerGap())
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -280,9 +322,12 @@ public class FrameMenu extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b_continuar;
     private javax.swing.JButton b_crear;
     private javax.swing.JButton b_editar;
     private javax.swing.JButton b_jugar;
+    private javax.swing.JButton b_jugar_a;
+    private javax.swing.JButton b_jugar_g;
     private javax.swing.JButton b_perfil;
     private javax.swing.JButton b_ranking;
     private javax.swing.JLabel jLabel1;
@@ -294,25 +339,20 @@ public class FrameMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JSpinner spin_columnes;
     private javax.swing.JSpinner spin_files;
     // End of variables declaration//GEN-END:variables
 
     private Animacio anim;
-    private Point p3a, p3b, p4a, p4b;
+    private Point p3a, p3b, p4a, p4b, p5a, p5b;
     
     public void inici(String name) {
-        File fil = new File("OpenSans-Light.ttf");
-        Font f;
-        try {
-            f = Font.createFont(Font.TRUETYPE_FONT, fil);
-        } catch (FontFormatException | IOException ex) {
-            f = Font.getFont("Tahoma");
-        }
-        f = f.deriveFont((float)144);
-        jLabel1.setFont(f);
-        f = f.deriveFont((float)36);
-        jLabel2.setFont(f);
+        
+        setIconImage((new ImageIcon("icon.png")).getImage());
+        
+        jLabel1.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 144));
+        jLabel2.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 36));
         jLabel2.setText("Benvingut "+name);
         
         ActionListener al = new ActionListener() {
@@ -326,6 +366,9 @@ public class FrameMenu extends javax.swing.JFrame {
         b_ranking.addActionListener(al);
         b_perfil.addActionListener(al);
         b_editar.addActionListener(al);
+        b_jugar_g.addActionListener(al);
+        b_continuar.addActionListener(al);
+        b_jugar_a.addActionListener(al);
         
         int min_files = 2;
         int max_files = 20;
@@ -358,12 +401,16 @@ public class FrameMenu extends javax.swing.JFrame {
         p3b = new Point(150,11);
         p4a = new Point(900,11);
         p4b = new Point(350,11);
+        p5a = new Point(900,20);
+        p5b = new Point(350,20);
         
         anim = new Animacio(1);
         anim.addElement(jPanel3);
         anim.setPoint(0, p3a);
         anim.addElement(jPanel4);
         anim.setPoint(1, p4a);
+        anim.addElement(jPanel5);
+        anim.setPoint(2, p5a);
         
     }
     
@@ -375,18 +422,22 @@ public class FrameMenu extends javax.swing.JFrame {
     private void picarBoto(JButton b) {
         if (b.equals(b_jugar)) {
             anim.setVel(10);
-            anim.setPoint(0, p3a);
+            anim.setPoint(0, p3b);
             anim.setPoint(1, p4a);
+            anim.setPoint(2, p5b);
         }
         else if (b.equals(b_crear)) {
             anim.setVel(10);
             anim.setPoint(0, p3b);
             anim.setPoint(1, p4b);
+            anim.setPoint(2, p5a);
         }
         else if (b.equals(b_ranking)) {
+            anim.setPoint(0, p3a);
             parent.obrirRanking(this);
         }
         else if (b.equals(b_perfil)) {
+            anim.setPoint(0, p3a);
             parent.obrirStats(this);
         }
         else if (b.equals(b_editar)) {
@@ -394,6 +445,29 @@ public class FrameMenu extends javax.swing.JFrame {
             int columnes = (Integer) spin_columnes.getValue();
             hmc.createManual(files, columnes);
             parent.obrirEditor(this);
+        }
+        else if (b.equals(b_jugar_g)) {
+            parent.obrirLlista(this);
+        }
+        else if (b.equals(b_continuar)) {
+            parent.obrirLlista(this);
+        }
+        else if (b.equals(b_jugar_a)) {
+            Object[] options = { "Baix", "Mitja","Alt" };
+            int val = JOptionPane.showOptionDialog(null, "Click OK to continue", "Warning",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+            null, options,options[0]);
+            Help h;
+            if (val == 0) h = Help.LOW;
+            else if (val == 1) h = Help.MEDIUM;
+            else h = Help.HIGH;
+            GeneratorController hidatoGen = new GeneratorController();
+            //x, y aleatoris entre 3 i 8 (inclosos)
+            Random rand = new Random();
+            int x = rand.nextInt(5)+3;
+            int y = rand.nextInt(5)+3;
+            Hidato hidato = hidatoGen.generateHidato(x,y);
+            parent.obrirPartida(this, h, "",hidato);
         }
     }
     
