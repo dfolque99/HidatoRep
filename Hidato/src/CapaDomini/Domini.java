@@ -5,6 +5,7 @@
  */
 package CapaDomini;
 
+import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Partida.Help;
 import CapaDomini.Rank.RankingController;
@@ -104,8 +105,8 @@ public class Domini {
         antic.dispose();
     }
     
-    public void obrirPartida(JFrame antic, String gameName, String hidatoName,Help h) {
-        FrameGame fg = new FrameGame(this, rc, uc, gmc, h, gameName, hidatoName, hs);
+    public void obrirPartida(JFrame antic, CurrentGameController cgc) {
+        FrameGame fg = new FrameGame(this, cgc, hmc);
         fg.setVisible(true);
         fg.setLocation(antic.getLocation());
         antic.dispose();
