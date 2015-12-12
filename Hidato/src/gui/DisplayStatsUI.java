@@ -10,7 +10,7 @@ public class DisplayStatsUI extends javax.swing.JFrame {
         UserStatsController usc = new UserStatsController(h);
         return new String[]{"Statistics of user: "+h.getUsername(),
                             "getAverageScore: "+String.valueOf(usc.getAverageScore()),
-                            "getAverageTimePerSolve: "+String.valueOf(usc.getAverageTimePerSolve().getSeconds()),
+                            "getAverageTimePerSolve: "+String.valueOf(usc.getAverageTimePerSolve()),
                             "getSolvedGames: "+String.valueOf(usc.getSolvedGames()),
                             "getSolvedPercentage: "+String.valueOf(usc.getSolvedPercentage()),
                             "getStartedGames: "+String.valueOf(usc.getStartedGames()),
