@@ -49,7 +49,7 @@
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="131" max="32767" attributes="0"/>
+              <EmptySpace pref="93" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -114,7 +114,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
@@ -124,16 +124,19 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jPanel4" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="jPanel5" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -210,28 +213,33 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="spin_columnes" pref="45" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="spin_files" min="-2" pref="45" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
-                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="b_editar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="20" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="spin_columnes" pref="45" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="spin_files" min="-2" pref="45" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -254,7 +262,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="b_editar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="47" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -315,7 +323,12 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="b_jugar_g" alignment="0" max="32767" attributes="0"/>
                   <Component id="b_continuar" alignment="0" max="32767" attributes="0"/>
-                  <Component id="b_jugar_a" alignment="0" pref="164" max="32767" attributes="0"/>
+                  <Component id="b_jugar_a" alignment="0" pref="170" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="box_dificultat" max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -326,7 +339,12 @@
                       <Component id="b_continuar" min="-2" pref="35" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="b_jugar_a" min="-2" pref="35" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="41" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="box_dificultat" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="38" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -354,6 +372,28 @@
                   <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Jugar aleatori"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="box_dificultat">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
+                </Property>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="3">
+                    <StringItem index="0" value="Baix"/>
+                    <StringItem index="1" value="Mitj&#xe0;"/>
+                    <StringItem index="2" value="Alt"/>
+                  </StringArray>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel4">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Nivell d&apos;ajuda:"/>
               </Properties>
             </Component>
           </SubComponents>

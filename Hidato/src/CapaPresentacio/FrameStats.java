@@ -40,7 +40,7 @@ public class FrameStats extends javax.swing.JFrame {
 
     private static String[] getStats(final HidatoUserController uc) {
         UserStatsController usc = uc.getStatsController();
-        String[] ret = new String[]{"Estadístiques de l'usuari " + usc.getUsername(),
+        String[] ret = new String[]{"Estadístiques de " + usc.getUsername(),
             "Hidatos resolts: " + String.valueOf(usc.getSolvedGames()),
             "Percentatge de resolts: ",
             "Puntuació mitjana: ",
@@ -163,9 +163,13 @@ public class FrameStats extends javax.swing.JFrame {
 
     @SuppressWarnings(value = "unchecked")
     private void initComponents(final HidatoUserController uc) {
-        javax.swing.JLabel myJLabel = new javax.swing.JLabel(convertToMultiline(convertToString(FrameStats.getStats(uc))), javax.swing.SwingConstants.CENTER); //SwingConstants.CENTER is for centering the jlabel text
-        myJLabel.setFont(myFont);
-        
+        javax.swing.JLabel[] myJLabels = new javax.swing.JLabel[8]; //SwingConstants.CENTER is for centering the jlabel text
+        String [] text = getStats(uc);
+        for (int i = 0; i < 8; ++i) {
+            myJLabels[i] = new javax.swing.JLabel(text[i],javax.swing.SwingConstants.CENTER);
+            myJLabels[i].setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        }
+        myJLabels[0].setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 36));
         this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         this.setPreferredSize(new java.awt.Dimension(sizeX, sizeY));
 
@@ -190,15 +194,22 @@ public class FrameStats extends javax.swing.JFrame {
 
         layout.setHorizontalGroup(
                 layout.createSequentialGroup()
-                .addComponent(myJLabel)
-                .addGap(30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER, true)
+                        .addComponent(myJLabels[0], javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(myJLabels[1], javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(myJLabels[2], javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(myJLabels[3], javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(myJLabels[4], javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(myJLabels[5], javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(myJLabels[6], javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(myJLabels[7], javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                )
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER, true)
                         .addComponent(buttonReturnToMenu, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonDelete, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonModifyPassword, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonSelectHidatoToEdit, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 )
-                .addGap(30)
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -208,7 +219,17 @@ public class FrameStats extends javax.swing.JFrame {
                         .addComponent(buttonModifyPassword)
                         .addComponent(buttonSelectHidatoToEdit)
                 )
-                .addComponent(myJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addGroup(layout.createSequentialGroup()
+                        .addComponent(myJLabels[0], javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(myJLabels[1], javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(myJLabels[2], javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(myJLabels[3], javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(myJLabels[4], javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(myJLabels[5], javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(myJLabels[6], javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(myJLabels[7], javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                )
+                
         );
 
         this.pack();
