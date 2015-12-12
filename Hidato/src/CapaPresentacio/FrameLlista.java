@@ -194,7 +194,7 @@ public class FrameLlista extends javax.swing.JFrame {
                 HidatoUserController uc = new HidatoUserController();
                 //uc.createUser("Usuari", "password");
                 uc.login("david", "david");
-                HidatoManagerController hmc = new HidatoManagerController(new HidatoSet(), null, uc);
+                HidatoManagerController hmc = new HidatoManagerController(new HidatoSet(), uc);
                 hmc.loadAll();
                 FrameLlista fll = new FrameLlista(new RetornadorString() {
                     @Override
