@@ -159,10 +159,15 @@ public class FrameStats extends javax.swing.JFrame {
     }
 
     private void openSelectedHidato(String hidatoName) {
-        if (null != hidatoName && hmc.loadHidato(hidatoName)) {
-            parent.obrirEditor(this);
-        } else {
-            JOptionPane.showMessageDialog(this, "No se ha pogut carregar", "No se ha pogut carregar", JOptionPane.PLAIN_MESSAGE);
+        if (hidatoName == null) {
+            
+        }
+        else {
+            if (hmc.loadHidato(hidatoName)) {
+                parent.obrirEditor(this);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se ha pogut carregar", "No se ha pogut carregar", JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }
 
