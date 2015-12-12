@@ -11,6 +11,7 @@ import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUserController;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -27,6 +28,7 @@ public class FrameLlistaPartides extends FrameLlista {
         super(ret,hmc);
         this.gmc = gmc;
         initComponents();
+        setIconImage((new ImageIcon("icon.png")).getImage());
     }
 
     /**
