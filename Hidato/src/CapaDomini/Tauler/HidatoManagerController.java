@@ -31,7 +31,7 @@ public class HidatoManagerController {
     /**
      * Controlador GameManagerController per enviar queries
      */
-    GameManagerController cgm;
+    GameManagerController gmc;
     
     /**
      * Controlador HidatoUserController per enviar queries
@@ -48,9 +48,8 @@ public class HidatoManagerController {
      * @param hset
      * @param cgm
      */
-    public HidatoManagerController (HidatoSet hset, GameManagerController cgm, HidatoUserController uc) {
+    public HidatoManagerController (HidatoSet hset, HidatoUserController uc) {
         this.hset = hset;
-        this.cgm = cgm;
         this.uc = uc;
     }
     
@@ -112,7 +111,7 @@ public class HidatoManagerController {
     public CurrentGameController playTempHidato(String name, Help help) {
         if (hset.getHidatoByName(name)== null) return null;
         //ES POT ESBORRAR EL METODE PERQUE NO ES CRIDA MAI
-        return cgm.createGameFromBoard(name, tempHidato.getBoardName(), help);
+        return gmc.createGameFromBoard(name, tempHidato.getBoardName(), help);
     }
     
     /**
@@ -202,6 +201,20 @@ public class HidatoManagerController {
         hset = HidatoSetDBController.loadAll();
         return 0;        
     }
+    
+    
+    public void setGameManagerController (GameManagerController gmc) {
+        this.gmc = gmc;
+    }
+    
+    public Hidato getHidatoByName (String name) {
+        return hset.getHidatoByName(name);
+    }
+    
+    public Hidato getHidatoByPos (int pos) {
+        return hset.getHidatoByPos(pos);
+    }
+    
     
     /**
      * Getters i setters sobre el hidato tempHidato

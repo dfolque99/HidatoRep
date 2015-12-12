@@ -52,8 +52,8 @@ public class Domini {
         this.uc = new HidatoUserController();
         this.rc = new RankingController();
         rc.init();
-        this.gmc = new GameManagerController(rc, uc, hs);
-        this.hmc = new HidatoManagerController(hs, gmc, uc);
+        this.hmc = new HidatoManagerController(hs, uc);
+        this.gmc = new GameManagerController(rc, uc, hmc);
         hmc.loadAll();
         convidat = false;
         FrameLogin fl = new FrameLogin(this, uc);
