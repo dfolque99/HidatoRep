@@ -9,6 +9,7 @@ package CapaPresentacio;
 import CapaDomini.Domini;
 import CapaDomini.Misc.Colors;
 import CapaDomini.Misc.Fonts;
+import CapaDomini.Partida.Help;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Tauler.Type;
@@ -65,6 +66,7 @@ public class FrameEditor extends javax.swing.JFrame {
         b_desar = new javax.swing.JButton();
         b_sortir = new javax.swing.JButton();
         b_solucio = new javax.swing.JButton();
+        b_jugar = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         label_nom = new javax.swing.JLabel();
         panel_edicio = new javax.swing.JPanel();
@@ -97,19 +99,29 @@ public class FrameEditor extends javax.swing.JFrame {
             .addGap(0, 470, Short.MAX_VALUE)
         );
 
+        b_autocompletar.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         b_autocompletar.setText("Autocompletar i validar");
 
+        b_validar.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         b_validar.setText("Validar");
 
+        b_esborrar_tot.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         b_esborrar_tot.setText("Esborrar tot");
 
+        label_dificultat.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         label_dificultat.setText("Dificultat no calculada");
 
+        b_desar.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         b_desar.setText("Desar");
 
+        b_sortir.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         b_sortir.setText("Sortir");
 
+        b_solucio.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         b_solucio.setText("Mostrar solució");
+
+        b_jugar.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        b_jugar.setText("Jugar hidato");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -121,14 +133,15 @@ public class FrameEditor extends javax.swing.JFrame {
                     .addComponent(b_autocompletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(b_validar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(b_esborrar_tot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(b_desar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(b_sortir, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(b_solucio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(label_dificultat, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(b_solucio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(b_desar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(b_sortir, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(b_jugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -137,18 +150,20 @@ public class FrameEditor extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(label_dificultat, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_esborrar_tot)
+                .addComponent(b_esborrar_tot, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_autocompletar)
+                .addComponent(b_autocompletar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_validar)
+                .addComponent(b_validar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_solucio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(b_desar)
+                .addComponent(b_solucio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(b_sortir)
-                .addContainerGap())
+                .addComponent(b_jugar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(b_sortir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_desar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         label_nom.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
@@ -170,15 +185,19 @@ public class FrameEditor extends javax.swing.JFrame {
                 .addComponent(label_nom, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
         );
 
-        panel_edicio.setBorder(javax.swing.BorderFactory.createTitledBorder("Opcions d'edició"));
+        panel_edicio.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Opcions d'edicióde casella", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, Fonts.getFont("OpenSans-Light", Font.PLAIN, 18)));
 
-        b_buida_esborrar.setText("Casella buida (esborrar número)");
+        b_buida_esborrar.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        b_buida_esborrar.setText("Buida (esborrar número)");
 
-        b_pista_posar.setText("Casella amb pista (posar número)");
+        b_pista_posar.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        b_pista_posar.setText("Pista (posar número)");
 
-        b_void.setText("Casella no vàlida");
+        b_void.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        b_void.setText("No vàlida");
 
-        b_buida_posar.setText("Casella buida (posar número)");
+        b_buida_posar.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        b_buida_posar.setText("Buida (posar número)");
 
         javax.swing.GroupLayout panel_edicioLayout = new javax.swing.GroupLayout(panel_edicio);
         panel_edicio.setLayout(panel_edicioLayout);
@@ -231,10 +250,10 @@ public class FrameEditor extends javax.swing.JFrame {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(panel_edicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
@@ -295,6 +314,7 @@ public class FrameEditor extends javax.swing.JFrame {
     private javax.swing.JRadioButton b_buida_posar;
     private javax.swing.JButton b_desar;
     private javax.swing.JButton b_esborrar_tot;
+    private javax.swing.JButton b_jugar;
     private javax.swing.JRadioButton b_pista_posar;
     private javax.swing.JButton b_solucio;
     private javax.swing.JButton b_sortir;
@@ -483,6 +503,22 @@ public class FrameEditor extends javax.swing.JFrame {
                 }
             }
         });
+        b_jugar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                Object[] options = { "Baix", "Mitja","Alt" };
+                int val = JOptionPane.showOptionDialog(null, "Tria el nivell d'ajuda", "",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, options,options[0]);
+                if (val != -1){
+                    Help h;
+                    if (val == 0) h = Help.LOW;
+                    else if (val == 1) h = Help.MEDIUM;
+                    else h = Help.HIGH;
+                    hmc.playTempHidato(h);
+                }
+            }
+        });
     }
     
     private void enablePanelEdicio(boolean b) {
@@ -634,6 +670,7 @@ public class FrameEditor extends javax.swing.JFrame {
     private void poderDesar(boolean b) {
         b_desar.setEnabled(b);
         b_solucio.setEnabled(b);
+        b_jugar.setEnabled(b);
         b_validar.setEnabled(!b);
         if (b) {
             hmc.calcTempDifficulty();

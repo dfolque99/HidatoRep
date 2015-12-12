@@ -108,10 +108,8 @@ public class HidatoManagerController {
      * Post: retorna un CurrentGameController per jugar al hidato amb nom name
      *      del hset; si no existeix aquest hidato, retorna null
      */
-    public CurrentGameController playTempHidato(String name, Help help) {
-        if (hset.getHidatoByName(name)== null) return null;
-        //ES POT ESBORRAR EL METODE PERQUE NO ES CRIDA MAI
-        return gmc.createGameFromBoard(name, tempHidato.getBoardName(), help);
+    public CurrentGameController playTempHidato(Help help) {
+        return null;
     }
     
     /**

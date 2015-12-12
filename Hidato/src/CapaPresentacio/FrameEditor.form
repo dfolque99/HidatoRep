@@ -60,10 +60,10 @@
               <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <Component id="panel_edicio" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                      <Component id="jPanel4" min="-2" pref="289" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jPanel1" min="-2" pref="470" max="-2" attributes="0"/>
               </Group>
@@ -110,16 +110,17 @@
                       <Component id="b_autocompletar" alignment="0" max="32767" attributes="0"/>
                       <Component id="b_validar" alignment="0" max="32767" attributes="0"/>
                       <Component id="b_esborrar_tot" alignment="0" max="32767" attributes="0"/>
-                      <Component id="b_desar" alignment="0" max="32767" attributes="0"/>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="b_sortir" min="-2" pref="272" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="b_solucio" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="label_dificultat" min="-2" pref="261" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="b_solucio" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="b_desar" min="-2" pref="133" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="b_sortir" min="-2" pref="133" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="b_jugar" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -131,18 +132,21 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="label_dificultat" min="-2" pref="23" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="b_esborrar_tot" min="-2" max="-2" attributes="0"/>
+                  <Component id="b_esborrar_tot" min="-2" pref="35" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="b_autocompletar" min="-2" max="-2" attributes="0"/>
+                  <Component id="b_autocompletar" min="-2" pref="35" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="b_validar" min="-2" max="-2" attributes="0"/>
+                  <Component id="b_validar" min="-2" pref="35" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="b_solucio" min="-2" max="-2" attributes="0"/>
+                  <Component id="b_solucio" min="-2" pref="35" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="b_jugar" min="-2" pref="35" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="b_sortir" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="b_desar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="b_desar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="b_sortir" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -150,37 +154,66 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="b_autocompletar">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Autocompletar i validar"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="b_validar">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Validar"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="b_esborrar_tot">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Esborrar tot"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="label_dificultat">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Dificultat no calculada"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="b_desar">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Desar"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="b_sortir">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Sortir"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="b_solucio">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Mostrar soluci&#xf3;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="b_jugar">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Jugar hidato"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -221,7 +254,9 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Opcions d&apos;edici&#xf3;"/>
+            <TitledBorder title="Opcions d&apos;edici&#xf3;de casella">
+              <Connection PropertyName="font" code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
+            </TitledBorder>
           </Border>
         </Property>
       </Properties>
@@ -258,22 +293,34 @@
       <SubComponents>
         <Component class="javax.swing.JRadioButton" name="b_buida_esborrar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Casella buida (esborrar n&#xfa;mero)"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Buida (esborrar n&#xfa;mero)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="b_pista_posar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Casella amb pista (posar n&#xfa;mero)"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Pista (posar n&#xfa;mero)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="b_void">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Casella no v&#xe0;lida"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="No v&#xe0;lida"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="b_buida_posar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Casella buida (posar n&#xfa;mero)"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Buida (posar n&#xfa;mero)"/>
           </Properties>
         </Component>
       </SubComponents>
