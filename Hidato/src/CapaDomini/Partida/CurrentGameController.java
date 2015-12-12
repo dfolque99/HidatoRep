@@ -159,6 +159,8 @@ public class CurrentGameController {
      */
     public int pause(){
         long time1 = (long) System.currentTimeMillis();
+        long t = time1-time0;
+        System.out.println("Joc pausat, s'incrementa el temps en "+t);
         game.incrementDuration((time1 - time0));
         return 0;
     }
@@ -311,5 +313,9 @@ public class CurrentGameController {
     
     public Boolean isRandom(){
         return game.isRandom();
+    }
+    
+    public void setName(String newName){
+        game.setName(newName);
     }
 }

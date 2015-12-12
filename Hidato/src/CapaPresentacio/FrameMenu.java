@@ -473,8 +473,7 @@ public class FrameMenu extends javax.swing.JFrame {
                 if (val == 0) h = Help.LOW;
                 else if (val == 1) h = Help.MEDIUM;
                 else h = Help.HIGH;
-                String gameName = JOptionPane.showInputDialog(this, "Escriu el nom de la partida: ");
-                parent.obrirPartida(this,gameName,null,h);
+                parent.obrirPartida(this,null,null,h);
             }
         }
     }

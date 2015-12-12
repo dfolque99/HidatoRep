@@ -102,20 +102,16 @@ public class FrameGame extends javax.swing.JFrame {
         
         if (h == null) help = Help.LOW;
         else help = h;
-        
-        
-        String name;
-        if (gameName == null) name = "Nou joc";
-        else name = gameName;
-        
-        
-        currentGameCtr = ctrGameManager.restoreGame(name);
-        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createGameFromBoard(name, hidatoName, help);
-        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createRandomGame(name, help);
+                
+        currentGameCtr = ctrGameManager.restoreGame(gameName);
+        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createGameFromBoard(gameName, hidatoName, help);
+        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createRandomGame(gameName, help);
         
         helpLabel.setText("Nivell d'ajuda: "+currentGameCtr.getHelp());
         diffLabel.setText("Dificultat: "+currentGameCtr.getDifficulty());
-        titleLabel.setText("Hidato: "+currentGameCtr.getName());
+        if (currentGameCtr.getName() == null){
+            titleLabel.setText("Nova partida");
+        }else titleLabel.setText("Partida: "+currentGameCtr.getName());
     }
     
     private void acabaPartida(){
@@ -162,17 +158,7 @@ public class FrameGame extends javax.swing.JFrame {
                      Help h, String gameName, String hidatoName, HidatoSet hs) {
         initComponents();
         inicialitzaParametres(parent, rc, uc, gmc, h, gameName, hidatoName, hs);
-        
-        //System.out.println("despres d'inicialitzar tot");
-        
-        //Hidato hidato = game.getHidato();
-        
-        /*Game game = new Game();
-        SolverController solver = new Solver();
-        HidatoUserController hidatoUserController = new HidatoUserController();
-        currentGame = newCurrentGameController(game,null,solver,null,hidatoUserController);
-        */
-        
+
         int x = currentGameCtr.getSizeX(), y = currentGameCtr.getSizeY();
         int maxim, x1, x2, y1, y2;
         maxim = Math.max(x,y);
@@ -181,8 +167,6 @@ public class FrameGame extends javax.swing.JFrame {
         y1 = (maxim-y)/2;
         y2 = y + y1; //aixi el hidato queda centrat en el panel
         boardPanel.setLayout(new GridLayout(maxim, maxim));
-        //int cellsize = 80;
-        //boardPanel.setPreferredSize(new Dimension(cellsize*x, cellsize*y));
 
         if (help == Help.HIGH){
             checkButton.setVisible(false);
@@ -229,8 +213,6 @@ public class FrameGame extends javax.swing.JFrame {
                     SquareCell p = new SquareCell(i,j, valor, type, blankColor, clickColor, hintColor, voidColor, fontSize, type == CapaDomini.Tauler.Type.BLANK);
                    
                     panels.get(i).add(p);
-                    //p.setPreferredSize(new Dimension(cellsize,cellsize));
-                    //p.setSize(new Dimension(cellsize,cellsize));
                     boardPanel.add(p,i0*maxim+j0);
                     p.addMouseListener(new java.awt.event.MouseAdapter() {
                         @Override
@@ -311,11 +293,6 @@ public class FrameGame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                formKeyPressed(evt);
-            }
-        });
 
         boardPanel.setPreferredSize(new java.awt.Dimension(400, 400));
 
@@ -542,7 +519,6 @@ public class FrameGame extends javax.swing.JFrame {
     }//GEN-LAST:event_checkButtonActionPerformed
 
     private void hintButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hintButtonActionPerformed
-        // TODO add your handling code here:
         ArrayList<Integer> hint = currentGameCtr.requestHint();
         if (hint == null){
             msgError("El hidato no te solucio");
@@ -580,7 +556,10 @@ public class FrameGame extends javax.swing.JFrame {
     }//GEN-LAST:event_pauseButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
+        currentGameCtr.saveGame();
+        if (currentGameCtr.getName() == null) 
+            currentGameCtr.setName(JOptionPane.showInputDialog(this, "Escriu el nom de la partida: "));
+        parent.obrirMenu(this);
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void restartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartButtonActionPerformed
@@ -594,18 +573,6 @@ public class FrameGame extends javax.swing.JFrame {
         }
         newValue.setValue(nextNumber(1));
     }//GEN-LAST:event_restartButtonActionPerformed
-
-    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        // TODO add your handling code here:
-        System.out.println("Typed key "+evt.getKeyCode());
-        int tecla = evt.getKeyCode();
-        if (tecla == 38 || tecla == 39){ //fletxa amunt / fletxa dreta
-            newValue.setValue(nextNumber((int)newValue.getValue()));
-        }
-        if (tecla == 37 || tecla == 40){
-            newValue.setValue(prevNumber((int)newValue.getValue()));
-        }
-    }//GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments
