@@ -102,15 +102,17 @@ public class FrameGame extends javax.swing.JFrame {
         timer.stop();
         msg("Felicitats, hidato completat!\n Puntuacio: "+currentGameCtr.calculateScore(),"Yeeeeeeee!!");
         if (currentGameCtr.isVolatile()){
-            String ret = JOptionPane.showInputDialog(this, "Vols guardar el hidato? Escriu el nom:");
-            Boolean aux = true;
-            while (ret != null && aux){
-                aux = hidatoManagerController.usedName(ret);
-                ret = JOptionPane.showInputDialog(this, "Ja hi ha un hidato amb aquest nom. Tria'n un altre:");
+            String newName = JOptionPane.showInputDialog(this, "Vols guardar el hidato? Escriu el nom:");
+            Boolean aux = hidatoManagerController.usedName(newName);
+            System.out.println("el hidato amb nom "+newName+" esta utilitzat? "+aux);
+            while (newName != null && aux){
+                newName = JOptionPane.showInputDialog(this, "Ja hi ha un hidato amb aquest nom. Tria'n un altre:");
+                aux = hidatoManagerController.usedName(newName);
+                System.out.println("el hidato amb nom "+newName+" esta utilitzat? "+aux);
             }
-            if (ret != null){
-                currentGameCtr.setBoardName(ret);
-                hidatoSet.addHidato(currentGameCtr.getHidato());
+            if (newName != null){
+                currentGameCtr.setBoardName(newName);
+                hidatoManagerController.saveTempHidato(newName);
             }
         }
         this.setVisible(false);
