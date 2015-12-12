@@ -28,7 +28,7 @@ public class FrameStatsDriver {
 
                 ((HidatoUser) huc.getLoggedUser()).addHidato(name);
 
-                hmc = new HidatoManagerController(new HidatoSet(), null, huc);
+                hmc = new HidatoManagerController(new HidatoSet(), huc);
 
                 hmc.loadAll();
                 hmc.createRandom(3, 3);

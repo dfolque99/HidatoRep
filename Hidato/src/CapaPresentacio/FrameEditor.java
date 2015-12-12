@@ -281,7 +281,7 @@ public class FrameEditor extends javax.swing.JFrame {
                 HidatoUserController uc = new HidatoUserController();
                 //uc.createUser("Usuari", "password");
                 uc.login("david", "david");
-                HidatoManagerController hmc = new HidatoManagerController(new HidatoSet(), null, uc);
+                HidatoManagerController hmc = new HidatoManagerController(new HidatoSet(), uc);
                 hmc.loadAll();
                 hmc.createRandom(7,7);
                 new FrameEditor(null, hmc).setVisible(true);
