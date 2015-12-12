@@ -54,6 +54,7 @@ public class Domini {
         rc.init();
         this.hmc = new HidatoManagerController(hs, uc);
         this.gmc = new GameManagerController(rc, uc, hmc);
+        hmc.setGameManagerController(gmc);
         hmc.loadAll();
         convidat = false;
         FrameLogin fl = new FrameLogin(this, uc);
