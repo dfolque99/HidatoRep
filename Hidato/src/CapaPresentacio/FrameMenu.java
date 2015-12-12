@@ -7,6 +7,7 @@ package CapaPresentacio;
 
 import CapaDomini.Domini;
 import CapaDomini.Misc.Fonts;
+import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Partida.Help;
 import CapaDomini.Tauler.GeneratorController;
 import CapaDomini.Tauler.Hidato;
@@ -39,10 +40,12 @@ public class FrameMenu extends javax.swing.JFrame {
     
     private Domini parent;
     private HidatoManagerController hmc;
+    private GameManagerController gmc;
     
-    public FrameMenu(Domini parent, HidatoManagerController hmc, String name) {
+    public FrameMenu(Domini parent, HidatoManagerController hmc, GameManagerController gmc, String name) {
         this.parent = parent;
         this.hmc = hmc;
+        this.gmc = gmc;
         initComponents();
         inici(name);
         if (name == "Convidat") fesConvidat();
@@ -316,7 +319,7 @@ public class FrameMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameMenu(null, null, "Usuari").setVisible(true);
+                new FrameMenu(null, null, null, "Usuari").setVisible(true);
             }
         });
     }
@@ -470,13 +473,8 @@ public class FrameMenu extends javax.swing.JFrame {
                 if (val == 0) h = Help.LOW;
                 else if (val == 1) h = Help.MEDIUM;
                 else h = Help.HIGH;
-                GeneratorController hidatoGen = new GeneratorController();
-                //x, y aleatoris entre 3 i 8 (inclosos)
-                Random rand = new Random();
-                int x = rand.nextInt(5)+3;
-                int y = rand.nextInt(5)+3;
-                Hidato hidato = hidatoGen.generateHidato(x,y);
-                parent.obrirPartida(this, h, "",hidato,true);
+                String gameName = JOptionPane.showInputDialog(this, "Escriu el nom de la partida: ");
+                parent.obrirPartida(this,gameName,null,h);
             }
         }
     }

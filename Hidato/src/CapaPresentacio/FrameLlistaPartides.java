@@ -87,7 +87,9 @@ public class FrameLlistaPartides extends FrameLlista {
                 HidatoUserController uc = new HidatoUserController();
                 //uc.createUser("Usuari", "password");
                 uc.login("hola","adeu");
-                GameManagerController gmc = new GameManagerController(new RankingController(), uc);
+                HidatoSet hs = new HidatoSet();
+                
+                GameManagerController gmc = new GameManagerController(new RankingController(), uc, new HidatoSet());
                 gmc.loadAllGames();
                 HidatoManagerController hmc = new HidatoManagerController(new HidatoSet(),gmc,uc);
                 FrameLlistaPartides flp = new FrameLlistaPartides(new RetornadorString() {

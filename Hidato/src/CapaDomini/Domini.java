@@ -48,10 +48,11 @@ public class Domini {
     public void adelanteee() {
         File f = new File("Users/");
         f.mkdir();
+        this.hs = new HidatoSet();
         this.uc = new HidatoUserController();
         this.rc = new RankingController();
         rc.init();
-        this.gmc = new GameManagerController(rc, uc);
+        this.gmc = new GameManagerController(rc, uc, hs);
         this.hmc = new HidatoManagerController(hs, gmc, uc);
         hmc.loadAll();
         convidat = false;
@@ -69,10 +70,10 @@ public class Domini {
     public void obrirMenu(JFrame antic) {
         FrameMenu fm;
         if (convidat) {
-            fm = new FrameMenu(this, hmc, "Convidat");
+            fm = new FrameMenu(this, hmc, gmc, "Convidat");
         }
         else {
-            fm = new FrameMenu(this, hmc, uc.getLoggedUser().getUsername());
+            fm = new FrameMenu(this, hmc, gmc, uc.getLoggedUser().getUsername());
         }
         fm.setVisible(true);
         Point location = antic.getLocation();
@@ -102,8 +103,8 @@ public class Domini {
         antic.dispose();
     }
     
-    public void obrirPartida(JFrame antic, Help h, String gameName, Hidato hidato, Boolean isRandom) {
-        FrameGame fg = new FrameGame(this, rc, uc, gmc, h, gameName, hidato, hs, isRandom);
+    public void obrirPartida(JFrame antic, String gameName, String hidatoName,Help h) {
+        FrameGame fg = new FrameGame(this, rc, uc, gmc, h, gameName, hidatoName, hs);
         fg.setVisible(true);
         fg.setLocation(antic.getLocation());
         antic.dispose();
@@ -139,5 +140,9 @@ public class Domini {
         flp.setVisible(true);
         flp.setLocation(antic.getLocation());
         antic.dispose();
+    }
+    
+    public void tanca() {
+        rc.save();
     }
 }

@@ -101,7 +101,7 @@ public class FrameLogin extends javax.swing.JFrame {
         jLabel2.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         jLabel2.setText("Contrasenya");
 
-        jPasswordField1.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        jPasswordField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jButton1.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         jButton1.setText("Entra");
