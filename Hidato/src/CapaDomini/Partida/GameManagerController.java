@@ -57,9 +57,13 @@ public class GameManagerController {
         this.hidatoUserController = hidatoUserController;
         this.ctrDBGame = new GameDBController();
         this.ctrRanking = ctrRanking;
-        this.gameSet = new GameSet(this.ctrDBGame.getAllGames(this.hidatoUserController.getLoggedUser().getUsername()));
+        this.gameSet = new GameSet();
         this.hidatoSet = hidatoSet;
         this.hidatoManagerController = hmc;
+    }
+    
+    public void initGameSet(){
+        this.gameSet = new GameSet(this.ctrDBGame.getAllGames(this.hidatoUserController.getLoggedUser().getUsername()));
     }
     
     public HidatoManagerController getHMC(){

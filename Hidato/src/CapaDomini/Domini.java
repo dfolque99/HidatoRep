@@ -58,7 +58,7 @@ public class Domini {
         hmc.setGameManagerController(gmc);
         hmc.loadAll();
         convidat = false;
-        FrameLogin fl = new FrameLogin(this, uc);
+        FrameLogin fl = new FrameLogin(this, uc, gmc);
         fl.setLocationByPlatform(true);
         fl.setVisible(true);
         hmc.veure();
