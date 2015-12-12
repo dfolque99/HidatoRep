@@ -62,6 +62,9 @@ public class GameManagerController {
         this.hidatoManagerController = hmc;
     }
     
+    public HidatoManagerController getHMC(){
+        return hidatoManagerController;
+    }
     
     public CurrentGameController createRandomGame(String name, Help help){
         //Si ja existeix una partida amb aquell nom, no fa res
