@@ -10,6 +10,7 @@ import CapaDomini.Usuari.HidatoUserController;
 import CapaDomini.Usuari.UserController;
 import javax.swing.JOptionPane;
 import CapaDomini.Misc.Fonts;
+import CapaDomini.Partida.GameManagerController;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -28,10 +29,12 @@ public class FrameLogin extends javax.swing.JFrame {
     
     private HidatoUserController uc;
     private Domini parent;
+    private GameManagerController gmc;
     
-    public FrameLogin(Domini parent, HidatoUserController uc) {
+    public FrameLogin(Domini parent, HidatoUserController uc, GameManagerController gmc) {
         this.parent = parent;
         this.uc = uc;
+        this.gmc = gmc;
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
@@ -225,6 +228,7 @@ public class FrameLogin extends javax.swing.JFrame {
             else if (result == -3) msgError("Error desconegut");
             else {
                 JOptionPane.showMessageDialog(this,"Has entrat correctament","Fantàstic!",JOptionPane.INFORMATION_MESSAGE);
+                gmc.initGameSet();
                 parent.obrirMenu(this);
             }
         }
