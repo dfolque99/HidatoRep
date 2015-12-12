@@ -111,7 +111,7 @@ public class FrameGame extends javax.swing.JFrame {
         else help = h;
                 
         currentGameCtr = ctrGameManager.restoreGame(gameName);
-        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createGameFromBoard(gameName, hidatoName, help);
+        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createGameFromBoardName(gameName, hidatoName, help);
         if (currentGameCtr == null) currentGameCtr = ctrGameManager.createRandomGame(gameName, help);
         
         helpLabel.setText("Nivell d'ajuda: "+currentGameCtr.getHelp());
