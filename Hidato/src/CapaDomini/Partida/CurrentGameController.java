@@ -318,4 +318,8 @@ public class CurrentGameController {
     public void setName(String newName){
         game.setName(newName);
     }
+    
+    public void setBoardName(String newName){
+        game.getHidato().setBoardName(newName);
+    }
 }
