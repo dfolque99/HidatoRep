@@ -87,6 +87,11 @@ public class FrameMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú principal");
         setSize(new java.awt.Dimension(800, 600));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 144)); // NOI18N
         jLabel1.setText("Hidato");
@@ -309,6 +314,10 @@ public class FrameMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        parent.saveBeforeClose();
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
@@ -473,26 +482,36 @@ public class FrameMenu extends javax.swing.JFrame {
             parent.obrirEditor(this);
         }
         else if (b.equals(b_jugar_g)) {
-            FrameLlista fll = new FrameLlista(new RetornadorString() {
-                public void retorna(String s) {
-                    jugarHidato(s);
-                }
-            }, hmc);
-            fll.setLocation(this.getLocation());
-            fll.loadHidatosTots();
-            fll.setVisible(true);
-            this.setVisible(false);
+            if (hmc.getAllHidatoList().isEmpty()) {
+                msgError("No existeix cap hidato al repositori");
+            }
+            else {
+                FrameLlista fll = new FrameLlista(new RetornadorString() {
+                    public void retorna(String s) {
+                        jugarHidato(s);
+                    }
+                }, hmc);
+                fll.setLocation(this.getLocation());
+                fll.loadHidatosTots();
+                fll.setVisible(true);
+                this.setVisible(false);
+            }
         }
         else if (b.equals(b_continuar)) {
-            FrameLlistaPartides fllp = new FrameLlistaPartides(new RetornadorString() {
-                public void retorna(String s) {
-                    jugarPartida(s);
-                }
-            }, gmc, hmc);
-            fllp.setLocation(this.getLocation());
-            fllp.loadPartidesUsuari(); // !!!!!!
-            fllp.setVisible(true);
-            this.setVisible(false);
+            if (gmc.getGameList().isEmpty()) {
+                msgError("No hi ha cap partida guardada");
+            }
+            else {
+                FrameLlistaPartides fllp = new FrameLlistaPartides(new RetornadorString() {
+                    public void retorna(String s) {
+                        jugarPartida(s);
+                    }
+                }, gmc, hmc);
+                fllp.setLocation(this.getLocation());
+                fllp.loadPartidesUsuari();
+                fllp.setVisible(true);
+                this.setVisible(false);
+            }
         }
         else if (b.equals(b_jugar_a)) {
             Random rand = new Random();
@@ -534,5 +553,7 @@ public class FrameMenu extends javax.swing.JFrame {
         return h;
     }
     
-    
+    private void msgError(String text) {
+        JOptionPane.showMessageDialog(this,text,"On vas flipat!",JOptionPane.ERROR_MESSAGE);
+    }
 }

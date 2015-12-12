@@ -144,7 +144,8 @@ public class Domini {
         antic.dispose();
     }
     
-    public void tanca() {
+    public void saveBeforeClose() {
         rc.save();
+        hmc.saveAll();
     }
 }
