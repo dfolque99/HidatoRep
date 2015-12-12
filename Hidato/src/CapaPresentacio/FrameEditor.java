@@ -263,7 +263,7 @@ public class FrameEditor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        hmc.saveAll();
+        parent.saveBeforeClose();
     }//GEN-LAST:event_formWindowClosing
 
     /**
