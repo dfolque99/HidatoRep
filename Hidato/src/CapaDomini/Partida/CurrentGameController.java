@@ -26,7 +26,7 @@ public class CurrentGameController {
     /**
      * Controlador de DB de game, de la capa de persistencia
      */
-    private final GameDBController ctrDBGame;
+    private final GameSet gameSet;
     
     /**
      * SolverController, te els metodes per resoldre hidatos
@@ -64,14 +64,15 @@ public class CurrentGameController {
      * @param ctrRanking controlador del ranking per enviar-li les dades de la partida acabada
      * @param hidatoUserController controlador de l'usuari que juga la partida
      */    
-    public CurrentGameController(Game game, GameDBController ctrDBGame, RankingController ctrRanking, HidatoUserController hidatoUserController){
+    public CurrentGameController(Game game, GameSet gameSet, RankingController ctrRanking, HidatoUserController hidatoUserController){
         this.game = game;
-        this.ctrDBGame = ctrDBGame;
+        this.gameSet = gameSet;
         this.ctrHidato = new HidatoController(game.getHidato());
         this.solver = new SolverController();
         this.ctrRanking = ctrRanking;
         this.hidatoUserController = hidatoUserController;
         this.time0 = (long) System.currentTimeMillis();
+        initialize();
     }
 
     /**
@@ -206,7 +207,7 @@ public class CurrentGameController {
      */
     public int saveGame(){
         pause();
-        ctrDBGame.saveGame(game);
+        gameSet.addGame(game);
         return 0;
     }
     
@@ -244,7 +245,7 @@ public class CurrentGameController {
         if (!game.getLegitSolved()) return 0;
         int checkPenalty = 60000;
         int changePenalty = 1000;
-        int hintPenalty = 60000;
+        int hintPenalty = 30000;
         long totalDuration = game.getDuration().toMillis() + checkPenalty*game.getChecksMade() + changePenalty * game.getChangesMade() + hintPenalty * game.getHints();
         long score = (long) (1e8 / totalDuration);
         if (game.getHelp() == Help.MEDIUM) score = score/2;

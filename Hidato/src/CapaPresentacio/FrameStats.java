@@ -6,6 +6,7 @@ import CapaDomini.Usuari.HidatoUserController;
 import CapaDomini.Usuari.UserController;
 import CapaDomini.Usuari.UserStatsController;
 import java.awt.Font;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -243,6 +244,7 @@ public class FrameStats extends javax.swing.JFrame {
         );
 
         this.pack();
+        setIconImage((new ImageIcon("icon.png")).getImage());
     }
 
 }
