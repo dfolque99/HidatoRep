@@ -21,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -42,6 +43,7 @@ public class FrameEditor extends javax.swing.JFrame {
     public FrameEditor(Domini parent, HidatoManagerController hmc) {
         initComponents();
         inici(parent, hmc);
+        setIconImage((new ImageIcon("icon.png")).getImage());
     }
     
 
