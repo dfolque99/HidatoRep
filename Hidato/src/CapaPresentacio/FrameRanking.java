@@ -201,7 +201,7 @@ public class FrameRanking extends javax.swing.JFrame {
     }//GEN-LAST:event_backToMenuActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        dom.tanca();
+        dom.saveBeforeClose();
     }//GEN-LAST:event_formWindowClosing
  
     /**

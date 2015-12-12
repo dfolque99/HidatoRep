@@ -285,6 +285,11 @@ public class FrameGame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         boardPanel.setPreferredSize(new java.awt.Dimension(400, 400));
 
@@ -567,6 +572,10 @@ public class FrameGame extends javax.swing.JFrame {
         }
         newValue.setValue(nextNumber(1));
     }//GEN-LAST:event_restartButtonActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        parent.saveBeforeClose();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

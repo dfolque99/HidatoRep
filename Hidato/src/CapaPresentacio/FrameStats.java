@@ -113,6 +113,11 @@ public class FrameStats extends javax.swing.JFrame {
         this.hmc = hmc;
         this.parent = parent;
         this.initComponents(uc);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                parent.saveBeforeClose();
+            }
+        });
     }
 
     private void buttonModifyPasswordActionPerformed(final UserController uc) {
