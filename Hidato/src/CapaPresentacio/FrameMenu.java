@@ -7,6 +7,7 @@ package CapaPresentacio;
 
 import CapaDomini.Domini;
 import CapaDomini.Misc.Fonts;
+import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Partida.Help;
 import CapaDomini.Tauler.GeneratorController;
@@ -486,12 +487,18 @@ public class FrameMenu extends javax.swing.JFrame {
             
         }
         else if (b.equals(b_jugar_a)) {
-            parent.obrirPartida(this,null,null,getHelp());
+            Random rand = new Random();
+            int x = rand.nextInt(5)+3;
+            int y = rand.nextInt(5)+3;
+            hmc.createRandom(x, y);
+            CurrentGameController cgc = hmc.playTempHidato(getHelp());
+            parent.obrirPartida(this,cgc);
         }
     }
     
     private void obrirGame (String boardname) {
-        parent.obrirPartida(this, null, boardname, getHelp());
+        CurrentGameController cgc = gmc.createGameFromBoardName(null, boardname, getHelp());
+        parent.obrirPartida(this, cgc);
     }
     
     private Help getHelp () {
