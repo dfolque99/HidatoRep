@@ -9,6 +9,7 @@ package CapaPresentacio;
 import CapaDomini.Domini;
 import CapaDomini.Misc.Colors;
 import CapaDomini.Misc.Fonts;
+import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.Help;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
@@ -506,19 +507,24 @@ public class FrameEditor extends javax.swing.JFrame {
         b_jugar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                Object[] options = { "Baix", "Mitja","Alt" };
-                int val = JOptionPane.showOptionDialog(null, "Tria el nivell d'ajuda", "",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                null, options,options[0]);
-                if (val != -1){
-                    Help h;
-                    if (val == 0) h = Help.LOW;
-                    else if (val == 1) h = Help.MEDIUM;
-                    else h = Help.HIGH;
-                    hmc.playTempHidato(h);
-                }
+                obrirJoc();
             }
         });
+    }
+    
+    private void obrirJoc() {
+        Object[] options = { "Baix", "Mitja","Alt" };
+        int val = JOptionPane.showOptionDialog(null, "Tria el nivell d'ajuda", "",
+        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+        null, options,options[0]);
+        if (val != -1){
+            Help h;
+            if (val == 0) h = Help.LOW;
+            else if (val == 1) h = Help.MEDIUM;
+            else h = Help.HIGH;
+            CurrentGameController cgc = hmc.playTempHidato(h);
+            parent.obrirPartida(this, cgc);
+        }
     }
     
     private void enablePanelEdicio(boolean b) {
