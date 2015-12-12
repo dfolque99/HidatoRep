@@ -25,6 +25,7 @@ public class FrameLlistaPartides extends FrameLlista {
      */
     public FrameLlistaPartides(RetornadorString ret, GameManagerController gmc, HidatoManagerController hmc) {
         super(ret,hmc);
+        this.gmc = gmc;
         initComponents();
     }
 
@@ -105,6 +106,7 @@ public class FrameLlistaPartides extends FrameLlista {
     }
     
     public void loadPartidesUsuari () {
+        if(gmc == null) System.out.println("gmc null");
         ArrayList<String> llista = gmc.getGameList();
         jList1.setListData(llista.toArray(new String[]{}));
         if (!llista.isEmpty()) jList1.setSelectedIndex(0);

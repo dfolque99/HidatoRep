@@ -120,7 +120,7 @@ public class GameManagerController {
         HidatoController ctrHidato = new HidatoController(hidato);
         ctrHidato.setBlankCellsToZero();
         DifficultyController diffController = new DifficultyController();
-        Game game = new Game(name, hidato, solvedHidato, loggedUser.getUsername(), help, diffController.getDifficulty(hidato), false);
+        Game game = new Game(name, hidato, solvedHidato, loggedUser.getUsername(), help, diffController.getDifficulty(hidato), true);
         CurrentGameController ctrCurrentGame = new CurrentGameController(game, ctrDBGame, ctrRanking, hidatoUserController);
         
         return ctrCurrentGame;

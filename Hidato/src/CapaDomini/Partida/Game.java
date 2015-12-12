@@ -79,7 +79,7 @@ public class Game implements Serializable {
      */
     private Boolean legitSolve; //OK
     
-    private Boolean isHidatoRandom;
+    private Boolean isHidatoVolatile;
     
     /**
      *  Crea un nou Game a partir d'un nom, un hidato, un hidato solucio, un usuari, un nivell d'ajuda i una dificultat
@@ -98,7 +98,7 @@ public class Game implements Serializable {
         this.hints = 0;
         this.difficulty = difficulty;
         this.legitSolve = true;
-        this.isHidatoRandom = isRandom;
+        this.isHidatoVolatile = isRandom;
     }
     
     /**
@@ -201,8 +201,8 @@ public class Game implements Serializable {
         return this.legitSolve;
     }
     
-    public Boolean isRandom(){
-        return this.isHidatoRandom;
+    public Boolean isVolatile(){
+        return this.isHidatoVolatile;
     }
     
     
