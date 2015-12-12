@@ -161,7 +161,7 @@ public class FrameStats extends javax.swing.JFrame {
 
     private void openSelectedHidato(String hidatoName) {
         if (hidatoName == null) {
-            
+            this.setVisible(true);
         }
         else {
             if (hmc.loadHidato(hidatoName)) {
