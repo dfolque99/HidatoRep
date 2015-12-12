@@ -473,26 +473,36 @@ public class FrameMenu extends javax.swing.JFrame {
             parent.obrirEditor(this);
         }
         else if (b.equals(b_jugar_g)) {
-            FrameLlista fll = new FrameLlista(new RetornadorString() {
-                public void retorna(String s) {
-                    jugarHidato(s);
-                }
-            }, hmc);
-            fll.setLocation(this.getLocation());
-            fll.loadHidatosTots();
-            fll.setVisible(true);
-            this.setVisible(false);
+            if (hmc.getAllHidatoList().isEmpty()) {
+                msgError("No existeix cap hidato al repositori");
+            }
+            else {
+                FrameLlista fll = new FrameLlista(new RetornadorString() {
+                    public void retorna(String s) {
+                        jugarHidato(s);
+                    }
+                }, hmc);
+                fll.setLocation(this.getLocation());
+                fll.loadHidatosTots();
+                fll.setVisible(true);
+                this.setVisible(false);
+            }
         }
         else if (b.equals(b_continuar)) {
-            FrameLlistaPartides fllp = new FrameLlistaPartides(new RetornadorString() {
-                public void retorna(String s) {
-                    jugarPartida(s);
-                }
-            }, gmc, hmc);
-            fllp.setLocation(this.getLocation());
-            fllp.loadPartidesUsuari(); // !!!!!!
-            fllp.setVisible(true);
-            this.setVisible(false);
+            if (gmc.getGameList().isEmpty()) {
+                msgError("No hi ha cap partida guardada");
+            }
+            else {
+                FrameLlistaPartides fllp = new FrameLlistaPartides(new RetornadorString() {
+                    public void retorna(String s) {
+                        jugarPartida(s);
+                    }
+                }, gmc, hmc);
+                fllp.setLocation(this.getLocation());
+                fllp.loadPartidesUsuari();
+                fllp.setVisible(true);
+                this.setVisible(false);
+            }
         }
         else if (b.equals(b_jugar_a)) {
             Random rand = new Random();
@@ -534,5 +544,7 @@ public class FrameMenu extends javax.swing.JFrame {
         return h;
     }
     
-    
+    private void msgError(String text) {
+        JOptionPane.showMessageDialog(this,text,"On vas flipat!",JOptionPane.ERROR_MESSAGE);
+    }
 }
