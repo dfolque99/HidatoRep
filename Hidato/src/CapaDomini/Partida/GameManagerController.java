@@ -66,6 +66,12 @@ public class GameManagerController {
         this.gameSet = new GameSet(this.ctrDBGame.getAllGames(this.hidatoUserController.getLoggedUser().getUsername()));
     }
     
+    public void saveGameSet(){
+        for (int i = 0; i < gameSet.getSize(); ++i){
+            ctrDBGame.saveGame(gameSet.getGameByPos(i));
+        }
+    }
+    
     public HidatoManagerController getHMC(){
         return hidatoManagerController;
     }
