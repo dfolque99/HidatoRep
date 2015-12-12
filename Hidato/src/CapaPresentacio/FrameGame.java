@@ -46,8 +46,6 @@ import javax.swing.Timer;
 
 /**
  * TO DO:
- * acabar de parlar com fem lo de la llista de partides, amb la llista(public, private?)
- * keylistener sempre dona 0?
  */
 /**
  *
