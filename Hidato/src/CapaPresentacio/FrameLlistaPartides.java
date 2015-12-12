@@ -86,10 +86,9 @@ public class FrameLlistaPartides extends FrameLlista {
             public void run() {
                 HidatoUserController uc = new HidatoUserController();
                 //uc.createUser("Usuari", "password");
-                uc.login("hola","adeu");
-                HidatoSet hs = new HidatoSet();
                 
-                GameManagerController gmc = new GameManagerController(new RankingController(), uc, new HidatoSet());
+                /*uc.login("hola","adeu");
+                GameManagerController gmc;
                 gmc.loadAllGames();
                 HidatoManagerController hmc = new HidatoManagerController(new HidatoSet(),gmc,uc);
                 FrameLlistaPartides flp = new FrameLlistaPartides(new RetornadorString() {
@@ -100,7 +99,7 @@ public class FrameLlistaPartides extends FrameLlista {
                 }, gmc,hmc);
                 flp.setVisible(true);
                 System.out.println("Abans de load partides");
-                flp.loadPartidesUsuari();
+                flp.loadPartidesUsuari();*/
             }
         });
     }

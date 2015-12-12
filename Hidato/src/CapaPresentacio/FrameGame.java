@@ -98,7 +98,10 @@ public class FrameGame extends javax.swing.JFrame {
             hidatoUserController.login("hola", "adeu");
         }else hidatoUserController = uc;
         
-        if (gmc == null) ctrGameManager = new GameManagerController(ctrRanking, hidatoUserController, hidatoSet);
+        if (gmc == null) {
+            System.out.println("error en frame game, game manager controller es null");
+            return;
+        }
         else ctrGameManager = gmc;
         
         if (h == null) help = Help.LOW;

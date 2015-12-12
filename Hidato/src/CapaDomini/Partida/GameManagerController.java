@@ -43,6 +43,8 @@ public class GameManagerController {
     
     private HidatoSet hidatoSet;
     
+    private HidatoManagerController hidatoManagerController;
+    
     /**
      * Creadora
      * @param hidatoSet conjunt amb tots els hidatos (taulers)
@@ -51,12 +53,13 @@ public class GameManagerController {
      * @param ctrRanking controlador del ranking per poder enviar-li entrades
      * @param hidatoUserController controlador d'usuari per modificar els parametres de l'usuari loguejat
      */
-    public GameManagerController(RankingController ctrRanking, HidatoUserController hidatoUserController, HidatoSet hidatoSet){
+    public GameManagerController(RankingController ctrRanking, HidatoUserController hidatoUserController, HidatoManagerController hmc){
         this.hidatoUserController = hidatoUserController;
         this.ctrDBGame = new GameDBController();
         this.ctrRanking = ctrRanking;
         this.gameSet = new GameSet();
         this.hidatoSet = hidatoSet;
+        this.hidatoManagerController = hmc;
     }
     
     
@@ -93,7 +96,7 @@ public class GameManagerController {
         HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
         Game game_aux = ctrDBGame.getGame(name, loggedUser.getUsername());
         if (game_aux != null) return null;
-        Hidato solvedHidato = hidatoSet.getHidatoByName(hidatoName);
+        Hidato solvedHidato = hidatoManagerController.getHidatoByName(hidatoName);
         if (solvedHidato == null) return null;
         Hidato hidato = new Hidato(solvedHidato);
         HidatoController ctrHidato = new HidatoController(hidato);
