@@ -67,6 +67,7 @@ public class FrameGame extends javax.swing.JFrame {
     RankingController ctrRanking;
     HidatoUserController hidatoUserController;
     GameManagerController ctrGameManager;
+    HidatoManagerController hidatoManagerController;
     HidatoSet hidatoSet;
     Help help;
     GeneratorController hidatoGenerator;
@@ -104,6 +105,8 @@ public class FrameGame extends javax.swing.JFrame {
         }
         else ctrGameManager = gmc;
         
+        hidatoManagerController = ctrGameManager.getHMC();
+        
         if (h == null) help = Help.LOW;
         else help = h;
                 
@@ -124,6 +127,11 @@ public class FrameGame extends javax.swing.JFrame {
         msg("Felicitats, hidato completat!\n Puntuacio: "+currentGameCtr.calculateScore(),"Yeeeeeeee!!");
         if (currentGameCtr.isRandom()){
             String ret = JOptionPane.showInputDialog(this, "Vols guardar el hidato? Escriu el nom:");
+            Boolean aux = true;
+            while (ret != null && aux){
+                aux = hidatoManagerController.usedName(ret);
+                ret = JOptionPane.showInputDialog(this, "Ja hi ha un hidato amb aquest nom. Tria'n un altre:");
+            }
             if (ret != null){
                 currentGameCtr.setBoardName(ret);
                 hidatoSet.addHidato(currentGameCtr.getHidato());
