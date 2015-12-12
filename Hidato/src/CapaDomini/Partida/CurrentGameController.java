@@ -311,8 +311,8 @@ public class CurrentGameController {
         return game.getHidato();
     }
     
-    public Boolean isRandom(){
-        return game.isRandom();
+    public Boolean isVolatile(){
+        return game.isVolatile();
     }
     
     public void setName(String newName){

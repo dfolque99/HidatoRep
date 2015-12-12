@@ -101,7 +101,7 @@ public class FrameGame extends javax.swing.JFrame {
         currentGameCtr.finishGame();
         timer.stop();
         msg("Felicitats, hidato completat!\n Puntuacio: "+currentGameCtr.calculateScore(),"Yeeeeeeee!!");
-        if (currentGameCtr.isRandom()){
+        if (currentGameCtr.isVolatile()){
             String ret = JOptionPane.showInputDialog(this, "Vols guardar el hidato? Escriu el nom:");
             Boolean aux = true;
             while (ret != null && aux){
