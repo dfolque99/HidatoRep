@@ -25,6 +25,16 @@ public final class UserStatsController {
         this.user = user;
     }
 
+    
+    /**
+     *
+     * @return userName of class User
+     */
+    public String getUsername() {
+        return user.getUsername();
+    }
+    
+    
     /**
      *
      * @return solvedGames of class User
@@ -77,8 +87,9 @@ public final class UserStatsController {
      *
      * @return percentage of time to solved games, from class HidatoUser 
      */
-    public Duration getAverageTimePerSolve() {
-        return user.getAverageTimePerSolve();
+    public long getAverageTimePerSolve() {
+        if (user.getAverageTimePerSolve() == null) return 0;
+        return user.getAverageTimePerSolve().getSeconds();
     }
 
     /**
@@ -87,5 +98,14 @@ public final class UserStatsController {
      */
     public int getTotalCreatedBoards() {
         return user.getTotalCreatedBoards();
+    }
+    
+    public long getBestTime() {
+        if (user.getBestTime() == null) return 0;
+        return user.getBestTime().getSeconds();
+    }
+    
+    public int getBestScore() {
+        return user.getBestScore();
     }
 }

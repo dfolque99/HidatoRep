@@ -25,7 +25,9 @@ public class HidatoUserController extends UserController {
         return error;
     }
     
-    
+    public UserStatsController getStatsController() {
+        return new UserStatsController((HidatoUser) getLoggedUser());
+    }
     
     
 }

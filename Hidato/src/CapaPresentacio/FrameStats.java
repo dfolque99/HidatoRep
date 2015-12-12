@@ -2,6 +2,7 @@ package CapaPresentacio;
 
 import CapaDomini.Misc.Fonts;
 import CapaDomini.Tauler.HidatoManagerController;
+import CapaDomini.Usuari.HidatoUserController;
 import CapaDomini.Usuari.UserController;
 import CapaDomini.Usuari.UserStatsController;
 import java.awt.Font;
@@ -37,24 +38,30 @@ public class FrameStats extends javax.swing.JFrame {
         return ret;
     }
 
-    private static String[] getStats(final UserController uc) {
-        CapaDomini.Usuari.User myUser = uc.getLoggedUser();
-        if (myUser instanceof CapaDomini.Usuari.HidatoUser) {
-            CapaDomini.Usuari.HidatoUser myHidatoUser = (CapaDomini.Usuari.HidatoUser) myUser;
-            UserStatsController usc = new UserStatsController(myHidatoUser);
-            return new String[]{"Estadístiques de l'usuari: " + uc.getLoggedUser().getUsername(),
-                "Puntuació mitjana: " + String.valueOf(usc.getAverageScore()),
-                "Temps mitja per resoldre (en segons): " + String.valueOf(usc.getAverageTimePerSolve().getSeconds()),
-                "Quantitat de hidatos resolts: " + String.valueOf(usc.getSolvedGames()),
-                "Percentatge de hidatos resolts: " + String.valueOf(usc.getSolvedPercentage()),
-                "Quantitat de hidatos començats: " + String.valueOf(usc.getStartedGames()),
-                "Quantitat de hidatos creats: " + String.valueOf(usc.getTotalCreatedBoards()),
-                "Puntuació total: " + String.valueOf(usc.getTotalScore()),
-                "Temps total jugat: " + String.valueOf(usc.getTotalTimePlayed().getSeconds())
-            };
-        } else {
-            return new String[]{"El cast a HidatoUSer ha fallat"};
+    private static String[] getStats(final HidatoUserController uc) {
+        UserStatsController usc = uc.getStatsController();
+        String[] ret = new String[]{"Estadístiques de l'usuari " + usc.getUsername(),
+            "Hidatos resolts: " + String.valueOf(usc.getSolvedGames()),
+            "Percentatge de resolts: ",
+            "Puntuació mitjana: ",
+            "Puntuació màxima en un hidato: ",
+            "Temps de resolució mitjà: ",
+            "Resolució més ràpida d'un hidato: ",
+            "Hidatos creats: " + String.valueOf(usc.getTotalCreatedBoards())
+        };
+        if (usc.getSolvedGames() != 0) {
+            ret[2] += String.valueOf(usc.getSolvedPercentage()) + "%";
+            ret[3] += String.valueOf(usc.getAverageScore()) + " punts";
+            ret[4] += String.valueOf(usc.getBestScore()) + " punts";
+            ret[5] += String.valueOf(usc.getAverageTimePerSolve()/60) + " minuts, " + 
+                usc.getAverageTimePerSolve()%60 + " segons";
+            ret[6] += String.valueOf(usc.getBestTime()/60) + " minuts, " + 
+                String.valueOf(usc.getBestTime()%60) + " segons";
         }
+        else {
+            ret[2] += "--"; ret[3] += "--"; ret[4] += "--"; ret[5] += "--"; ret[6] += "--";
+        }
+        return ret;
     }
 
     private static javax.swing.JButton createButton(final String text, final java.awt.event.ActionListener l) {
@@ -88,7 +95,7 @@ public class FrameStats extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(myJFrame, "Usuari borrat", "Usuari borrat", JOptionPane.PLAIN_MESSAGE);
             System.exit(0);
         } else if (null != Password) {
-            JOptionPane.showMessageDialog(myJFrame, "Contraseñya incorrecta", "Contraseñya incorrecta", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(myJFrame, "Contrasenya incorrecta", "Contrasenya incorrecta", JOptionPane.ERROR_MESSAGE);
         }
     }
     private HidatoManagerController hmc;
@@ -99,8 +106,8 @@ public class FrameStats extends javax.swing.JFrame {
         throw new UnsupportedOperationException();
     }
 
-    public FrameStats(CapaDomini.Domini parent, final UserController uc, HidatoManagerController hmc) {
-        super("Gestió del perfil de l'usuarie");
+    public FrameStats(CapaDomini.Domini parent, final HidatoUserController uc, HidatoManagerController hmc) {
+        super("Gestió del perfil de l'usuari");
         this.parent = parent;
         this.hmc = hmc;
         this.parent = parent;
@@ -155,7 +162,7 @@ public class FrameStats extends javax.swing.JFrame {
     }
 
     @SuppressWarnings(value = "unchecked")
-    private void initComponents(final UserController uc) {
+    private void initComponents(final HidatoUserController uc) {
         javax.swing.JLabel myJLabel = new javax.swing.JLabel(convertToMultiline(convertToString(FrameStats.getStats(uc))), javax.swing.SwingConstants.CENTER); //SwingConstants.CENTER is for centering the jlabel text
         myJLabel.setFont(myFont);
         
