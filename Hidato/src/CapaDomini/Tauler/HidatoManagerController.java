@@ -54,8 +54,17 @@ public class HidatoManagerController {
         this.uc = uc;
     }
     
-    public ArrayList<String> getHidatoList() {
+    public ArrayList<String> getUserHidatoList() {
         return ((HidatoUser) uc.getLoggedUser()).getCreatedHidatos();
+    }
+    
+    public ArrayList<String> getAllHidatoList() {
+        ArrayList<String> llista = new ArrayList<>();
+        int total = hset.getTotalHidatos();
+        for (int i = 0; i < total; ++i){
+            llista.add(hset.getHidatoByPos(i).getBoardName());
+        }
+        return llista;
     }
     
     /**
@@ -103,7 +112,7 @@ public class HidatoManagerController {
     public CurrentGameController playTempHidato(String name, Help help) {
         if (hset.getHidatoByName(name)== null) return null;
         //ES POT ESBORRAR EL METODE PERQUE NO ES CRIDA MAI
-        return cgm.createGame(name, tempHidato, help);
+        return cgm.createGame(name, tempHidato, help, false);
     }
     
     /**

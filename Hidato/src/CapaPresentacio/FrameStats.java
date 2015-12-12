@@ -124,15 +124,18 @@ public class FrameStats extends javax.swing.JFrame {
     }
 
     private Object[] getHidatos(final UserController uc) {
-        String[] ret = hmc.getHidatoList().toArray(new String[]{});
+        String[] ret = hmc.getUserHidatoList().toArray(new String[]{});
         return ret;
     }
 
     private void buttonSelectHidatoToEditActionPerformed(final UserController uc) {
         Object[] myList = getHidatos(uc);
         if (myList.length > 0) {
-            FrameLlista fll = new FrameLlista((String s) -> {
-                openSelectedHidato(s);
+            //                            FELIX NO HAGAS LO DE LA LAMBDA AQUÍ
+            FrameLlista fll = new FrameLlista(new RetornadorString() {
+                public void retorna(String s) {
+                    openSelectedHidato(s);
+                }
             }, hmc);
             fll.setLocation(this.getLocation());
             fll.loadHidatosUsuari();

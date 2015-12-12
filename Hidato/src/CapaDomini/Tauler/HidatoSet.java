@@ -14,6 +14,8 @@ import java.util.ArrayList;
  * @author David
  */
 
+
+///////// falta fer que els organitzi ordenadament
 public class HidatoSet implements Serializable {
     
     /**

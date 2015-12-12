@@ -447,10 +447,18 @@ public class FrameMenu extends javax.swing.JFrame {
             parent.obrirEditor(this);
         }
         else if (b.equals(b_jugar_g)) {
-            parent.obrirLlista(this);
+            FrameLlista fll = new FrameLlista(new RetornadorString() {
+                public void retorna(String s) {
+                    obrirGame(s);
+                }
+            }, hmc);
+            fll.setLocation(this.getLocation());
+            fll.loadHidatosTots();
+            fll.setVisible(true);
+            this.setVisible(false);
         }
         else if (b.equals(b_continuar)) {
-            parent.obrirLlistaPartides(this);
+            
         }
         else if (b.equals(b_jugar_a)) {
             Object[] options = { "Baix", "Mitja","Alt" };
@@ -473,6 +481,9 @@ public class FrameMenu extends javax.swing.JFrame {
         }
     }
     
+    private void obrirGame (String boardname) {
+        //aqui s'ha d'obrir la partida amb nom de hidato s
+    }
     
     
 }

@@ -102,8 +102,8 @@ public class Domini {
         antic.dispose();
     }
     
-    public void obrirPartida(JFrame antic, Help h, String gameName,Hidato hidato,Boolean isRandom) {
-        FrameGame fg = new FrameGame(this, rc, uc, gmc, h, gameName,hidato,hs,isRandom);
+    public void obrirPartida(JFrame antic, Help h, String gameName, Hidato hidato, Boolean isRandom) {
+        FrameGame fg = new FrameGame(this, rc, uc, gmc, h, gameName, hidato, hs, isRandom);
         fg.setVisible(true);
         fg.setLocation(antic.getLocation());
         antic.dispose();

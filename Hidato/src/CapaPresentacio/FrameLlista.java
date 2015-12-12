@@ -264,7 +264,13 @@ public class FrameLlista extends javax.swing.JFrame {
     }
     
     public void loadHidatosUsuari () {
-        ArrayList<String> llista = hmc.getHidatoList();
+        ArrayList<String> llista = hmc.getUserHidatoList();
+        jList1.setListData(llista.toArray(new String[]{}));
+        if (!llista.isEmpty()) jList1.setSelectedIndex(0);
+    }
+    
+    public void loadHidatosTots () {
+        ArrayList<String> llista = hmc.getAllHidatoList();
         jList1.setListData(llista.toArray(new String[]{}));
         if (!llista.isEmpty()) jList1.setSelectedIndex(0);
     }
