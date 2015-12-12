@@ -57,7 +57,7 @@ public class GameManagerController {
         this.hidatoUserController = hidatoUserController;
         this.ctrDBGame = new GameDBController();
         this.ctrRanking = ctrRanking;
-        this.gameSet = new GameSet();
+        this.gameSet = new GameSet(this.ctrDBGame.getAllGames(this.hidatoUserController.getLoggedUser().getUsername()));
         this.hidatoSet = hidatoSet;
         this.hidatoManagerController = hmc;
     }
@@ -69,7 +69,7 @@ public class GameManagerController {
     public CurrentGameController createRandomGame(String name, Help help){
         //Si ja existeix una partida amb aquell nom, no fa res
         HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
-        Game game_aux = ctrDBGame.getGame(name, loggedUser.getUsername());
+        Game game_aux = gameSet.getGameByName(name);
         if (game_aux != null) return null;
         
         //x, y aleatoris entre 3 i 8 (inclosos)
@@ -83,7 +83,7 @@ public class GameManagerController {
         ctrHidato.setBlankCellsToZero();
         DifficultyController diffController = new DifficultyController();
         Game game = new Game(name, hidato, solvedHidato, loggedUser.getUsername(), help, diffController.getDifficulty(hidato), true);
-        CurrentGameController ctrCurrentGame = new CurrentGameController(game, ctrDBGame, ctrRanking, hidatoUserController);
+        CurrentGameController ctrCurrentGame = new CurrentGameController(game, gameSet, ctrRanking, hidatoUserController);
         
         return ctrCurrentGame;
     }
@@ -97,7 +97,7 @@ public class GameManagerController {
      */
     public CurrentGameController createGameFromBoardName(String name, String hidatoName, Help help){
         HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
-        Game game_aux = ctrDBGame.getGame(name, loggedUser.getUsername());
+        Game game_aux = gameSet.getGameByName(name);
         if (game_aux != null) return null;
         Hidato solvedHidato = hidatoManagerController.getHidatoByName(hidatoName);
         if (solvedHidato == null) return null;
@@ -106,14 +106,14 @@ public class GameManagerController {
         ctrHidato.setBlankCellsToZero();
         DifficultyController diffController = new DifficultyController();
         Game game = new Game(name, hidato, solvedHidato, loggedUser.getUsername(), help, diffController.getDifficulty(hidato), false);
-        CurrentGameController ctrCurrentGame = new CurrentGameController(game, ctrDBGame, ctrRanking, hidatoUserController);
+        CurrentGameController ctrCurrentGame = new CurrentGameController(game, gameSet, ctrRanking, hidatoUserController);
         
         return ctrCurrentGame;
     }
     
     public CurrentGameController createGameFromBoard(String name, Hidato solvedHidato, Help help){
         HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
-        Game game_aux = ctrDBGame.getGame(name, loggedUser.getUsername());
+        Game game_aux = gameSet.getGameByName(name);
         if (game_aux != null) return null;
         if (solvedHidato == null) return null;
         Hidato hidato = new Hidato(solvedHidato);
@@ -121,7 +121,7 @@ public class GameManagerController {
         ctrHidato.setBlankCellsToZero();
         DifficultyController diffController = new DifficultyController();
         Game game = new Game(name, hidato, solvedHidato, loggedUser.getUsername(), help, diffController.getDifficulty(hidato), true);
-        CurrentGameController ctrCurrentGame = new CurrentGameController(game, ctrDBGame, ctrRanking, hidatoUserController);
+        CurrentGameController ctrCurrentGame = new CurrentGameController(game, gameSet, ctrRanking, hidatoUserController);
         
         return ctrCurrentGame;
     }
@@ -134,11 +134,10 @@ public class GameManagerController {
      * @return el controlador de la partida recuperada
      */
     public CurrentGameController restoreGame(String name){
-        HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
-        Game game = ctrDBGame.getGame(name, loggedUser.getUsername());
-        ctrDBGame.deleteGame(name, loggedUser.getUsername());
+        Game game = gameSet.getGameByName(name);
+        gameSet.deleteGame(name);
         if (game == null) return null;
-        CurrentGameController ctrCurrentGame = new CurrentGameController(game, ctrDBGame, ctrRanking, hidatoUserController);
+        CurrentGameController ctrCurrentGame = new CurrentGameController(game, gameSet, ctrRanking, hidatoUserController);
         return ctrCurrentGame;
     }
     
@@ -150,13 +149,8 @@ public class GameManagerController {
      * @return 0
      */
     public int deleteGame(String name){
-        HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
-        ctrDBGame.deleteGame(name, loggedUser.getUsername());
+        gameSet.deleteGame(name);
         return 0;
-    }
-    
-    public void loadAllGames(){
-        gameSet = new GameSet(ctrDBGame.getAllGames(hidatoUserController.getLoggedUser().getUsername()));
     }
     
     public ArrayList<String> getGameList(){
@@ -169,6 +163,6 @@ public class GameManagerController {
     }
     
     public Game getGame(String name){
-        return ctrDBGame.getGame(name, hidatoUserController.getLoggedUser().getUsername());
+        return gameSet.getGameByName(name);
     }
 }

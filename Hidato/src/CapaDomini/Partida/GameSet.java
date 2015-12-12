@@ -37,6 +37,12 @@ public class GameSet {
         if (getGameByName(game.getName()) == null) g.add(game);
     }
     
+    public void deleteGame (String name){
+        for (int i = 0; i < g.size(); ++i){
+            if (g.get(i).getName().equals(name)) g.remove(i);
+        }
+    }
+    
     public int getSize(){
         return g.size();
     }
