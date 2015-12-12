@@ -141,4 +141,8 @@ public class Domini {
         flp.setLocation(antic.getLocation());
         antic.dispose();
     }
+    
+    public void tanca() {
+        rc.save();
+    }
 }
