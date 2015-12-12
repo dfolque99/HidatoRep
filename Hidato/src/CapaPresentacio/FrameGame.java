@@ -34,6 +34,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import javafx.scene.layout.Border;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -158,6 +159,8 @@ public class FrameGame extends javax.swing.JFrame {
                      Help h, String gameName, String hidatoName, HidatoSet hs) {
         initComponents();
         inicialitzaParametres(parent, rc, uc, gmc, h, gameName, hidatoName, hs);
+        
+        setIconImage((new ImageIcon("icon.png")).getImage());
 
         int x = currentGameCtr.getSizeX(), y = currentGameCtr.getSizeY();
         int maxim, x1, x2, y1, y2;
