@@ -71,6 +71,11 @@ public class FrameRanking extends javax.swing.JFrame {
         setTitle("Ranking");
         setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         selectorDificultat.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         selectorDificultat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fàcil", "Mitjà", "Difícil" }));
@@ -194,6 +199,10 @@ public class FrameRanking extends javax.swing.JFrame {
         // TODO add your handling code here:
         dom.obrirMenu(this);
     }//GEN-LAST:event_backToMenuActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        dom.tanca();
+    }//GEN-LAST:event_formWindowClosing
  
     /**
      * @param args the command line arguments
