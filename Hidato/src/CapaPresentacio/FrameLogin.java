@@ -11,6 +11,8 @@ import CapaDomini.Usuari.UserController;
 import javax.swing.JOptionPane;
 import CapaDomini.Misc.Fonts;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 
 
@@ -48,6 +50,19 @@ public class FrameLogin extends javax.swing.JFrame {
         }
         initComponents();
         setIconImage((new ImageIcon("icon.png")).getImage());
+        jPasswordField1.addKeyListener(new KeyListener() {
+            public void keyReleased (KeyEvent evt) {
+                
+            }
+            public void keyPressed (KeyEvent evt) {
+                
+            }
+            public void keyTyped (KeyEvent evt) {
+                if (evt.getKeyChar() == '\n') {
+                    entra();
+                }
+            }
+        });
     }
 
     
