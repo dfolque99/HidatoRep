@@ -109,7 +109,7 @@ public class HidatoManagerController {
      *      del hset; si no existeix aquest hidato, retorna null
      */
     public CurrentGameController playTempHidato(Help help) {
-        return null;
+        return gmc.createGameFromBoard(null, tempHidato, help);
     }
     
     /**
