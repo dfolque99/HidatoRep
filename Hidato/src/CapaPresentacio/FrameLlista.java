@@ -53,6 +53,7 @@ public class FrameLlista extends javax.swing.JFrame {
         label_nom = new javax.swing.JLabel();
         label_autor = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<String>();
@@ -80,7 +81,9 @@ public class FrameLlista extends javax.swing.JFrame {
         label_autor.setFont(new java.awt.Font("Tahoma", 2, 24)); // NOI18N
         label_autor.setText("Autor");
 
-        jButton1.setText("Seleccionar");
+        jButton1.setText("Selecciona");
+
+        jButton2.setText("Cancel·la");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -94,7 +97,10 @@ public class FrameLlista extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 152, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -108,7 +114,9 @@ public class FrameLlista extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label_autor)
                 .addGap(11, 11, 11)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -210,6 +218,7 @@ public class FrameLlista extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     protected javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -248,7 +257,13 @@ public class FrameLlista extends javax.swing.JFrame {
         jButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent evt) {
-                retorna();
+                retorna(true);
+            }
+        });
+        jButton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent evt) {
+                retorna(false);
             }
         });
     }
@@ -258,8 +273,9 @@ public class FrameLlista extends javax.swing.JFrame {
         label_autor.setFont(Fonts.getFont("OpenSans-Light", Font.ITALIC, 24));
     }
     
-    private void retorna() {
-        ret.retorna(jList1.getSelectedValue());
+    private void retorna(boolean b) {
+        if (b) ret.retorna(jList1.getSelectedValue());
+        else ret.retorna(null);
         this.dispose();
     }
     
