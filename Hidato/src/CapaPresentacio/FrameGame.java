@@ -121,6 +121,7 @@ public class FrameGame extends javax.swing.JFrame {
         if (currentGameCtr.isRandom()){
             String ret = JOptionPane.showInputDialog(this, "Vols guardar el hidato? Escriu el nom:");
             if (ret != null){
+                currentGameCtr.setBoardName(ret);
                 hidatoSet.addHidato(currentGameCtr.getHidato());
             }
         }
@@ -542,6 +543,7 @@ public class FrameGame extends javax.swing.JFrame {
                 panels.get(i).get(j).changeVal(value);
             }
         }
+        acabaPartida();
     }//GEN-LAST:event_solveButtonActionPerformed
 
     private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseButtonActionPerformed
