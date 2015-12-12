@@ -254,6 +254,7 @@ public class FrameLlista extends javax.swing.JFrame {
         });
         jList1.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         jButton1.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        jButton2.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         jButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent evt) {

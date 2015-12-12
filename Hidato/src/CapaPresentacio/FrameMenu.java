@@ -497,8 +497,14 @@ public class FrameMenu extends javax.swing.JFrame {
     }
     
     private void obrirGame (String boardname) {
-        CurrentGameController cgc = gmc.createGameFromBoardName(null, boardname, getHelp());
-        parent.obrirPartida(this, cgc);
+        if (boardname == null) {
+            this.setVisible(true);
+            anim.setVel(1);
+        }
+        else {
+            CurrentGameController cgc = gmc.createGameFromBoardName(null, boardname, getHelp());
+            parent.obrirPartida(this, cgc);
+        }
     }
     
     private Help getHelp () {
