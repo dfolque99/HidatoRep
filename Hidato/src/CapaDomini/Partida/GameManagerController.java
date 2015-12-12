@@ -4,12 +4,15 @@ import CapaPersistencia.GameDBController;
 import CapaDomini.Tauler.HidatoController;
 import CapaDomini.Rank.RankingController;
 import CapaDomini.Tauler.DifficultyController;
+import CapaDomini.Tauler.GeneratorController;
 import CapaDomini.Tauler.Hidato;
+import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUser;
 import CapaDomini.Usuari.HidatoUserController;
 import CapaDomini.Tauler.SolverController;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Controlador de totes les partides. Quan la vista vol crear/recuperar una partida,
@@ -38,6 +41,8 @@ public class GameManagerController {
     
     private GameSet gameSet;
     
+    private HidatoSet hidatoSet;
+    
     /**
      * Creadora
      * @param hidatoSet conjunt amb tots els hidatos (taulers)
@@ -46,11 +51,35 @@ public class GameManagerController {
      * @param ctrRanking controlador del ranking per poder enviar-li entrades
      * @param hidatoUserController controlador d'usuari per modificar els parametres de l'usuari loguejat
      */
-    public GameManagerController(RankingController ctrRanking, HidatoUserController hidatoUserController){
+    public GameManagerController(RankingController ctrRanking, HidatoUserController hidatoUserController, HidatoSet hidatoSet){
         this.hidatoUserController = hidatoUserController;
         this.ctrDBGame = new GameDBController();
         this.ctrRanking = ctrRanking;
         this.gameSet = new GameSet();
+        this.hidatoSet = hidatoSet;
+    }
+    
+    
+    public CurrentGameController createRandomGame(String name, Help help){
+        //Si ja existeix una partida amb aquell nom, no fa res
+        HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
+        Game game_aux = ctrDBGame.getGame(name, loggedUser.getUsername());
+        if (game_aux != null) return null;
+        
+        //x, y aleatoris entre 3 i 8 (inclosos)
+        Random rand = new Random();
+        int x = rand.nextInt(5)+3;
+        int y = rand.nextInt(5)+3;
+        GeneratorController gc = new GeneratorController();
+        Hidato solvedHidato = gc.generateHidato(x, y);
+        Hidato hidato = new Hidato(solvedHidato);
+        HidatoController ctrHidato = new HidatoController(hidato);
+        ctrHidato.setBlankCellsToZero();
+        DifficultyController diffController = new DifficultyController();
+        Game game = new Game(name, hidato, solvedHidato, loggedUser.getUsername(), help, diffController.getDifficulty(hidato), true);
+        CurrentGameController ctrCurrentGame = new CurrentGameController(game, ctrDBGame, ctrRanking, hidatoUserController);
+        
+        return ctrCurrentGame;
     }
     
     /**
@@ -60,22 +89,17 @@ public class GameManagerController {
      * @param help Nivell d'ajuda (LOW/MEDIUM/HIGH)
      * @return el controlador de la partida creada
      */
-    public CurrentGameController createGame(String name, Hidato solvedHidato, Help help, Boolean isRandom){
-        Boolean error = false;
+    public CurrentGameController createGameFromBoard(String name, String hidatoName, Help help){
         HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
         Game game_aux = ctrDBGame.getGame(name, loggedUser.getUsername());
-        if (game_aux != null) {
-            error = true;
-        }
-        if (solvedHidato == null) {
-            error = true;
-        }
-        if (error) return null;
+        if (game_aux != null) return null;
+        Hidato solvedHidato = hidatoSet.getHidatoByName(hidatoName);
+        if (solvedHidato == null) return null;
         Hidato hidato = new Hidato(solvedHidato);
         HidatoController ctrHidato = new HidatoController(hidato);
         ctrHidato.setBlankCellsToZero();
         DifficultyController diffController = new DifficultyController();
-        Game game = new Game(name, hidato, solvedHidato, loggedUser.getUsername(), help, diffController.getDifficulty(hidato), isRandom);
+        Game game = new Game(name, hidato, solvedHidato, loggedUser.getUsername(), help, diffController.getDifficulty(hidato), false);
         CurrentGameController ctrCurrentGame = new CurrentGameController(game, ctrDBGame, ctrRanking, hidatoUserController);
         
         return ctrCurrentGame;

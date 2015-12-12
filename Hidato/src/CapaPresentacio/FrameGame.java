@@ -81,8 +81,8 @@ public class FrameGame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this,text,title,JOptionPane.PLAIN_MESSAGE);
     }
     
-    private void inicialitzaParametres(Domini parent, RankingController rc, HidatoUserController uc, 
-                                       GameManagerController gmc, Help h, String gameName,Hidato hidato,HidatoSet hs,Boolean isRandom){
+    private void inicialitzaParametres(Domini parent, RankingController rc, HidatoUserController uc, GameManagerController gmc, 
+                                       Help h, String gameName, String hidatoName, HidatoSet hs){
         this.parent = parent;
         hidatoGenerator = new GeneratorController();
         this.hidatoSet = hs;
@@ -97,7 +97,7 @@ public class FrameGame extends javax.swing.JFrame {
             hidatoUserController.login("hola", "adeu");
         }else hidatoUserController = uc;
         
-        if (gmc == null) ctrGameManager = new GameManagerController(ctrRanking, hidatoUserController);
+        if (gmc == null) ctrGameManager = new GameManagerController(ctrRanking, hidatoUserController, hidatoSet);
         else ctrGameManager = gmc;
         
         if (h == null) help = Help.LOW;
@@ -110,8 +110,8 @@ public class FrameGame extends javax.swing.JFrame {
         
         
         currentGameCtr = ctrGameManager.restoreGame(name);
-        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createGame(name, hidato, help, isRandom);
-        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createGame(name, hidatoGenerator.generateHidato(3,2), help, true);
+        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createGameFromBoard(name, hidatoName, help);
+        if (currentGameCtr == null) currentGameCtr = ctrGameManager.createRandomGame(name, help);
         
         helpLabel.setText("Nivell d'ajuda: "+currentGameCtr.getHelp());
         diffLabel.setText("Dificultat: "+currentGameCtr.getDifficulty());
@@ -159,9 +159,9 @@ public class FrameGame extends javax.swing.JFrame {
     }
     
     public FrameGame(Domini parent, RankingController rc, HidatoUserController uc, GameManagerController gmc, 
-                     Help h, String gameName,Hidato hidato,HidatoSet hs,Boolean isRandom) {
+                     Help h, String gameName, String hidatoName, HidatoSet hs) {
         initComponents();
-        inicialitzaParametres(parent,rc,uc,gmc,h,gameName,hidato,hs,isRandom);
+        inicialitzaParametres(parent, rc, uc, gmc, h, gameName, hidatoName, hs);
         
         //System.out.println("despres d'inicialitzar tot");
         
@@ -637,7 +637,7 @@ public class FrameGame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameGame(new Domini(), null, null, null, null, null,null,null,true).setVisible(true);
+                new FrameGame(new Domini(), null, null, null, null, null, null, null).setVisible(true);
             }
         });
     }

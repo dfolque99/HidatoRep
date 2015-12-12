@@ -112,7 +112,7 @@ public class HidatoManagerController {
     public CurrentGameController playTempHidato(String name, Help help) {
         if (hset.getHidatoByName(name)== null) return null;
         //ES POT ESBORRAR EL METODE PERQUE NO ES CRIDA MAI
-        return cgm.createGame(name, tempHidato, help, false);
+        return cgm.createGameFromBoard(name, tempHidato.getBoardName(), help);
     }
     
     /**

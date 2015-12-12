@@ -67,7 +67,7 @@ public class DriverGame {
             SolverController solver = new SolverController();
             RankingController ctrRanking = new RankingController();
            // GeneratorController hidatoGenerator = new GeneratorController(4,5); //tamany del hidato
-            GameManagerController ctrGameManager = new GameManagerController(ctrRanking, hidatoUserController);
+            GameManagerController ctrGameManager = new GameManagerController(ctrRanking, hidatoUserController, hidatoSet);
             CurrentGameController ctrCurrentGame = null;
             hidatoUserController.login(username, password);
 
@@ -106,7 +106,7 @@ public class DriverGame {
                                     default: hidato = hidatoGenerator.generateHidato(0,0);//Mai s'hauria d'arribar aqui
                                 }
                                 if (hidato == null) System.out.println("hidato nul");
-                                ctrCurrentGame = ctrGameManager.createGame(name, hidato, help,true);
+                                ctrCurrentGame = ctrGameManager.createGameFromBoard(name, hidato.getBoardName(), help);
                                 if (ctrCurrentGame == null){
                                     System.out.println("Error. Possibles causes:");
                                     System.out.println("- Ja existia una partida amb el nom introduit");
@@ -125,7 +125,7 @@ public class DriverGame {
                                 name = "default";
                                 help = Help.LOW;
                                 hidato = defaultHidato();
-                                ctrCurrentGame = ctrGameManager.createGame(name,hidato,help,true);
+                                ctrCurrentGame = ctrGameManager.createGameFromBoard(name,hidato.getBoardName(),help);
                                 break;
                             default: break; //Mai s'hauria d'arribar aqui
                         }
