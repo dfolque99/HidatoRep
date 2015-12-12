@@ -475,7 +475,7 @@ public class FrameMenu extends javax.swing.JFrame {
         else if (b.equals(b_jugar_g)) {
             FrameLlista fll = new FrameLlista(new RetornadorString() {
                 public void retorna(String s) {
-                    obrirGame(s);
+                    jugarHidato(s);
                 }
             }, hmc);
             fll.setLocation(this.getLocation());
@@ -484,7 +484,15 @@ public class FrameMenu extends javax.swing.JFrame {
             this.setVisible(false);
         }
         else if (b.equals(b_continuar)) {
-            
+            FrameLlistaPartides fllp = new FrameLlistaPartides(new RetornadorString() {
+                public void retorna(String s) {
+                    jugarPartida(s);
+                }
+            }, gmc, hmc);
+            fllp.setLocation(this.getLocation());
+            fllp.loadPartidesUsuari(); // !!!!!!
+            fllp.setVisible(true);
+            this.setVisible(false);
         }
         else if (b.equals(b_jugar_a)) {
             Random rand = new Random();
@@ -496,13 +504,24 @@ public class FrameMenu extends javax.swing.JFrame {
         }
     }
     
-    private void obrirGame (String boardname) {
+    private void jugarHidato (String boardname) {
         if (boardname == null) {
             this.setVisible(true);
             anim.setVel(1);
         }
         else {
             CurrentGameController cgc = gmc.createGameFromBoardName(null, boardname, getHelp());
+            parent.obrirPartida(this, cgc);
+        }
+    }
+    
+    private void jugarPartida (String gameName) {
+        if (gameName == null) {
+            this.setVisible(true);
+            anim.setVel(1);
+        }
+        else {
+            CurrentGameController cgc = gmc.restoreGame(gameName);
             parent.obrirPartida(this, cgc);
         }
     }
