@@ -147,5 +147,6 @@ public class Domini {
     public void saveBeforeClose() {
         rc.save();
         hmc.saveAll();
+        gmc.saveGameSet();
     }
 }
