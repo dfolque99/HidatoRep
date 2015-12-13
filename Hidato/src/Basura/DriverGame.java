@@ -24,6 +24,7 @@ import CapaDomini.Partida.Game;
 import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Partida.Help;
 import CapaDomini.Tauler.Cell;
+import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.Type;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -63,11 +64,12 @@ public class DriverGame {
             HidatoSet hidatoSet = new HidatoSet();
             HidatoUser user = new HidatoUser(username, password);
             HidatoUserController hidatoUserController = new HidatoUserController();
+            HidatoManagerController hmc = new HidatoManagerController(hidatoSet,hidatoUserController);
             GameDBController ctrDBGame = new GameDBController();
             SolverController solver = new SolverController();
             RankingController ctrRanking = new RankingController();
            // GeneratorController hidatoGenerator = new GeneratorController(4,5); //tamany del hidato
-            GameManagerController ctrGameManager = new GameManagerController(ctrRanking, hidatoUserController, hidatoSet);
+            GameManagerController ctrGameManager = new GameManagerController(ctrRanking, hidatoUserController, hmc);
             CurrentGameController ctrCurrentGame = null;
             hidatoUserController.login(username, password);
 
