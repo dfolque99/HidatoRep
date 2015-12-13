@@ -19,6 +19,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
@@ -341,6 +343,8 @@ public class FrameEditor extends javax.swing.JFrame {
     private ButtonGroup g1;
     private String nomHidato;
     private boolean solMostrada;
+    private final FrameEditor dis = this;
+    DialogProgressBar dialog;
     
     
     
@@ -435,22 +439,32 @@ public class FrameEditor extends javax.swing.JFrame {
                     return;
                 }
                 posarZeros();
-                boolean completat = hmc.completeTempHidato();
-                if (completat) {
-                    for (int i = 0; i < N; ++i) {
-                        for (int j = 0; j < M; ++j) {
-                            CapaDomini.Tauler.Type t = hmc.getTempCellType(i, j);
-                            panels.get(i).get(j).changeType(t);
-                            int val = hmc.getTempCellVal(i, j);
-                            if (t == CapaDomini.Tauler.Type.GIVEN) panels.get(i).get(j).changeVal(val);
+                dis.setEnabled(false);
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        boolean completat = hmc.completeTempHidato();
+                        dis.setEnabled(true);
+                        dialog.dispose();
+                        if (completat) {
+                            for (int i = 0; i < N; ++i) {
+                                for (int j = 0; j < M; ++j) {
+                                    CapaDomini.Tauler.Type t = hmc.getTempCellType(i, j);
+                                    panels.get(i).get(j).changeType(t);
+                                    int val = hmc.getTempCellVal(i, j);
+                                    if (t == CapaDomini.Tauler.Type.GIVEN) panels.get(i).get(j).changeVal(val);
+                                }
+                            }
+                            poderDesar(true);
+                            msgInfo ("S'ha completat el hidato. Ara ja es pot desar.");
+                        }
+                        else {
+                            msgError ("No s'ha pogut completar el hidato");
                         }
                     }
-                    poderDesar(true);
-                    msgInfo ("S'ha completat el hidato. Ara ja es pot desar.");
-                }
-                else {
-                    msgError ("No s'ha pogut completar el hidato");
-                }
+                });
+                t.start();
+                dialog = obrirProgressBar("Completant el hidato...", t);
             }
         });
         b_validar.addActionListener(new ActionListener() {
@@ -465,14 +479,24 @@ public class FrameEditor extends javax.swing.JFrame {
                     return;
                 }
                 posarZeros();
-                boolean completat = hmc.solveTempHidato();
-                if (completat) {
-                    poderDesar(true);
-                    msgInfo ("S'ha validat el hidato. Ara ja es pot desar.");
-                }
-                else {
-                    msgError ("No s'ha pogut validar el hidato");
-                }
+                dis.setEnabled(false);
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        boolean completat = hmc.solveTempHidato();
+                        dis.setEnabled(true);
+                        dialog.dispose();
+                        if (completat) {
+                            poderDesar(true);
+                            msgInfo ("S'ha validat el hidato. Ara ja es pot desar.");
+                        }
+                        else {
+                            msgError ("No s'ha pogut validar el hidato");
+                        }
+                    }
+                });
+                t.start();
+                dialog = obrirProgressBar("Buscant una solució...", t);
             }
         });
         b_desar.addActionListener(new ActionListener() {
@@ -511,6 +535,23 @@ public class FrameEditor extends javax.swing.JFrame {
             }
         });
     }
+    
+    private DialogProgressBar obrirProgressBar(String titol, Thread t) {
+        DialogProgressBar dialog = new DialogProgressBar(this,false,new Runnable() {
+            @Override
+            public void run() {
+                t.interrupt();
+                dis.setEnabled(true);
+            }
+        });
+        int x = dis.getLocation().x+(dis.getSize().width-dialog.getSize().width)/2;
+        int y = dis.getLocation().y+(dis.getSize().height-dialog.getSize().height)/2;
+        dialog.setTitle(titol);
+        dialog.setLocation(new Point(x,y));
+        dialog.setVisible(true);
+        return dialog;
+    }
+    
     
     private void obrirJoc() {
         Object[] options = { "Baix", "Mitja","Alt" };
