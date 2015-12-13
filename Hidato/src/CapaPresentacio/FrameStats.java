@@ -75,7 +75,7 @@ public class FrameStats extends javax.swing.JFrame {
 
     private static String askPassword(javax.swing.JFrame myFrame, String extra) {
         javax.swing.JPanel panel = new javax.swing.JPanel();
-        javax.swing.JLabel label = new javax.swing.JLabel("Introdueix contrasenya " + extra + " :");
+        javax.swing.JLabel label = new javax.swing.JLabel("Introdueix contrasenya " + extra + ":");
         javax.swing.JPasswordField pass = new javax.swing.JPasswordField(20);
         panel.add(label);
         panel.add(pass);
@@ -90,11 +90,11 @@ public class FrameStats extends javax.swing.JFrame {
     }
 
     private static void buttonDeleteActionPerformed(javax.swing.JFrame myJFrame, final UserController uc) {
-        String Password = FrameStats.askPassword(myJFrame, "actual \ni pressiona ok per borrar l'usuari, \npressiona cancel per cancelar");
+        String Password = FrameStats.askPassword(myJFrame, "actual \ni pressiona \"OK\" per esborrar l'usuari, \npressiona \"Cancel\" per cancelar");
         Boolean truePass = uc.getLoggedUser().getPassword().equals(Password);
         if (truePass) {
             uc.deleteUser(Password);
-            JOptionPane.showMessageDialog(myJFrame, "Usuari borrat", "Usuari borrat", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(myJFrame, "Usuari esborrat", "Usuari esborrat", JOptionPane.PLAIN_MESSAGE);
             System.exit(0);
         } else if (null != Password) {
             JOptionPane.showMessageDialog(myJFrame, "Contrasenya incorrecta", "Contrasenya incorrecta", JOptionPane.ERROR_MESSAGE);
@@ -110,7 +110,7 @@ public class FrameStats extends javax.swing.JFrame {
     }
 
     public FrameStats(CapaDomini.Domini parent, final HidatoUserController uc, HidatoManagerController hmc) {
-        super("Gestió del perfil de l'usuari");
+        super("Gestió del perfil d'usuari");
         this.parent = parent;
         this.hmc = hmc;
         this.uc = uc;
