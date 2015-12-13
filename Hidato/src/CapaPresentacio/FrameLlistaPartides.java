@@ -133,6 +133,7 @@ public class FrameLlistaPartides extends FrameLlista {
     
     @Override
     protected CapaDomini.Tauler.Type getType(int i, int j){
+        System.out.println("Demana el type de la cell "+i+","+j);
         return cgc.getCellType(i,j);
     }
     
@@ -143,6 +144,16 @@ public class FrameLlistaPartides extends FrameLlista {
         else if (cgc.getCellType(i,j) == CapaDomini.Tauler.Type.BLANK && cgc.getCellVal(i, j) != 0)
             panels.get(i0).get(j0).setVal(val);
         
+    }
+    
+    @Override
+    protected int hidatoX(){
+        return cgc.getSizeX();
+    }
+    
+    @Override
+    protected int hidatoY(){
+        return cgc.getSizeY();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

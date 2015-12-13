@@ -168,6 +168,7 @@ public class GameManagerController {
         if (gameSet == null) System.out.println("gameset null");
         for(int i = 0; i < gameSet.getSize();i++){
             ret.add((gameSet.getGameByPos(i)).getName());
+            System.out.println("mida del gameset: "+gameSet.getSize());
         }
         return ret;
     }

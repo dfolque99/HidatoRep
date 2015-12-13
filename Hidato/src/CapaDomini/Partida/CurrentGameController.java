@@ -211,6 +211,10 @@ public class CurrentGameController {
         return 0;
     }
     
+    public Boolean existsGame(String name){
+        return (gameSet.getGameByName(name) != null);
+    }
+    
     /**
      * Actualitza les estadistiques de l'usuari i el ranking, quan la partida esta acabada
      * @return 0
