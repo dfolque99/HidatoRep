@@ -605,6 +605,10 @@ public class FrameGame extends javax.swing.JFrame {
                         msgError("Introdueix algun nom");
                         return;
                     }
+                    if (currentGameCtr.existsGame(newName)){
+                        msgError("Ja existeix una partida amb aquest nom");
+                        return;
+                    }
                     currentGameCtr.setName(newName);
                 }
                 currentGameCtr.saveGame();

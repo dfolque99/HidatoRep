@@ -369,9 +369,17 @@ public class FrameLlista extends javax.swing.JFrame {
                             
     }
     
+    protected int hidatoX(){
+        return hmc.getTempSizeX();
+    }
+    
+    protected int hidatoY(){
+        return hmc.getTempSizeY();
+    }
+    
     protected void dibuixarHidato() {
-        int N = hmc.getTempSizeX();
-        int M = hmc.getTempSizeY();
+        int N = hidatoX();
+        int M = hidatoY();
         jPanel2.removeAll();
         jPanel2.updateUI();
         int maxim, N1, N2, M1, M2;
