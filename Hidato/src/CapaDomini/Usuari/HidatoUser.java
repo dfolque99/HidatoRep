@@ -55,7 +55,7 @@ public class HidatoUser extends User implements Serializable {
     
     public double getSolvedPercentage() {
         if (getStartedGames() == 0) return 0;
-        else return (float)getSolvedGames()/(float)getStartedGames();
+        else return (float)getSolvedGames()/(float)getStartedGames()*100;
     }
     
     public int getAverageScore() {
