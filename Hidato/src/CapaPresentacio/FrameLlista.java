@@ -62,6 +62,7 @@ public class FrameLlista extends javax.swing.JFrame {
         jList1 = new javax.swing.JList<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Hidatos guardats");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);

@@ -79,6 +79,7 @@ public class FrameEditor extends javax.swing.JFrame {
         b_buida_posar = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Editor de hidato");
         setBounds(new java.awt.Rectangle(0, 0, 800, 600));
         setSize(new java.awt.Dimension(800, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
