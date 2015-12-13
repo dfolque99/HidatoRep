@@ -2,12 +2,16 @@ package CapaDomini.Tauler;
 
 import CapaDomini.Misc.Position;
 import CapaDomini.Misc.Utils;
+import java.util.AbstractQueue;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NavigableMap;
+import java.util.Objects;
+import java.util.Queue;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -337,12 +341,60 @@ public class SolverController {
         //recursion case
         board.getCell(x, y).setVal(n);    
         used[x][y] = true;
-        if (getNeighboursSortedWorst(x, y, n).stream().anyMatch((s) -> (solveWithBacktracking(x + s[0], y + s[1], n + 1)))) {
-            return true;
+        boolean b = true;
+        if (n >= 20 && n % 10 == 0){b = isBoardConnected();}
+        //if (n == 1){b = isBoardConnected();}
+        if (b){
+            if (getNeighboursSortedWorst(x, y, n).stream().anyMatch((s) -> (solveWithBacktracking(x + s[0], y + s[1], n + 1)))) {
+                return true;
+            }
         }
         used[x][y] = false;
         return false;
     }
-
+    /**
+     * 
+     * @return if the blank cells not used can be reached from the others
+     */
+    private boolean isBoardConnected(){
+        Integer blankCount = 0;
+        Position startingBlank = new Position(-1,-1);//no deberia utilizarse
+            for (int i = 0; i < board.getSizeX(); i+=1){
+                for (int j = 0; j < board.getSizeY(); j+=1){
+                    if (!used[i][j] && board.getCell(i, j).getType() == Type.BLANK) {
+                        blankCount +=1;
+                        //System.out.println("x "+i+" y "+j);
+                        startingBlank = new Position(i,j); 
+                    }
+                }
+            }
+        Integer bfsCount = 0;
+        if (0 != blankCount){
+            boolean[][] visited = new boolean[board.getSizeX()][board.getSizeY()];
+            Queue<Position> qp = new ArrayDeque<>((board.getSizeX()+1)*(board.getSizeY()+1));
+            qp.add(startingBlank);
+            while (!qp.isEmpty()){
+                Position pos = qp.remove();
+                if (!visited[pos.getX()][pos.getY()]){
+                    //System.out.println("x "+pos.getX()+" y "+pos.getY());
+                    visited[pos.getX()][pos.getY()] = true;
+                    bfsCount += 1;
+                    qp.addAll(
+                        Arrays.stream(Moore)
+                        .map(p -> Position.add(p,pos))        
+                        .filter(p -> {
+                            Integer x = p.getX();
+                            Integer y = p.getY();
+                            return !((Math.min(x, y) < 0) || (Math.max(x - board.getSizeX(), y - board.getSizeY()) >= 0));
+                        })
+                        .filter(p -> (board.getCell(p.getX(), p.getY()).getType() == Type.BLANK && !used[p.getX()][p.getY()]))        
+                        .collect(Collectors.toList())
+                    );
+                }
+            }            
+        }
+        //System.out.println("blankCount "+blankCount+" bfsCount "+bfsCount+" startingBlank x "+startingBlank.getX()+" y "+startingBlank.getY());
+        return Objects.equals(bfsCount, blankCount);
+    }
     
 }
