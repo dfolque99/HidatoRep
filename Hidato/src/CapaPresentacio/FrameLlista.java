@@ -297,7 +297,7 @@ public class FrameLlista extends javax.swing.JFrame {
         label_autor.setFont(Fonts.getFont("OpenSans-Light", Font.ITALIC, 24));
     }
     
-    private void retorna(boolean b) {
+    protected void retorna(boolean b) {
         if (b) ret.retorna(jList1.getSelectedValue());
         else ret.retorna(null);
         this.dispose();

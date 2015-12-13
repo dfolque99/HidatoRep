@@ -29,11 +29,6 @@ public class CurrentGameController {
     private final GameSet gameSet;
     
     /**
-     * SolverController, te els metodes per resoldre hidatos
-     */
-    private final SolverController solver;
-    
-    /**
      * Controlador de hidato, te metodes per modificar hidatos
      */
     private HidatoController ctrHidato;
@@ -68,7 +63,6 @@ public class CurrentGameController {
         this.game = game;
         this.gameSet = gameSet;
         this.ctrHidato = new HidatoController(game.getHidato());
-        this.solver = new SolverController();
         this.ctrRanking = ctrRanking;
         this.hidatoUserController = hidatoUserController;
         this.time0 = (long) System.currentTimeMillis();
@@ -90,7 +84,7 @@ public class CurrentGameController {
     public boolean check(){
         game.incrementChecksMade();
         Hidato hidato = ctrHidato.getHidato();
-        return solver.solve(hidato);
+        return (new SolverController()).solve(hidato);
     }
     
     /**
@@ -101,7 +95,7 @@ public class CurrentGameController {
     public ArrayList<Integer> requestHint(){
         game.incrementHints();
         Hidato hidato = ctrHidato.getHidato();
-        ArrayList<Integer> hint = solver.getHint(hidato); //x y value
+        ArrayList<Integer> hint = (new SolverController()).getHint(hidato); //x y value
         if (hint == null) return null; //El hidato no te solucio
         int x = hint.get(0);
         int y = hint.get(1);
@@ -136,7 +130,7 @@ public class CurrentGameController {
         Help helpAux = game.getHelp(); 
         //controlar que la cell sigui valida
         if (helpAux == Help.HIGH){
-            if (!solver.solve(hidato)){
+            if (!(new SolverController()).solve(hidato)){
                 hidato.getCell(x,y).setVal(0);
                 return -1; // -1 = EL HIDATO NO TE SOLUCIO
             }else return 0;
@@ -192,6 +186,7 @@ public class CurrentGameController {
      */
     public int solve(){
         game.setLegitSolve(false);
+        SolverController solver = (new SolverController());
         if (solver.solve(game.getHidato())){
             game.setHidato(solver.getHidato(game.getHidato()));
         }else game.solve();

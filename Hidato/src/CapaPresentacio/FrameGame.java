@@ -27,6 +27,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -73,7 +74,7 @@ public class FrameGame extends javax.swing.JFrame {
     GeneratorController hidatoGenerator;
     Domini parent;
     Timer timer;
-    
+    FrameGame dis = this;
     
     private void msgError(String text) {
         JOptionPane.showMessageDialog(this,text,"Error",JOptionPane.ERROR_MESSAGE);
@@ -512,39 +513,90 @@ public class FrameGame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private DialogProgressBar dialog;
+    
+    private DialogProgressBar obrirProgressBar(String titol, Thread t) {
+        DialogProgressBar dialog = new DialogProgressBar(this,false,new Runnable() {
+            @Override
+            public void run() {
+                t.interrupt();
+                dis.setEnabled(true);
+            }
+        });
+        int x = dis.getLocation().x+(dis.getSize().width-dialog.getSize().width)/2;
+        int y = dis.getLocation().y+(dis.getSize().height-dialog.getSize().height)/2;
+        dialog.setTitle(titol);
+        dialog.setLocation(new Point(x,y));
+        dialog.setVisible(true);
+        return dialog;
+    }
+    
     private void checkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkButtonActionPerformed
-        if(currentGameCtr.check()){
-            msg("El hidato encara te solucio","");
-        }else{
-            msgError("El hidato no te solucio");
-        }
+        dis.setEnabled(false);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean result = currentGameCtr.check();
+                    dis.setEnabled(true);
+                    dialog.dispose();
+                if(result){
+                    msg("El hidato encara te solucio","");
+                }else{
+                    msgError("El hidato no te solucio");
+                }
+            }
+        });
+        dialog = obrirProgressBar("Buscant una solució...", t);
+        t.start();
+        t.interrupt();
     }//GEN-LAST:event_checkButtonActionPerformed
 
     private void hintButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hintButtonActionPerformed
-        ArrayList<Integer> hint = currentGameCtr.requestHint();
-        if (hint == null){
-            msgError("El hidato no te solucio");
-            return;
-        }
-        int x = hint.get(0);
-        int y = hint.get(1);
-        int value = hint.get(2);
-        panels.get(x).get(y).changeVal(value);
-        newValue.setValue(nextNumber((int)newValue.getValue()-1));
-        if(nextNumber(1) == -1){
-            acabaPartida();
-        }
+        dis.setEnabled(false);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<Integer> hint = currentGameCtr.requestHint();
+                dis.setEnabled(true);
+                dialog.dispose();
+                if (hint == null){
+                    msgError("El hidato no te solucio");
+                    return;
+                }
+                int x = hint.get(0);
+                int y = hint.get(1);
+                int value = hint.get(2);
+                panels.get(x).get(y).changeVal(value);
+                newValue.setValue(nextNumber((int)newValue.getValue()-1));
+                if(nextNumber(1) == -1){
+                    acabaPartida();
+                }
+            }
+        });
+        dialog = obrirProgressBar("Buscant una pista...", t);
+        t.start();
     }//GEN-LAST:event_hintButtonActionPerformed
 
     private void solveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solveButtonActionPerformed
-        currentGameCtr.solve();
-        for(int i = 0; i < currentGameCtr.getSizeX(); i++){
-            for(int j = 0; j < currentGameCtr.getSizeY(); j++){
-                int value = currentGameCtr.getCellVal(i, j);
-                panels.get(i).get(j).changeVal(value);
+        dis.setEnabled(false);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                currentGameCtr.solve();
+                dis.setEnabled(true);
+                dialog.dispose();
+                for(int i = 0; i < currentGameCtr.getSizeX(); i++){
+                    for(int j = 0; j < currentGameCtr.getSizeY(); j++){
+                        int value = currentGameCtr.getCellVal(i, j);
+                        panels.get(i).get(j).changeVal(value);
+                    }
+                }
+                acabaPartida();
             }
-        }
-        acabaPartida();
+        });
+        dialog = obrirProgressBar("Resolent el hidato...", t);
+        t.start();
     }//GEN-LAST:event_solveButtonActionPerformed
 
     private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseButtonActionPerformed
