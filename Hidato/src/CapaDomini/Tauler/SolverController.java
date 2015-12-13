@@ -342,7 +342,8 @@ public class SolverController {
         //recursion case
         board.getCell(x, y).setVal(n);    
         used[x][y] = true;
-        boolean b = SolverControllerStop.isStopped();
+        boolean b = !SolverControllerStop.isStopped();
+        //boolean b = true;
         if (n >= 20 && n % 10 == 0){b = isBoardConnected();}
         //if (n == 1){b = isBoardConnected();}
         if (b){
