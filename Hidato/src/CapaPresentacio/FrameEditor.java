@@ -448,7 +448,7 @@ public class FrameEditor extends javax.swing.JFrame {
                         boolean completat = hmc.completeTempHidato();
                         if (!SolverControllerStop.isStopped()) {
                             dis.setEnabled(true);
-                            dialog.dispose();
+                            if (dialog != null) dialog.dispose();
                             if (completat) {
                                 for (int i = 0; i < N; ++i) {
                                     for (int j = 0; j < M; ++j) {
@@ -490,7 +490,7 @@ public class FrameEditor extends javax.swing.JFrame {
                         boolean completat = hmc.solveTempHidato();
                         if (!SolverControllerStop.isStopped()) {
                             dis.setEnabled(true);
-                            dialog.dispose();
+                            if (dialog != null) dialog.dispose();
                             if (completat) {
                                 poderDesar(true);
                                 msgInfo ("S'ha validat el hidato. Ara ja es pot desar.");
