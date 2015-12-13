@@ -656,6 +656,10 @@ public class FrameGame extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        currentGameCtr.pause();
+        isGamePaused = true;
+        timeSincePause = 0;
+        boardPanel.setVisible(false);
         String[] opcions = new String[] {"Si", "No", "Cancel·la"};
         int response = JOptionPane.showOptionDialog(this, "Vols guardar la partida?", "Sortir a menu",
         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
@@ -680,6 +684,9 @@ public class FrameGame extends javax.swing.JFrame {
             }
             parent.obrirMenu(this);
         }
+        currentGameCtr.unpause();
+        isGamePaused = false;
+        boardPanel.setVisible(true);
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void undoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoButtonActionPerformed
