@@ -35,6 +35,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Stack;
 import javafx.scene.layout.Border;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -56,6 +57,14 @@ import javax.swing.Timer;
  */
 public class FrameGame extends javax.swing.JFrame {
 
+    private class Accio{
+        int x,y,val;
+        Accio(int x0, int y0, int val0){
+            x = x0;
+            y = y0;
+            val = val0;
+        }
+    }
     ArrayList<ArrayList<SquareCell>> panels;
     Color blankColor;
     Color hintColor;
@@ -74,6 +83,7 @@ public class FrameGame extends javax.swing.JFrame {
     GeneratorController hidatoGenerator;
     Domini parent;
     Timer timer;
+    Stack<Accio> historial;
     FrameGame dis = this;
     
     private void msgError(String text) {
@@ -98,6 +108,7 @@ public class FrameGame extends javax.swing.JFrame {
         if (currentGameCtr.getName() == null){
             titleLabel.setText("Nova partida");
         }else titleLabel.setText("Partida: "+currentGameCtr.getName());
+        historial = new Stack<>();
     }
     
     private void acabaPartida(){
@@ -233,6 +244,8 @@ public class FrameGame extends javax.swing.JFrame {
                                 }else if (errCode == -5){
                                     msgError("La posicio no es valida!");
                                 }else{
+                                    int oldVal = p.getVal();
+                                    historial.add(new Accio(p.getA(), p.getB(), oldVal));
                                     p.changeVal(v);
                                     if (nextNumber(1) == -1){
                                         if (currentGameCtr.isSolved()) acabaPartida();
@@ -280,6 +293,7 @@ public class FrameGame extends javax.swing.JFrame {
         pauseButton = new javax.swing.JButton();
         restartButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
+        undoButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         timeLabel = new javax.swing.JLabel();
         helpLabel = new javax.swing.JLabel();
@@ -384,6 +398,13 @@ public class FrameGame extends javax.swing.JFrame {
             }
         });
 
+        undoButton.setText("Desfés");
+        undoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                undoButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -391,17 +412,20 @@ public class FrameGame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(checkButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(hintButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(pauseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(restartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(solveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(checkButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(hintButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(solveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(pauseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(restartButton, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                            .addComponent(undoButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -413,14 +437,16 @@ public class FrameGame extends javax.swing.JFrame {
                         .addGap(35, 35, 35)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(restartButton)
-                            .addComponent(exitButton)))
+                            .addComponent(solveButton)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(checkButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(hintButton)
-                            .addComponent(solveButton))
+                            .addComponent(undoButton))
                         .addGap(29, 29, 29)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exitButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -476,7 +502,7 @@ public class FrameGame extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 143, Short.MAX_VALUE))
+                .addGap(0, 114, Short.MAX_VALUE))
         );
 
         titleLabel.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 36));
@@ -567,6 +593,8 @@ public class FrameGame extends javax.swing.JFrame {
                 int x = hint.get(0);
                 int y = hint.get(1);
                 int value = hint.get(2);
+                int oldVal = panels.get(x).get(y).getVal();
+                historial.add(new Accio(x,y,oldVal));
                 panels.get(x).get(y).changeVal(value);
                 newValue.setValue(nextNumber((int)newValue.getValue()-1));
                 if(nextNumber(1) == -1){
@@ -617,6 +645,7 @@ public class FrameGame extends javax.swing.JFrame {
             for(int j = 0; j < currentGameCtr.getSizeY(); j++){
                 int value = currentGameCtr.getCellVal(i, j);
                 panels.get(i).get(j).changeVal(value);
+                historial = new Stack<>();
             }
         }
         newValue.setValue(nextNumber(1));
@@ -652,6 +681,16 @@ public class FrameGame extends javax.swing.JFrame {
             parent.obrirMenu(this);
         }
     }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void undoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoButtonActionPerformed
+        if (historial.isEmpty()) return;
+        Accio a = historial.pop();
+        int x = a.x;
+        int y = a.y;
+        int val = a.val;
+        currentGameCtr.putValue(val, x, y);
+        panels.get(x).get(y).changeVal(val);
+    }//GEN-LAST:event_undoButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -709,5 +748,6 @@ public class FrameGame extends javax.swing.JFrame {
     private javax.swing.JButton solveButton;
     private javax.swing.JLabel timeLabel;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JButton undoButton;
     // End of variables declaration//GEN-END:variables
 }
