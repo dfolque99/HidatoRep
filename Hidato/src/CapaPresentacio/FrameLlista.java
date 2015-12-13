@@ -323,6 +323,7 @@ public class FrameLlista extends javax.swing.JFrame {
         ArrayList<String> llista = hmc.getUserHidatoList();
         jList1.setListData(llista.toArray(new String[]{}));
         if (!llista.isEmpty()) jList1.setSelectedIndex(0);
+        jButton1.setText("Edita");
         jButton2.setVisible(true);
         jButton2.setText("Nom nou");
         jButton3.setVisible(true);

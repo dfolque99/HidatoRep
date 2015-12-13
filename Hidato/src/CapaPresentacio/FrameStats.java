@@ -146,30 +146,40 @@ public class FrameStats extends javax.swing.JFrame {
     private void buttonSelectHidatoToEditActionPerformed(final UserController uc) {
         Object[] myList = getHidatos(uc);
         if (myList.length > 0) {
-            //                            FELIX NO HAGAS LO DE LA LAMBDA AQUÍ
-            FrameLlista fll = new FrameLlista(new RetornadorString() {
-                public void retorna(String s) {
-                    openSelectedHidato(s);
-                }
-                public void elimina(String s) {
-                    deleteHidato(s);
-                }
-                public void canviaNom(String oldName, String newName){
-                    renameHidato(oldName, newName);
-                }
-            }, hmc);
-            fll.setLocation(this.getLocation());
-            fll.loadHidatosUsuari();
-            fll.setVisible(true);
-            this.setVisible(false);
+            obrirLlista();
         } else {
             JOptionPane.showMessageDialog(this, "No hidatos trobats", "L'usuari no te hidatos guardats", JOptionPane.ERROR_MESSAGE);
         }
     }
     
+    private void obrirLlista() {
+        //                            FELIX NO HAGAS LO DE LA LAMBDA AQUÍ
+        FrameLlista fll = new FrameLlista(new RetornadorString() {
+            public void retorna(String s) {
+                openSelectedHidato(s);
+            }
+            public void elimina(String s) {
+                deleteHidato(s);
+            }
+            public void canviaNom(String oldName, String newName){
+                renameHidato(oldName, newName);
+            }
+        }, hmc);
+        fll.setLocation(this.getLocation());
+        fll.loadHidatosUsuari();
+        fll.setVisible(true);
+        this.setVisible(false);
+    }
+    
     private void deleteHidato(String name) {
         hmc.deleteHidato(name);
-        buttonSelectHidatoToEditActionPerformed(uc);
+        Object[] myList = getHidatos(uc);
+        if (myList.length > 0) {
+            obrirLlista();
+        }
+        else {
+            this.setVisible(true);
+        }
     }
     
     private void renameHidato(String oldName, String newName) {
