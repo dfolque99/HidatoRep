@@ -4,14 +4,12 @@
  * and open the template in the editor.
  */
 package CapaDomini.Tauler;
-import CapaDomini.Partida.*;
+import CapaDomini.Misc.Position;
 import CapaDomini.Misc.*;
-import java.util.AbstractQueue;
+import CapaDomini.Partida.Difficulty;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Objects;
 import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -173,7 +171,7 @@ public class DifficultyController {
                 } 
             }
         }
-        PV.sort((CapaDomini.Tauler.PositionValue a,CapaDomini.Tauler.PositionValue b)->a.getValue()-b.getValue());//o al reves
+        PV.sort((CapaDomini.Misc.PositionValue a,CapaDomini.Misc.PositionValue b)->a.getValue()-b.getValue());//o al reves
         return PV;
     }
     /**
