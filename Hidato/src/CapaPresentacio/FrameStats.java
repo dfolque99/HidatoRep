@@ -117,6 +117,7 @@ public class FrameStats extends javax.swing.JFrame {
         this.parent = parent;
         this.initComponents(uc);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 parent.saveBeforeClose();
             }
