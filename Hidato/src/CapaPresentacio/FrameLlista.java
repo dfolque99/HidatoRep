@@ -328,6 +328,7 @@ public class FrameLlista extends javax.swing.JFrame {
         jButton2.setText("Nom nou");
         jButton3.setVisible(true);
         jButton3.setText("Elimina");
+        jButton4.setText("Endarrere");
         jButton2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent evt) {

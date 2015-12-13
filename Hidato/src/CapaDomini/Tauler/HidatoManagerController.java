@@ -204,12 +204,14 @@ public class HidatoManagerController {
         hset.deleteHidatoByName(name);
         ArrayList<String> hidatos = ((HidatoUser)uc.getLoggedUser()).getCreatedHidatos();
         hidatos.remove(name);
+        uc.updateUser();
     }
     
     public void renameHidato (String oldName, String newName) {
         hset.getHidatoByName(oldName).setBoardName(newName);
         ArrayList<String> hidatos = ((HidatoUser)uc.getLoggedUser()).getCreatedHidatos();
         hidatos.set(hidatos.indexOf(oldName), newName);
+        uc.updateUser();
     }
     
     
