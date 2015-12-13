@@ -22,6 +22,7 @@ import CapaDomini.Tauler.HidatoController;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Tauler.SolverController;
+import CapaDomini.Tauler.SolverControllerStop;
 import CapaDomini.Usuari.HidatoUserController;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -546,7 +547,7 @@ public class FrameGame extends javax.swing.JFrame {
         DialogProgressBar dialog = new DialogProgressBar(this,false,new Runnable() {
             @Override
             public void run() {
-                t.interrupt();
+                SolverControllerStop.stop();
                 dis.setEnabled(true);
             }
         });
@@ -564,18 +565,19 @@ public class FrameGame extends javax.swing.JFrame {
             @Override
             public void run() {
                 boolean result = currentGameCtr.check();
-                    dis.setEnabled(true);
-                    dialog.dispose();
-                if(result){
-                    msg("El hidato encara te solucio","");
-                }else{
-                    msgError("El hidato no te solucio");
+                if (!SolverControllerStop.isStopped()) {
+                        dis.setEnabled(true);
+                        dialog.dispose();
+                    if(result){
+                        msg("El hidato encara te solucio","");
+                    }else{
+                        msgError("El hidato no te solucio");
+                    }
                 }
             }
         });
         dialog = obrirProgressBar("Buscant una solució...", t);
         t.start();
-        t.interrupt();
     }//GEN-LAST:event_checkButtonActionPerformed
 
     private void hintButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hintButtonActionPerformed
@@ -584,21 +586,23 @@ public class FrameGame extends javax.swing.JFrame {
             @Override
             public void run() {
                 ArrayList<Integer> hint = currentGameCtr.requestHint();
-                dis.setEnabled(true);
-                dialog.dispose();
-                if (hint == null){
-                    msgError("El hidato no te solucio");
-                    return;
-                }
-                int x = hint.get(0);
-                int y = hint.get(1);
-                int value = hint.get(2);
-                int oldVal = panels.get(x).get(y).getVal();
-                historial.add(new Accio(x,y,oldVal));
-                panels.get(x).get(y).changeVal(value);
-                newValue.setValue(nextNumber((int)newValue.getValue()-1));
-                if(nextNumber(1) == -1){
-                    acabaPartida();
+                if (!SolverControllerStop.isStopped()) {
+                    dis.setEnabled(true);
+                    dialog.dispose();
+                    if (hint == null){
+                        msgError("El hidato no te solucio");
+                        return;
+                    }
+                    int x = hint.get(0);
+                    int y = hint.get(1);
+                    int value = hint.get(2);
+                    int oldVal = panels.get(x).get(y).getVal();
+                    historial.add(new Accio(x,y,oldVal));
+                    panels.get(x).get(y).changeVal(value);
+                    newValue.setValue(nextNumber((int)newValue.getValue()-1));
+                    if(nextNumber(1) == -1){
+                        acabaPartida();
+                    }
                 }
             }
         });
@@ -612,15 +616,17 @@ public class FrameGame extends javax.swing.JFrame {
             @Override
             public void run() {
                 currentGameCtr.solve();
-                dis.setEnabled(true);
-                dialog.dispose();
-                for(int i = 0; i < currentGameCtr.getSizeX(); i++){
-                    for(int j = 0; j < currentGameCtr.getSizeY(); j++){
-                        int value = currentGameCtr.getCellVal(i, j);
-                        panels.get(i).get(j).changeVal(value);
+                if (SolverControllerStop.isStopped()) {
+                    dis.setEnabled(true);
+                    dialog.dispose();
+                    for(int i = 0; i < currentGameCtr.getSizeX(); i++){
+                        for(int j = 0; j < currentGameCtr.getSizeY(); j++){
+                            int value = currentGameCtr.getCellVal(i, j);
+                            panels.get(i).get(j).changeVal(value);
+                        }
                     }
+                    acabaPartida();
                 }
-                acabaPartida();
             }
         });
         dialog = obrirProgressBar("Resolent el hidato...", t);

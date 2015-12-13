@@ -44,6 +44,7 @@ public class GeneratorController {
      *  retorna null si no hi ha casella inicial, o si es impossible de generar
     */
     public Hidato generateHidato(Hidato h) {
+        SolverControllerStop.allow();
         this.h = new Hidato(h);
         n = h.getSizeX();
         m = h.getSizeY();
@@ -265,6 +266,7 @@ public class GeneratorController {
     }
     
     private boolean backtracking (int val, Position p) {
+        if(SolverControllerStop.isStopped()) return false;
         ++iteracions;
         if (massaLluny(val,p)) return false;
         L[val-1] = p;

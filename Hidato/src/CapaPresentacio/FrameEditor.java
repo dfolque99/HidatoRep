@@ -13,6 +13,7 @@ import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.Help;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
+import CapaDomini.Tauler.SolverControllerStop;
 import CapaDomini.Tauler.Type;
 import CapaDomini.Usuari.HidatoUserController;
 import java.awt.Color;
@@ -445,22 +446,24 @@ public class FrameEditor extends javax.swing.JFrame {
                     @Override
                     public void run() {
                         boolean completat = hmc.completeTempHidato();
-                        dis.setEnabled(true);
-                        dialog.dispose();
-                        if (completat) {
-                            for (int i = 0; i < N; ++i) {
-                                for (int j = 0; j < M; ++j) {
-                                    CapaDomini.Tauler.Type t = hmc.getTempCellType(i, j);
-                                    panels.get(i).get(j).changeType(t);
-                                    int val = hmc.getTempCellVal(i, j);
-                                    if (t == CapaDomini.Tauler.Type.GIVEN) panels.get(i).get(j).changeVal(val);
+                        if (!SolverControllerStop.isStopped()) {
+                            dis.setEnabled(true);
+                            dialog.dispose();
+                            if (completat) {
+                                for (int i = 0; i < N; ++i) {
+                                    for (int j = 0; j < M; ++j) {
+                                        CapaDomini.Tauler.Type t = hmc.getTempCellType(i, j);
+                                        panels.get(i).get(j).changeType(t);
+                                        int val = hmc.getTempCellVal(i, j);
+                                        if (t == CapaDomini.Tauler.Type.GIVEN) panels.get(i).get(j).changeVal(val);
+                                    }
                                 }
+                                poderDesar(true);
+                                msgInfo ("S'ha completat el hidato. Ara ja es pot desar.");
                             }
-                            poderDesar(true);
-                            msgInfo ("S'ha completat el hidato. Ara ja es pot desar.");
-                        }
-                        else {
-                            msgError ("No s'ha pogut completar el hidato");
+                            else {
+                                msgError ("No s'ha pogut completar el hidato");
+                            }
                         }
                     }
                 });
@@ -485,14 +488,16 @@ public class FrameEditor extends javax.swing.JFrame {
                     @Override
                     public void run() {
                         boolean completat = hmc.solveTempHidato();
-                        dis.setEnabled(true);
-                        dialog.dispose();
-                        if (completat) {
-                            poderDesar(true);
-                            msgInfo ("S'ha validat el hidato. Ara ja es pot desar.");
-                        }
-                        else {
-                            msgError ("No s'ha pogut validar el hidato");
+                        if (!SolverControllerStop.isStopped()) {
+                            dis.setEnabled(true);
+                            dialog.dispose();
+                            if (completat) {
+                                poderDesar(true);
+                                msgInfo ("S'ha validat el hidato. Ara ja es pot desar.");
+                            }
+                            else {
+                                msgError ("No s'ha pogut validar el hidato");
+                            }
                         }
                     }
                 });
@@ -541,7 +546,7 @@ public class FrameEditor extends javax.swing.JFrame {
         DialogProgressBar dialog = new DialogProgressBar(this,false,new Runnable() {
             @Override
             public void run() {
-                t.interrupt();
+                SolverControllerStop.stop();
                 dis.setEnabled(true);
             }
         });
