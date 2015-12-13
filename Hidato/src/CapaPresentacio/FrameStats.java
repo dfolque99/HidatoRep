@@ -51,7 +51,8 @@ public class FrameStats extends javax.swing.JFrame {
             "Hidatos creats: " + String.valueOf(usc.getTotalCreatedBoards())
         };
         if (usc.getSolvedGames() != 0) {
-            ret[2] += String.valueOf(usc.getSolvedPercentage()) + "%";
+            String aux = String.format("%.2f",usc.getSolvedPercentage());
+            ret[2] += aux + "%";
             ret[3] += String.valueOf(usc.getAverageScore()) + " punts";
             ret[4] += String.valueOf(usc.getBestScore()) + " punts";
             ret[5] += String.valueOf(usc.getAverageTimePerSolve()/60) + " minuts, " + 
