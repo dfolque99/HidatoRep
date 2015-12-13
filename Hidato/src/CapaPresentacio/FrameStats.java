@@ -215,10 +215,10 @@ public class FrameStats extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         this.getContentPane().setLayout(layout);
 
-        final JButton buttonReturnToMenu = createButton("Volver al Menu", (java.awt.event.ActionEvent evt) -> {
+        final JButton buttonReturnToMenu = createButton("Tornar al Menú", (java.awt.event.ActionEvent evt) -> {
             parent.obrirMenu(this);
         });
-        final JButton buttonDelete = createButton("Borrar usuari", (java.awt.event.ActionEvent evt) -> {
+        final JButton buttonDelete = createButton("Esborrar usuari", (java.awt.event.ActionEvent evt) -> {
             buttonDeleteActionPerformed(this, uc);
         });
         final JButton buttonModifyPassword = createButton("Canviar contrasenya", (java.awt.event.ActionEvent evt) -> {
@@ -244,19 +244,19 @@ public class FrameStats extends javax.swing.JFrame {
                         .addComponent(myJLabels[7], javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 )
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER, true)
-                        .addComponent(buttonReturnToMenu, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonDelete, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonModifyPassword, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonSelectHidatoToEdit, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonModifyPassword, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonDelete, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonReturnToMenu, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 )
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                 .addGroup(layout.createSequentialGroup()
-                        .addComponent(buttonReturnToMenu)
-                        .addComponent(buttonDelete)
-                        .addComponent(buttonModifyPassword)
                         .addComponent(buttonSelectHidatoToEdit)
+                        .addComponent(buttonModifyPassword)
+                        .addComponent(buttonDelete)
+                        .addComponent(buttonReturnToMenu)
                 )
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(myJLabels[0], javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
