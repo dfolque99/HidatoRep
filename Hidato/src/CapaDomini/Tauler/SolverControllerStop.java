@@ -6,7 +6,7 @@ package CapaDomini.Tauler;
  */
 public class SolverControllerStop {
 
-    private static boolean stop = false;
+    private volatile static boolean stop = false;
 
     //final static SolverControllerStop ref = new SolverControllerStop();
 
