@@ -7,6 +7,7 @@ package CapaPresentacio;
 
 import CapaDomini.Domini;
 import CapaDomini.Misc.Colors;
+import CapaDomini.Misc.Fonts;
 import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.Difficulty;
 import CapaDomini.Partida.Game;
@@ -24,6 +25,7 @@ import CapaDomini.Tauler.SolverController;
 import CapaDomini.Usuari.HidatoUserController;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -484,7 +486,7 @@ public class FrameGame extends javax.swing.JFrame {
                 .addGap(0, 105, Short.MAX_VALUE))
         );
 
-        titleLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        titleLabel.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 36));
         titleLabel.setText("Hidato:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
