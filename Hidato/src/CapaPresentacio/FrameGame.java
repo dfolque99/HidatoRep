@@ -597,9 +597,16 @@ public class FrameGame extends javax.swing.JFrame {
         null, opcions, opcions[0]);
         if (response == 0 || response == 1){
             if (response == 0){
-                currentGameCtr.saveGame();
-                if (currentGameCtr.getName() == null) 
-                    currentGameCtr.setName(JOptionPane.showInputDialog(this, "Escriu el nom de la partida: "));
+                if (currentGameCtr.getName() == null) {
+                    String newName = JOptionPane.showInputDialog(this, "Escriu el nom de la partida: ");
+                    System.out.println("Nom de partida:"+newName+","+newName+","+newName+","+newName+","+newName+",");
+                    if (newName == null) return;
+                    if (newName.equals("")){
+                        msgError("Introdueix algun nom");
+                        return;
+                    }
+                    currentGameCtr.setName(newName);
+                }
                 currentGameCtr.saveGame();
             }
             parent.obrirMenu(this);

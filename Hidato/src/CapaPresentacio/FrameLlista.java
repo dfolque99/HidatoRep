@@ -238,19 +238,19 @@ public class FrameLlista extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     protected javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    protected javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel label_autor;
-    private javax.swing.JLabel label_nom;
+    protected javax.swing.JLabel label_nom;
     // End of variables declaration//GEN-END:variables
 
     private RetornadorString ret;
     private HidatoManagerController hmc;
-    private String selected;
-    private ArrayList<ArrayList<SquareCellRapida>> panels;
+    protected String selected;
+    protected ArrayList<ArrayList<SquareCellRapida>> panels;
     private Thread t;
-    private boolean seguir;
+    protected boolean seguir;
     
     private void inici(RetornadorString ret, HidatoManagerController hmc) {
         this.ret = ret;
@@ -302,6 +302,7 @@ public class FrameLlista extends javax.swing.JFrame {
     }
     
     private void canviaNom() {
+        //funciona si el newName es null?
         String newName = JOptionPane.showInputDialog(this, "Escriu un nou nom pel hidato "
                 + jList1.getSelectedValue() + ":");
         if (hmc.usedName(newName)) {
@@ -346,7 +347,7 @@ public class FrameLlista extends javax.swing.JFrame {
         if (!llista.isEmpty()) jList1.setSelectedIndex(0);
     }
 
-    private void seleccio() {
+    protected void seleccio() {
         seguir = false;
         boolean result = hmc.loadHidato(selected);
         if (!result) {
@@ -358,7 +359,17 @@ public class FrameLlista extends javax.swing.JFrame {
         dibuixarHidato();
     }
 
-    private void dibuixarHidato() {
+    protected CapaDomini.Tauler.Type getType(int i, int j){
+        return hmc.getTempCellType(i,j);
+    }
+    
+    protected void setVal(int i, int j, int i0, int j0){
+        int val = hmc.getTempCellVal(i,j);
+        if (hmc.getTempCellType(i,j) == CapaDomini.Tauler.Type.GIVEN) panels.get(i0).get(j0).setVal(val);
+                            
+    }
+    
+    protected void dibuixarHidato() {
         int N = hmc.getTempSizeX();
         int M = hmc.getTempSizeY();
         jPanel2.removeAll();
@@ -376,7 +387,8 @@ public class FrameLlista extends javax.swing.JFrame {
             for (int j0 = 0; j0 < maxim; ++j0) {
                 if (N1 <= i0 && i0 < N2 && M1 <= j0 && j0 < M2) {
                     int i = i0-N1, j = j0-M1;
-                    CapaDomini.Tauler.Type type = hmc.getTempCellType(i,j);
+                    CapaDomini.Tauler.Type type = getType(i,j);
+                    //CapaDomini.Tauler.Type type = hmc.getTempCellType(i,j);
                     SquareCellRapida p = new SquareCellRapida(0,type,Colors.c(2),Colors.c(1),Colors.c(0), 400/maxim*5/10);
                     jPanel2.add(p, i0*maxim+j0);
                     panels.get(i0).add(p);
@@ -398,8 +410,7 @@ public class FrameLlista extends javax.swing.JFrame {
                             int i = i0-N1, j = j0-M1;
                             if (!seguir) return;
                             try {
-                                int val = hmc.getTempCellVal(i,j);
-                                if (hmc.getTempCellType(i,j) == CapaDomini.Tauler.Type.GIVEN) panels.get(i0).get(j0).setVal(val);
+                                setVal(i,j,i0,j0);
                             }
                             catch(Exception e) {}
                         }
@@ -410,7 +421,7 @@ public class FrameLlista extends javax.swing.JFrame {
         t.start();
     }
     
-    private void msgError(String text) {
+    protected void msgError(String text) {
         JOptionPane.showMessageDialog(this,text,"Error",JOptionPane.ERROR_MESSAGE);
     }
 }

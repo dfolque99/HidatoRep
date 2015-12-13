@@ -172,7 +172,10 @@ public class GameManagerController {
         return ret;
     }
     
-    public Game getGame(String name){
-        return gameSet.getGameByName(name);
+    public CurrentGameController getGame(String name){
+        Game game =  gameSet.getGameByName(name);
+        if (game == null) return null;
+        CurrentGameController ctrCurrentGame = new CurrentGameController(game, gameSet, ctrRanking, hidatoUserController);
+        return ctrCurrentGame;
     }
 }

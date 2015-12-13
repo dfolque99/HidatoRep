@@ -5,13 +5,17 @@
  */
 package CapaPresentacio;
 
+import CapaDomini.Misc.Colors;
+import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Rank.RankingController;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUserController;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 /**
  *
@@ -21,12 +25,14 @@ public class FrameLlistaPartides extends FrameLlista {
 
     
     private GameManagerController gmc;
+    private CurrentGameController cgc;
     /**
      * Creates new form FrameLlistaPartides
      */
     public FrameLlistaPartides(RetornadorString ret, GameManagerController gmc, HidatoManagerController hmc) {
         super(ret,hmc);
         this.gmc = gmc;
+        this.cgc = null;
         initComponents();
         setIconImage((new ImageIcon("icon.png")).getImage());
     }
@@ -108,12 +114,36 @@ public class FrameLlistaPartides extends FrameLlista {
     }
     
     public void loadPartidesUsuari () {
-        if(gmc == null) System.out.println("gmc null");
         ArrayList<String> llista = gmc.getGameList();
         jList1.setListData(llista.toArray(new String[]{}));
         if (!llista.isEmpty()) jList1.setSelectedIndex(0);
     }
-
+    
+    @Override
+    protected void seleccio() {
+        seguir = false;
+        cgc = gmc.getGame(selected);
+        if (cgc == null) {
+            msgError("No s'ha trobat l'element");
+            return;
+        }
+        label_nom.setText(selected);
+        dibuixarHidato();
+    }
+    
+    @Override
+    protected CapaDomini.Tauler.Type getType(int i, int j){
+        return cgc.getCellType(i,j);
+    }
+    
+    @Override
+    protected void setVal(int i, int j, int i0, int j0){
+        int val = cgc.getCellVal(i,j);
+        if (cgc.getCellType(i,j) == CapaDomini.Tauler.Type.GIVEN) panels.get(i0).get(j0).setVal(val);
+        else if (cgc.getCellType(i,j) == CapaDomini.Tauler.Type.BLANK && cgc.getCellVal(i, j) != 0)
+            panels.get(i0).get(j0).setVal(val);
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

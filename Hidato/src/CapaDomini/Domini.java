@@ -119,7 +119,7 @@ public class Domini {
         antic.dispose();
     }
     
-    
+    /*
     public void obrirLlista(JFrame antic){
         FrameLlista flh = new FrameLlista(new RetornadorString(){
             @Override
@@ -143,6 +143,7 @@ public class Domini {
         flp.setLocation(antic.getLocation());
         antic.dispose();
     }
+    */
     
     public void saveBeforeClose() {
         rc.save();
