@@ -5,7 +5,7 @@
  */
 package CapaDomini.Tauler;
 import CapaDomini.Misc.Position;
-import CapaDomini.Misc.*;
+import CapaDomini.Misc.PositionValue;
 import CapaDomini.Partida.Difficulty;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +66,7 @@ public class DifficultyController {
                 if (hidato.getCell(i, j).getType() == Type.BLANK) count += 1;
             } 
         }
-        System.out.println("sum "+sum+" quantity "+count);
+        //System.out.println("sum "+sum+" quantity "+count);
         return sum/count;
     } 
     /**
@@ -75,6 +75,7 @@ public class DifficultyController {
      * @param t 
      */
     private static <T> void printArray(T[] t){
+        /*
         System.out.print("[");
         for(T tt:t) {
             if (tt instanceof PositionValue) {
@@ -84,6 +85,7 @@ public class DifficultyController {
             System.out.print(", ");
         }
         System.out.print("]\n");
+        */
     }
     /**
      * Print array of arrays
@@ -91,17 +93,17 @@ public class DifficultyController {
      * @param t 
      */
     private static <T> void printArray(T[][] t){
+        /*
         System.out.print("[\n");
         for(T[] tt:t) {
             printArray(tt);
         }
         System.out.print("]\n");
+        */
     }
-    /**
-     * 
-     * @param args 
-     */
-    public static void main(String[] args) {System.out.println(new DifficultyController().getDifficulty(new Hidato(10,10)));}
+
+    //public static void main(String[] args) {System.out.println(new DifficultyController().getDifficulty(new Hidato(10,10)));}
+    
     /**
      * 
      */
@@ -199,7 +201,7 @@ public class DifficultyController {
         printArray(count);
         final double d = arrayToDouble(count);
         //LOG.log(myLevel,"Difficulty is: "+String.valueOf(d));
-        System.out.println("Difficulty is: "+String.valueOf(d));
+        //System.out.println("Difficulty is: "+String.valueOf(d));
         return d;        
         //System.out.print(Utils.toString(hidato));
         //
