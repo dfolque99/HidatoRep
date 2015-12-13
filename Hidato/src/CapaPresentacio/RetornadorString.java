@@ -11,4 +11,6 @@ package CapaPresentacio;
  */
 public interface RetornadorString {
     public void retorna(String s);
+    public void elimina(String s);
+    public void canviaNom(String oldName, String newName);
 }

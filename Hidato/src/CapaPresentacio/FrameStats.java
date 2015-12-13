@@ -149,6 +149,12 @@ public class FrameStats extends javax.swing.JFrame {
                 public void retorna(String s) {
                     openSelectedHidato(s);
                 }
+                public void elimina(String s) {
+                    
+                }
+                public void canviaNom(String s1, String s2){
+                    
+                }
             }, hmc);
             fll.setLocation(this.getLocation());
             fll.loadHidatosUsuari();

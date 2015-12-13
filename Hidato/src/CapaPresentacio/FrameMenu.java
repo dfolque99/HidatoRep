@@ -490,6 +490,8 @@ public class FrameMenu extends javax.swing.JFrame {
                     public void retorna(String s) {
                         jugarHidato(s);
                     }
+                    public void elimina(String s) {}
+                    public void canviaNom(String s1, String s2){}
                 }, hmc);
                 fll.setLocation(this.getLocation());
                 fll.loadHidatosTots();
@@ -506,6 +508,8 @@ public class FrameMenu extends javax.swing.JFrame {
                     public void retorna(String s) {
                         jugarPartida(s);
                     }
+                    public void elimina(String s) {}
+                    public void canviaNom(String s1, String s2){}
                 }, gmc, hmc);
                 fllp.setLocation(this.getLocation());
                 fllp.loadPartidesUsuari();

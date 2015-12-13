@@ -66,8 +66,31 @@ public class FrameLogin extends javax.swing.JFrame {
                 }
             }
         });
+        jTextField1.addKeyListener(new KeyListener() {
+            public void keyReleased (KeyEvent evt) {
+                
+            }
+            public void keyPressed (KeyEvent evt) {
+                if (evt.getKeyCode() == 38) {
+                    if (evt.isControlDown()) {
+                        uc.createUser("david", "david");
+                        uc.login("david", "david");
+                        gmc.initGameSet();
+                        obrirMenu();
+                    }
+                }
+            }
+            public void keyTyped (KeyEvent evt) {
+                if (evt.getKeyChar() == '\n') {
+                    entra();
+                }
+            }
+        });
     }
 
+    private void obrirMenu() {
+        parent.obrirMenu(this);
+    }
     
     
 
