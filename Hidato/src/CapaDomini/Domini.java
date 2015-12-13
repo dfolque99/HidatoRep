@@ -47,16 +47,24 @@ public class Domini {
     }
     
     public void adelanteee() {
+        this.hs = new HidatoSet();
+        
         File f = new File("Users/");
         f.mkdir();
-        this.hs = new HidatoSet();
         this.uc = new HidatoUserController();
+        
         this.rc = new RankingController();
         rc.init();
+        
         this.hmc = new HidatoManagerController(hs, uc);
+        
+        f = new File("Games/");
+        f.mkdir();
         this.gmc = new GameManagerController(rc, uc, hmc);
+        
         hmc.setGameManagerController(gmc);
         hmc.loadAll();
+        
         convidat = false;
         FrameLogin fl = new FrameLogin(this, uc, gmc);
         fl.setLocationByPlatform(true);
