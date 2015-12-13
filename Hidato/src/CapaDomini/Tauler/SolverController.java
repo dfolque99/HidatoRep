@@ -140,6 +140,7 @@ public class SolverController {
      * @return true if hidato has a solution
      */
     public boolean solve(final Hidato hidato) {
+        SolverControllerStop.allow();
         upload(new Hidato(hidato));
         return solve();
     }
@@ -341,7 +342,7 @@ public class SolverController {
         //recursion case
         board.getCell(x, y).setVal(n);    
         used[x][y] = true;
-        boolean b = true;
+        boolean b = SolverControllerStop.isStopped();
         if (n >= 20 && n % 10 == 0){b = isBoardConnected();}
         //if (n == 1){b = isBoardConnected();}
         if (b){
