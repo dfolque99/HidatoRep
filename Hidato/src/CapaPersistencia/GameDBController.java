@@ -17,21 +17,20 @@ public class GameDBController {
     private final static String directory = "Games/";
     private final static String extension = ".obj";
 
-    //Pre: game no es null
+    // //Pre: game no es null
     public void saveGame(Game game) {
-        //Crea la carpeta raiz "Games/" (si no estaba ya hecho)
-        File dir = new File(directory);
-        dir.mkdir();
-        //Crea la subcarpeta "Games/<nombreusuario>/" (si no estaba ya hecho)
-        dir = new File(directory + getFolder(game));
-        dir.mkdir();
-        try {
-            FileOutputStream fos = new FileOutputStream(getDirectory(game));
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(game);
-            fos.close();
-        } catch (Exception e) {
-            
+        if (game != null) {
+            //Crea la subcarpeta "Games/<nombreusuario>/" (si no estaba ya hecho)
+            File dir = new File(directory + getFolder(game));
+            dir.mkdir();
+            try {
+                FileOutputStream fos = new FileOutputStream(getDirectory(game));
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(game);
+                fos.close();
+            } catch (Exception e) {
+
+            }
         }
     }
 
@@ -80,7 +79,7 @@ public class GameDBController {
     
     
     private static String getDirectory(Game game) {
-        return getDirectory(getFolder(game),getName(game));
+        return directory + getFolder(game) + "/" + getName(game) + extension;
     }
     
     private static String getDirectory(String gameName, String username) {
