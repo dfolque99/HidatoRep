@@ -101,6 +101,7 @@ public class FrameStats extends javax.swing.JFrame {
     }
     private HidatoManagerController hmc;
     private CapaDomini.Domini parent;
+    private HidatoUserController uc;
     private String hidatoName;
 
     private FrameStats() {
@@ -111,6 +112,7 @@ public class FrameStats extends javax.swing.JFrame {
         super("Gestió del perfil de l'usuari");
         this.parent = parent;
         this.hmc = hmc;
+        this.uc = uc;
         this.parent = parent;
         this.initComponents(uc);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -150,10 +152,10 @@ public class FrameStats extends javax.swing.JFrame {
                     openSelectedHidato(s);
                 }
                 public void elimina(String s) {
-                    
+                    deleteHidato(s);
                 }
-                public void canviaNom(String s1, String s2){
-                    
+                public void canviaNom(String oldName, String newName){
+                    renameHidato(oldName, newName);
                 }
             }, hmc);
             fll.setLocation(this.getLocation());
@@ -163,6 +165,16 @@ public class FrameStats extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "No hidatos trobats", "L'usuari no te hidatos guardats", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    private void deleteHidato(String name) {
+        hmc.deleteHidato(name);
+        buttonSelectHidatoToEditActionPerformed(uc);
+    }
+    
+    private void renameHidato(String oldName, String newName) {
+        hmc.renameHidato(oldName, newName);
+        buttonSelectHidatoToEditActionPerformed(uc);
     }
 
     private void openSelectedHidato(String hidatoName) {

@@ -200,6 +200,18 @@ public class HidatoManagerController {
         return 0;        
     }
     
+    public void deleteHidato (String name) {
+        hset.deleteHidatoByName(name);
+        ArrayList<String> hidatos = ((HidatoUser)uc.getLoggedUser()).getCreatedHidatos();
+        hidatos.remove(name);
+    }
+    
+    public void renameHidato (String oldName, String newName) {
+        hset.getHidatoByName(oldName).setBoardName(newName);
+        ArrayList<String> hidatos = ((HidatoUser)uc.getLoggedUser()).getCreatedHidatos();
+        hidatos.set(hidatos.indexOf(oldName), newName);
+    }
+    
     
     public void setGameManagerController (GameManagerController gmc) {
         this.gmc = gmc;

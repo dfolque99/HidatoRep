@@ -186,11 +186,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="exitButton" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="checkButton" max="32767" attributes="0"/>
-                              <Component id="solveButton" max="32767" attributes="0"/>
-                              <Component id="hintButton" alignment="0" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="checkButton" alignment="0" max="32767" attributes="0"/>
+                          <Component id="solveButton" alignment="0" max="32767" attributes="0"/>
+                          <Component id="hintButton" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">

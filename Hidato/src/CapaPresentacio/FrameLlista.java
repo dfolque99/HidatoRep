@@ -54,8 +54,8 @@ public class FrameLlista extends javax.swing.JFrame {
         label_autor = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<String>();
@@ -90,11 +90,11 @@ public class FrameLlista extends javax.swing.JFrame {
 
         jButton1.setText("Selecciona");
 
-        jButton2.setText("Cancel·la");
+        jButton2.setText("Boto 2");
 
-        jButton3.setText("Cancel·la");
+        jButton4.setText("Cancel·la");
 
-        jButton4.setText("Selecciona");
+        jButton3.setText("Boto 3");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -111,9 +111,9 @@ public class FrameLlista extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -126,12 +126,13 @@ public class FrameLlista extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label_autor)
                 .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -271,13 +272,17 @@ public class FrameLlista extends javax.swing.JFrame {
         jList1.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         jButton1.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         jButton2.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        jButton3.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        jButton4.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        jButton2.setVisible(false);
+        jButton3.setVisible(false);
         jButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent evt) {
                 retorna(true);
             }
         });
-        jButton2.addActionListener(new ActionListener() {
+        jButton4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent evt) {
                 retorna(false);
@@ -296,10 +301,43 @@ public class FrameLlista extends javax.swing.JFrame {
         this.dispose();
     }
     
+    private void canviaNom() {
+        String newName = JOptionPane.showInputDialog(this, "Escriu un nou nom pel hidato "
+                + jList1.getSelectedValue() + ":");
+        if (hmc.usedName(newName)) {
+            msgError("Ja existeix un hidato amb aquest nom");
+        }
+        else {
+            ret.canviaNom(jList1.getSelectedValue(), newName);
+            this.dispose();
+        }
+    }
+    
+    private void elimina() {
+        ret.elimina(jList1.getSelectedValue());
+        this.dispose();
+    }
+    
     public void loadHidatosUsuari () {
         ArrayList<String> llista = hmc.getUserHidatoList();
         jList1.setListData(llista.toArray(new String[]{}));
         if (!llista.isEmpty()) jList1.setSelectedIndex(0);
+        jButton2.setVisible(true);
+        jButton2.setText("Nom nou");
+        jButton3.setVisible(true);
+        jButton3.setText("Elimina");
+        jButton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent evt) {
+                canviaNom();
+            }
+        });
+        jButton3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent evt) {
+                elimina();
+            }
+        });
     }
     
     public void loadHidatosTots () {
