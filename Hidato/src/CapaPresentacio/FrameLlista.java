@@ -234,8 +234,8 @@ public class FrameLlista extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    protected javax.swing.JButton jButton2;
+    protected javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     protected javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
@@ -246,7 +246,7 @@ public class FrameLlista extends javax.swing.JFrame {
     protected javax.swing.JLabel label_nom;
     // End of variables declaration//GEN-END:variables
 
-    private RetornadorString ret;
+    protected RetornadorString ret;
     private HidatoManagerController hmc;
     protected String selected;
     protected ArrayList<ArrayList<SquareCellRapida>> panels;
@@ -303,20 +303,23 @@ public class FrameLlista extends javax.swing.JFrame {
         this.dispose();
     }
     
-    private void canviaNom() {
-        //funciona si el newName es null?
+    protected void canviaNom() {
         String newName = JOptionPane.showInputDialog(this, "Escriu un nou nom pel hidato "
                 + jList1.getSelectedValue() + ":");
+        if (newName == null) return;
+        if (newName.equals("")) {
+            msgError("Escriu algun nom!");
+            return;
+        }
         if (hmc.usedName(newName)) {
             msgError("Ja existeix un hidato amb aquest nom");
+            return;
         }
-        else {
-            ret.canviaNom(jList1.getSelectedValue(), newName);
-            this.dispose();
-        }
+        ret.canviaNom(jList1.getSelectedValue(), newName);
+        this.dispose();
     }
     
-    private void elimina() {
+    protected void elimina() {
         ret.elimina(jList1.getSelectedValue());
         this.dispose();
     }

@@ -9,8 +9,11 @@ import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Usuari.HidatoUserController;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  * Vista que mostra la llista de totes les partides d'un usuari. L'usuari pot seleccionar 
@@ -42,13 +45,25 @@ public class FrameLlistaPartides extends FrameLlista {
         this.cgc = null;
         initComponents();
         setIconImage((new ImageIcon("icon.png")).getImage());
+        jButton2.setVisible(true);
+        jButton3.setVisible(true);
+        jButton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent evt) {
+                canviaNom();
+            }
+        });
+        jButton3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent evt) {
+                elimina();
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Partides guardades");
@@ -58,23 +73,15 @@ public class FrameLlistaPartides extends FrameLlista {
             }
         });
 
-        jButton1.setText("jButton1");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(200, 200, 200)
-                .addComponent(jButton1)
-                .addContainerGap(527, Short.MAX_VALUE))
+            .addGap(0, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(470, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(107, 107, 107))
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         pack();
@@ -89,6 +96,23 @@ public class FrameLlistaPartides extends FrameLlista {
         retorna(false);
     }//GEN-LAST:event_formWindowClosing
 
+    @Override
+    protected void canviaNom() {
+        String newName = JOptionPane.showInputDialog(this, "Escriu un nou nom per la partida "
+                + jList1.getSelectedValue() + ":");
+        if (newName == null) return;
+        if (newName.equals("")) {
+            msgError("Escriu algun nom!");
+            return;
+        }
+        if (gmc.getGame(newName) != null) {
+            msgError("Ja existeix un hidato amb aquest nom");
+            return;
+        }
+        ret.canviaNom(jList1.getSelectedValue(), newName);
+        this.dispose();
+    }
+    
     /**
      * Carrega les partides d'un usuari en la llista.
      */
@@ -159,6 +183,5 @@ public class FrameLlistaPartides extends FrameLlista {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
