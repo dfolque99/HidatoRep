@@ -327,6 +327,14 @@ public class CurrentGameController {
     }
     
     /**
+     * Getter del nom de l'usuari
+     * @return nom de l'usuari de la partida
+     */
+    public String getUsername(){
+        return game.getUsername();
+    }
+    
+    /**
      * Calcula el seguent nombre que no esta colocat al hidato, a partir d'un donat.
      * Si arriba al final, torna a començar.
      * @param ini Nombre donat

@@ -4,14 +4,11 @@ import CapaPersistencia.GameDBController;
 import CapaDomini.Tauler.HidatoController;
 import CapaDomini.Rank.RankingController;
 import CapaDomini.Tauler.DifficultyController;
-import CapaDomini.Tauler.GeneratorController;
 import CapaDomini.Tauler.Hidato;
 import CapaDomini.Tauler.HidatoManagerController;
-import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUser;
 import CapaDomini.Usuari.HidatoUserController;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Controlador de totes les partides. Quan la vista vol crear/recuperar una partida,

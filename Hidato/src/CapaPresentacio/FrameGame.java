@@ -91,7 +91,7 @@ public class FrameGame extends javax.swing.JFrame {
      */
     private final FrameGame dis = this;
     
-    private int v_compartit, err_compartit; // per compartir entre threads
+    private int v_compartit; // per compartir entre threads
     private SquareCell p_compartit;
     
     /**
@@ -145,7 +145,7 @@ public class FrameGame extends javax.swing.JFrame {
         currentGameCtr.finishGame();
         timer.stop();
         msg("Hidato completat!\n Puntuacio: "+currentGameCtr.calculateScore(),"Felicitats!");
-        if (currentGameCtr.isVolatile()){
+        if (currentGameCtr.isVolatile() && currentGameCtr.getUsername() != null){
             String newName = JOptionPane.showInputDialog(this, "Vols guardar el hidato? Escriu el nom:");
             Boolean aux = hidatoManagerController.usedName(newName);
             while (newName != null && aux){
@@ -766,45 +766,59 @@ public class FrameGame extends javax.swing.JFrame {
         timeSincePause = 0;       
         isGamePaused = true;
         boardPanel.setVisible(false);
-        String[] opcions = new String[] {"Si", "No", "Cancel·la"};
-        int response = JOptionPane.showOptionDialog(this, "Vols guardar la partida?", "Sortir a menu",
-        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-        null, opcions, opcions[0]);
-        if (response == 0 || response == 1){
+        if (currentGameCtr.getUsername() == null){
+            String[] opcions = new String[] {"Si", "No"};
+            int response = JOptionPane.showOptionDialog(this, "Vols sortir de la partida sense guardar?", "Sortir a menu",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+            null, opcions, opcions[0]);
             if (response == 0){
-                if (currentGameCtr.getName() == null) {
-                    String newName = JOptionPane.showInputDialog(this, "Escriu el nom de la partida: ");
-                    if (newName == null) {
-                        boardPanel.setVisible(true);
-                        currentGameCtr.unpause();
-                        isGamePaused = false;
-                        return;
-                    }
-                    if (newName.equals("")){
-                        msgError("Introdueix algun nom");
-                        boardPanel.setVisible(true);
-                        currentGameCtr.unpause();
-                        isGamePaused = false;
-                        return;
-                    }
-                    if (currentGameCtr.existsGame(newName)){
-                        msgError("Ja existeix una partida amb aquest nom");
-                        boardPanel.setVisible(true);
-                        currentGameCtr.unpause();
-                        isGamePaused = false;
-                        return;
-                    }
-                    currentGameCtr.setName(newName);
-                }
+                parent.obrirMenu(this);
+            }else{
                 currentGameCtr.unpause();
                 isGamePaused = false;
-                currentGameCtr.saveGame();
+                boardPanel.setVisible(true);
             }
-            parent.obrirMenu(this);
+        }else{        
+            String[] opcions = new String[] {"Si", "No", "Cancel·la"};
+            int response = JOptionPane.showOptionDialog(this, "Vols guardar la partida?", "Sortir a menu",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+            null, opcions, opcions[0]);
+            if (response == 0 || response == 1){
+                if (response == 0){
+                    if (currentGameCtr.getName() == null) {
+                        String newName = JOptionPane.showInputDialog(this, "Escriu el nom de la partida: ");
+                        if (newName == null) {
+                            boardPanel.setVisible(true);
+                            currentGameCtr.unpause();
+                            isGamePaused = false;
+                            return;
+                        }
+                        if (newName.equals("")){
+                            msgError("Introdueix algun nom");
+                            boardPanel.setVisible(true);
+                            currentGameCtr.unpause();
+                            isGamePaused = false;
+                            return;
+                        }
+                        if (currentGameCtr.existsGame(newName)){
+                            msgError("Ja existeix una partida amb aquest nom");
+                            boardPanel.setVisible(true);
+                            currentGameCtr.unpause();
+                            isGamePaused = false;
+                            return;
+                        }
+                        currentGameCtr.setName(newName);
+                    }
+                    currentGameCtr.unpause();
+                    isGamePaused = false;
+                    currentGameCtr.saveGame();
+                }
+                parent.obrirMenu(this);
+            }
+            currentGameCtr.unpause();
+            isGamePaused = false;
+            boardPanel.setVisible(true);
         }
-        currentGameCtr.unpause();
-        isGamePaused = false;
-        boardPanel.setVisible(true);
     }//GEN-LAST:event_exitButtonActionPerformed
 
     /**
