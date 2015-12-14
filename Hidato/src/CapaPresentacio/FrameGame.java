@@ -616,6 +616,7 @@ public class FrameGame extends javax.swing.JFrame {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
+                SolverControllerStop.allow();
                 boolean result = currentGameCtr.check();
                 if (!SolverControllerStop.isStopped()) {
                         dis.setEnabled(true);
@@ -679,8 +680,9 @@ public class FrameGame extends javax.swing.JFrame {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
+                SolverControllerStop.allow();
                 currentGameCtr.solve();
-                if (SolverControllerStop.isStopped()) {
+                if (!SolverControllerStop.isStopped()) {
                     dis.setEnabled(true);
                     if (dialog != null) dialog.dispose();
                     for(int i = 0; i < currentGameCtr.getSizeX(); i++){

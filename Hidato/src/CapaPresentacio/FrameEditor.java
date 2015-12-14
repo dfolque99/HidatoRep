@@ -190,7 +190,7 @@ public class FrameEditor extends javax.swing.JFrame {
                 .addComponent(label_nom, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
         );
 
-        panel_edicio.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Opcions d'edicióde casella", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, Fonts.getFont("OpenSans-Light", Font.PLAIN, 18)));
+        panel_edicio.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Opcions d'edició de casella", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, Fonts.getFont("OpenSans-Light", Font.PLAIN, 18)));
 
         b_buida_esborrar.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         b_buida_esborrar.setText("Buida (esborrar número)");
@@ -467,8 +467,8 @@ public class FrameEditor extends javax.swing.JFrame {
                         }
                     }
                 });
-                t.start();
                 dialog = obrirProgressBar("Completant el hidato...", t);
+                t.start();
             }
         });
         b_validar.addActionListener(new ActionListener() {
