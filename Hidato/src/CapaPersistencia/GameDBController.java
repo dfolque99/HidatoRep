@@ -79,6 +79,11 @@ public class GameDBController {
     
     public void deleteAllGames(String username) {
         File f = new File(directory + username);
+        ArrayList<String> gameNames = new ArrayList(Arrays.asList(f.list()));
+        for (int i = 0; i < gameNames.size(); ++i) {
+            File aux = new File(directory + username + "/" + gameNames.get(i));
+            aux.delete();
+        }
         f.delete();
     }
     
