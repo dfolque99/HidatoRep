@@ -6,6 +6,7 @@
 package CapaDomini.Tauler;
 import CapaDomini.Misc.Position;
 import CapaDomini.Misc.PositionValue;
+import CapaDomini.Misc.Utils;
 import CapaDomini.Partida.Difficulty;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,38 +70,6 @@ public class DifficultyController {
         //System.out.println("sum "+sum+" quantity "+count);
         return sum/count;
     } 
-    /**
-     * Print array
-     * @param <T>
-     * @param t 
-     */
-    private static <T> void printArray(T[] t){
-        /*
-        System.out.print("[");
-        for(T tt:t) {
-            if (tt instanceof PositionValue) {
-                PositionValue pv = (PositionValue) tt;
-                System.out.print("Value "+pv.getValue()+" X "+pv.getX()+" Y "+pv.getY());
-            } else {System.out.print(tt);}
-            System.out.print(", ");
-        }
-        System.out.print("]\n");
-        */
-    }
-    /**
-     * Print array of arrays
-     * @param <T>
-     * @param t 
-     */
-    private static <T> void printArray(T[][] t){
-        /*
-        System.out.print("[\n");
-        for(T[] tt:t) {
-            printArray(tt);
-        }
-        System.out.print("]\n");
-        */
-    }
 
     //public static void main(String[] args) {System.out.println(new DifficultyController().getDifficulty(new Hidato(10,10)));}
     
@@ -198,7 +167,7 @@ public class DifficultyController {
                 this.countPossibilityOfBeingInAPAth(myGivenCells.get(i),myGivenCells.get(i+1));
             }
         }
-        printArray(count);
+        //Utils.printArray(count);
         final double d = arrayToDouble(count);
         //LOG.log(myLevel,"Difficulty is: "+String.valueOf(d));
         //System.out.println("Difficulty is: "+String.valueOf(d));
