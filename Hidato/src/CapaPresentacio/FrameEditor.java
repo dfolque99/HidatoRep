@@ -445,6 +445,7 @@ public class FrameEditor extends javax.swing.JFrame {
                 Thread t = new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        SolverControllerStop.allow();
                         boolean completat = hmc.completeTempHidato();
                         if (!SolverControllerStop.isStopped()) {
                             dis.setEnabled(true);
@@ -487,6 +488,7 @@ public class FrameEditor extends javax.swing.JFrame {
                 Thread t = new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        SolverControllerStop.allow();
                         boolean completat = hmc.solveTempHidato();
                         if (!SolverControllerStop.isStopped()) {
                             dis.setEnabled(true);
@@ -501,8 +503,8 @@ public class FrameEditor extends javax.swing.JFrame {
                         }
                     }
                 });
-                t.start();
                 dialog = obrirProgressBar("Buscant una solució...", t);
+                t.start();
             }
         });
         b_desar.addActionListener(new ActionListener() {

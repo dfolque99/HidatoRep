@@ -93,6 +93,9 @@ public class FrameGame extends javax.swing.JFrame {
      */
     private final FrameGame dis = this;
     
+    private int v_compartit, err_compartit; // per compartir entre threads
+    private SquareCell p_compartit;
+    
     /**
      * Barra de progres.
      */
@@ -262,39 +265,58 @@ public class FrameGame extends javax.swing.JFrame {
                                 int v;
                                 v = (Integer) newValue.getValue();
                                 if (evt.isControlDown()) v = 0;
-                                int errCode = currentGameCtr.putValue(v, p.getA(), p.getB());
-                                if (errCode == -1){
-                                    msgError("No s'ha colocat el numero perque el hidato ja no te solucio");
-                                }else if (errCode == -2){
-                                    msgError("No s'ha colocat el numero perque hi ha dos nombres consecutius separats");
-                                }else if (errCode == -3){
-                                    msgError("El valor esta fora del rang!");
-                                }else if (errCode == -4){
-                                    msgError("Ja hi ha una cell amb aquest valor!");
-                                }else if (errCode == -5){
-                                    msgError("La posicio no es valida!");
-                                }else{
-                                    int oldVal = p.getVal();
-                                    historial.add(new Accio(p.getA(), p.getB(), oldVal));
-                                    undoButton.setEnabled(true);
-                                    p.changeVal(v);
-                                    if (nextNumber(1) == -1){
-                                        if (currentGameCtr.isSolved()) acabaPartida();
-                                    }else{
-                                        if((int) newValue.getValue() != 0){
-                                            newValue.setValue(nextNumber(v));
-                                            if ((int) newValue.getValue() == -1){
-                                                newValue.setValue(nextNumber(1));
-                                            }
-                                        } 
+                                
+                                SolverControllerStop.allow();
+                                dis.setEnabled(false);
+                                v_compartit = v;
+                                p_compartit = p;
+                                Thread t = new Thread(new Runnable() {
+                                    public void run() {
+                                        posarValor(p_compartit, v_compartit);
                                     }
-                                }
+                                });
+                                dialog = obrirProgressBar("Comprovant valor...", t);
+                                t.start();
                             }
                         }
                     });
                 }else{
                     JPanel p = new JPanel();
                     boardPanel.add(p,i0*maxim+j0);
+                }
+            }
+        }
+    }
+    
+    private void posarValor(SquareCell p, int v) {
+        int errCode = currentGameCtr.putValue(v, p.getA(), p.getB());
+        if (!SolverControllerStop.isStopped()) {
+            dis.setEnabled(true);
+            dialog.dispose();
+            if (errCode == -1){
+                msgError("No s'ha colocat el numero perque el hidato ja no te solucio");
+            }else if (errCode == -2){
+                msgError("No s'ha colocat el numero perque hi ha dos nombres consecutius separats");
+            }else if (errCode == -3){
+                msgError("El valor esta fora del rang!");
+            }else if (errCode == -4){
+                msgError("Ja hi ha una cell amb aquest valor!");
+            }else if (errCode == -5){
+                msgError("La posicio no es valida!");
+            }else{
+                int oldVal = p.getVal();
+                historial.add(new Accio(p.getA(), p.getB(), oldVal));
+                undoButton.setEnabled(true);
+                p.changeVal(v);
+                if (nextNumber(1) == -1){
+                    if (currentGameCtr.isSolved()) acabaPartida();
+                }else{
+                    if((int) newValue.getValue() != 0){
+                        newValue.setValue(nextNumber(v));
+                        if ((int) newValue.getValue() == -1){
+                            newValue.setValue(nextNumber(1));
+                        }
+                    } 
                 }
             }
         }
@@ -644,6 +666,7 @@ public class FrameGame extends javax.swing.JFrame {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
+                SolverControllerStop.allow();
                 ArrayList<Integer> hint = currentGameCtr.requestHint();
                 if (!SolverControllerStop.isStopped()) {
                     dis.setEnabled(true);
