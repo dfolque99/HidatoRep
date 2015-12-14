@@ -8,85 +8,90 @@ import java.util.Date;
 
 
 /**
- * Representa una partida
+ * Representa una partida.
  * @author Pau Surrell
  */
 public class Game implements Serializable {
     
     /**
-     * Nom de la partida
+     * Nom de la partida.
      */
-    private String name; //OK
+    private String name;
     
     /**
-     * Nivell d'ajuda
+     * Nivell d'ajuda.
      */
-    private final Help help; //OK
+    private final Help help;
     
     /**
-     * Duracio de la partida, en milisegons
+     * Duracio de la partida, en milisegons.
      */
-    private Duration duration; //OK
+    private Duration duration;
     
     /**
-     * Nombre de checks fets (un check vol dir comprovar si te solucio)
+     * Nombre de checks fets (un check vol dir comprovar si te solucio).
      */
-    private int checksMade; //OK
+    private int checksMade;
     
     /**
-     * Nombre de canvis fets (un canvi es o posar o treure un nombre d'una casella)
+     * Nombre de canvis fets (un canvi es o posar o treure un nombre d'una casella).
      */
-    private int changesMade; //OK
+    private int changesMade;
     
     /**
-     * Nombre de pistes demanades (una pista es que la maquina posi un nombre a la seva posicio correcta)
+     * Nombre de pistes demanades (una pista es que la maquina posi un nombre a la seva posicio correcta).
      */
-    private int hints; //OK
+    private int hints;
     
     /**
-     * Data de creacio de la partida
+     * Hidato (tauler) sobre el qual es juga la partida.
      */
-    private final Date date; //OK
+    private Hidato hidato;
     
     /**
-     * Hidato (tauler) sobre el qual es juga la partida
+     * Hidato resolt a partir de l'inicial (no es solucio unica).
      */
-    private Hidato hidato; //OK
+    private final Hidato solvedHidato;
     
     /**
-     * Hidato resolt a partir de l'inicial (no es solucio unica)
+     * Hidato igual que l'inicial, que no es pot modificar.
      */
-    private final Hidato solvedHidato; //OK
+    private final Hidato origHidato;
     
     /**
-     * Hidato igual que l'inicial, que no es pot modificar
+     * Usuari que juga la partida.
      */
-    private final Hidato origHidato; //OK
+    private final String username;
     
     /**
-     * Usuari que juga la partida
+     * Nivell de dificultat de la partida.
      */
-    private final String username; //OK
-    
-    /**
-     * Nivell de dificultat de la partida
-     */
-    private final Difficulty difficulty; //OK
+    private final Difficulty difficulty;
     
     /**
      * Boolea que indica si per resoldre la partida s'ha utilitzat la opcio solve
-     * (true = no s'ha utilitzat)
+     * (true = no s'ha utilitzat).
      */
-    private Boolean legitSolve; //OK
-    
-    private Boolean isHidatoVolatile;
+    private Boolean legitSolve; 
     
     /**
-     *  Crea un nou Game a partir d'un nom, un hidato, un hidato solucio, un usuari, un nivell d'ajuda i una dificultat
-     */    
-    public Game(String name, Hidato hidato, Hidato solvedHidato, String username, Help help, Difficulty difficulty, Boolean isRandom){
+     * Boolea que indica si el Hidato es volatil (volatil vol dir que no esta 
+     * guardat al hidatoSet)
+     */
+    private final Boolean isHidatoVolatile;
+    
+    /**
+     * Creadora. Inicialitza tots els parametres als valors que li passen.
+     * @param name nom de la partida
+     * @param hidato hidato sobre el qual es juga la partida
+     * @param solvedHidato hidato resolt 
+     * @param username nom de l'usuari que juga la partida
+     * @param help nivell d'ajuda de la partida
+     * @param difficulty nivell de dificultat de la partida
+     * @param isVolatile indica si el hidato es volatil 
+     */   
+    public Game(String name, Hidato hidato, Hidato solvedHidato, String username, Help help, Difficulty difficulty, Boolean isVolatile){
         this.name = name;
-        this.date = new Date();
         this.hidato = new Hidato(hidato);
         this.origHidato = new Hidato(hidato);
         this.solvedHidato = new Hidato(solvedHidato);
@@ -98,7 +103,7 @@ public class Game implements Serializable {
         this.hints = 0;
         this.difficulty = difficulty;
         this.legitSolve = true;
-        this.isHidatoVolatile = isRandom;
+        this.isHidatoVolatile = isVolatile;
     }
     
     /**
@@ -110,14 +115,6 @@ public class Game implements Serializable {
     }
     
     /**
-     * Getter de la data
-     * @return la data de creacio de la partida
-     */
-    public Date getDate(){
-        return this.date;
-    }
-    
-    /**
      * Getter del hidato
      * @return el hidato (tauler) de la partida
      */
@@ -126,13 +123,9 @@ public class Game implements Serializable {
     }
     
     /**
-     * Getter del hidato resolt
-     * @return el hidato resolt
+     * Setter del hidato
+     * @param hidato nou hidato de la partida
      */
-    public Hidato getSolvedHidato(){
-        return new Hidato(solvedHidato);
-    }
-    
     public void setHidato(Hidato hidato){
         this.hidato = hidato;
     }
@@ -201,11 +194,19 @@ public class Game implements Serializable {
         return this.legitSolve;
     }
     
+    
+    /**
+     * Retorna si el hidato de la partida es volatil
+     * @return true si es volatil, false si no
+     */
     public Boolean isVolatile(){
         return this.isHidatoVolatile;
     }
     
-    
+    /**
+     * Setter de legit solve
+     * @param b nou valor de legitSolve
+     */
     public void setLegitSolve(Boolean b){
         this.legitSolve = b;
     }
@@ -213,60 +214,48 @@ public class Game implements Serializable {
     /**
      * Setter del nom de la partida
      * @param name nou nom de la partida
-     * @return 0
      */
-    public int setName(String name){
+    public void setName(String name){
         this.name = name;
-        return 0;
     }
     
     /**
      * Reinicia la partida, i posa tots els parametres com al principi
-     * @return 
      */
-    public int restartGame(){
+    public void restartGame(){
         this.hidato = new Hidato(this.origHidato);
         this.changesMade = 0;
         this.checksMade = 0;
         this.duration = Duration.ZERO;
         this.hints = 0;
-        return 0;
     }
     
     /**
      * Resol automaticament la partida, i posa legitSolve a fals
-     * @return 0
      */
-    public int solve(){
+    public void solve(){
         this.hidato = new Hidato(this.solvedHidato);
-        return 0;
     }
     
     /**
      * Incrementa el nombre de canvis fets en 1. 
-     * @return 0
      */
-    public int incrementChangesMade(){
+    public void incrementChangesMade(){
         this.changesMade++;
-        return 0;
     }
     
     /**
      * Incrementa el nombre de checks fets en la partida en 1
-     * @return 0
      */
-    public int incrementChecksMade(){
+    public void incrementChecksMade(){
         this.checksMade++;
-        return 0;
     }
     
     /**
      * Incrementa el nombre de pistes demanades en 1
-     * @return 0
      */
-    public int incrementHints(){
+    public void incrementHints(){
         this.hints++;
-        return 0;
     }
     
     /**

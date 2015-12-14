@@ -166,6 +166,7 @@ public class FrameGame extends javax.swing.JFrame {
     
     /**
      * Calcula el seguent nombre a partir d'un donat que no esta colocat al hidato.
+     * Si arriba al final, torna a començar.
      * @param ini Nombre donat
      * @return Minim nombre mes gran que ini que no esta al hidato. Retorna -1
      * si no n'ha trobat cap.

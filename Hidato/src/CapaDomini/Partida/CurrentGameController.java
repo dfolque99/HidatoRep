@@ -143,7 +143,7 @@ public class CurrentGameController {
      */
     public void pause(){
         long time1 = (long) System.currentTimeMillis();
-        game.incrementDuration((time1 - time0));
+        game.incrementDuration(time1 - time0);
     }
        
     /**
@@ -344,7 +344,7 @@ public class CurrentGameController {
     }
     
     /**
-     * Retorna si la partida es volatil (es a dir, si no esta guardada al gameSet)
+     * Retorna si el hidato es volatil (es a dir, si no esta guardat al hidatoSet)
      * @return true si es volatil, false si no
      */
     public Boolean isVolatile(){
