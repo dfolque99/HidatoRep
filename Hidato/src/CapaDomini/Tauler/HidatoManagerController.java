@@ -214,6 +214,15 @@ public class HidatoManagerController {
         uc.updateUser();
     }
     
+    public void renameUserHidatos() {
+        String username = uc.getLoggedUser().getUsername();
+        for (int i = 0; i < hset.getTotalHidatos(); ++i) {
+            if (hset.getHidatoByPos(i).getUsername().equals(username)) {
+            System.out.print(hset.getHidatoByPos(i).getUsername() + " " + username);
+                hset.getHidatoByPos(i).setUsername(username+"*");
+            }
+        }
+    }
     
     public void setGameManagerController (GameManagerController gmc) {
         this.gmc = gmc;
