@@ -64,7 +64,8 @@ public class GameManagerController {
      * Inicialitza el game set amb les partides de l'usuari guardades en fitxers
      */
     public void initGameSet(){
-        this.gameSet = new GameSet(this.ctrDBGame.getAllGames(this.hidatoUserController.getLoggedUser().getUsername()));
+        gameSet = new GameSet(ctrDBGame.getAllGames(hidatoUserController.getLoggedUser().getUsername()));
+        ctrDBGame.deleteAllGames(hidatoUserController.getLoggedUser().getUsername());
     }
     
     /**
