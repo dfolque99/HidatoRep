@@ -1,9 +1,10 @@
-package CapaPresentacio;
+package Basura;
 
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUser;
 import CapaDomini.Usuari.HidatoUserController;
+import CapaPresentacio.FrameStats;
 
 /**
  * @version 3
@@ -44,7 +45,7 @@ public class FrameStatsDriver {
                 System.out.println(hmc.loadHidato(name));
                 //CapaDomini.Domini d = ;
                 //d.hmc = hmc;
-                new FrameStats(new CapaDomini.Domini(huc, null, null, hmc), huc, hmc).setVisible(true);
+                new FrameStats(new CapaPresentacio.AdminVistes(huc, null, null, hmc), huc, hmc).setVisible(true);
                 //hacer new CapaDomini.Domini() hace que FrameEditor tenga hmc distinto del de esta funcion
             } catch (Exception e) {
                 System.out.println("Couldn't do login");

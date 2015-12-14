@@ -5,15 +5,13 @@
  */
 package CapaPresentacio;
 
-import CapaDomini.Domini;
-
 /**
  *
  * @author David
  */
 public class Main {
     public static void main (String args[]) {
-        Domini d = new Domini();
+        AdminVistes d = new AdminVistes();
         d.adelanteee();
     }
 }

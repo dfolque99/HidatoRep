@@ -5,7 +5,6 @@
  */
 package CapaPresentacio;
 
-import CapaDomini.Domini;
 import CapaDomini.Misc.Colors;
 import CapaDomini.Misc.Fonts;
 import CapaDomini.Partida.GameManagerController;

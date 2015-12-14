@@ -101,7 +101,7 @@ public class FrameStats extends javax.swing.JFrame {
         }
     }
     private HidatoManagerController hmc;
-    private CapaDomini.Domini parent;
+    private CapaPresentacio.AdminVistes parent;
     private HidatoUserController uc;
     private String hidatoName;
 
@@ -109,7 +109,7 @@ public class FrameStats extends javax.swing.JFrame {
         throw new UnsupportedOperationException();
     }
 
-    public FrameStats(CapaDomini.Domini parent, final HidatoUserController uc, HidatoManagerController hmc) {
+    public FrameStats(CapaPresentacio.AdminVistes parent, final HidatoUserController uc, HidatoManagerController hmc) {
         super("Gestió del perfil d'usuari");
         this.parent = parent;
         this.hmc = hmc;

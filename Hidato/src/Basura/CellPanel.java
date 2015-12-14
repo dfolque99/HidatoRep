@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package CapaPresentacio;
+package Basura;
 
 import java.awt.Color;
 import java.awt.Font;

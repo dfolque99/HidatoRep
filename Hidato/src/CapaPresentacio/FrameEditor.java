@@ -6,7 +6,6 @@
 package CapaPresentacio;
 
 
-import CapaDomini.Domini;
 import CapaDomini.Misc.Colors;
 import CapaDomini.Misc.Fonts;
 import CapaDomini.Partida.CurrentGameController;
@@ -45,7 +44,7 @@ public class FrameEditor extends javax.swing.JFrame {
     /**
      * Creates new form FrameEditor
      */
-    public FrameEditor(Domini parent, HidatoManagerController hmc) {
+    public FrameEditor(AdminVistes parent, HidatoManagerController hmc) {
         initComponents();
         inici(parent, hmc);
         setIconImage((new ImageIcon("icon.png")).getImage());
@@ -341,7 +340,7 @@ public class FrameEditor extends javax.swing.JFrame {
     private ArrayList<ArrayList<Integer>> fixats;
     private int N, M;
     private HidatoManagerController hmc;
-    private Domini parent;
+    private AdminVistes parent;
     private ButtonGroup g1;
     private String nomHidato;
     private boolean solMostrada;
@@ -350,7 +349,7 @@ public class FrameEditor extends javax.swing.JFrame {
     
     
     
-    public void inici(Domini parent, HidatoManagerController hmc) {
+    public void inici(AdminVistes parent, HidatoManagerController hmc) {
         this.N = hmc.getTempSizeX();
         this.M = hmc.getTempSizeY();
         this.hmc = hmc;

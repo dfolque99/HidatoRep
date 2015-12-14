@@ -5,7 +5,6 @@
  */
 package CapaPresentacio;
 
-import CapaDomini.Domini;
 import CapaDomini.Usuari.HidatoUserController;
 import CapaDomini.Usuari.UserController;
 import javax.swing.JOptionPane;
@@ -28,10 +27,10 @@ public class FrameLogin extends javax.swing.JFrame {
      */
     
     private HidatoUserController uc;
-    private Domini parent;
+    private AdminVistes parent;
     private GameManagerController gmc;
     
-    public FrameLogin(Domini parent, HidatoUserController uc, GameManagerController gmc) {
+    public FrameLogin(AdminVistes parent, HidatoUserController uc, GameManagerController gmc) {
         this.parent = parent;
         this.uc = uc;
         this.gmc = gmc;

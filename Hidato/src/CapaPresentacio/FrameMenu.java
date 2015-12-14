@@ -5,7 +5,6 @@
  */
 package CapaPresentacio;
 
-import CapaDomini.Domini;
 import CapaDomini.Misc.Fonts;
 import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.GameManagerController;
@@ -39,11 +38,11 @@ import javax.swing.event.ChangeListener;
 public class FrameMenu extends javax.swing.JFrame {
 
     
-    private Domini parent;
+    private AdminVistes parent;
     private HidatoManagerController hmc;
     private GameManagerController gmc;
     
-    public FrameMenu(Domini parent, HidatoManagerController hmc, GameManagerController gmc, String name) {
+    public FrameMenu(AdminVistes parent, HidatoManagerController hmc, GameManagerController gmc, String name) {
         this.parent = parent;
         this.hmc = hmc;
         this.gmc = gmc;

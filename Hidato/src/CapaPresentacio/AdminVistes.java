@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package CapaDomini;
+package CapaPresentacio;
 
 import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.GameManagerController;
@@ -30,7 +30,7 @@ import javax.swing.JFrame;
  *
  * @author David
  */
-public class Domini {
+public class AdminVistes {
     
     private HidatoUserController uc;
     private HidatoManagerController hmc;
@@ -38,8 +38,8 @@ public class Domini {
     private GameManagerController gmc;
     private RankingController rc;
     private boolean convidat;
-    public Domini(){}
-    public Domini(HidatoUserController uc, RankingController rc, GameManagerController gmc, HidatoManagerController hmc){
+    public AdminVistes(){}
+    public AdminVistes(HidatoUserController uc, RankingController rc, GameManagerController gmc, HidatoManagerController hmc){
         this.uc = uc;
         this.rc = rc;
         this.gmc = gmc;
@@ -126,32 +126,6 @@ public class Domini {
         fr.setLocation(antic.getLocation());
         antic.dispose();
     }
-    
-    /*
-    public void obrirLlista(JFrame antic){
-        FrameLlista flh = new FrameLlista(new RetornadorString(){
-            @Override
-            public void retorna(String s){
-                System.out.println("Retorna la string "+s);
-            }
-        },hmc);
-        flh.setVisible(true);
-        flh.setLocation(antic.getLocation());
-        antic.dispose();
-    }
-    
-    public void obrirLlistaPartides(JFrame antic){
-        FrameLlistaPartides flp = new FrameLlistaPartides(new RetornadorString(){
-            @Override
-            public void retorna(String s){
-                System.out.println("Retorna la string "+s);
-            }
-        },gmc,hmc);
-        flp.setVisible(true);
-        flp.setLocation(antic.getLocation());
-        antic.dispose();
-    }
-    */
     
     public void saveBeforeClose() {
         rc.save();

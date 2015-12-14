@@ -1,6 +1,5 @@
 package CapaPresentacio;
 
-import CapaDomini.Domini;
 import CapaDomini.Misc.Colors;
 import CapaDomini.Misc.Fonts;
 import CapaDomini.Partida.CurrentGameController;
@@ -76,7 +75,7 @@ public class FrameGame extends javax.swing.JFrame {
     /**
      * Objecte que ha creat aquest.
      */
-    private Domini parent;
+    private AdminVistes parent;
     
     /**
      * Temporitzador usat per calcular el temps de partida en temps real.
@@ -125,7 +124,7 @@ public class FrameGame extends javax.swing.JFrame {
      * @param cgc controlador de la partida 
      * @param hmc controlador de hidatos
      */
-    private void inicialitzaParametres(Domini parent, CurrentGameController cgc, HidatoManagerController hmc){
+    private void inicialitzaParametres(AdminVistes parent, CurrentGameController cgc, HidatoManagerController hmc){
         this.parent = parent;
         hidatoManagerController = hmc;
         currentGameCtr = cgc;
@@ -192,7 +191,7 @@ public class FrameGame extends javax.swing.JFrame {
      * @param cgc controlador de partida (comunicacio vista-controlador)
      * @param hmc controlador del conjunt de hidatos
      */
-    public FrameGame(Domini parent, CurrentGameController cgc, HidatoManagerController hmc) {
+    public FrameGame(AdminVistes parent, CurrentGameController cgc, HidatoManagerController hmc) {
         initComponents();
         inicialitzaParametres(parent, cgc, hmc);
         

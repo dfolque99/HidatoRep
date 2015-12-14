@@ -5,7 +5,6 @@
  */
 package CapaPresentacio;
 
-import CapaDomini.Domini;
 import CapaDomini.Partida.Difficulty;
 import CapaDomini.Rank.RankingController;
 import java.awt.FlowLayout;
@@ -27,7 +26,7 @@ import CapaDomini.Misc.Fonts;
 public class FrameRanking extends javax.swing.JFrame {
     
     //Creates new form FrameRanking
-    public FrameRanking(Domini dom, RankingController rc) {
+    public FrameRanking(AdminVistes dom, RankingController rc) {
         
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -255,7 +254,7 @@ public class FrameRanking extends javax.swing.JFrame {
     //===============================MI CODIGO==================================
     
     private RankingController rc;
-    private Domini dom;
+    private AdminVistes dom;
     
     private final int N = RankingController.getRankingMaxSize();
     //Numero de informacion proporcionada por cada entrada del ranking
@@ -265,7 +264,7 @@ public class FrameRanking extends javax.swing.JFrame {
     //Funcio per inicialitzar el frame (assignar ranking controller, mostrar ranking
     //inicial, etc.)
     //Es final para evitar un warning (call to overridable method in constructor)
-    public final void inicialitza(Domini dom, RankingController rc) {
+    public final void inicialitza(AdminVistes dom, RankingController rc) {
         
         this.dom = dom;
         this.rc = rc;
