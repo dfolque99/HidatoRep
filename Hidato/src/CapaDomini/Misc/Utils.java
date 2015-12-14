@@ -20,7 +20,7 @@ public final class Utils {
      * @param t
      */
     private static <T> void printArray(T[] t) {
-        /*
+
         System.out.print("[");
         for(T tt:t) {
         if (tt instanceof PositionValue) {
@@ -30,24 +30,47 @@ public final class Utils {
         System.out.print(", ");
         }
         System.out.print("]\n");
-         */
     }
+    private static void printArray(boolean[] t) {
 
+        System.out.print("[");
+        for(boolean tt:t) {
+            System.out.print(tt ? "+1" : "-1");
+            System.out.print(", ");
+        }
+        System.out.print("]\n");
+    }
     /**
      * Print array of arrays
      * @param <T>
      * @param t
      */
     public static <T> void printArray(T[][] t) {
-        /*
+    
         System.out.print("[\n");
         for(T[] tt:t) {
         printArray(tt);
         }
         System.out.print("]\n");
-         */
     }
-
+    public static void printArray(boolean[][] t) {
+    
+        System.out.print("[\n");
+        for(boolean[] tt:t) {
+        printArray(tt);
+        }
+        System.out.print("]\n");
+    }    
+    public static void printHidatoConnected(final Hidato board){
+        System.out.println("Print Hidato, 0 if blank, . if given, used or void");
+        for (int i = 0; i < board.getSizeX(); i+=1){
+            for (int j = 0; j < board.getSizeY(); j+=1){
+                System.out.print((board.getCell(i,j).getType() == Type.BLANK && board.getCell(i,j).getVal() == 0 ? "0" :"."));
+            }
+            System.out.print("\n");
+        }
+        
+    }
     private Utils() {
         throw new UnsupportedOperationException();
     }
