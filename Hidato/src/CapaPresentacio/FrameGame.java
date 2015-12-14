@@ -275,7 +275,7 @@ public class FrameGame extends javax.swing.JFrame {
                                         posarValor(p_compartit, v_compartit);
                                     }
                                 });
-                                dialog = obrirProgressBar("Comprovant valor...", t);
+                                if (currentGameCtr.getHelp() == Help.HIGH) dialog = obrirProgressBar("Comprovant valor...", t);
                                 t.start();
                             }
                         }
@@ -292,7 +292,7 @@ public class FrameGame extends javax.swing.JFrame {
         int errCode = currentGameCtr.putValue(v, p.getA(), p.getB());
         if (!SolverControllerStop.isStopped()) {
             dis.setEnabled(true);
-            dialog.dispose();
+            if (dialog != null) dialog.dispose();
             if (errCode == -1){
                 msgError("No s'ha colocat el numero perque el hidato ja no te solucio");
             }else if (errCode == -2){

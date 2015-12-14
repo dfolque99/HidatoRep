@@ -452,6 +452,7 @@ public class FrameMenu extends javax.swing.JFrame {
     private void fesConvidat() {
         b_crear.setEnabled(false);
         b_perfil.setEnabled(false);
+        b_continuar.setEnabled(false);
     }
     
     private void picarBoto(JButton b) {
