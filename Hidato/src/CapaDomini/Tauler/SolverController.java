@@ -142,15 +142,6 @@ public class SolverController {
     public boolean solve(final Hidato hidato) {
         SolverControllerStop.allow();
         upload(new Hidato(hidato));
-        return solve();
-    }
-
-    /**
-     * tries to solve hidato
-     *
-     * @return true if hidato can be solved,
-     */
-    private boolean solve() {
         return solveWithBacktracking(givenCells[start].getX(), givenCells[start].getY(), start);
     }
 
@@ -344,14 +335,20 @@ public class SolverController {
         used[x][y] = true;
         boolean b = !SolverControllerStop.isStopped();
         //boolean b = true;
-        if (n >= 20 && n % 10 == 0){b = isBoardConnected();}
+        if (b /*&& n >= 20 && n % 20 == 0*/){b = isBoardConnected();}
         //if (n == 1){b = isBoardConnected();}
         if (b){
             if (getNeighboursSortedWorst(x, y, n).stream().anyMatch((s) -> (solveWithBacktracking(x + s[0], y + s[1], n + 1)))) {
                 return true;
             }
+        } else {
+            System.out.println("b falso: x y n "+x+" "+y+" "+n);
+            //CapaDomini.Misc.Utils.printArray(used);
         }
         used[x][y] = false;
+        if (board.getCell(x, y).getType() == Type.BLANK) {
+            board.getCell(x, y).setVal(0); //para printHidatoConnected
+        }
         return false;
     }
     /**
@@ -359,19 +356,20 @@ public class SolverController {
      * @return if the blank cells not used can be reached from the others
      */
     private boolean isBoardConnected(){
-        Integer blankCount = 0;
+        // 1 _ 3 _ 5 es conexo, usamos solo used y Type.VOID, 
+        Integer nonVoidNonUsedCount = 0;
         Position startingBlank = new Position(-1,-1);//no deberia utilizarse
             for (int i = 0; i < board.getSizeX(); i+=1){
                 for (int j = 0; j < board.getSizeY(); j+=1){
-                    if (!used[i][j] && board.getCell(i, j).getType() == Type.BLANK) {
-                        blankCount +=1;
+                    if (!used[i][j] && board.getCell(i, j).getType() != Type.VOID) {
+                        nonVoidNonUsedCount +=1;
                         //System.out.println("x "+i+" y "+j);
                         startingBlank = new Position(i,j); 
                     }
                 }
             }
         Integer bfsCount = 0;
-        if (0 != blankCount){
+        if (0 != nonVoidNonUsedCount){
             boolean[][] visited = new boolean[board.getSizeX()][board.getSizeY()];
             Queue<Position> qp = new ArrayDeque<>((board.getSizeX()+1)*(board.getSizeY()+1));
             qp.add(startingBlank);
@@ -389,14 +387,14 @@ public class SolverController {
                             Integer y = p.getY();
                             return !((Math.min(x, y) < 0) || (Math.max(x - board.getSizeX(), y - board.getSizeY()) >= 0));
                         })
-                        .filter(p -> (board.getCell(p.getX(), p.getY()).getType() == Type.BLANK && !used[p.getX()][p.getY()]))        
+                        .filter(p -> (board.getCell(p.getX(), p.getY()).getType() != Type.VOID && !used[p.getX()][p.getY()]))        
                         .collect(Collectors.toList())
                     );
                 }
             }            
         }
-        //System.out.println("blankCount "+blankCount+" bfsCount "+bfsCount+" startingBlank x "+startingBlank.getX()+" y "+startingBlank.getY());
-        return Objects.equals(bfsCount, blankCount);
+        //System.out.println("blankCount "+nonVoidNonUsedCount+" bfsCount "+bfsCount+" startingBlank x "+startingBlank.getX()+" y "+startingBlank.getY());
+        return Objects.equals(bfsCount, nonVoidNonUsedCount);
     }
     
 }
