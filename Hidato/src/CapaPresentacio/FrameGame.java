@@ -110,6 +110,7 @@ public class FrameGame extends javax.swing.JFrame {
             titleLabel.setText("Nova partida");
         }else titleLabel.setText("Partida: "+currentGameCtr.getName());
         historial = new Stack<>();
+        undoButton.setEnabled(false);
     }
     
     private void acabaPartida(){
@@ -147,19 +148,6 @@ public class FrameGame extends javax.swing.JFrame {
         return -1;
     }
     
-    private int prevNumber(int ini){
-        HidatoController hc = new HidatoController(currentGameCtr.getHidato());
-        for (int i = ini-1; i >1 ; i--){
-            if (hc.getCellPositionFromValue(i, 1) == -1){
-                return i;
-            }
-        }
-        if (ini != hc.countValidCells()){
-            return prevNumber(hc.countValidCells());
-        }
-        return -1;
-    }
-    
     public FrameGame(Domini parent, CurrentGameController cgc, HidatoManagerController hmc) {
         initComponents();
         inicialitzaParametres(parent, cgc, hmc);
@@ -176,7 +164,7 @@ public class FrameGame extends javax.swing.JFrame {
         boardPanel.setLayout(new GridLayout(maxim, maxim));
 
         if (help == Help.HIGH){
-            checkButton.setVisible(false);
+            checkButton.setEnabled(false);
         }
         
         ActionListener taskPerformer = new ActionListener(){
@@ -247,6 +235,7 @@ public class FrameGame extends javax.swing.JFrame {
                                 }else{
                                     int oldVal = p.getVal();
                                     historial.add(new Accio(p.getA(), p.getB(), oldVal));
+                                    undoButton.setEnabled(true);
                                     p.changeVal(v);
                                     if (nextNumber(1) == -1){
                                         if (currentGameCtr.isSolved()) acabaPartida();
@@ -452,7 +441,7 @@ public class FrameGame extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(checkButton)
                     .addComponent(pauseButton))
@@ -465,8 +454,7 @@ public class FrameGame extends javax.swing.JFrame {
                     .addComponent(solveButton)
                     .addComponent(restartButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(exitButton)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addComponent(exitButton))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -518,12 +506,12 @@ public class FrameGame extends javax.swing.JFrame {
         buttonsPanelLayout.setVerticalGroup(
             buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonsPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
 
         titleLabel.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 36));
@@ -616,6 +604,7 @@ public class FrameGame extends javax.swing.JFrame {
                     int value = hint.get(2);
                     int oldVal = panels.get(x).get(y).getVal();
                     historial.add(new Accio(x,y,oldVal));
+                    undoButton.setEnabled(true);
                     panels.get(x).get(y).changeVal(value);
                     newValue.setValue(nextNumber((int)newValue.getValue()-1));
                     if(nextNumber(1) == -1){
@@ -670,6 +659,7 @@ public class FrameGame extends javax.swing.JFrame {
                 int value = currentGameCtr.getCellVal(i, j);
                 panels.get(i).get(j).changeVal(value);
                 historial = new Stack<>();
+                undoButton.setEnabled(false);
             }
         }
         newValue.setValue(nextNumber(1));
@@ -722,6 +712,7 @@ public class FrameGame extends javax.swing.JFrame {
         int val = a.val;
         currentGameCtr.putValue(val, x, y);
         panels.get(x).get(y).changeVal(val);
+        if (historial.size() == 0) undoButton.setEnabled(false);
     }//GEN-LAST:event_undoButtonActionPerformed
 
     /**

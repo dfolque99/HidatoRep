@@ -123,6 +123,7 @@ public class GameManagerController {
     
     public CurrentGameController createGameFromBoard(String name, Hidato solvedHidato, Help help){
         HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
+        if (loggedUser == null) System.out.println("user null"); 
         Game game_aux = gameSet.getGameByName(name);
         if (game_aux != null) return null;
         if (solvedHidato == null) return null;
@@ -130,7 +131,10 @@ public class GameManagerController {
         HidatoController ctrHidato = new HidatoController(hidato);
         ctrHidato.setBlankCellsToZero();
         DifficultyController diffController = new DifficultyController();
-        Game game = new Game(name, hidato, solvedHidato, loggedUser.getUsername(), help, diffController.getDifficulty(hidato), true);
+        String username;
+        if (loggedUser == null) username = null;
+        else username = loggedUser.getUsername();
+        Game game = new Game(name, hidato, solvedHidato, username, help, diffController.getDifficulty(hidato), true);
         CurrentGameController ctrCurrentGame = new CurrentGameController(game, gameSet, ctrRanking, hidatoUserController);
         
         return ctrCurrentGame;
