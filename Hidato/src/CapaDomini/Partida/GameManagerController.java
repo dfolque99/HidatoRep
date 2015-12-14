@@ -15,9 +15,7 @@ import java.util.Random;
 
 /**
  * Controlador de totes les partides. Quan la vista vol crear/recuperar una partida,
- * aquest controlador li proporciona el controlador de partida corresponent. Hi ha
- * un d'aquests controladors per cada usuari loguejat -> si es fa logout i login
- amb un altre usuari, s'ha de crear un altre objecte GameManagerController
+ * aquest controlador li proporciona el controlador de partida corresponent. 
  * @author Pau Surrell
  */
 
@@ -38,69 +36,50 @@ public class GameManagerController {
      */
     private final HidatoUserController hidatoUserController;
     
+    /**
+     * Conjunt de partides
+     */
     private GameSet gameSet;
     
-    private HidatoSet hidatoSet;
-    
-    private HidatoManagerController hidatoManagerController;
+    /**
+     * Controlador de conjunt de hidatos
+     */
+    private final HidatoManagerController hidatoManagerController;
     
     /**
-     * Creadora
-     * @param hidatoSet conjunt amb tots els hidatos (taulers)
-     * @param ctrDBGame controlador de la DB, per comunicar-se amb la capa de persistencia
-     * @param solver solver per poder resoldre hidatos
-     * @param ctrRanking controlador del ranking per poder enviar-li entrades
-     * @param hidatoUserController controlador d'usuari per modificar els parametres de l'usuari loguejat
+     * Creadora. Inicialitza tots els controladors amb els que es comunicara.
+     * @param ctrRanking controlador de ranking
+     * @param hidatoUserController controlador d'usuari
+     * @param hidatoManagerController controlador de conjunt de hidatos
      */
-    public GameManagerController(RankingController ctrRanking, HidatoUserController hidatoUserController, HidatoManagerController hmc){
+    public GameManagerController(RankingController ctrRanking, HidatoUserController hidatoUserController, HidatoManagerController hidatoManagerController){
         this.hidatoUserController = hidatoUserController;
         this.ctrDBGame = new GameDBController();
         this.ctrRanking = ctrRanking;
         this.gameSet = new GameSet();
-        this.hidatoSet = hidatoSet;
-        this.hidatoManagerController = hmc;
+        this.hidatoManagerController = hidatoManagerController;
     }
     
+    /**
+     * Inicialitza el game set amb les partides de l'usuari guardades en fitxers
+     */
     public void initGameSet(){
         this.gameSet = new GameSet(this.ctrDBGame.getAllGames(this.hidatoUserController.getLoggedUser().getUsername()));
     }
     
+    /**
+     * Guarda el game set en fitxers. S'executa just abans de tancar el programa.
+     */
     public void saveGameSet(){
         for (int i = 0; i < gameSet.getSize(); ++i){
             ctrDBGame.saveGame(gameSet.getGameByPos(i));
         }
     }
     
-    public HidatoManagerController getHMC(){
-        return hidatoManagerController;
-    }
-    
-    public CurrentGameController createRandomGame(String name, Help help){
-        //Si ja existeix una partida amb aquell nom, no fa res
-        HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
-        Game game_aux = gameSet.getGameByName(name);
-        if (game_aux != null) return null;
-        
-        //x, y aleatoris entre 3 i 8 (inclosos)
-        Random rand = new Random();
-        int x = rand.nextInt(5)+3;
-        int y = rand.nextInt(5)+3;
-        GeneratorController gc = new GeneratorController();
-        Hidato solvedHidato = gc.generateHidato(x, y);
-        Hidato hidato = new Hidato(solvedHidato);
-        HidatoController ctrHidato = new HidatoController(hidato);
-        ctrHidato.setBlankCellsToZero();
-        DifficultyController diffController = new DifficultyController();
-        Game game = new Game(name, hidato, solvedHidato, loggedUser.getUsername(), help, diffController.getDifficulty(hidato), true);
-        CurrentGameController ctrCurrentGame = new CurrentGameController(game, gameSet, ctrRanking, hidatoUserController);
-        
-        return ctrCurrentGame;
-    }
-    
     /**
-     * Crea una partida
+     * Crea una partida a partir d'un nom de tauler 
      * @param name Nom de la partida creada
-     * @param solvedHidato Hidato de la partida (Ha d'estar resolt)
+     * @param hidatoName nom del hidato de la partida (el hidato ha d'existir)
      * @param help Nivell d'ajuda (LOW/MEDIUM/HIGH)
      * @return el controlador de la partida creada
      */
@@ -123,6 +102,14 @@ public class GameManagerController {
         return ctrCurrentGame;
     }
     
+    /**
+     * Crea una partida a partir d'un tauler 
+     * @param name Nom de la partida creada
+     * @param solvedHidato hidato de la partida. Ha d'estar resolt, i no ha d'estar 
+     * guardat al hidatoSet.
+     * @param help Nivell d'ajuda (LOW/MEDIUM/HIGH)
+     * @return el controlador de la partida creada
+     */
     public CurrentGameController createGameFromBoard(String name, Hidato solvedHidato, Help help){
         HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
         if (loggedUser == null) System.out.println("user null"); 
@@ -144,10 +131,9 @@ public class GameManagerController {
     
     /**
      * Recupera una partida que s'havia guardat amb nom 'name'
- NOTA: com que GameDBController actualment es un stub, no guarda mai cap partida, 
- i per tant les partides no es poden recuperar
      * @param name nom de la partida a recuperar
-     * @return el controlador de la partida recuperada
+     * @return el controlador de la partida recuperada. Si no existeix cap partida,
+     * retorna null.
      */
     public CurrentGameController restoreGame(String name){
         Game game = gameSet.getGameByName(name);
@@ -158,27 +144,30 @@ public class GameManagerController {
     }
     
     /**
-     * Elimina la partida del repositori amb nom 'name' i usuari 'loggedUser'
-     * NOTA: com que CtrDBgame actualment es un stub, no guarda mai cap partida,
-     * per tant mai eliminara res
+     * Elimina la partida del conjunt amb nom 'name'
      * @param name nom del hidato a eliminar
-     * @return 0
      */
-    public int deleteGame(String name){
+    public void deleteGame(String name){
         gameSet.deleteGame(name);
-        return 0;
     }
     
+    /**
+     * Getter dels noms totes les partides del gameSet
+     * @return noms de les partides del gameSet
+     */
     public ArrayList<String> getGameList(){
         ArrayList<String> ret = new ArrayList<>();
-        if (gameSet == null) System.out.println("gameset null");
         for(int i = 0; i < gameSet.getSize();i++){
             ret.add((gameSet.getGameByPos(i)).getName());
-            System.out.println("mida del gameset: "+gameSet.getSize());
         }
         return ret;
     }
     
+    /**
+     * Getter d'una partida del gameSet
+     * @param name nom de la partida buscada
+     * @return la partida amb el nom donat. Si no existeix, retorna null.
+     */
     public CurrentGameController getGame(String name){
         Game game =  gameSet.getGameByName(name);
         if (game == null) return null;
