@@ -10,7 +10,6 @@ import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUser;
 import CapaDomini.Usuari.HidatoUserController;
-import CapaDomini.Tauler.SolverController;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -115,7 +114,10 @@ public class GameManagerController {
         HidatoController ctrHidato = new HidatoController(hidato);
         ctrHidato.setBlankCellsToZero();
         DifficultyController diffController = new DifficultyController();
-        Game game = new Game(name, hidato, solvedHidato, loggedUser.getUsername(), help, diffController.getDifficulty(hidato), false);
+        String username;
+        if (loggedUser == null) username = null;
+        else username = loggedUser.getUsername();
+        Game game = new Game(name, hidato, solvedHidato, username, help, diffController.getDifficulty(hidato), false);
         CurrentGameController ctrCurrentGame = new CurrentGameController(game, gameSet, ctrRanking, hidatoUserController);
         
         return ctrCurrentGame;

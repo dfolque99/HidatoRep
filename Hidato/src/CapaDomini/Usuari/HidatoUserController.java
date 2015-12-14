@@ -5,7 +5,9 @@
  */
 package CapaDomini.Usuari;
 
+import CapaPersistencia.GameDBController;
 import CapaPersistencia.UserDBController;
+import java.io.File;
 
 /**
  *
@@ -27,6 +29,13 @@ public class HidatoUserController extends UserController {
     
     public UserStatsController getStatsController() {
         return new UserStatsController((HidatoUser) getLoggedUser());
+    }
+    
+    @Override
+    public int deleteUser(String password) {
+        GameDBController db = new GameDBController();
+        db.deleteAllGames(getLoggedUser().getUsername());
+        return super.deleteUser(password);
     }
     
     
