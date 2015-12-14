@@ -149,11 +149,9 @@ public class FrameGame extends javax.swing.JFrame {
         if (currentGameCtr.isVolatile()){
             String newName = JOptionPane.showInputDialog(this, "Vols guardar el hidato? Escriu el nom:");
             Boolean aux = hidatoManagerController.usedName(newName);
-            System.out.println("el hidato amb nom "+newName+" esta utilitzat? "+aux);
             while (newName != null && aux){
                 newName = JOptionPane.showInputDialog(this, "Ja hi ha un hidato amb aquest nom. Tria'n un altre:");
                 aux = hidatoManagerController.usedName(newName);
-                System.out.println("el hidato amb nom "+newName+" esta utilitzat? "+aux);
             }
             if (newName != null){
                 currentGameCtr.setBoardName(newName);
@@ -766,8 +764,8 @@ public class FrameGame extends javax.swing.JFrame {
      */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         currentGameCtr.pause();
+        timeSincePause = 0;       
         isGamePaused = true;
-        timeSincePause = 0;
         boardPanel.setVisible(false);
         String[] opcions = new String[] {"Si", "No", "Cancel·la"};
         int response = JOptionPane.showOptionDialog(this, "Vols guardar la partida?", "Sortir a menu",
@@ -779,20 +777,28 @@ public class FrameGame extends javax.swing.JFrame {
                     String newName = JOptionPane.showInputDialog(this, "Escriu el nom de la partida: ");
                     if (newName == null) {
                         boardPanel.setVisible(true);
+                        currentGameCtr.unpause();
+                        isGamePaused = false;
                         return;
                     }
                     if (newName.equals("")){
                         msgError("Introdueix algun nom");
                         boardPanel.setVisible(true);
+                        currentGameCtr.unpause();
+                        isGamePaused = false;
                         return;
                     }
                     if (currentGameCtr.existsGame(newName)){
                         msgError("Ja existeix una partida amb aquest nom");
                         boardPanel.setVisible(true);
+                        currentGameCtr.unpause();
+                        isGamePaused = false;
                         return;
                     }
                     currentGameCtr.setName(newName);
                 }
+                currentGameCtr.unpause();
+                isGamePaused = false;
                 currentGameCtr.saveGame();
             }
             parent.obrirMenu(this);
@@ -810,7 +816,6 @@ public class FrameGame extends javax.swing.JFrame {
      * @param evt event de clicar en el boto
      */
     private void undoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoButtonActionPerformed
-        System.out.printf("%d, %d\n", buttonsPanel.getSize().width,buttonsPanel.getSize().height);
         if (historial.isEmpty()) return;
         Accio a = historial.pop();
         int x = a.x;

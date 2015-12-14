@@ -180,6 +180,7 @@ public class CurrentGameController {
      */
     public void saveGame(){
         pause();
+        gameSet.deleteGame(game.getName());
         gameSet.addGame(game);
     }
     
@@ -194,6 +195,7 @@ public class CurrentGameController {
         long time1 = System.currentTimeMillis();
         game.incrementDuration(time1 - time0);
         
+        gameSet.deleteGame(game.getName());
         HidatoUser user = (HidatoUser) hidatoUserController.getLoggedUser();
         if (user == null) return;
         user.incrementSolvedGames();

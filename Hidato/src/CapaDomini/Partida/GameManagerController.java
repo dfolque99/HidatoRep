@@ -137,7 +137,6 @@ public class GameManagerController {
      */
     public CurrentGameController restoreGame(String name){
         Game game = gameSet.getGameByName(name);
-        gameSet.deleteGame(name);
         if (game == null) return null;
         CurrentGameController ctrCurrentGame = new CurrentGameController(game, gameSet, ctrRanking, hidatoUserController);
         return ctrCurrentGame;
