@@ -14,6 +14,40 @@ import CapaDomini.Tauler.Type;
 
 public final class Utils {
 
+    /**
+     * Print array
+     * @param <T>
+     * @param t
+     */
+    private static <T> void printArray(T[] t) {
+        /*
+        System.out.print("[");
+        for(T tt:t) {
+        if (tt instanceof PositionValue) {
+        PositionValue pv = (PositionValue) tt;
+        System.out.print("Value "+pv.getValue()+" X "+pv.getX()+" Y "+pv.getY());
+        } else {System.out.print(tt);}
+        System.out.print(", ");
+        }
+        System.out.print("]\n");
+         */
+    }
+
+    /**
+     * Print array of arrays
+     * @param <T>
+     * @param t
+     */
+    public static <T> void printArray(T[][] t) {
+        /*
+        System.out.print("[\n");
+        for(T[] tt:t) {
+        printArray(tt);
+        }
+        System.out.print("]\n");
+         */
+    }
+
     private Utils() {
         throw new UnsupportedOperationException();
     }
