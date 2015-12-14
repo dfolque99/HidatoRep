@@ -77,6 +77,11 @@ public class GameDBController {
         return ret;
     }
     
+    public void deleteAllGames(String username) {
+        File f = new File(directory + username);
+        f.delete();
+    }
+    
     
     private static String getDirectory(Game game) {
         return directory + getFolder(game) + "/" + getName(game) + extension;
