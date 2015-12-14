@@ -1,5 +1,4 @@
 package CapaDomini.Partida;
-import CapaPersistencia.GameDBController;
 import CapaDomini.Tauler.Cell;
 import CapaDomini.Tauler.HidatoController;
 import CapaDomini.Rank.RankingController;
@@ -49,13 +48,12 @@ public class CurrentGameController {
     private long time0;
     
     /**
-     * Creadora
- Crea un controlador a partir d'un game, un GameDBController (que permet la comunicacio
- amb la capa de persistencia), un solver, un controlador de ranking  i un
- controlador d'usuari
+     * Creadora 
+     * Crea un controlador a partir d'un game, un GameDBController 
+     * (que permet la comunicacio amb la capa de persistencia), un solver, 
+     * un controlador de ranking  i un controlador d'usuari
      * @param game partida assignada a aquest controlador
-     * @param ctrDBGame controlador de la DB per comunicar-se amb la capa de persistencia
-     * @param solver solver per poder resoldre els hidatos
+     * @param gameSet conjunt de partides 
      * @param ctrRanking controlador del ranking per enviar-li les dades de la partida acabada
      * @param hidatoUserController controlador de l'usuari que juga la partida
      */    
@@ -67,14 +65,6 @@ public class CurrentGameController {
         this.hidatoUserController = hidatoUserController;
         this.time0 = (long) System.currentTimeMillis();
         initialize();
-    }
-
-    /**
-     * Getter de la partida del controlador
-     * @return la partida del controlador
-     */
-    public Game getGame(){
-        return this.game;
     }
     
     /**
@@ -150,41 +140,31 @@ public class CurrentGameController {
     
     /**
      * Fa una pausa en la partida (atura el temps de partida)
-     * @return 0
      */
-    public int pause(){
+    public void pause(){
         long time1 = (long) System.currentTimeMillis();
-        long t = time1-time0;
-        System.out.println("Joc pausat, s'incrementa el temps en "+t);
         game.incrementDuration((time1 - time0));
-        return 0;
     }
        
     /**
      * Torna a la partida despres d'una pausa (el temps de partida torna a comptar)
-     * @return 0
      */
-    public int unpause(){
+    public void unpause(){
         time0 = System.currentTimeMillis();
-        System.out.println("Retorn: temps = "+game.getDuration().toMinutes());
-        return 0;
     }
     
     /**
      * Reinicia la partida (torna el hidato i les estadistiques tal com estaven al principi)
-     * @return 0
      */
-    public int restartGame(){
+    public void restartGame(){
         game.restartGame();
         this.ctrHidato = new HidatoController(game.getHidato());
-        return 0;
     }
     
     /**
      * Resol la partida automaticament
-     * @return 0
      */
-    public int solve(){
+    public void solve(){
         game.setLegitSolve(false);
         SolverController solver = (new SolverController());
         if (solver.solve(game.getHidato())){
@@ -192,18 +172,15 @@ public class CurrentGameController {
         }else game.solve();
         
         this.ctrHidato = new HidatoController(game.getHidato());
-        return 0;
     }
     
     /**
      * Guarda la partida al repositori
      * NOTA: com que ctrDBGame actualment es un stub, la partida es eliminada i no es guarda enlloc
-     * @return 0
      */
-    public int saveGame(){
+    public void saveGame(){
         pause();
         gameSet.addGame(game);
-        return 0;
     }
     
     public Boolean existsGame(String name){
@@ -212,7 +189,6 @@ public class CurrentGameController {
     
     /**
      * Actualitza les estadistiques de l'usuari i el ranking, quan la partida esta acabada
-     * @return 0
      */
     public void finishGame(){
         long time1 = System.currentTimeMillis();
@@ -230,14 +206,12 @@ public class CurrentGameController {
         user.updateBestScore(score);
         
         hidatoUserController.updateUser();
-        
-        System.out.println("El resultat es "+username);
         ctrRanking.addScoreToRanking(score, username, game.getDifficulty());
     }
     
     /**
      * Calcula la puntuacio de la partida (val 0 si s'ha utilitzat el solve per acabar-la)
-     * @return la puntuacio
+     * @return la puntuacio obtinguda
      */
     public int calculateScore(){
         if (!game.getLegitSolved()) return 0;
@@ -252,77 +226,143 @@ public class CurrentGameController {
     }
     
     /**
-     * Inicialitza la partida
-     * @return 0
+     * Inicialitza la partida. Si es una nova partida, actualitza estadistiques de l'usuari.
      */
     public void initialize(){
         unpause();
         if (hidatoUserController.getLoggedUser() == null) return;
-        if (game.getName() != null) {
-            System.out.println("El nom de partida no es null, no s'incrementen les partides");
-            return;
-        }
-        
+        if (game.getName() != null) return;
         hidatoUserController.getLoggedUser().incrementStartedGames();
         hidatoUserController.updateUser();
     }
    
+    /**
+     * Getter del valor de la cell en la posicio (i,j)
+     * @param i coordenada x de la cell
+     * @param j coordenada y de la cell
+     * @return valor de la cell
+     */
     public int getCellVal(int i, int j){
         Hidato hidato = game.getHidato();
         Cell c = hidato.getCell(i,j);
         return c.getVal();
     }
     
+    /**
+     * Getter del tipus de la cell en la posicio (i,j)
+     * @param i coordenada x de la cell
+     * @param j coordenada y de la cell
+     * @return tipus de la cell
+     */
     public CapaDomini.Tauler.Type getCellType(int i, int j){
         Hidato hidato = game.getHidato();
         Cell c = hidato.getCell(i,j);
         return c.getType();
     }
     
+    /**
+     * Getter del nombre de files
+     * @return nombre de files del hidato
+     */
     public int getSizeX(){
         return game.getHidato().getSizeX();
     }
     
+    /**
+     * Getter del nombre de columnes
+     * @return nombre de columnes del hidato
+     */
     public int getSizeY(){
         return game.getHidato().getSizeY();
     }
     
+    /**
+     * Getter del nombre de cells valides
+     * @return nombre de cells valides del hidato
+     */
     public int getValidCells(){
         return ctrHidato.countValidCells();
     }
     
+    /**
+     * Getter de la duracio
+     * @return duracio de la partida
+     */
     public Duration getDuration(){
         return game.getDuration();
     }
     
+    /**
+     * Retorna si el hidato esta resolt o no
+     * @return true si esta resolt, false si no
+     */
     public Boolean isSolved(){
         return ctrHidato.isSolved();
     }
     
+    /**
+     * Getter del nivell d'ajuda 
+     * @return nivell d'ajuda de la partida
+     */
     public Help getHelp(){
         return game.getHelp();
     }
     
+    /**
+     * Getter de la dificultat
+     * @return nivell de dificultat de la partida
+     */
     public Difficulty getDifficulty(){
         return game.getDifficulty();
     }
     
+    /**
+     * Getter del nom
+     * @return nom de la partida
+     */
     public String getName(){
         return game.getName();
     }
     
-    public Hidato getHidato(){
-        return game.getHidato();
+    /**
+     * Calcula el seguent nombre que no esta colocat al hidato, a partir d'un donat.
+     * Si arriba al final, torna a començar.
+     * @param ini Nombre donat
+     * @return Minim nombre mes gran que ini que no esta al hidato. 
+     * Retorna -1 si no n'hi ha cap.
+     */
+    public int nextNumber(int ini){
+        for (int i = ini+1; i <= ctrHidato.countValidCells(); i++){
+            if (ctrHidato.getCellPositionFromValue(i, 1) == -1){
+                return i;
+            }
+        }
+        if (ini != 1){
+            return nextNumber(1);
+        }
+        return -1;
     }
     
+    /**
+     * Retorna si la partida es volatil (es a dir, si no esta guardada al gameSet)
+     * @return true si es volatil, false si no
+     */
     public Boolean isVolatile(){
         return game.isVolatile();
     }
     
+    /**
+     * Setter del nom
+     * @param newName nou nom de la partida 
+     */
     public void setName(String newName){
         game.setName(newName);
     }
     
+    /**
+     * Setter del nom del hidato
+     * @param newName nou nom del hidato
+     */
     public void setBoardName(String newName){
         game.getHidato().setBoardName(newName);
     }

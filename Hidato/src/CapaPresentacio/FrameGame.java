@@ -171,16 +171,7 @@ public class FrameGame extends javax.swing.JFrame {
      * si no n'ha trobat cap.
      */
     private int nextNumber(int ini){
-        HidatoController hc = new HidatoController(currentGameCtr.getHidato());
-        for (int i = ini+1; i <= hc.countValidCells(); i++){
-            if (hc.getCellPositionFromValue(i, 1) == -1){
-                return i;
-            }
-        }
-        if (ini != 1){
-            return nextNumber(1);
-        }
-        return -1;
+        return currentGameCtr.nextNumber(ini);
     }
     
     /**
