@@ -214,12 +214,12 @@ public class CurrentGameController {
      * Actualitza les estadistiques de l'usuari i el ranking, quan la partida esta acabada
      * @return 0
      */
-    public int finishGame(){
+    public void finishGame(){
         long time1 = System.currentTimeMillis();
         game.incrementDuration(time1 - time0);
         
         HidatoUser user = (HidatoUser) hidatoUserController.getLoggedUser();
-        if (user == null) System.out.println("usuari null en el current game");
+        if (user == null) return;
         user.incrementSolvedGames();
         user.incrementTotalTimePlayed(game.getDuration());
         user.updateBestTime(game.getDuration());
@@ -233,7 +233,6 @@ public class CurrentGameController {
         
         System.out.println("El resultat es "+username);
         ctrRanking.addScoreToRanking(score, username, game.getDifficulty());
-        return 0;
     }
     
     /**
@@ -256,11 +255,16 @@ public class CurrentGameController {
      * Inicialitza la partida
      * @return 0
      */
-    public int initialize(){
+    public void initialize(){
+        unpause();
+        if (hidatoUserController.getLoggedUser() == null) return;
+        if (game.getName() != null) {
+            System.out.println("El nom de partida no es null, no s'incrementen les partides");
+            return;
+        }
+        
         hidatoUserController.getLoggedUser().incrementStartedGames();
         hidatoUserController.updateUser();
-        unpause();
-        return 0;
     }
    
     public int getCellVal(int i, int j){
