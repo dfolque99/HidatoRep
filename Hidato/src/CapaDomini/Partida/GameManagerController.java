@@ -10,7 +10,6 @@ import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUser;
 import CapaDomini.Usuari.HidatoUserController;
-import CapaDomini.Tauler.SolverController;
 import java.util.ArrayList;
 import java.util.Random;
 
