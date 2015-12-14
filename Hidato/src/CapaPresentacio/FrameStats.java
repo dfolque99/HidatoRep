@@ -89,12 +89,14 @@ public class FrameStats extends javax.swing.JFrame {
         return null;
     }
 
-    private static void buttonDeleteActionPerformed(javax.swing.JFrame myJFrame, final UserController uc) {
+    private void buttonDeleteActionPerformed(javax.swing.JFrame myJFrame, final UserController uc) {
         String Password = FrameStats.askPassword(myJFrame, "actual \ni pressiona \"OK\" per esborrar l'usuari, \npressiona \"Cancel\" per cancelar");
         Boolean truePass = uc.getLoggedUser().getPassword().equals(Password);
         if (truePass) {
+            hmc.renameUserHidatos();
             uc.deleteUser(Password);
             JOptionPane.showMessageDialog(myJFrame, "Usuari esborrat", "Usuari esborrat", JOptionPane.PLAIN_MESSAGE);
+            parent.saveBeforeClose();
             System.exit(0);
         } else if (null != Password) {
             JOptionPane.showMessageDialog(myJFrame, "Contrasenya incorrecta", "Contrasenya incorrecta", JOptionPane.ERROR_MESSAGE);
