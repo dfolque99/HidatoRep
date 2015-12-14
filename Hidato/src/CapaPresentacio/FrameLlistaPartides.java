@@ -45,7 +45,7 @@ public class FrameLlistaPartides extends FrameLlista {
         this.cgc = null;
         initComponents();
         setIconImage((new ImageIcon("icon.png")).getImage());
-        jButton2.setVisible(true);
+        jButton3.setText("Elimina");
         jButton3.setVisible(true);
         jButton2.addActionListener(new ActionListener() {
             @Override

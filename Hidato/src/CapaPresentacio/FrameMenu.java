@@ -504,17 +504,7 @@ public class FrameMenu extends javax.swing.JFrame {
                 msgError("No hi ha cap partida guardada");
             }
             else {
-                FrameLlistaPartides fllp = new FrameLlistaPartides(new RetornadorString() {
-                    public void retorna(String s) {
-                        jugarPartida(s);
-                    }
-                    public void elimina(String s) {}
-                    public void canviaNom(String s1, String s2){}
-                }, gmc, hmc);
-                fllp.setLocation(this.getLocation());
-                fllp.loadPartidesUsuari();
-                fllp.setVisible(true);
-                this.setVisible(false);
+                obrirLlistaPartides();
             }
         }
         else if (b.equals(b_jugar_a)) {
@@ -555,6 +545,51 @@ public class FrameMenu extends javax.swing.JFrame {
         else if (box_dificultat.getSelectedIndex() == 1) h = Help.MEDIUM;
         else h = Help.HIGH;
         return h;
+    }
+    
+    private void obrirLlistaPartides() {
+        FrameLlistaPartides flp = new FrameLlistaPartides(new RetornadorString() {
+            @Override
+            public void retorna(String s) {
+                openSelectedGame(s);
+            }
+            @Override
+            public void elimina(String s) {
+                deleteGame(s);
+            }
+            @Override
+            public void canviaNom(String oldName, String newName){}
+        }, gmc, hmc);
+        flp.setLocation(this.getLocation());
+        flp.loadPartidesUsuari();
+        flp.setVisible(true);
+        this.setVisible(false);
+    }
+    
+    private void deleteGame(String name) {
+        gmc.deleteGame(name);
+        Object[] myList = gmc.getGameList().toArray();
+        System.out.println("mida de la llista = "+myList.length);
+        if (myList.length > 0) {
+            obrirLlistaPartides();
+        }
+        else {
+            this.setVisible(true);
+        }
+    }
+
+    private void openSelectedGame(String gameName) {
+        if (gameName == null) {
+            this.setVisible(true);
+        }
+        else {
+            CurrentGameController cgc = gmc.restoreGame(gameName);
+            if (cgc == null){
+                msgError("No s'ha pogut carregar la partida");
+            }else{
+                parent.obrirPartida(this, cgc);
+            }
+        }
     }
     
     private void msgError(String text) {
