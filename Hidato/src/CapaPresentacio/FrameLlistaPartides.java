@@ -8,7 +8,6 @@ package CapaPresentacio;
 import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Tauler.HidatoManagerController;
-import CapaDomini.Usuari.HidatoUserController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -96,10 +95,13 @@ public class FrameLlistaPartides extends FrameLlista {
         retorna(false);
     }//GEN-LAST:event_formWindowClosing
 
+    /**
+     * Metode per canviar el nom d'una partida. S'utilitza en el RetornadorString
+     */
     @Override
     protected void canviaNom() {
         String newName = JOptionPane.showInputDialog(this, "Escriu un nou nom per la partida "
-                + jList1.getSelectedValue() + ":");
+            + jList1.getSelectedValue() + ":");
         if (newName == null) return;
         if (newName.equals("")) {
             msgError("Escriu algun nom!");
