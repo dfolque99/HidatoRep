@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- *
+ *Controlador que gestiona los rankings.
+ * Tiene tres rankings, uno por cada dificultad de juego.
  * @author Guillem
- * Controlador que gestiona los rankings. Tiene tres rankings, uno por cada
- * dificultad de juego.
+ * 
  */
 public class RankingController {
     
