@@ -483,7 +483,7 @@ public class FrameMenu extends javax.swing.JFrame {
         else if (b.equals(b_editar)) {
             int files = (Integer)spin_files.getValue();
             int columnes = (Integer) spin_columnes.getValue();
-            hmc.createManual(files, columnes);
+            hmc.createRandom(files, columnes);
             parent.obrirEditor(this);
         }
         else if (b.equals(b_jugar_g)) {

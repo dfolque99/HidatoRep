@@ -231,7 +231,7 @@ public class FrameGame extends javax.swing.JFrame {
                     int i = i0 - x1, j = j0-y1; //i, j van de 0 a x-1 i de 0 a y-1 respectivament
                     int valor = currentGameCtr.getCellVal(i, j);
                     CapaDomini.Tauler.Type type = currentGameCtr.getCellType(i, j);
-                    int fontSize = 250/maxim;
+                    int fontSize = 230/maxim;
                     
                     voidColor = Colors.c(0);
                     if (valor == 1 || valor == currentGameCtr.getValidCells()){

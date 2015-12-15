@@ -357,6 +357,8 @@ public class FrameEditor extends javax.swing.JFrame {
             poderDesar(true);
         }
         label_nom.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 48));
+        
+        
         solMostrada = false;
         
         
@@ -368,6 +370,7 @@ public class FrameEditor extends javax.swing.JFrame {
         N2 = N + N1;
         M1 = (maxim-M)/2;
         M2 = M + M1;
+        boolean resolt = true;
         jPanel1.setLayout(new GridLayout(maxim, maxim));
         for (int i0 = 0; i0 < maxim; ++i0) {
             panels.add(new ArrayList<>());
@@ -377,6 +380,7 @@ public class FrameEditor extends javax.swing.JFrame {
                     int i = i0-N1, j = j0-M1;
                     int val = hmc.getTempCellVal(i,j);
                     CapaDomini.Tauler.Type type = hmc.getTempCellType(i,j);
+                    if (type != CapaDomini.Tauler.Type.VOID && val == 0) resolt = false;
                     if (type != CapaDomini.Tauler.Type.GIVEN) val = 0;
                     SquareCell p = new SquareCell(i,j,val,type,Colors.c(2),Colors.c(4),Colors.c(1),Colors.c(0), 450/maxim*5/10,true);
                     panels.get(i).add(p);
@@ -399,6 +403,10 @@ public class FrameEditor extends javax.swing.JFrame {
                     jPanel1.add(p,i0*maxim+j0);
                 }
             }
+        }
+        if (resolt) {
+            solMostrada = true;
+            poderDesar(true);
         }
         g1 = new ButtonGroup();
         g1.add(b_buida_esborrar); g1.add(b_pista_posar); g1.add(b_void); g1.add(b_buida_posar);
