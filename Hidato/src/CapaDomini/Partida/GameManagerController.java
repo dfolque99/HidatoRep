@@ -171,7 +171,10 @@ public class GameManagerController {
         CurrentGameController ctrCurrentGame = new CurrentGameController(game, gameSet, ctrRanking, hidatoUserController);
         return ctrCurrentGame;
     }
-    //Elimina tots els games del gameSet actual
+    
+    /**
+     * Elimina totes les partides del gameSet
+     */
     public void deleteAllGames() {
         gameSet = new GameSet();
     }
