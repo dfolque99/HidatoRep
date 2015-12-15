@@ -8,27 +8,42 @@ package CapaPresentacio;
 
 import CapaDomini.Misc.Fonts;
 import CapaDomini.Tauler.Type;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagLayout;
-import java.awt.Rectangle;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.SoftBevelBorder;
 
 /**
- *
+ * Classe que representa una cel·la com a component. No és editable.
+ * Pretén ser més ràpida que SquareCell, pel que no escriu el número directament
  * @author David
  */
-public class SquareCellRapida extends JPanel{
+public class RapidCell extends JPanel{
     
+    /*
+     * Colors que adopta la casella en funció del seu tipus i valor
+     */
     private final Color color_normal, color_given, color_void;
-    private JLabel label; //etiqueta que contindra el valor de la cell
+    
+    /*
+     * JLabel on es mostrarà el número de la cel·la
+     */
+    private JLabel label;
+    
+    /*
+     * Mida de la font amb la qual es mostrarà el valor de la cel·la
+     */
     private final int font_num;
     
     
-    public SquareCellRapida (int val, Type type, Color blankColor, Color givenColor, Color voidColor, int font_num) {
+    /**
+     * Creadora amb parametres
+     * Posa el color de fons, la vora del panel, però no crea listeners, ni
+     * crea el label amb el valor, per que es creï més ràpid
+     */
+    public RapidCell (int val, Type type, Color blankColor, Color givenColor, Color voidColor, int font_num) {
         color_normal = blankColor;
         color_given = givenColor;
         color_void = voidColor;
@@ -55,6 +70,11 @@ public class SquareCellRapida extends JPanel{
         }
     }
     
+    /*
+     * Crea (si no esta creat ja) el label, i hi escriu el valor de la cel·la
+     * Es fa per separat de la creadora, per no ralentitzar el programa
+     * principal
+     */
     public void setVal(int val) {
         if (label == null) {
             setLayout(new GridBagLayout());

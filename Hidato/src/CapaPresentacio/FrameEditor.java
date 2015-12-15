@@ -11,11 +11,7 @@ import CapaDomini.Misc.Fonts;
 import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.Help;
 import CapaDomini.Tauler.HidatoManagerController;
-import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Tauler.SolverControllerStop;
-import CapaDomini.Usuari.HidatoUserController;
-import java.awt.Color;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
@@ -24,11 +20,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 
 /**
  *
@@ -389,7 +382,7 @@ public class FrameEditor extends javax.swing.JFrame {
                     panels.get(i).add(p);
                     fixats.get(i).add(val);
                     jPanel1.add(p, i0*maxim+j0);
-                    p.changeType(hmc.getTempCellType(i,j));
+                    p.setType(hmc.getTempCellType(i,j));
                     p.addMouseListener(new java.awt.event.MouseAdapter() {
                         @Override
                         public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -426,9 +419,9 @@ public class FrameEditor extends javax.swing.JFrame {
                 for (int i = 0; i < N; ++i) {
                     for (int j = 0; j < M; ++j) {
                         hmc.setTempCellVal(i, j, 0);
-                        panels.get(i).get(j).changeVal(0);
+                        panels.get(i).get(j).setVal(0);
                         hmc.setTempCellType(i, j, CapaDomini.Tauler.Type.BLANK);
-                        panels.get(i).get(j).changeType(CapaDomini.Tauler.Type.BLANK);
+                        panels.get(i).get(j).setType(CapaDomini.Tauler.Type.BLANK);
                         fixats.get(i).set(j,0);
                     }
                 }
@@ -456,9 +449,9 @@ public class FrameEditor extends javax.swing.JFrame {
                                 for (int i = 0; i < N; ++i) {
                                     for (int j = 0; j < M; ++j) {
                                         CapaDomini.Tauler.Type t = hmc.getTempCellType(i, j);
-                                        panels.get(i).get(j).changeType(t);
+                                        panels.get(i).get(j).setType(t);
                                         int val = hmc.getTempCellVal(i, j);
-                                        if (t == CapaDomini.Tauler.Type.GIVEN) panels.get(i).get(j).changeVal(val);
+                                        if (t == CapaDomini.Tauler.Type.GIVEN) panels.get(i).get(j).setVal(val);
                                     }
                                 }
                                 poderDesar(true);
@@ -625,8 +618,8 @@ public class FrameEditor extends javax.swing.JFrame {
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < M; ++j) {
                 if (hmc.getTempCellType(i, j) != CapaDomini.Tauler.Type.VOID) {
-                    panels.get(i).get(j).changeVal(hmc.getTempCellVal(i, j));
-                    panels.get(i).get(j).changeType(hmc.getTempCellType(i, j));
+                    panels.get(i).get(j).setVal(hmc.getTempCellVal(i, j));
+                    panels.get(i).get(j).setType(hmc.getTempCellType(i, j));
                 }
             }
         }
@@ -639,7 +632,7 @@ public class FrameEditor extends javax.swing.JFrame {
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < M; ++j) {
                 if (hmc.getTempCellType(i, j) == CapaDomini.Tauler.Type.BLANK) {
-                    panels.get(i).get(j).changeVal(fixats.get(i).get(j));
+                    panels.get(i).get(j).setVal(fixats.get(i).get(j));
                 }
             }
         }
@@ -697,9 +690,9 @@ public class FrameEditor extends javax.swing.JFrame {
         if (p.getLight()) {
             if (b_buida_esborrar.isSelected()) {
                 hmc.setTempCellType(p.getA(), p.getB(), CapaDomini.Tauler.Type.BLANK);
-                p.changeType(CapaDomini.Tauler.Type.BLANK);
+                p.setType(CapaDomini.Tauler.Type.BLANK);
                 hmc.setTempCellVal(p.getA(), p.getB(), 0);
-                p.changeVal(0);
+                p.setVal(0);
                 fixats.get(p.getA()).set(p.getB(), 0);
                 poderDesar(false);
             }
@@ -717,20 +710,20 @@ public class FrameEditor extends javax.swing.JFrame {
                     return;
                 }
                 hmc.setTempCellVal(p.getA(), p.getB(), num);
-                p.changeVal(num);
+                p.setVal(num);
                 fixats.get(p.getA()).set(p.getB(), num);
                 CapaDomini.Tauler.Type t;
                 if (b_buida_posar.isSelected()) t = CapaDomini.Tauler.Type.BLANK;
                 else t = CapaDomini.Tauler.Type.GIVEN;
                 hmc.setTempCellType(p.getA(), p.getB(), t);
-                p.changeType(t);
+                p.setType(t);
                 poderDesar(false);
             }
             else if (b_void.isSelected()) {
                 hmc.setTempCellType(p.getA(), p.getB(), CapaDomini.Tauler.Type.VOID);
-                p.changeType(CapaDomini.Tauler.Type.VOID);
+                p.setType(CapaDomini.Tauler.Type.VOID);
                 hmc.setTempCellVal(p.getA(), p.getB(), -1);
-                p.changeVal(0);
+                p.setVal(0);
                 fixats.get(p.getA()).set(p.getB(), 0);
                 poderDesar(false);
             }

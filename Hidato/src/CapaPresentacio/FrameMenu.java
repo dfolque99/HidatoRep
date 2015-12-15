@@ -9,22 +9,12 @@ import CapaDomini.Misc.Fonts;
 import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Partida.Help;
-import CapaDomini.Tauler.GeneratorController;
-import CapaDomini.Tauler.Hidato;
 import CapaDomini.Tauler.HidatoManagerController;
-import java.awt.Button;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -32,23 +22,21 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- *
+ * Classe que consisteix en el menú principal del programa
  * @author David
  */
 public class FrameMenu extends javax.swing.JFrame {
-
     
-    private AdminVistes parent;
-    private HidatoManagerController hmc;
-    private GameManagerController gmc;
-    
+    /*
+     * Constructora amb parametres
+     */
     public FrameMenu(AdminVistes parent, HidatoManagerController hmc, GameManagerController gmc, String name) {
         this.parent = parent;
         this.hmc = hmc;
         this.gmc = gmc;
         initComponents();
         inici(name);
-        if (name == "Convidat") fesConvidat();
+        if (name.equals("Convidat")) fesConvidat();
     }
 
     /**
@@ -80,7 +68,7 @@ public class FrameMenu extends javax.swing.JFrame {
         b_jugar_g = new javax.swing.JButton();
         b_continuar = new javax.swing.JButton();
         b_jugar_a = new javax.swing.JButton();
-        box_dificultat = new javax.swing.JComboBox();
+        box_ajuda = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -225,8 +213,8 @@ public class FrameMenu extends javax.swing.JFrame {
         b_jugar_a.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         b_jugar_a.setText("Jugar aleatori");
 
-        box_dificultat.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
-        box_dificultat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Baix", "Mitjà", "Alt" }));
+        box_ajuda.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
+        box_ajuda.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Baix", "Mitjà", "Alt" }));
 
         jLabel4.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         jLabel4.setText("Nivell d'ajuda:");
@@ -241,7 +229,7 @@ public class FrameMenu extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(box_dificultat, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(box_ajuda, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,7 +241,7 @@ public class FrameMenu extends javax.swing.JFrame {
                 .addComponent(b_jugar_a, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(box_dificultat, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(box_ajuda, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
@@ -313,45 +301,14 @@ public class FrameMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * Funció que es duu a terme quan es va a tancar el formulari.
+     * Guarda tot abans de tancar.
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         parent.saveBeforeClose();
     }//GEN-LAST:event_formWindowClosing
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrameMenu(null, null, null, "Usuari").setVisible(true);
-            }
-        });
-    }
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_continuar;
@@ -362,7 +319,7 @@ public class FrameMenu extends javax.swing.JFrame {
     private javax.swing.JButton b_jugar_g;
     private javax.swing.JButton b_perfil;
     private javax.swing.JButton b_ranking;
-    private javax.swing.JComboBox box_dificultat;
+    private javax.swing.JComboBox box_ajuda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -378,9 +335,38 @@ public class FrameMenu extends javax.swing.JFrame {
     private javax.swing.JSpinner spin_files;
     // End of variables declaration//GEN-END:variables
 
+    
+    /*
+     * Controlador GameManagerController
+     */
+    private final GameManagerController gmc;
+    
+    /*
+     * Controlador HidatoManagerController
+     */
+    private final HidatoManagerController hmc;
+    
+    /*
+     * Controlador AdminVistes per fer canvis de vista
+     */
+    private final AdminVistes parent;
+    
+    /*
+     * Objecte per fer les animacions
+     */
     private Animacio anim;
+    
+    /*
+     * Posicions inicials (a) i finals (b) dels panels (jPanel3, jPanel4 i
+     * jPanel5) que s'han de moure en les animacions
+     */
     private Point p3a, p3b, p4a, p4b, p5a, p5b;
     
+    /*
+     * Funció que es duu a terme al crear la vista
+     * Configura els botons (font, text, listeners) i altres components
+     * Prepara les animacions
+     */
     public void inici(String name) {
         
         setIconImage((new ImageIcon("icon.png")).getImage());
@@ -410,6 +396,7 @@ public class FrameMenu extends javax.swing.JFrame {
         spin_files.setValue(8);
         spin_columnes.setValue(8);
         spin_files.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged (ChangeEvent evt) {
                 if ((Integer)spin_files.getValue() < min_files) {
                     spin_files.setValue(min_files);
@@ -420,6 +407,7 @@ public class FrameMenu extends javax.swing.JFrame {
             }
         });
         spin_columnes.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged (ChangeEvent evt) {
                 if ((Integer)spin_columnes.getValue() < min_columnes) {
                     spin_columnes.setValue(min_columnes);
@@ -448,12 +436,29 @@ public class FrameMenu extends javax.swing.JFrame {
         
     }
     
+    /*
+     * Accions a dur a terme quan hem entrat en mode convidat
+     * (prohibir crear, entrar a perfil, i continuar partida guardada)
+     */
     private void fesConvidat() {
         b_crear.setEnabled(false);
         b_perfil.setEnabled(false);
         b_continuar.setEnabled(false);
     }
     
+    /*
+     * Funció que s'executa quan es pitja algun boto. Segons el botó fa unes
+     * accions o unes altres.
+     * Jugar i Crear inicien animacions per mostrar els seus panels.
+     * Ranking i Perfil obren les vistes corresponents.
+     * Jugar hidato guardat i continuar partida guardada obren una llista per
+     * escollir hidato/partida.
+     * Jugar hidato aleatori obre una partida amb un hidato aleatori de nxm on
+     * n i m són aleatoris entre 5 i 9
+     * Crear obre l'editor amb un hidato buit de la mida indicada en els 
+     * spinners
+     * Les partides s'obren amb el nivell d'ajuda del comboBox
+     */
     private void picarBoto(JButton b) {
         if (b.equals(b_jugar)) {
             anim.setVel(10);
@@ -486,17 +491,7 @@ public class FrameMenu extends javax.swing.JFrame {
                 msgError("No existeix cap hidato al repositori");
             }
             else {
-                FrameLlista fll = new FrameLlista(new RetornadorString() {
-                    public void retorna(String s) {
-                        jugarHidato(s);
-                    }
-                    public void elimina(String s) {}
-                    public void canviaNom(String s1, String s2){}
-                }, hmc);
-                fll.setLocation(this.getLocation());
-                fll.loadHidatosTots();
-                fll.setVisible(true);
-                this.setVisible(false);
+                obrirLlistaHidatos();
             }
         }
         else if (b.equals(b_continuar)) {
@@ -509,14 +504,18 @@ public class FrameMenu extends javax.swing.JFrame {
         }
         else if (b.equals(b_jugar_a)) {
             Random rand = new Random();
-            int x = rand.nextInt(5)+3;
-            int y = rand.nextInt(5)+3;
+            int x = rand.nextInt(4)+5;
+            int y = rand.nextInt(4)+5;
             hmc.createRandom(x, y);
             CurrentGameController cgc = hmc.playTempHidato(getHelp());
             parent.obrirPartida(this,cgc);
         }
     }
     
+    /*
+     * Funció que es crida quan la llista de Hidatos retorna una String
+     * boardname per jugar. Obre la vista de partida amb el hidato boardname
+     */
     private void jugarHidato (String boardname) {
         if (boardname == null) {
             this.setVisible(true);
@@ -528,6 +527,10 @@ public class FrameMenu extends javax.swing.JFrame {
         }
     }
     
+    /*
+     * Funció que es crida quan la llista de partides retorna una String
+     * gameName per jugar. Obre la vista de partida amb la partida que toca
+     */
     private void jugarPartida (String gameName) {
         if (gameName == null) {
             this.setVisible(true);
@@ -535,23 +538,58 @@ public class FrameMenu extends javax.swing.JFrame {
         }
         else {
             CurrentGameController cgc = gmc.restoreGame(gameName);
-            parent.obrirPartida(this, cgc);
+            if (cgc == null){
+                msgError("No s'ha pogut carregar la partida");
+            }else{
+                parent.obrirPartida(this, cgc);
+            }
         }
     }
     
+    /*
+     * Retorna el nivell d'ajuda escollit en box_ajuda
+     */
     private Help getHelp () {
         Help h;
-        if (box_dificultat.getSelectedIndex() == 0) h = Help.LOW;
-        else if (box_dificultat.getSelectedIndex() == 1) h = Help.MEDIUM;
+        if (box_ajuda.getSelectedIndex() == 0) h = Help.LOW;
+        else if (box_ajuda.getSelectedIndex() == 1) h = Help.MEDIUM;
         else h = Help.HIGH;
         return h;
     }
     
+    /*
+     * Crea la vista de llista de hidatos, i li carrega tots els hidatos
+     * guardats. Crea l'objecte amb els mètodes a fer quan aquesta faci alguna
+     * acció, dels quals només retorna fa alguna cosa (cridar a jugarHidato)
+     */
+    private void obrirLlistaHidatos() {
+        FrameLlista fll = new FrameLlista(new RetornadorString() {
+            @Override
+            public void retorna(String s) {
+                jugarHidato(s);
+            }
+            @Override
+            public void elimina(String s) {}
+            @Override
+            public void canviaNom(String s1, String s2){}
+        }, hmc);
+        fll.setLocation(this.getLocation());
+        fll.loadHidatosTots();
+        fll.setVisible(true);
+        this.setVisible(false);
+    }
+    
+    /*
+     * Crea la vista de llista de partides, i li carrega les partides de
+     * l'usuari. Crea l'objecte amb els mètodes a fer quan aquesta faci alguna
+     * acció, dels quals actuen retorna (que crida a jugarHidato), i elimina
+     * (que crida deleteGame)
+     */
     private void obrirLlistaPartides() {
         FrameLlistaPartides flp = new FrameLlistaPartides(new RetornadorString() {
             @Override
             public void retorna(String s) {
-                openSelectedGame(s);
+                jugarPartida(s);
             }
             @Override
             public void elimina(String s) {
@@ -566,10 +604,12 @@ public class FrameMenu extends javax.swing.JFrame {
         this.setVisible(false);
     }
     
+    /*
+     * Esborra la partida amb nom name de l'usuari loggejat
+     */
     private void deleteGame(String name) {
         gmc.deleteGame(name);
         Object[] myList = gmc.getGameList().toArray();
-        System.out.println("mida de la llista = "+myList.length);
         if (myList.length > 0) {
             obrirLlistaPartides();
         }
@@ -578,20 +618,9 @@ public class FrameMenu extends javax.swing.JFrame {
         }
     }
 
-    private void openSelectedGame(String gameName) {
-        if (gameName == null) {
-            this.setVisible(true);
-        }
-        else {
-            CurrentGameController cgc = gmc.restoreGame(gameName);
-            if (cgc == null){
-                msgError("No s'ha pogut carregar la partida");
-            }else{
-                parent.obrirPartida(this, cgc);
-            }
-        }
-    }
-    
+    /*
+     * Mostra un missatge d'error amb la informació text
+     */
     private void msgError(String text) {
         JOptionPane.showMessageDialog(this,text,"On vas flipat!",JOptionPane.ERROR_MESSAGE);
     }

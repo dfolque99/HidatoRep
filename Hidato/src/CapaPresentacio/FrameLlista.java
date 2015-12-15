@@ -7,22 +7,16 @@ package CapaPresentacio;
 
 import CapaDomini.Misc.Colors;
 import CapaDomini.Misc.Fonts;
-import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Tauler.HidatoManagerController;
-import CapaDomini.Tauler.HidatoSet;
-import CapaDomini.Usuari.HidatoUserController;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -227,9 +221,9 @@ public class FrameLlista extends javax.swing.JFrame {
     protected String selected;
     
     /*
-     * Array de les SquareCellRapida que conformen el taulell
+     * Array de les RapidCell que conformen el taulell
      */
-    protected ArrayList<ArrayList<SquareCellRapida>> panels;
+    protected ArrayList<ArrayList<RapidCell>> panels;
     
     /*
      * Thread que escriu els números al taulell.
@@ -448,7 +442,7 @@ public class FrameLlista extends javax.swing.JFrame {
                     //CapaDomini.Tauler.Type type = hmc.getTempCellType(i,j);
                     Color c = Colors.c(1);
                     if (getVal(i, j) == valMin || getVal(i, j) == valMax) c = Colors.c(3);
-                    SquareCellRapida p = new SquareCellRapida(0,type,Colors.c(2),c,Colors.c(0), 400/maxim*5/10);
+                    RapidCell p = new RapidCell(0,type,Colors.c(2),c,Colors.c(0), 400/maxim*5/10);
                     jPanel2.add(p, i0*maxim+j0);
                     panels.get(i0).add(p);
                 }
