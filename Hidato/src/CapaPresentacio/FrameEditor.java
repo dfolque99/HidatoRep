@@ -11,11 +11,7 @@ import CapaDomini.Misc.Fonts;
 import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.Help;
 import CapaDomini.Tauler.HidatoManagerController;
-import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Tauler.SolverControllerStop;
-import CapaDomini.Usuari.HidatoUserController;
-import java.awt.Color;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
@@ -24,11 +20,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 
 /**
  *

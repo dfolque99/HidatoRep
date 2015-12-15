@@ -6,10 +6,15 @@
 package CapaPresentacio;
 
 /**
- *
+ * Classe principal del programa. Conté el mètode main del programa.
  * @author David
  */
 public class Main {
+    
+    /*
+     * És la funció que comença el programa.
+     * Crea un objecte AdminVistes i crida el seu mètode executaPrograma
+     */
     public static void main (String args[]) {
         AdminVistes d = new AdminVistes();
         d.executaPrograma();

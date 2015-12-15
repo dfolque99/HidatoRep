@@ -327,7 +327,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="box_dificultat" max="32767" attributes="0"/>
+                      <Component id="box_ajuda" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -341,7 +341,7 @@
                       <Component id="b_jugar_a" min="-2" pref="35" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="box_dificultat" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="box_ajuda" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="38" max="32767" attributes="0"/>
@@ -374,7 +374,7 @@
                 <Property name="text" type="java.lang.String" value="Jugar aleatori"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="box_dificultat">
+            <Component class="javax.swing.JComboBox" name="box_ajuda">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="Fonts.getFont(&quot;OpenSans-Light&quot;, Font.PLAIN, 18)" type="code"/>

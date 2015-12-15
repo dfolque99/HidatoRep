@@ -8,11 +8,9 @@ package CapaPresentacio;
 
 import CapaDomini.Misc.Fonts;
 import CapaDomini.Tauler.Type;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagLayout;
-import java.awt.Rectangle;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.SoftBevelBorder;
