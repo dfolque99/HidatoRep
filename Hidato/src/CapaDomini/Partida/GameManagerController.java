@@ -110,7 +110,6 @@ public class GameManagerController {
      */
     public CurrentGameController createGameFromBoard(String name, Hidato solvedHidato, Help help){
         HidatoUser loggedUser = (HidatoUser) hidatoUserController.getLoggedUser();
-        if (loggedUser == null) System.out.println("user null"); 
         Game game_aux = gameSet.getGameByName(name);
         if (game_aux != null) return null;
         if (solvedHidato == null) return null;
