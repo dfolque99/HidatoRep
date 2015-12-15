@@ -4,7 +4,6 @@ import CapaDomini.Misc.Colors;
 import CapaDomini.Misc.Fonts;
 import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.Help;
-import CapaDomini.Tauler.HidatoController;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.SolverControllerStop;
 import java.awt.Color;
@@ -92,7 +91,10 @@ public class FrameGame extends javax.swing.JFrame {
      */
     private final FrameGame dis = this;
     
-    private int v_compartit; // per compartir entre threads
+    /**
+     * Variables per compartir entre threads
+     */
+    private int v_compartit;
     private SquareCell p_compartit;
     
     /**
@@ -277,6 +279,11 @@ public class FrameGame extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Coloca un valor en un panell de la vista
+     * @param p panell que volem
+     * @param v valor a colocar
+     */
     private void posarValor(SquareCell p, int v) {
         int errCode = currentGameCtr.putValue(v, p.getA(), p.getB());
         if (!SolverControllerStop.isStopped()) {
