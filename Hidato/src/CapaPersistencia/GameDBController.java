@@ -42,10 +42,10 @@ public class GameDBController {
     en persistencia
     */
     public ArrayList<Game> getAllGames(String username){
-        ArrayList<Game> ret = new ArrayList<>();
+        ArrayList<Game> ret = new ArrayList<Game>();
         File f = new File(directory + username);
         f.mkdir();
-        ArrayList<String> gameNames = new ArrayList(Arrays.asList(f.list()));
+        ArrayList<String> gameNames = new ArrayList<String>(Arrays.asList(f.list()));
         for (int i = 0; i < gameNames.size(); ++i) {
             try {
                 FileInputStream fis = new FileInputStream(directory + username + "/" + gameNames.get(i));
@@ -67,7 +67,7 @@ public class GameDBController {
     public void deleteAllGames(String username) {
         File f = new File(directory + username);
         if (Arrays.asList(f.list()) != null) {
-            ArrayList<String> gameNames = new ArrayList(Arrays.asList(f.list()));
+            ArrayList<String> gameNames = new ArrayList<String>(Arrays.asList(f.list()));
             for (int i = 0; i < gameNames.size(); ++i) {
                 File aux = new File(directory + username + "/" + gameNames.get(i));
                 aux.delete();
