@@ -45,8 +45,7 @@ public class HidatoManagerController {
     /*
      * Creadora amb parametres
      */
-    public HidatoManagerController (HidatoSet hset, HidatoUserController uc) {
-        this.hset = hset;
+    public HidatoManagerController (HidatoUserController uc) {
         this.uc = uc;
     }
     

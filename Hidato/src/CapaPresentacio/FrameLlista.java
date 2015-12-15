@@ -27,13 +27,14 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
- *
+ * Vista que serveix com a diàleg per escollir d'entre una llista de
+ * hidatos o partides
  * @author David
  */
 public class FrameLlista extends javax.swing.JFrame {
 
     /**
-     * Creates new form FrameLlista
+     * Creadora amb parametres
      */
     public FrameLlista(RetornadorString ret, HidatoManagerController hmc) {
         initComponents();
@@ -187,51 +188,13 @@ public class FrameLlista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * Funció que es crida abans de tancar, és com pitjar el botó endarrere
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         retorna(false);
     }//GEN-LAST:event_formWindowClosing
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameLlista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameLlista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameLlista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameLlista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                HidatoUserController uc = new HidatoUserController();
-                //uc.createUser("Usuari", "password");
-                uc.login("david", "david");
-                HidatoManagerController hmc = new HidatoManagerController(new HidatoSet(), uc);
-                hmc.loadAll();
-                FrameLlista fll = new FrameLlista(null, hmc);
-                fll.setVisible(true);
-                fll.loadHidatosUsuari();
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -247,19 +210,49 @@ public class FrameLlista extends javax.swing.JFrame {
     protected javax.swing.JLabel label_nom;
     // End of variables declaration//GEN-END:variables
 
+    /*
+     * Objecte que té els mètodes que s'efectuen al frame que ha creat aquest
+     * quan es pitgi algun botó
+     */
     protected RetornadorString ret;
+    
+    /*
+     * Controlador HidatoManagerController
+     */
     private HidatoManagerController hmc;
+    
+    /*
+     * Paraula seleccionada de la jList1
+     */
     protected String selected;
+    
+    /*
+     * Array de les SquareCellRapida que conformen el taulell
+     */
     protected ArrayList<ArrayList<SquareCellRapida>> panels;
+    
+    /*
+     * Thread que escriu els números al taulell.
+     * S'escriuen en un thread perquè a vegades triga bastant en fer-se.
+     */
     private Thread t;
+    
+    /*
+     * Booleà que serveix per controlar les accions del thread
+     */
     protected boolean seguir;
     
+    /*
+     * Funció que es duu a terme al principi.
+     * Configura el frame, els listeners, els components i els paràmetres
+     */
     private void inici(RetornadorString ret, HidatoManagerController hmc) {
         this.ret = ret;
         this.hmc = hmc;
         label_nom.setText("");
         label_nom.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 48));
-        posaLabelAutor();
+        label_autor.setText("");
+        label_autor.setFont(Fonts.getFont("OpenSans-Light", Font.ITALIC, 24));
         selected = null;
         jList1.setSelectionBackground(Colors.c(1));
         jList1.addListSelectionListener(new ListSelectionListener() {
@@ -293,17 +286,19 @@ public class FrameLlista extends javax.swing.JFrame {
         setIconImage((new ImageIcon("icon.png")).getImage());
     }
     
-    private void posaLabelAutor(){
-        label_autor.setText("");
-        label_autor.setFont(Fonts.getFont("OpenSans-Light", Font.ITALIC, 24));
-    }
-    
+    /*
+     * Crida la funció retorna de ret i elimina aquest frame
+     */
     protected void retorna(boolean b) {
         if (b) ret.retorna(jList1.getSelectedValue());
         else ret.retorna(null);
         this.dispose();
     }
     
+    /*
+     * Demana un nom per al hidato, i si no hi ha cap altre amb aquest nom,
+     * crida la funció de ret per a canviar el nom del hidato.
+     */
     protected void canviaNom() {
         String newName = JOptionPane.showInputDialog(this, "Escriu un nou nom pel hidato "
                 + jList1.getSelectedValue() + ":");
@@ -320,11 +315,19 @@ public class FrameLlista extends javax.swing.JFrame {
         this.dispose();
     }
     
+    /*
+     * Crida la funció de ret per eliminar el hidato
+     */
     protected void elimina() {
         ret.elimina(jList1.getSelectedValue());
         this.dispose();
     }
     
+    /*
+     * Carrega a la llista els hidatos de l'usuari loggejat i configura els
+     * botons que són per una llista de hidatos d'un usuari (és a dir, per una
+     * on es poden editar, canviar de nom, i eliminar)
+     */
     public void loadHidatosUsuari () {
         ArrayList<String> llista = hmc.getUserHidatoList();
         jList1.setListData(llista.toArray(new String[]{}));
@@ -349,12 +352,19 @@ public class FrameLlista extends javax.swing.JFrame {
         });
     }
     
+    /*
+     * Carrega a la llista els hidatos de tots els usuaris
+     */
     public void loadHidatosTots () {
         ArrayList<String> llista = hmc.getAllHidatoList();
         jList1.setListData(llista.toArray(new String[]{}));
         if (!llista.isEmpty()) jList1.setSelectedIndex(0);
     }
 
+    /*
+     * Carrega el hidato seleccionat a hmc, el dibuixa en pantalla, i actualitza
+     * les dades que surten en pantalla
+     */
     protected void seleccio() {
         seguir = false;
         boolean result = hmc.loadHidato(selected);
@@ -367,28 +377,48 @@ public class FrameLlista extends javax.swing.JFrame {
         dibuixarHidato();
     }
 
+    /*
+     * Getter del tipus de la cel·la (i,j)
+     */
     protected CapaDomini.Tauler.Type getType(int i, int j){
         return hmc.getTempCellType(i,j);
     }
     
+    /*
+     * Getter del valor de la cel·la (i,j)
+     */
     protected int getVal(int i, int j){
         return hmc.getTempCellVal(i,j);
     }
     
+    /*
+     * Setter del valor de la cel·la (i,j) a la pantalla
+     * Només escriu el valor de les cel·les de tipus GIVEN
+     */
     protected void setVal(int i, int j, int i0, int j0){
         int val = hmc.getTempCellVal(i,j);
         if (hmc.getTempCellType(i,j) == CapaDomini.Tauler.Type.GIVEN) panels.get(i0).get(j0).setVal(val);
                             
     }
     
+    /*
+     * Getter del nombre de files del hidato que s'ha carregat a hmc
+     */
     protected int hidatoX(){
         return hmc.getTempSizeX();
     }
     
+    /*
+     * Getter del nombre de columnes del hidato que s'ha carregat a hmc
+     */
     protected int hidatoY(){
         return hmc.getTempSizeY();
     }
     
+    /*
+     * Dibuixa el hidato carregat a hmc a la pantalla. Primer posa els tipus de
+     * cel·les i després crea un thread que posa els números
+     */
     protected void dibuixarHidato() {
         int N = hidatoX();
         int M = hidatoY();
@@ -450,6 +480,9 @@ public class FrameLlista extends javax.swing.JFrame {
         t.start();
     }
     
+    /*
+     * Mostra un missatge d'error amb la informació text
+     */
     protected void msgError(String text) {
         JOptionPane.showMessageDialog(this,text,"Error",JOptionPane.ERROR_MESSAGE);
     }
