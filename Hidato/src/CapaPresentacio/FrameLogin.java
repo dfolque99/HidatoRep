@@ -6,7 +6,6 @@
 package CapaPresentacio;
 
 import CapaDomini.Usuari.HidatoUserController;
-import CapaDomini.Usuari.UserController;
 import javax.swing.JOptionPane;
 import CapaDomini.Misc.Fonts;
 import CapaDomini.Partida.GameManagerController;
@@ -17,19 +16,28 @@ import javax.swing.ImageIcon;
 
 
 /**
- *
+ * Vista que permet fer login al programa, registrar nous usuaris, i entrar
+ * com a convidat
  * @author David
  */
 public class FrameLogin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrameLogin
+    /*
+     * Controladors necessaris
      */
-    
     private HidatoUserController uc;
-    private AdminVistes parent;
     private GameManagerController gmc;
     
+    /*
+     * Controlador AdminVistes per obrir noves pantalles
+     */
+    private AdminVistes parent;
+    
+    /*
+     * Creadora amb parametres
+     * Posa el LookAndFeel "Windows" i configura els camps de username i
+     * password perquè intentin entrar al pitjar Enter
+     */
     public FrameLogin(AdminVistes parent, HidatoUserController uc, GameManagerController gmc) {
         this.parent = parent;
         this.uc = uc;
@@ -41,24 +49,15 @@ public class FrameLogin extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        } catch (Exception e) {}
         initComponents();
         setIconImage((new ImageIcon("icon.png")).getImage());
         jPasswordField1.addKeyListener(new KeyListener() {
-            public void keyReleased (KeyEvent evt) {
-                
-            }
-            public void keyPressed (KeyEvent evt) {
-                
-            }
+            @Override
+            public void keyReleased (KeyEvent evt) { }
+            @Override
+            public void keyPressed (KeyEvent evt) { }
+            @Override
             public void keyTyped (KeyEvent evt) {
                 if (evt.getKeyChar() == '\n') {
                     entra();
@@ -66,19 +65,11 @@ public class FrameLogin extends javax.swing.JFrame {
             }
         });
         jTextField1.addKeyListener(new KeyListener() {
-            public void keyReleased (KeyEvent evt) {
-                
-            }
-            public void keyPressed (KeyEvent evt) {
-                if (evt.getKeyCode() == 38) {
-                    if (evt.isControlDown()) {
-                        uc.createUser("david", "david");
-                        uc.login("david", "david");
-                        gmc.initGameSet();
-                        obrirMenu();
-                    }
-                }
-            }
+            @Override
+            public void keyReleased (KeyEvent evt) { }
+            @Override
+            public void keyPressed (KeyEvent evt) { }
+            @Override
             public void keyTyped (KeyEvent evt) {
                 if (evt.getKeyChar() == '\n') {
                     entra();
@@ -86,13 +77,7 @@ public class FrameLogin extends javax.swing.JFrame {
             }
         });
     }
-
-    private void obrirMenu() {
-        parent.obrirMenu(this);
-    }
     
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -218,21 +203,34 @@ public class FrameLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * Es crida al pitjar el botó Entra
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         entra();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /*
+     * Es crida al pitjar el botó Entra com a Convidat
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
         entraConvidat();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /*
+     * Es crida al pitjar el botó Registra't
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
         registrar();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    /*
+     * Intenta fer login amb les dades dels camps username i password
+     * Si falta alguna dada, ho explicita
+     * Si no es pot fer login, n'explica el motiu
+     * Si es pot fer login, inicialitza el gameSet amb aquest usuari i crida la
+     * funció obrirMenu de l'AdminVistes
+     */
     private void entra() {
         String username = jTextField1.getText();
         String password = new String(jPasswordField1.getPassword());
@@ -256,12 +254,21 @@ public class FrameLogin extends javax.swing.JFrame {
         }
     }
     
+    /*
+     * Entra al programa en mode convidat
+     */
     private void entraConvidat() {
         JOptionPane.showMessageDialog(this,"Entraràs com a convidat. Algunes funcions no estaran disponibles.","Fantàstic!",JOptionPane.INFORMATION_MESSAGE);
         parent.setConvidat();
         parent.obrirMenu(this);
     }
     
+    /*
+     * Intenta registrar l'usuari amb les dades dels camps username i password
+     * Si falta alguna dada, ho explicita
+     * Si no es pot fer el registre, n'explica el motiu
+     * Si es pot fer registre, ho explicita
+     */
     private void registrar() {
         String username = jTextField1.getText();
         String password = new String(jPasswordField1.getPassword());
@@ -270,7 +277,7 @@ public class FrameLogin extends javax.swing.JFrame {
             msgError("Falta nom d'usuari");
         }
         else if (username.contains("/") || username.contains("*")) {
-            msgError("Els caracters '/' i '*' no són valids pel nom");
+            msgError("Els caràcters '/' i '*' no són valids per al nom");
         }
         else if (username.equals("Convidat")) {
             msgError("Nom d'usuari no disponible");
@@ -288,45 +295,13 @@ public class FrameLogin extends javax.swing.JFrame {
         }
     }
     
+    /*
+     * Mostra un missatge d'error amb la informació text
+     */
     private void msgError(String text) {
-        JOptionPane.showMessageDialog(this,text,"On vas flipat!",JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this,text,"Error",JOptionPane.ERROR_MESSAGE);
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrameLogin(null, new HidatoUserController(), null).setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

@@ -8,31 +8,65 @@ package CapaPresentacio;
 
 import CapaDomini.Misc.Fonts;
 import CapaDomini.Tauler.Type;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagLayout;
-import java.awt.Rectangle;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.SoftBevelBorder;
 
 /**
- *
+ * Classe que representa una cel·la com a component
  * @author David
  */
 public class SquareCell extends JPanel{
     
-    private final int a; //dimensio x
-    private final int b; //dimensio y
-    private int val; //valor de la cell
-    private Type type; //tipus de la cell
+    /*
+     * Fila on està la cel·la en el seu hidato
+     */
+    private final int a;
+    
+    /*
+     * Columna on està la cel·la en el seu hidato
+     */
+    private final int b;
+    
+    /*
+     * Valor de la cel·la
+     */
+    private int val;
+    
+    /*
+     * Tipus de la cel·la
+     */
+    private Type type;
+    
+    /*
+     * Colors que adopta la casella en funció del seu tipus i valor
+     */
     private final Color color_normal, color_highlight, color_given, color_void;
-    private final JLabel label; //etiqueta que contindra el valor de la cell
-    private boolean light; //si esta iluminat perque el ratoli hi passa per sobre
-    private boolean modificable; //si l'usuari pot modificar el valor
     
+    /*
+     * JLabel on es mostrarà el número de la cel·la
+     */
+    private final JLabel label;
     
+    /*
+     * Boolean que indica si el ratolí ha pitjat a la casella i encara no ha
+     * sortit de sobre seu. Serveix per coordinar l'esdeveniment
+     * press+release-mouseOut
+     */
+    private boolean light;
+    
+    /*
+     * Boolean que indica si l'usuari ha de ser capaç de modificar la cel·la
+     */
+    private boolean modificable;
+    
+    /**
+     * Creadora amb paràmetres
+     * Posa el color de fons, la vora del panel, 
+     */
     public SquareCell (int a, int b, int val, Type type, Color blankColor, Color clickColor, Color givenColor, Color voidColor, int font_num, boolean mod) {
         this.a = a;
         this.b = b;
@@ -73,7 +107,7 @@ public class SquareCell extends JPanel{
         else label.setText(Integer.toString(val));
     }
     
-    public void changeType(Type type) {
+    public final void changeType(Type type) {
         this.type = type;
         if (type == Type.VOID) {
             setBackground(color_void);
