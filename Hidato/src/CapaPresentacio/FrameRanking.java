@@ -7,17 +7,13 @@ package CapaPresentacio;
 
 import CapaDomini.Partida.Difficulty;
 import CapaDomini.Rank.RankingController;
-import java.awt.FlowLayout;
+import CapaDomini.Misc.Fonts;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-import java.awt.Font;
-import CapaDomini.Misc.Fonts;
+import java.util.ArrayList;
 
 /**
  *
@@ -195,48 +191,12 @@ public class FrameRanking extends javax.swing.JFrame {
     }//GEN-LAST:event_selectorDificultatActionPerformed
 
     private void backToMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToMenuActionPerformed
-        // TODO add your handling code here:
         dom.obrirMenu(this);
     }//GEN-LAST:event_backToMenuActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         dom.saveBeforeClose();
     }//GEN-LAST:event_formWindowClosing
- 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameRanking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameRanking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameRanking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameRanking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrameRanking(null,null).setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backToMenu;
@@ -247,10 +207,6 @@ public class FrameRanking extends javax.swing.JFrame {
     private javax.swing.JPanel tagPanel;
     // End of variables declaration//GEN-END:variables
 
-    
-    
-    
-    
     //===============================MI CODIGO==================================
     
     private RankingController rc;
@@ -259,20 +215,22 @@ public class FrameRanking extends javax.swing.JFrame {
     private final int N = RankingController.getRankingMaxSize();
     //Numero de informacion proporcionada por cada entrada del ranking
     //Es decir, numero de columnas del gridlayout
-    private final static int M = 3; 
+    private final static int M = 3;
     
-    //Funcio per inicialitzar el frame (assignar ranking controller, mostrar ranking
-    //inicial, etc.)
-    //Es final para evitar un warning (call to overridable method in constructor)
-    public final void inicialitza(AdminVistes dom, RankingController rc) {
+    
+    //A PARTIR DE AQUI FUNCIONES PRIVADAS
+    
+    /*
+    Funcion que sirve para inicializar el JFrame (asignarle el RankingController,
+    mostrar el ranking inicial (inicialmente siempre se muestra el facil en este caso),
+    poner la imagen de icono, etc.)
+    Tiene el modificador final para evitar un warning de compilacion.
+    */
+    private final void inicialitza(AdminVistes dom, RankingController rc) {
         
         this.dom = dom;
         this.rc = rc;
         
-        /* DESCOMENTAR PARA DEBUGAR
-        this.rc = new RankingController();
-        this.rc.init();
-        */
         setIconImage((new ImageIcon("icon.png")).getImage());
         
         posPanel.setLayout(new GridLayout(N,1));
@@ -302,7 +260,9 @@ public class FrameRanking extends javax.swing.JFrame {
         setVisibleRanking(Difficulty.EASY);
     }
     
-    //Mostra el ranking de dificultat dif
+    /*
+    Funcion que sirve para seleccionar que ranking es visible por pantalla
+    */
     private void setVisibleRanking(Difficulty dif) {
         rankingPanel.removeAll();
         ArrayList <String> ranking = rc.getRankingInfo(dif);
@@ -322,9 +282,12 @@ public class FrameRanking extends javax.swing.JFrame {
         }
         rankingPanel.updateUI();
     }
-    
-    //Serveix per reordenar l'ordre de les columnes del ranking (canviar l'ordre
-    //en que es dona l'informacio de cada entrada)
+     
+    /*
+    Funcion que reordena el orden en el que se muestra la informacion de cada
+    entrada del ranking en el rankingPanel (consiste en una permutacion de los
+    indices i = 0..2)
+    */
     private static int perm(int i) {
         switch(i) {
             case 0: return 1;
@@ -334,7 +297,10 @@ public class FrameRanking extends javax.swing.JFrame {
         }
     }
     
-    //Converteix una dificultat donada com un string en una del tipus Difficulty
+    /*
+    Funcion que convierte una dificultad en String devuelta por el JComboBox
+    selectorDificultat a una dificultad del tipo Difficulty.
+    */
     private static Difficulty string2diff(String s) {
         switch(s) {
             case "Fàcil": return Difficulty.EASY;
@@ -343,6 +309,5 @@ public class FrameRanking extends javax.swing.JFrame {
             default: return Difficulty.EASY;
         }
     }
-    
-
+   
 }

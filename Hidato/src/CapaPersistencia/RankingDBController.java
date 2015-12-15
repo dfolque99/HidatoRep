@@ -7,7 +7,11 @@ package CapaPersistencia;
 
 import CapaDomini.Partida.Difficulty;
 import CapaDomini.Rank.Ranking;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * Clase que gestiona la persistencia de los rankings.
@@ -20,8 +24,13 @@ public class RankingDBController {
     private static final String directory = "Ranking/";
     private static final String extension = ".obj";
     
+    /*
+    Funcion que devuelve el Ranking que se corresponde con la dificultad
+    difficulty guardado en persistencia. En caso de no existir este devuelve
+    un nuevo Ranking vacio con parametro de dificultad difficulty.
+    */
     public Ranking getRanking(Difficulty difficulty) {
-        Ranking ret = null;
+        Ranking ret;
         try {
             FileInputStream fis = new FileInputStream(getDirectory(difficulty));
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -34,6 +43,10 @@ public class RankingDBController {
         return ret;
     }
     
+    /*
+    Guarda o sobreescribe (en caso de ya existir un ranking con la dificultad
+    difficulty) el Ranking ranking.
+    */
     public void modifyRanking(Difficulty difficulty,Ranking ranking) {
         File f = new File(directory);
         f.mkdir();
@@ -49,6 +62,13 @@ public class RankingDBController {
         
     }
     
+    //A PARTIR DE AQUI FUNCIONES PRIVADAS
+    
+    
+    /*
+    Funcion que devuelve un String que contiene el path donde se debe guardar el
+    Ranking cuya dificultad es difficulty.
+    */
     private String getDirectory(Difficulty difficulty) {
         return directory + difficulty.toString() + extension;
     }
