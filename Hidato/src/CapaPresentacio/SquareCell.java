@@ -54,7 +54,7 @@ public class SquareCell extends JPanel{
     /*
      * Boolean que indica si el ratolí ha pitjat a la casella i encara no ha
      * sortit de sobre seu. Serveix per coordinar l'esdeveniment
-     * press+release-mouseOut
+     * press+release-mouseExited
      */
     private boolean light;
     
@@ -63,9 +63,10 @@ public class SquareCell extends JPanel{
      */
     private boolean modificable;
     
-    /**
+    /*
      * Creadora amb paràmetres
-     * Posa el color de fons, la vora del panel, 
+     * Posa el color de fons, la vora del panel, crea el label amb el valor, 
+     * defineix els listeners mouseEntered i mouseExited
      */
     public SquareCell (int a, int b, int val, Type type, Color blankColor, Color clickColor, Color givenColor, Color voidColor, int font_num, boolean mod) {
         this.a = a;
@@ -86,7 +87,7 @@ public class SquareCell extends JPanel{
         else label.setText(Integer.toString(val));
         label.setFont(Fonts.getFont("OpenSans-Light",Font.PLAIN, font_num));
         setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
-        changeType(type);
+        setType(type);
         
         addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -101,13 +102,16 @@ public class SquareCell extends JPanel{
         });
     }
     
-    public void changeVal(int val) {
+    /**
+     * 
+     */
+    public void setVal(int val) {
         this.val = val;
         if (val <= 0) label.setText("");
         else label.setText(Integer.toString(val));
     }
     
-    public final void changeType(Type type) {
+    public final void setType(Type type) {
         this.type = type;
         if (type == Type.VOID) {
             setBackground(color_void);
@@ -129,7 +133,7 @@ public class SquareCell extends JPanel{
                 setBackground(color_highlight);
             }
             else {
-                changeType(type);
+                setType(type);
             }
         }
     }

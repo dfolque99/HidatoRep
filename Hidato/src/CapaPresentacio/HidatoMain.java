@@ -9,7 +9,7 @@ package CapaPresentacio;
  * Classe principal del programa. Conté el mètode main del programa.
  * @author David
  */
-public class Main {
+public class HidatoMain {
     
     /*
      * És la funció que comença el programa.
