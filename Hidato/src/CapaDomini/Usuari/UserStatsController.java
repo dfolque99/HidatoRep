@@ -4,6 +4,7 @@ import java.time.Duration;
 
 /**
  * A controller for the achievements and statistics of the users
+ *
  * @since 2015-11-14
  * @author felix.axel.gimeno
  * @see HidatoUser
@@ -100,10 +101,11 @@ public final class UserStatsController {
     public int getTotalCreatedBoards() {
         return user.getTotalCreatedBoards();
     }
-    
+
     /**
-     * 
-     * @return best time in seconds, from class user, or 0 if the user doesnt have it yet
+     *
+     * @return best time in seconds, from class user, or 0 if the user doesnt
+     * have it yet
      */
     public long getBestTime() {
         if (user.getBestTime() == null) {
@@ -113,7 +115,7 @@ public final class UserStatsController {
     }
 
     /**
-     * 
+     *
      * @return best score, 0 is default, from class user
      */
     public int getBestScore() {
