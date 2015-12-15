@@ -211,6 +211,10 @@ public class CurrentGameController {
         ctrRanking.addScoreToRanking(score, username, game.getDifficulty());
     }
     
+    public void writeHidato(){
+        ctrHidato.writeHidato();
+    }
+    
     /**
      * Calcula la puntuacio de la partida (val 0 si s'ha utilitzat el solve per acabar-la)
      * @return la puntuacio obtinguda
@@ -375,5 +379,9 @@ public class CurrentGameController {
      */
     public void setBoardName(String newName){
         game.getHidato().setBoardName(newName);
+    }
+    
+    public Game getGame(String name){
+        return gameSet.getGameByName(name);
     }
 }

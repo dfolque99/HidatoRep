@@ -4,6 +4,7 @@ import CapaDomini.Misc.Colors;
 import CapaDomini.Misc.Fonts;
 import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.Help;
+import CapaDomini.Tauler.HidatoController;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.SolverControllerStop;
 import java.awt.Color;

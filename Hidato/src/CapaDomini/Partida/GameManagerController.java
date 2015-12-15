@@ -134,7 +134,7 @@ public class GameManagerController {
      * retorna null.
      */
     public CurrentGameController restoreGame(String name){
-        Game game = gameSet.getGameByName(name);
+        Game game = new Game(gameSet.getGameByName(name));
         if (game == null) return null;
         CurrentGameController ctrCurrentGame = new CurrentGameController(game, gameSet, ctrRanking, hidatoUserController);
         return ctrCurrentGame;

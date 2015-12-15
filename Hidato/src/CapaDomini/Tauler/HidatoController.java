@@ -142,4 +142,13 @@ public class HidatoController {
         }
         return false;
     }
+    
+    public void writeHidato(){
+        for (int i = 0; i < hidato.getSizeX(); i++){
+            for (int j = 0; j < hidato.getSizeY(); j++){
+                System.out.print(hidato.getCell(i, j).getVal()+"  ");
+            }
+            System.out.print("\n");
+        }
+    }
 }

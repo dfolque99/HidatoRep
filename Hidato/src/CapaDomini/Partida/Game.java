@@ -106,6 +106,22 @@ public class Game implements Serializable {
         this.isHidatoVolatile = isVolatile;
     }
     
+    public Game(Game g){
+        this.name = g.name;
+        this.hidato = new Hidato(g.hidato);
+        this.origHidato = new Hidato(g.origHidato);
+        this.solvedHidato = new Hidato(g.solvedHidato);
+        this.username = g.username;
+        this.help = g.help;
+        this.changesMade = g.changesMade;
+        this.checksMade = g.checksMade;
+        this.duration = g.duration;
+        this.hints = g.hints;
+        this.difficulty = g.difficulty;
+        this.legitSolve = g.legitSolve;
+        this.isHidatoVolatile = g.isHidatoVolatile;
+    }
+    
     /**
      * Getter del nom del hidato
      * @return el nom de la partida
