@@ -266,7 +266,7 @@ public class FrameGame extends javax.swing.JFrame {
                                         posarValor(p_compartit, v_compartit);
                                     }
                                 });
-                                if (currentGameCtr.getHelp() == Help.HIGH) dialog = obrirProgressBar("Comprovant valor...", t);
+                                if (currentGameCtr.getHelp() == Help.HIGH) dialog = obrirProgressBar("Comprovant valor...");
                                 t.start();
                             }
                         }
@@ -605,10 +605,9 @@ public class FrameGame extends javax.swing.JFrame {
     /**
      * Obre un dialeg amb una barra de progres.
      * @param titol Titol del dialeg obert
-     * @param t Thread que se n'ocupa
      * @return El dialeg creat
      */
-    private DialogProgressBar obrirProgressBar(String titol, Thread t) {
+    private DialogProgressBar obrirProgressBar(String titol) {
         DialogProgressBar dialog = new DialogProgressBar(this,false,new Runnable() {
             @Override
             public void run() {
@@ -647,7 +646,7 @@ public class FrameGame extends javax.swing.JFrame {
                 }
             }
         });
-        dialog = obrirProgressBar("Buscant una solució...", t);
+        dialog = obrirProgressBar("Buscant una solució...");
         t.start();
     }//GEN-LAST:event_checkButtonActionPerformed
 
@@ -685,7 +684,7 @@ public class FrameGame extends javax.swing.JFrame {
                 }
             }
         });
-        dialog = obrirProgressBar("Buscant una pista...", t);
+        dialog = obrirProgressBar("Buscant una pista...");
         t.start();
     }//GEN-LAST:event_hintButtonActionPerformed
 
@@ -714,7 +713,7 @@ public class FrameGame extends javax.swing.JFrame {
                 }
             }
         });
-        dialog = obrirProgressBar("Resolent el hidato...", t);
+        dialog = obrirProgressBar("Resolent el hidato...");
         t.start();
     }//GEN-LAST:event_solveButtonActionPerformed
 
