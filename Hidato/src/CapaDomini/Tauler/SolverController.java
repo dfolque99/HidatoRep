@@ -2,7 +2,6 @@ package CapaDomini.Tauler;
 
 import CapaDomini.Misc.Position;
 import CapaDomini.Misc.Utils;
-import java.util.AbstractQueue;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -239,6 +238,7 @@ public class SolverController {
     }
 
     /**
+     * tests if position is valid, uncached
      *
      * @param x
      * @param y
@@ -270,6 +270,7 @@ public class SolverController {
     }
 
     /**
+     * tests if position is valid, with myCache
      *
      * @param x
      * @param y
