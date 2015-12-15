@@ -303,7 +303,7 @@ public class FrameGame extends javax.swing.JFrame {
                 int oldVal = p.getVal();
                 historial.add(new Accio(p.getA(), p.getB(), oldVal));
                 undoButton.setEnabled(true);
-                p.changeVal(v);
+                p.setVal(v);
                 if (nextNumber(1) == -1){
                     if (currentGameCtr.isSolved()) acabaPartida();
                 }else{
@@ -677,7 +677,7 @@ public class FrameGame extends javax.swing.JFrame {
                     int oldVal = panels.get(x).get(y).getVal();
                     historial.add(new Accio(x,y,oldVal));
                     undoButton.setEnabled(true);
-                    panels.get(x).get(y).changeVal(value);
+                    panels.get(x).get(y).setVal(value);
                     newValue.setValue(nextNumber((int)newValue.getValue()-1));
                     if(nextNumber(1) == -1){
                         acabaPartida();
@@ -707,7 +707,7 @@ public class FrameGame extends javax.swing.JFrame {
                     for(int i = 0; i < currentGameCtr.getSizeX(); i++){
                         for(int j = 0; j < currentGameCtr.getSizeY(); j++){
                             int value = currentGameCtr.getCellVal(i, j);
-                            panels.get(i).get(j).changeVal(value);
+                            panels.get(i).get(j).setVal(value);
                         }
                     }
                     acabaPartida();
@@ -746,7 +746,7 @@ public class FrameGame extends javax.swing.JFrame {
         for(int i = 0; i < currentGameCtr.getSizeX(); i++){
             for(int j = 0; j < currentGameCtr.getSizeY(); j++){
                 int value = currentGameCtr.getCellVal(i, j);
-                panels.get(i).get(j).changeVal(value);
+                panels.get(i).get(j).setVal(value);
                 historial = new Stack<>();
                 undoButton.setEnabled(false);
             }
@@ -843,7 +843,7 @@ public class FrameGame extends javax.swing.JFrame {
         int y = a.y;
         int val = a.val;
         currentGameCtr.putValue(val, x, y);
-        panels.get(x).get(y).changeVal(val);
+        panels.get(x).get(y).setVal(val);
         if (historial.size() == 0) undoButton.setEnabled(false);
     }//GEN-LAST:event_undoButtonActionPerformed
 
