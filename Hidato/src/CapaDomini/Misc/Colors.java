@@ -34,9 +34,9 @@ public class Colors {
     
     /**
      * Funció que retorna el color segons el tema seleccionat.
-     * @param i Especifica el tipus de color que vol. 0 -> caselles void,
-     * 1 -> caselles given, 2 -> caselles blank, 3 -> caselles inici/final, 
-     * 4 -> casella clicada.
+     * @param i Especifica el tipus de color que vol. 0 = caselles void,
+     * 1 = caselles given, 2 = caselles blank, 3 = caselles inici/final, 
+     * 4 = casella clicada.
      * @return El color corresponent.
      */
     public static final Color c(int i) {
