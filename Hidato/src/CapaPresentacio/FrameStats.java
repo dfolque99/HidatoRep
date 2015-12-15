@@ -100,7 +100,7 @@ public class FrameStats extends javax.swing.JFrame {
         javax.swing.JPasswordField pass = new javax.swing.JPasswordField(20);
         panel.add(label);
         panel.add(pass);
-        String[] options = new String[]{"OK", "Cancel"};
+        String[] options = new String[]{"OK", "Cancel·lar"};
         int option = JOptionPane.showOptionDialog(myFrame, panel, null,
                 JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options, options[1]);
@@ -160,7 +160,7 @@ public class FrameStats extends javax.swing.JFrame {
      * button delete user
      */
     private void buttonDeleteActionPerformed() {
-        String Password = FrameStats.askPassword(this, "actual \ni pressiona \"OK\" per esborrar l'usuari, \npressiona \"Cancel\" per cancelar");
+        String Password = FrameStats.askPassword(this, "actual \ni pressiona \"OK\" per esborrar l'usuari, \npressiona \"Cancel·la\" per cancelar");
         Boolean truePass = uc.getLoggedUser().getPassword().equals(Password);
         if (truePass) {
             gmc.deleteAllGames();
@@ -184,11 +184,11 @@ public class FrameStats extends javax.swing.JFrame {
             String NewPassword = FrameStats.askPassword(this, "nova");
             if (null != NewPassword) {
                 uc.modifyPassword(OldPassword, NewPassword);
-                JOptionPane.showMessageDialog(this, "Contraseña canviada", "Contraseña canviada", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Contrasenya canviada", "Contrasenya canviada", JOptionPane.PLAIN_MESSAGE);
             }
 
         } else if (null != OldPassword) {
-            JOptionPane.showMessageDialog(this, "Contraseñya incorrecta", "Contraseñya incorrecta", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Contrasenya incorrecta", "Contrasenya incorrecta", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -208,7 +208,7 @@ public class FrameStats extends javax.swing.JFrame {
         if (getHidatos().length > 0) {
             obrirLlista();
         } else {
-            JOptionPane.showMessageDialog(this, "No hidatos trobats", "L'usuari no te hidatos guardats", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Cap hidato trobat", "L'usuari no té hidatos guardats", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -272,7 +272,7 @@ public class FrameStats extends javax.swing.JFrame {
             if (hmc.loadHidato(hidatoName)) {
                 parent.obrirEditor(this);
             } else {
-                JOptionPane.showMessageDialog(this, "No se ha pogut carregar", "No se ha pogut carregar", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No s'ha pogut carregar", "No s'ha pogut carregar", JOptionPane.PLAIN_MESSAGE);
             }
         }
     }
