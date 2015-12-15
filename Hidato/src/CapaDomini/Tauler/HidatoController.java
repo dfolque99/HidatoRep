@@ -119,6 +119,10 @@ public class HidatoController {
         return true;
     }
     
+    /**
+     * Retorna si el numero 1 esta colocat en el hidato
+     * @return true si ho esta, false si no
+     */
     public Boolean hasOrigin() {
         for (int i = 0; i < hidato.getSizeX(); ++i) {
             for (int j = 0; j < hidato.getSizeY(); ++j) {
@@ -128,13 +132,12 @@ public class HidatoController {
         return false;
     }
     
+    /**
+     * Retorna si l'ultima casella esta posada en el hidato
+     * @return true si ho esta, false si no
+     */
     public Boolean hasFinal() {
-        int total = 0;
-        for (int i = 0; i < hidato.getSizeX(); ++i) {
-            for (int j = 0; j < hidato.getSizeY(); ++j) {
-                if (!hidato.getCell(i, j).getType().equals(Type.VOID)) ++total;
-            }
-        }
+        int total = countValidCells();
         for (int i = 0; i < hidato.getSizeX(); ++i) {
             for (int j = 0; j < hidato.getSizeY(); ++j) {
                 if (hidato.getCell(i, j).getVal() == total) return true;
@@ -142,13 +145,5 @@ public class HidatoController {
         }
         return false;
     }
-    
-    public void writeHidato(){
-        for (int i = 0; i < hidato.getSizeX(); i++){
-            for (int j = 0; j < hidato.getSizeY(); j++){
-                System.out.print(hidato.getCell(i, j).getVal()+"  ");
-            }
-            System.out.print("\n");
-        }
-    }
+
 }

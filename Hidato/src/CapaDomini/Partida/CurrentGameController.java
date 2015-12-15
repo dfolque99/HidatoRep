@@ -184,6 +184,11 @@ public class CurrentGameController {
         gameSet.addGame(game);
     }
     
+    /**
+     * Retorna si existeix una partida en el conjunt amb el nom donat
+     * @param name nom de la partida
+     * @return true si existeix, false si no
+     */
     public Boolean existsGame(String name){
         return (gameSet.getGameByName(name) != null);
     }
@@ -209,10 +214,6 @@ public class CurrentGameController {
         
         hidatoUserController.updateUser();
         ctrRanking.addScoreToRanking(score, username, game.getDifficulty());
-    }
-    
-    public void writeHidato(){
-        ctrHidato.writeHidato();
     }
     
     /**
@@ -380,8 +381,5 @@ public class CurrentGameController {
     public void setBoardName(String newName){
         game.getHidato().setBoardName(newName);
     }
-    
-    public Game getGame(String name){
-        return gameSet.getGameByName(name);
-    }
+
 }
