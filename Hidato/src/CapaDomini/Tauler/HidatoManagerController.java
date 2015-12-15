@@ -10,14 +10,13 @@ package CapaDomini.Tauler;
 import CapaPersistencia.HidatoSetDBController;
 import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Partida.CurrentGameController;
-import CapaDomini.Partida.Difficulty;
 import CapaDomini.Partida.Help;
 import CapaDomini.Usuari.HidatoUser;
 import CapaDomini.Usuari.HidatoUserController;
 import java.util.ArrayList;
 
 /**
- *
+ * Classe controladora del conjunt de hidatos i de l'edició d'aquests.
  * @author David
  */
 
@@ -43,30 +42,15 @@ public class HidatoManagerController {
      */
     Hidato tempHidato;
     
-    /**
+    /*
      * Creadora amb parametres
-     * @param hset
-     * @param cgm
      */
     public HidatoManagerController (HidatoSet hset, HidatoUserController uc) {
         this.hset = hset;
         this.uc = uc;
     }
     
-    public ArrayList<String> getUserHidatoList() {
-        return ((HidatoUser) uc.getLoggedUser()).getCreatedHidatos();
-    }
-    
-    public ArrayList<String> getAllHidatoList() {
-        ArrayList<String> llista = new ArrayList<>();
-        int total = hset.getTotalHidatos();
-        for (int i = 0; i < total; ++i){
-            llista.add(hset.getHidatoByPos(i).getBoardName());
-        }
-        return llista;
-    }
-    
-    /**
+    /*
      * Pre: sizeX,sizeY >= 0, difficulty != null
      * Post: crea un hidato aleatori i el carrega a tempHidato
      */
@@ -75,7 +59,7 @@ public class HidatoManagerController {
         tempHidato = hg.generateHidato(sizeX, sizeY);
     }
     
-    /**
+    /*
      * Pre: sizeX,sizeY >= 0
      * Post: inicialitza tempHidato amb sizeX x sizeY (buit: nomes extrems)
      */
@@ -83,7 +67,7 @@ public class HidatoManagerController {
         tempHidato = new Hidato (sizeX, sizeY);
     }
     
-    /**
+    /*
      * Pre: name != null
      * Post: si no existeix un hidato a hset amb nom name, retorna false
      *      si existeix, el carrega a tempHidato i retorna true
@@ -95,7 +79,7 @@ public class HidatoManagerController {
         return true;
     }
     
-    /**
+    /*
      * Pre: name != null
      * Post: retorna true si existeix un Hidato anomenat name a hset
      */
@@ -103,7 +87,7 @@ public class HidatoManagerController {
         return (hset.getHidatoByName(name) != null);
     }
     
-    /**
+    /*
      * Pre: name,help!= null
      * Post: retorna un CurrentGameController per jugar al hidato amb nom name
      *      del hset; si no existeix aquest hidato, retorna null
@@ -112,7 +96,7 @@ public class HidatoManagerController {
         return gmc.createGameFromBoard(null, tempHidato, help);
     }
     
-    /**
+    /*
      * Pre: cert
      * Post: si tempHidato te solucio, la posa a tempHidato i retorna true;
      *      sino, retorna false
@@ -125,14 +109,7 @@ public class HidatoManagerController {
         return true;
     }
     
-    public boolean validateTempHidato() {
-        SolverController solver = new SolverController();
-        boolean teSolucio = solver.solve(tempHidato);
-        if (!teSolucio) return false;
-        return true;
-    }
-    
-    /**
+    /*
      * Pre: name != null
      * Post: guarda el tempHidato a hset amb nom name (sobreescriu si cal)
      */
@@ -152,7 +129,7 @@ public class HidatoManagerController {
         }
     }
     
-    /**
+    /*
      * Pre: difficulty != null
      * Post: si tempHidato es pot completar, ho fa a tempHidato i retorna true;
      *      sino, retorna false
@@ -165,68 +142,116 @@ public class HidatoManagerController {
         return true;
     }
     
+    /*
+     * Pre: cert
+     * Post: retorna un booleà que diu si el tempHidato té final
+     */
     public boolean tempHasFinal() {
         HidatoController hc = new HidatoController(tempHidato);
         return hc.hasFinal();
     }
     
+    /*
+     * Pre: cert
+     * Post: retorna un booleà que diu si el tempHidato té inici
+     */
     public boolean tempHasOrigin() {
         HidatoController hc = new HidatoController(tempHidato);
         return hc.hasOrigin();
     }
     
+    /*
+     * Pre: cert
+     * Post: calcula la dificultat del hidato tempHidato i la posa a tempHidato
+     */
     public void calcTempDifficulty () {
         DifficultyController dc = new DifficultyController();
         tempHidato.setDifficulty(dc.getDifficulty(tempHidato));
     }
     
-    /**
+    /*
      * Pre: cert
      * Post: guarda l'estat de hset al disc
-     * @return 0
      */
     public int saveAll() {
         HidatoSetDBController.saveAll(hset);
         return 0;
     }
     
-    /**
+    /*
      * Pre: cert
      * Post: carrega l'estat de hset del disc
-     * @return 0
      */
     public int loadAll() {
         hset = HidatoSetDBController.loadAll();
         return 0;        
     }
     
+    /*
+     * Pre: name != null
+     * Post: elimina el hidato amb nom name del hset, i de la llista de hidatos
+     * creats de l'usuari loggejat
+     */
     public void deleteHidato (String name) {
         hset.deleteHidatoByName(name);
-        ArrayList<String> hidatos = ((HidatoUser)uc.getLoggedUser()).getCreatedHidatos();
+        ArrayList<String> hidatos = 
+                ((HidatoUser)uc.getLoggedUser()).getCreatedHidatos();
         hidatos.remove(name);
         uc.updateUser();
     }
     
+    /*
+     * Pre: oldName, newName != null
+     * Post: canvia el nom del hidato amb nom oldName del hset a newName, i
+     * tambe ho modifica a la llista de hidatos creats de l'usuari loggejat
+     */
     public void renameHidato (String oldName, String newName) {
         hset.getHidatoByName(oldName).setBoardName(newName);
-        ArrayList<String> hidatos = ((HidatoUser)uc.getLoggedUser()).getCreatedHidatos();
+        ArrayList<String> hidatos = 
+                ((HidatoUser)uc.getLoggedUser()).getCreatedHidatos();
         hidatos.set(hidatos.indexOf(oldName), newName);
         uc.updateUser();
     }
     
+    /**
+     * Pre: cert
+     * Post: afegeix un asterisc al nom d'usuari dels hidatos creats per
+     * l'usuari loggejat
+     */
     public void renameUserHidatos() {
         String username = uc.getLoggedUser().getUsername();
         for (int i = 0; i < hset.getTotalHidatos(); ++i) {
             if (hset.getHidatoByPos(i).getUsername().equals(username)) {
-            System.out.print(hset.getHidatoByPos(i).getUsername() + " " + username);
                 hset.getHidatoByPos(i).setUsername(username+"*");
             }
         }
     }
     
-    public void setGameManagerController (GameManagerController gmc) {
-        this.gmc = gmc;
+    /*
+     * Pre: cert
+     * Post: retorna un array amb els noms dels hidatos de l'usuari loggejat
+     */
+    public ArrayList<String> getUserHidatoList() {
+        return ((HidatoUser) uc.getLoggedUser()).getCreatedHidatos();
     }
+    
+    /*
+     * Pre: cert
+     * Post: retorna un array amb els noms de tots els hidatos
+     */
+    public ArrayList<String> getAllHidatoList() {
+        ArrayList<String> llista = new ArrayList<>();
+        int total = hset.getTotalHidatos();
+        for (int i = 0; i < total; ++i){
+            llista.add(hset.getHidatoByPos(i).getBoardName());
+        }
+        return llista;
+    }
+    
+    
+    /*
+     * Getters i setters
+     */
     
     public Hidato getHidatoByName (String name) {
         return hset.getHidatoByName(name);
@@ -235,11 +260,6 @@ public class HidatoManagerController {
     public Hidato getHidatoByPos (int pos) {
         return hset.getHidatoByPos(pos);
     }
-    
-    
-    /**
-     * Getters i setters sobre el hidato tempHidato
-     */
     
     public String getTempBoardName () {
         return tempHidato.getBoardName();
@@ -271,16 +291,15 @@ public class HidatoManagerController {
         return tempHidato.getSizeY();
     }
     
+    public void setGameManagerController (GameManagerController gmc) {
+        this.gmc = gmc;
+    }
+    
     public void setTempCellVal (int x, int y, int val) {
         tempHidato.getCell(x, y).setVal(val);
     }
     
     public void setTempCellType (int x, int y, Type type) {
         tempHidato.getCell(x, y).setType(type);
-    }
-    
-    public void veure() {
-        System.out.printf("%d hidatos:\n", hset.getTotalHidatos());
-        hset.veure();
     }
 }

@@ -6,29 +6,68 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
- * 
+ * Classe encarregada de la generació aleatòria de hidatos.
  * @author David
- * 
  */
 
 public class GeneratorController {
     
+    /**
+     * Hidato que s'esta generant
+     */
     private Hidato h;
+    
+    /**
+     * Dimensions del hidato que s'esta generant
+     */
     private int n, m;
-    private int iter, val_ref;
+    
+    /**
+     * Nombre de vegades que s'ha cridat la funcio del backtracking
+     */
+    private int iter;
+    
+    /**
+     * Valor que s'estava posant quan s'ha trobat particionament al hidato
+     */
+    private int val_ref;
+    
+    /**
+     * Nombre de caselles no omplertes al voltant de la casella (i,j)
+     */
     private int D[][]; 
+    
+    /**
+     * Posicio del hidato on es troba cada valor i
+     */
     private Position L[];
+    
+    /**
+     * Proxim valor predeterminat despres del valor i
+     */
     private int nextGiven[];
-    private int totalCaselles = 0;
-    private final boolean controlarPart = true;
-    private double factor = 1.0 * 5/10;
+    
+    /**
+     * Nombre total de caselles que s'han d'omplir al hidato
+     */
+    private int totalCaselles;
+    
+    /**
+     * Proporcio del cami que s'ha de conservar al tirar endarrere en el
+     * backtracking al trobar particionament
+     */
+    private double factor;
+    
+    /**
+     * Nombre d'iteracions del backtracking que passen sense comprovar el
+     * particionament
+     */
     private final int N = 30;
-    public double iteracions;
     
-    
-    public GeneratorController() {
-        
-    }
+    /**
+     * Array de nodes, representa el hidato, s'utilitza en l'algorisme UHC
+     */
+    private Node[][] quad;
     
     
     /**
@@ -40,7 +79,7 @@ public class GeneratorController {
      *      * si el tipus d'una casella es VOID, haura de ser VOID
      *      * si el tipus d'una casella es GIVEN, haura de ser GIVEN
      *      * si el tipus d'una casella es BLANK, sera BLANK o GIVEN, depenent
-     *        de si cal donar mes nombres inicials per satisfer la dificultat
+     *        de si cal donar mes nombres inicials
      *  retorna null si no hi ha casella inicial, o si es impossible de generar
     */
     public Hidato generateHidato(Hidato h) {
@@ -48,19 +87,15 @@ public class GeneratorController {
         this.h = new Hidato(h);
         n = h.getSizeX();
         m = h.getSizeY();
+        
         comptaCaselles();
+        if (!hidatoValid()) return null;
         
-        iteracions = 0;
-        if (hidatoValid() == false) return null;
-        
-        System.out.print("Factor 5/10...\n");
         factor = 5.0/10;
-        if (completarCami() == false) {
-            System.out.print("Factor 8/10...\n");
+        if (!completarCami()) {
             factor = 8.0/10;
-            if (completarCami() == false) return null;
+            if (!completarCami()) return null;
         }
-        
         posarPistes();
         return this.h;
     }
@@ -76,8 +111,7 @@ public class GeneratorController {
         h.getCell(0,0).setVal(0);
         h.getCell(n-1, m-1).setVal(0);
         
-        iteracions = 0;
-        
+        iter = 0;
         int vegades = 0;
         boolean trobat = false;
         
@@ -91,16 +125,16 @@ public class GeneratorController {
                 posarCasellesVoid();
             }
             comptaCaselles();
-            trobat = completarCamiUHC();
+            trobat = generarCamiUHC();
             vegades++;
         }
         
-        // si fins ara no hem trobat cap cami, provem amb un backtracking exhaustiu
+        // si fins ara no hem trobat cap cami, fem un backtracking exhaustiu
         if (trobat == false) {
             h = new Hidato(sizeX, sizeY);
             h.getCell(0,0).setVal(0);
             h.getCell(n-1, m-1).setVal(0);
-            iteracions = 0;
+            iter = 0;
             comptaCaselles();
             h.getCell(randomNum(0,n-1), randomNum(0,m-1)).setVal(1);
             factor = 1;
@@ -115,6 +149,12 @@ public class GeneratorController {
     
     /*================================UHC=====================================*/
     
+    /**
+     * Classe utilitzada per a l'algorisme UHC.
+     * Consta principalment d'una posicio al taulell, i de nodes anterior i
+     * seguent, així com també un array amb els seus veïns al taulell, i flags
+     * posat i esVoid
+     */
     private class Node {
         int x, y;
         Node seg, ant;
@@ -131,9 +171,11 @@ public class GeneratorController {
         }
     }
     
-    Node[][] quad;
-    
-    private boolean completarCamiUHC() {
+    /**
+     * Genera un camí aleatori en el hidato, utilitzant l'algorisme UHC.
+     * Retorna un booleà que diu si s'ha trobat el camí.
+     */
+    private boolean generarCamiUHC() {
         quad = new Node[n][m];
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
@@ -149,12 +191,12 @@ public class GeneratorController {
         s.posat = true;
         int Psize = 1;
         boolean solucio = false;
-        iteracions = 0;
+        iter = 0;
         int maxim = Math.max(n,m);
         double aproximador = maxim*maxim*Math.log10(maxim)*5;
         
-        while (iteracions < Math.max(aproximador*5, 10000)) {
-            ++iteracions;
+        while (iter < Math.max(aproximador*5, 10000)) {
+            ++iter;
             // 2
             // a
             if (Psize == totalCaselles) {
@@ -212,6 +254,9 @@ public class GeneratorController {
         return false;
     }
     
+    /**
+     * Omple l'arrayList de veins dels nodes
+     */
     private void afegirVeins() {
         for (int x = 0; x < n; ++x) {
             for (int y = 0; y < m; ++y) {
@@ -227,6 +272,9 @@ public class GeneratorController {
         }
     }
     
+    /**
+     * Escull un node no void com a node inicial
+     */
     private Node buscarInicial() {
         int vegades = 100;
         while (vegades-- > 0) {
@@ -243,17 +291,22 @@ public class GeneratorController {
         return null;
     }
     
+    /**
+     * Retorna un vei aleatori d'entre els del node ndp
+     */
     private Node select (Node ndp) {
         if (ndp.veins.isEmpty()) return null;
         Node ret = ndp.veins.get(randomNum(0,ndp.veins.size()-1));
-        // ndp.veins.remove(ret);
-        // ret.veins.remove(ndp);
         return ret;
     }
     
     
     /*===========================BACKTRACKING=================================*/
     
+    /**
+     * Funció que encapsula la crida al backtracking.
+     * Actualitza D i h, abans i despres de la crida
+     */
     private boolean backtracking_enc (int val, Position p) {
         int antVal = GC(p.getX(),p.getY());
         SC(p.getX(),p.getY(),val);
@@ -265,15 +318,17 @@ public class GeneratorController {
         return false;
     }
     
+    /**
+     * Funció principal del mètode de resolució amb backtracking.
+     * Després de fer unes comprovacions per optimitzar la poda del 
+     * backtracking, fa la crida recursiva a la funció als seus veïns
+     */
     private boolean backtracking (int val, Position p) {
         if(SolverControllerStop.isStopped()) return false;
-        ++iteracions;
         if (massaLluny(val,p)) return false;
         L[val-1] = p;
         if (val == totalCaselles) return true;
-        if (controlarPart) {
-            if (!controlParticionament(val)) return false;
-        }
+        if (!controlParticionament(val)) return false;
         Position veiObligat = buscaVeiObligat(val, p);
         if (veiObligat != null) return backtracking_enc(val+1, veiObligat);
         ArrayList<Position> veins = buscaVeins(p);
@@ -302,6 +357,9 @@ public class GeneratorController {
         return false;
     }
     
+    /**
+     * Retorna la casella del hidato que té el valor 1
+     */
     private Position buscaCasellaInicial() {
         for (int i = 0; i < n; ++i){
             for (int j = 0; j < m; ++j) {
@@ -311,6 +369,9 @@ public class GeneratorController {
         return null;
     }
     
+    /**
+     * Retorna un array amb els veïns on es pot moure el backtracking
+     */
     private ArrayList<Position> buscaVeins(Position p) {
         ArrayList<Position> ret = new ArrayList<>();
         for (int i = Math.max(p.getX()-1, 0); i <= Math.min(p.getX()+1, n-1); ++i) {
@@ -324,6 +385,10 @@ public class GeneratorController {
         return ret;
     }
     
+    /**
+     * Mira si hi ha un veí que té per valor donat el següent al backtracking
+     * i el retorna si el troba
+     */
     private Position buscaVeiObligat(int val, Position p) {
         for (int i = Math.max(p.getX()-1, 0); i <= Math.min(p.getX()+1, n-1); ++i) {
             for (int j = Math.max(p.getY()-1, 0); j <= Math.min(p.getY()+1, m-1); ++j) {
@@ -336,6 +401,9 @@ public class GeneratorController {
         return null;
     }
     
+    /**
+     * Si alguna de les caselles de veins només te un veí disponible el retorna
+     */
     private Position buscaVeiRecomanable(ArrayList<Position> veins) {
         for (int i = 0; i < veins.size(); ++i) {
             Position vei = veins.get(i);
@@ -346,6 +414,10 @@ public class GeneratorController {
         return null;
     }
     
+    /**
+     * Fa els preparatius per efectuar la generació i fa la crida inicial del
+     * backtracking
+     */
     private boolean completarCami() {
         Position casellaInicial = buscaCasellaInicial();
         if (casellaInicial == null) return false;
@@ -357,6 +429,9 @@ public class GeneratorController {
         return backtracking_enc(1, casellaInicial);
     }
     
+    /**
+     * Efectua el control de particionament del taulell
+     */
     private boolean controlParticionament(int val) {
         if (++iter == N) {
             iter = 0;
@@ -368,16 +443,26 @@ public class GeneratorController {
         return true;
     }
     
+    /**
+     * Mètode abreujat per trobar el valor d'una cel·la del hidato
+     */
     private int GC (int i, int j) {
         return h.getCell(i, j).getVal();
     }
     
+    /**
+     * Mira si la posicio p amb valor val està massa lluny de la seguent pista,
+     * com per poder-hi arribar
+     */
     private boolean massaLluny(int val, Position p) {
         int valNextGiven = nextGiven[val-1];
         if (valNextGiven == 0) return false;
         return (Position.distance(p, L[valNextGiven-1]) > valNextGiven-val);
     }
     
+    /**
+     * Omple l'array D correctament
+     */
     private void omplirD () {
         D = new int[n][m];
         for (int i = 0; i < n; ++i) {
@@ -387,6 +472,9 @@ public class GeneratorController {
         }
     }
     
+    /**
+     * Omple L i nextGiven amb les dades de les caselles prederminades
+     */
     private void omplirNextGivenIL() {
         nextGiven = new int[totalCaselles];
         ArrayList<Integer> donats = new ArrayList<>();
@@ -410,6 +498,11 @@ public class GeneratorController {
         }
     }
     
+    /**
+     * Comprova si hi ha particionament, comptant les caselles omplertes amb
+     * valors inferiors a val com a omplenades, i les que tenen valors superiors
+     * com a no omplenades
+     */
     private boolean particionat(int val) {
         if (val >= totalCaselles) return false;
         int x0 = 0, y0 = 0;
@@ -447,18 +540,32 @@ public class GeneratorController {
         return part;
     }
     
+    /**
+     * Retorna un boolea que es true amb probabilitat del 40%, que ens marca
+     * si hem d'accedir als veins en ordre òptim per trobar un hidato bo, o en
+     * ordre aleatori
+     */
     private boolean probabilitatCamiSegur() {
         return randomNum(1,100) <= 40; // probabilitat del 40%
     }
     
+    /**
+     * Mètode abreujat per posar el valor d'una cel·la del hidato
+     */
     private void SC (int i, int j, int val) {
         h.getCell(i, j).setVal(val);
     }
     
+    /**
+     * Si (x,y) es una posicio valida, suma val a D[x][y]
+     */
     private void sumarValD (int x, int y, int val) {
         if (x >= 0 && x < n && y >= 0 && y < m) D[x][y] += val;
     }
     
+    /**
+     * Suma val a totes les posicions valides al voltant de (x,y)
+     */
     private void sumarVoltantD (int x, int y, int val) {
         for (int i = x-1; i <= x+1; ++i) {
             for (int j = y-1; j <= y+1; ++j) {
@@ -472,13 +579,17 @@ public class GeneratorController {
     
     /*=============================DE TOT===================================*/
     
-    
-    
-    
+    /**
+     * Escull el nombre de pistes que es donaran a l'atzar entre 1/5 del total
+     * i 1/3 (+1 per evitar errors) del total
+     */
     private int calculaNumPistes() {
         return randomNum(totalCaselles/5, totalCaselles/3+1);
     }
     
+    /**
+     * Dona a totalCaselles el valor adequat
+     */
     private void comptaCaselles() {
         totalCaselles = 0;
         for (int i = 0; i < n; ++i) {
@@ -488,10 +599,12 @@ public class GeneratorController {
         }
     }
     
+    
+    /**
+     * Comprova que cada numero apareixi com a molt una vegada, que el hidato
+     * no estigui parcitionat, i que els numeros estiguin a dins del rang
+     */
     private boolean hidatoValid() {
-        /** comprova que cada numero apareixi com a molt un cop, que no estigui
-         * particionat, i que els numeros estiguin dins del rang
-         */
         if (particionat()) return false;
         ArrayList<Integer> aparicions = new ArrayList<>();
         for (int i = 0; i < totalCaselles; ++i) aparicions.add(0);
@@ -510,6 +623,9 @@ public class GeneratorController {
         return true;
     }
     
+    /**
+     * Omple l'array L correctament
+     */
     private void omplirL() {
         L = new Position[totalCaselles];
         for (int i = 0; i < n; ++i) {
@@ -522,6 +638,9 @@ public class GeneratorController {
         }
     }
     
+    /**
+     * Comprova si hi ha particionament, comptant totes les caselles VOID
+     */
     private boolean particionat () {
         int x0 = 0, y0 = 0;
         boolean BFS[][] = new boolean[n][m];
@@ -558,6 +677,10 @@ public class GeneratorController {
         return part;
     }
     
+    /**
+     * Amb probabilitat de 70%, posa algunes caselles void aleatoriament (entre
+     * 1 i n*m/2 aleatòriament)
+     */
     private void posarCasellesVoid() {
         if (randomNum(1,100) <= 30) {
             posarCasellesVoid(0);
@@ -570,6 +693,9 @@ public class GeneratorController {
         }
     }
     
+    /**
+     * Posa tantes caselles void a l'atzar com el valor de buides
+     */
     private void posarCasellesVoid(int buides) {
         ArrayList<Integer> llista = new ArrayList<>();
         for (int i = 0; i < n*m; ++i) llista.add(i);
@@ -586,6 +712,10 @@ public class GeneratorController {
         }
     }
     
+    /**
+     * Posa les pistes que s'han preescrit i les necessaries perquè n'hi hagi
+     * el nombre retornat per calculaNumPistes()
+     */
     private void posarPistes () {
         h.getCell(L[0].getX(), L[0].getY()).setType(Type.GIVEN);
         h.getCell(L[totalCaselles-1].getX(), L[totalCaselles-1].getY()).setType(Type.GIVEN);
@@ -607,6 +737,9 @@ public class GeneratorController {
         }
     }
     
+    /**
+     * Retorna un numero aleatori de [min,max]
+     */
     private int randomNum (int min, int max) {
         return (int)(Math.random() * (max - min + 1)) + min;
     }

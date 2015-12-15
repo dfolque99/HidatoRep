@@ -42,7 +42,7 @@ public class Cell implements Serializable{
     
     /**
      * Creadora per deep copy
-     * @param cell 
+     * @param cell Cel·la que es copia
      */
     public Cell (Cell cell) {
         val = cell.getVal();
@@ -59,7 +59,7 @@ public class Cell implements Serializable{
         this.type = type;
     }
 
-    /**
+    /*
      * A partir d'aquí, getters i setters
      */
     
