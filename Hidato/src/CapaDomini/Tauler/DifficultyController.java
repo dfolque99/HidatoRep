@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
  * @since 07-12-2015
  * @version 0.8
  * @author felix.axel.gimeno
+ * @see Hidato
  */
 public class DifficultyController {
 
