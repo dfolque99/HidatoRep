@@ -11,10 +11,19 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- *
+ * Classe estàtica que reuneix les fonts especials utilitzades al projecte.
  * @author David
  */
 public class Fonts {
+    
+    /**
+     * Retorna un objecte Font (que pot ser del sistema, o estar incorporada
+     * als arxius del projecte), amb les propietats especificades.
+     * @param nom Nom de la font demanada.
+     * @param style Estil de la font.
+     * @param num Tamany de la font.
+     * @return Retorna la Font esperada.
+     */
     public static Font getFont(String nom, int style, int num) {
         File fil = new File(nom + ".ttf");
         Font f;
