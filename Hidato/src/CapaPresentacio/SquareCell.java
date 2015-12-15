@@ -54,7 +54,8 @@ public class SquareCell extends JPanel{
     /*
      * Boolean que indica si el ratolí ha pitjat a la casella i encara no ha
      * sortit de sobre seu. Serveix per coordinar l'esdeveniment
-     * press+release-mouseExited
+     * press+release-mouseExited, assignant també un color diferenc a la cel·la
+     * durant aquest
      */
     private boolean light;
     
@@ -102,8 +103,9 @@ public class SquareCell extends JPanel{
         });
     }
     
-    /**
-     * 
+    /*
+     * Canvia el valor del quadre de text i de la variable val
+     * si val == 0, en comptes d'escriure un 0, no s'escriu res al label
      */
     public void setVal(int val) {
         this.val = val;
@@ -111,6 +113,11 @@ public class SquareCell extends JPanel{
         else label.setText(Integer.toString(val));
     }
     
+    /*
+     * Canvia el tipus de cel·la, canviant el color i la lletra si cal
+     * La lletra és de tipus Light si la cel·la és BLANK, i de tipus Regular si
+     * la cel·la és GIVEN
+     */
     public final void setType(Type type) {
         this.type = type;
         if (type == Type.VOID) {
@@ -126,6 +133,10 @@ public class SquareCell extends JPanel{
         }
     }
     
+    /*
+     * Canvia el valor de light i "ilumina" la cel·la canviant-ne el color a
+     * color_highlight si light passa a true
+     */
     public void setLight(boolean light) {
         if (modificable) {
             this.light = light;
@@ -138,9 +149,17 @@ public class SquareCell extends JPanel{
         }
     }
 
+    /*
+     * Setter de modificable
+     */
     public void setModificable(boolean modificable) {
         this.modificable = modificable;
     }
+    
+    
+    /*
+     * Getters
+     */
     
     public int getVal() {
         return val;
