@@ -19,14 +19,14 @@ import javax.swing.border.SoftBevelBorder;
  *
  * @author David
  */
-public class SquareCellRapida extends JPanel{
+public class RapidCell extends JPanel{
     
     private final Color color_normal, color_given, color_void;
     private JLabel label; //etiqueta que contindra el valor de la cell
     private final int font_num;
     
     
-    public SquareCellRapida (int val, Type type, Color blankColor, Color givenColor, Color voidColor, int font_num) {
+    public RapidCell (int val, Type type, Color blankColor, Color givenColor, Color voidColor, int font_num) {
         color_normal = blankColor;
         color_given = givenColor;
         color_void = voidColor;

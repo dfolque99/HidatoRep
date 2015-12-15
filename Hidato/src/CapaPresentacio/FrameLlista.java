@@ -221,9 +221,9 @@ public class FrameLlista extends javax.swing.JFrame {
     protected String selected;
     
     /*
-     * Array de les SquareCellRapida que conformen el taulell
+     * Array de les RapidCell que conformen el taulell
      */
-    protected ArrayList<ArrayList<SquareCellRapida>> panels;
+    protected ArrayList<ArrayList<RapidCell>> panels;
     
     /*
      * Thread que escriu els números al taulell.
@@ -442,7 +442,7 @@ public class FrameLlista extends javax.swing.JFrame {
                     //CapaDomini.Tauler.Type type = hmc.getTempCellType(i,j);
                     Color c = Colors.c(1);
                     if (getVal(i, j) == valMin || getVal(i, j) == valMax) c = Colors.c(3);
-                    SquareCellRapida p = new SquareCellRapida(0,type,Colors.c(2),c,Colors.c(0), 400/maxim*5/10);
+                    RapidCell p = new RapidCell(0,type,Colors.c(2),c,Colors.c(0), 400/maxim*5/10);
                     jPanel2.add(p, i0*maxim+j0);
                     panels.get(i0).add(p);
                 }
