@@ -1,15 +1,70 @@
-
 package CapaDomini.Misc;
 
 import java.util.Objects;
 
 /**
  * Immutable class for storing 2 dimensional values
- * 
+ *
  * @author felix.axel.gimeno
  * @since 2015-11-14 position class, stores x,y position
  */
 public class Position {
+
+    /**
+     * adds a postion to another
+     *
+     * @param p1 first position
+     * @param p2 second position
+     * @return a position of the added value
+     */
+    public static Position add(final Position p1, final Position p2) {
+        return new Position(p1.getX() + p2.getX(), p1.getY() + p2.getY());
+    }
+
+    /**
+     * (x,y) to (-x,-y)
+     *
+     * @param p1 position to give opposite to
+     * @return the symmetrical position of input
+     */
+    public static Position symmetric(final Position p1) {
+        return new Position(-p1.getX(), -p1.getY());
+    }
+
+    /**
+     * calculates the norm of a position
+     *
+     * @param p position to give the norm of
+     * @return norm of p
+     */
+    public static Integer norm(Position p) {
+        return Math.max(Math.abs(p.getX()), Math.abs(p.getY()));
+    }
+
+    /**
+     * Calculates distance from p1 to p2
+     *
+     * @param p1 first position not null
+     * @param p2 second position not null
+     * @return distance
+     */
+    public static Integer distance(final Position p1, final Position p2) {
+        return norm(Position.add(p1, Position.symmetric(p2)));
+        //return Math.max(Math.abs(p1.getX() - p2.getX()), Math.abs(p1.getY() - p2.getY()));
+    }
+
+    /**
+     * Is unreachable cell in p2 with value m from cell in p1 with value n ?
+     *
+     * @param n value for first cell
+     * @param p1 position for first cell
+     * @param m value for second cell
+     * @param p2 position for second cell
+     * @return true if unreachable
+     */
+    public static boolean notEnoughDistance(int n, Position p1, int m, Position p2) {
+        return (Position.distance(p1, p2) > Math.abs(n - m));
+    }
 
     /**
      * x position
@@ -19,20 +74,6 @@ public class Position {
      * y position
      */
     private final Integer y;
-
-    /**
-     * @return x position
-     */
-    public Integer getX() {
-        return x;
-    }
-
-    /**
-     * @return y position
-     */
-    public Integer getY() {
-        return y;
-    }
 
     /**
      * To disallow constructor (), use Position(x,y)
@@ -51,6 +92,20 @@ public class Position {
         this.y = y;
     }
 
+    /**
+     * @return x position
+     */
+    public Integer getX() {
+        return x;
+    }
+
+    /**
+     * @return y position
+     */
+    public Integer getY() {
+        return y;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -61,7 +116,9 @@ public class Position {
 
     @Override
     public boolean equals(Object obj) {
-    	if (obj == this) {return true;}
+        if (obj == this) {
+            return true;
+        }
         if (obj == null) {
             return false;
         }
@@ -75,59 +132,4 @@ public class Position {
         return Objects.equals(this.getY(), other.getY());
     }
 
-    /**
-     * adds a postion to another
-     * 
-     * @param p1 first position
-     * @param p2 second position
-     * @return a position of the added value
-     */
-    public static Position add(final Position p1, final Position p2){
-    	return new Position(p1.getX()+p2.getX(),p1.getY() + p2.getY());
-    }
-    
-    /**
-     * (x,y) to (-x,-y)
-     * 
-     * @param p1 position to give opposite to
-     * @return the symmetrical position of input
-     */
-    public static Position symmetric(final Position p1){
-    	return new Position(-p1.getX(),-p1.getY());
-    }
-    
-    /**
-     * calculates the norm of a position 
-     * 
-     * @param p position to give the norm of
-     * @return norm of p
-     */
-    public static Integer norm(Position p){
-    	return Math.max(Math.abs(p.getX()), Math.abs(p.getY()));
-    }
-    
-    /**
-     * Calculates distance from p1 to p2 
-     * 
-     * @param p1 first position not null
-     * @param p2 second position not null
-     * @return distance
-     */
-    public static Integer distance(final Position p1, final Position p2){
-    	return norm(Position.add(p1, Position.symmetric(p2)));
-    	//return Math.max(Math.abs(p1.getX() - p2.getX()), Math.abs(p1.getY() - p2.getY()));
-   }
-    
-    /**
-     * Is unreachable cell in p2 with value m from cell in p1 with value n ?
-     * 
-     * @param n value for first cell
-     * @param p1 position for first cell
-     * @param m value for second cell
-     * @param p2 position for second cell
-     * @return true if unreachable 
-     */
-    public static boolean notEnoughDistance(int n, Position p1, int m, Position p2) {
-        return ( Position.distance(p1,p2)> Math.abs(n - m));
-    }
 }

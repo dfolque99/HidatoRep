@@ -3,6 +3,8 @@ package CapaDomini.Usuari;
 import java.time.Duration;
 
 /**
+ * A controller for the achievements and statistics of the users
+ *
  * @since 2015-11-14
  * @author felix.axel.gimeno
  * @see HidatoUser
@@ -10,10 +12,13 @@ import java.time.Duration;
  */
 public final class UserStatsController {
 
+    /**
+     * internal user instantiated with the class
+     */
     private final HidatoUser user;
 
     @SuppressWarnings("unused")
-	private UserStatsController() {
+    private UserStatsController() {
         throw new UnsupportedOperationException();
     }
 
@@ -21,11 +26,10 @@ public final class UserStatsController {
      *
      * @param user instance of User to show stats of
      */
-    public UserStatsController(HidatoUser user) {
+    public UserStatsController(final HidatoUser user) {
         this.user = user;
     }
 
-    
     /**
      *
      * @return userName of class User
@@ -33,8 +37,7 @@ public final class UserStatsController {
     public String getUsername() {
         return user.getUsername();
     }
-    
-    
+
     /**
      *
      * @return solvedGames of class User
@@ -61,7 +64,7 @@ public final class UserStatsController {
 
     /**
      *
-     * @return score of user, from class HidatoUser 
+     * @return score of user, from class HidatoUser
      */
     public int getTotalScore() {
         return user.getTotalScore();
@@ -69,7 +72,7 @@ public final class UserStatsController {
 
     /**
      *
-     * @return percentage of solved games to started, from class HidatoUser 
+     * @return percentage of solved games to started, from class HidatoUser
      */
     public double getSolvedPercentage() {
         return user.getSolvedPercentage();
@@ -77,7 +80,7 @@ public final class UserStatsController {
 
     /**
      *
-     * @return percentage of score to started games, from class HidatoUser 
+     * @return percentage of score to started games, from class HidatoUser
      */
     public int getAverageScore() {
         return user.getAverageScore();
@@ -85,10 +88,12 @@ public final class UserStatsController {
 
     /**
      *
-     * @return percentage of time to solved games, from class HidatoUser 
+     * @return percentage of time to solved games, from class HidatoUser
      */
     public long getAverageTimePerSolve() {
-        if (user.getAverageTimePerSolve() == null) return 0;
+        if (user.getAverageTimePerSolve() == null) {
+            return 0;
+        }
         return user.getAverageTimePerSolve().getSeconds();
     }
 
@@ -99,12 +104,23 @@ public final class UserStatsController {
     public int getTotalCreatedBoards() {
         return user.getTotalCreatedBoards();
     }
-    
+
+    /**
+     *
+     * @return best time in seconds, from class user, or 0 if the user doesnt
+     * have it yet
+     */
     public long getBestTime() {
-        if (user.getBestTime() == null) return 0;
+        if (user.getBestTime() == null) {
+            return 0;
+        }
         return user.getBestTime().getSeconds();
     }
-    
+
+    /**
+     *
+     * @return best score, 0 is default, from class user
+     */
     public int getBestScore() {
         return user.getBestScore();
     }
