@@ -405,7 +405,6 @@ public class FrameEditor extends javax.swing.JFrame {
             }
         }
         if (resolt) {
-            solMostrada = true;
             poderDesar(true);
         }
         g1 = new ButtonGroup();
