@@ -149,6 +149,17 @@ public class FrameLlistaPartides extends FrameLlista {
     }
     
     /**
+     * Demana el valor de la cell amb posició (i,j)
+     * @param i coordenada x de la cell
+     * @param j coordenada y de la cell
+     * @return tipus de la cell
+     */
+    @Override
+    protected int getVal(int i, int j){
+        return cgc.getCellVal(i,j);
+    }
+    
+    /**
      * Posa el valor d'una cell en el panel, si la cell te algun numero posat.
      * @param i coordenada x de la cell en el controlador
      * @param j coordenada y de la cell en el controlador

@@ -11,6 +11,7 @@ import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUserController;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -370,6 +371,10 @@ public class FrameLlista extends javax.swing.JFrame {
         return hmc.getTempCellType(i,j);
     }
     
+    protected int getVal(int i, int j){
+        return hmc.getTempCellVal(i,j);
+    }
+    
     protected void setVal(int i, int j, int i0, int j0){
         int val = hmc.getTempCellVal(i,j);
         if (hmc.getTempCellType(i,j) == CapaDomini.Tauler.Type.GIVEN) panels.get(i0).get(j0).setVal(val);
@@ -397,6 +402,13 @@ public class FrameLlista extends javax.swing.JFrame {
         M2 = M + M1;
         jPanel2.setLayout(new GridLayout(maxim, maxim));
         panels = new ArrayList<>();
+        int valMin = 1;
+        int valMax = 1;
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < M; ++j) {
+                if (valMax < getVal(i, j)) valMax = getVal(i, j);
+            }
+        }
         for (int i0 = 0; i0 < maxim; ++i0) {
             panels.add(new ArrayList<>());
             for (int j0 = 0; j0 < maxim; ++j0) {
@@ -404,7 +416,9 @@ public class FrameLlista extends javax.swing.JFrame {
                     int i = i0-N1, j = j0-M1;
                     CapaDomini.Tauler.Type type = getType(i,j);
                     //CapaDomini.Tauler.Type type = hmc.getTempCellType(i,j);
-                    SquareCellRapida p = new SquareCellRapida(0,type,Colors.c(2),Colors.c(1),Colors.c(0), 400/maxim*5/10);
+                    Color c = Colors.c(1);
+                    if (getVal(i, j) == valMin || getVal(i, j) == valMax) c = Colors.c(3);
+                    SquareCellRapida p = new SquareCellRapida(0,type,Colors.c(2),c,Colors.c(0), 400/maxim*5/10);
                     jPanel2.add(p, i0*maxim+j0);
                     panels.get(i0).add(p);
                 }
