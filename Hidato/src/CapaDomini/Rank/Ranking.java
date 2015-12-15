@@ -89,4 +89,11 @@ public class Ranking implements Serializable {
         if (ranking.size() > N) ranking.remove(N);
     }
     
+    public void rename(String username) {
+        for (int i = 0; i < ranking.size(); ++i) {
+            RankingEntry entrada = ranking.get(i);
+            if (entrada.getUsername().equals(username)) entrada.rename();
+        }
+    }
+    
 }

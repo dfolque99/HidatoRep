@@ -20,7 +20,7 @@ import java.util.GregorianCalendar;
 public class RankingEntry implements Serializable {
     
     private final Date date;
-    private final String username;
+    private String username;
     private final int score; 
     
     
@@ -31,6 +31,10 @@ public class RankingEntry implements Serializable {
         this.date = new Date(date.getTime());
         this.username = username;
         this.score = score;
+    }
+    
+    public void rename() {
+        username = username + "*";
     }
 
     //METODOS PARA CONSULTAR LA INFORMACION QUE CONTIENE LA ENTRADA DEL RANKING

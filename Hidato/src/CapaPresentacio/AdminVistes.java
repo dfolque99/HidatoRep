@@ -104,7 +104,7 @@ public class AdminVistes {
      * Obre la vista d'estadistiques
      */
     public void obrirStats(JFrame antic) {
-        FrameStats fs = new FrameStats(this, uc, hmc, gmc);
+        FrameStats fs = new FrameStats(this, uc, hmc, gmc, rc);
         fs.setVisible(true);
         fs.setLocation(antic.getLocation());
         antic.dispose();
