@@ -2,6 +2,7 @@ package CapaPresentacio;
 
 import CapaDomini.Misc.Fonts;
 import CapaDomini.Partida.GameManagerController;
+import CapaDomini.Rank.RankingController;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Usuari.HidatoUserController;
 import CapaDomini.Usuari.UserController;
@@ -125,7 +126,11 @@ public class FrameStats extends javax.swing.JFrame {
      *
      */
     private HidatoUserController uc;
-
+    /**
+     * 
+     */
+    private RankingController rc;
+    
     /**
      * disabled
      */
@@ -140,12 +145,13 @@ public class FrameStats extends javax.swing.JFrame {
      * @param hmc
      * @param gmc
      */
-    public FrameStats(CapaPresentacio.AdminVistes parent, final HidatoUserController uc, HidatoManagerController hmc, GameManagerController gmc) {
+    public FrameStats(CapaPresentacio.AdminVistes parent, final HidatoUserController uc, HidatoManagerController hmc, GameManagerController gmc, RankingController rc) {
         super("Gestió del perfil d'usuari");
         this.parent = parent;
         this.gmc = gmc;
         this.hmc = hmc;
         this.uc = uc;
+        this.rc = rc;
         this.parent = parent;
         this.initComponents();
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -165,6 +171,7 @@ public class FrameStats extends javax.swing.JFrame {
         if (truePass) {
             gmc.deleteAllGames();
             hmc.renameUserHidatos();
+            rc.rename(uc.getLoggedUser().getUsername());
             uc.deleteUser(Password);
             JOptionPane.showMessageDialog(this, "Usuari esborrat", "Usuari esborrat", JOptionPane.PLAIN_MESSAGE);
             parent.saveBeforeClose();

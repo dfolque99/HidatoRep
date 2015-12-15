@@ -108,5 +108,11 @@ public class RankingController {
         }
         return res;
     }
+    
+    public void rename(String username) {
+        easyRanking.rename(username);
+        mediumRanking.rename(username);
+        hardRanking.rename(username);
+    }
 
 }
