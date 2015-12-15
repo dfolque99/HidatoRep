@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * to save an d load hidatosets
+ * to save and load hidatosets
  *
  * @author felix.axel.gimeno
  * @see HidatoSet
