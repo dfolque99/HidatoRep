@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Representa un hidato.
+ * Representa un hidato. Classe de dades del domini.
  * @author David
  */
 

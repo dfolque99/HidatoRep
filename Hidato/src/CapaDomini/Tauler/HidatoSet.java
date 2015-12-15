@@ -10,27 +10,26 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- *
+ * Conjunt de hidatos guardats (repositori). Classe de dades del domini.
  * @author David
  */
 
 
-///////// falta fer que els organitzi ordenadament
 public class HidatoSet implements Serializable {
     
-    /**
+    /*
      * ArrayList on es guarden tots els hidatos del repositori
      */
     ArrayList<Hidato> H;
     
-    /**
+    /*
      * Creadora per defecte
      */
     public HidatoSet() {
         H = new ArrayList<Hidato>();
     }
     
-    /**
+    /*
      * Pre: cert
      * Post: si existeix, retorna el hidato a la posicio pos de H
      */
@@ -39,7 +38,7 @@ public class HidatoSet implements Serializable {
         return null;
     }
     
-    /**
+    /*
      * Pre: cert
      * Post: si existeix, retorna el hidato de H amb nom name
      */
@@ -50,7 +49,7 @@ public class HidatoSet implements Serializable {
         return null;
     }
     
-    /**
+    /*
      * Pre: cert
      * Post: retorna el nombre de hidatos de H
      */
@@ -58,7 +57,7 @@ public class HidatoSet implements Serializable {
         return H.size();
     }
     
-    /**
+    /*
      * Pre: cert
      * Post: si existeix, elimina el hidato a la posicio pos de H
      */
@@ -66,7 +65,7 @@ public class HidatoSet implements Serializable {
         if (pos >= 0 && pos < H.size()) H.remove(pos);
     }
     
-    /**
+    /*
      * Pre: cert
      * Post: si existeix, elimina el hidato amb nom name de H
      */
@@ -76,7 +75,7 @@ public class HidatoSet implements Serializable {
         }
     }
     
-    /**
+    /*
      * Pre: h != null
      * Post: si no existeix un hidato amb el mateix nom que h, guarda h al
      *      repositori i retorna true; sino, retorna false
@@ -85,7 +84,7 @@ public class HidatoSet implements Serializable {
         if (getHidatoByName(h.getBoardName()) == null) H.add(h);
     }
     
-    /**
+    /*
      * Pre: h.boardname = name != null
      * Post: si existeix un hidato amb nom name, el substitueix per h
      */
@@ -96,18 +95,4 @@ public class HidatoSet implements Serializable {
             }
         }
     }
-
-    /**
-     * Setter de l'array de hidatos
-     */
-    public void setHidatos(ArrayList<Hidato> H) {
-        this.H = H;
-    }
-    
-    public void veure() {
-        for (Hidato h : H) {
-            System.out.print("Hidato " + h.getBoardName() + ", de l'usuari " + h.getUsername() + "\n");
-        }
-    }
-    
 }

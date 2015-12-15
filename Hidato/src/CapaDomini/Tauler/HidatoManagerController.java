@@ -274,7 +274,6 @@ public class HidatoManagerController {
         return tempHidato.getDifficulty().toString();
     }
     
-    
     public int getTempCellVal (int x, int y) {
         return tempHidato.getCell(x, y).getVal();
     }
@@ -290,6 +289,7 @@ public class HidatoManagerController {
     public int getTempSizeY () {
         return tempHidato.getSizeY();
     }
+    
     
     public void setGameManagerController (GameManagerController gmc) {
         this.gmc = gmc;
