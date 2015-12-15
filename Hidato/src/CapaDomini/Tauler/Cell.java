@@ -9,12 +9,28 @@ import java.io.Serializable;
 
 
 /**
- *
+ * Representa una cel·la d'un hidato. Classe de dades de domini.
  * @author David
  */
 public class Cell implements Serializable{
-    int val;
-    Type type;
+    /**
+     * Valor que correspon a la cel·la.
+     * Si la casella és de tipus GIVEN, sempre serà el valor que li correspon.
+     * Si la casella és de tipus VOID, és indiferent aquest paràmetre.
+     * Si la casella és de tipus BLANK, podrà tenir diferents valors:
+     * * Si està en un hidato al repositori, tindrà el valor d'una possible
+     * solució.
+     * * Si està en un hidato en partida, tindrà el valor que l'usuari li hagi
+     * donat (0 si encara no n'hi ha donat cap).
+     * * Si està en un hidato que s'està resolent o generant, tindrà el valor
+     * que l'algorisme li hagi assignat fins al moment (0 si encara no).
+     */
+    private int val;
+    
+    /**
+     * Tipus de la casella.
+     */
+    private Type type;
     
     /**
      * Creadora per defecte
