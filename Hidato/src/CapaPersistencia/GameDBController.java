@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
+ * Clase que gestiona la persistencia de los Games (partidas guardadas)
  * @author Guillem
  */
 public class GameDBController {
@@ -17,7 +18,9 @@ public class GameDBController {
     private final static String directory = "Games/";
     private final static String extension = ".obj";
 
-    // //Pre: game no es null
+    /*
+    Guarda el Game game en persistencia
+    */
     public void saveGame(Game game) {
         if (game != null) {
             //Crea la subcarpeta "Games/<nombreusuario>/" (si no estaba ya hecho)
@@ -34,30 +37,10 @@ public class GameDBController {
         }
     }
 
-    //Pre: El game identificado por (gameName,username) puede no existir
-    public Game getGame(String gameName, String username) {
-        Game ret = null;
-        try {
-            FileInputStream fis = new FileInputStream(getDirectory(gameName,username));
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            ret = (Game)ois.readObject();
-            fis.close();
-        }
-        catch (Exception  e) {
-            
-        }
-        finally {
-            return ret;
-        }
-    }
-    
-    //Pre: -
-    //Post: Se elimina (en caso de existir) el game identificado por (gameName,username)
-    public void deleteGame(String gameName, String username) {
-        File f = new File(getDirectory(gameName,username));
-        f.delete();
-    }
-    
+    /*
+    Devuelve un ArrayList que contiene todos los Games del usuario username guardados
+    en persistencia
+    */
     public ArrayList<Game> getAllGames(String username){
         ArrayList<Game> ret = new ArrayList<>();
         File f = new File(directory + username);
@@ -78,6 +61,9 @@ public class GameDBController {
         return ret;
     }
     
+    /*
+    Elimina todos los Games del usuario username guardados en persistencia.
+    */
     public void deleteAllGames(String username) {
         File f = new File(directory + username);
         if (Arrays.asList(f.list()) != null) {
@@ -90,13 +76,10 @@ public class GameDBController {
         }
     }
     
+    //A PARTIR DE AQUI FUNCIONES PRIVADAS
     
     private static String getDirectory(Game game) {
         return directory + getFolder(game) + "/" + getName(game) + extension;
-    }
-    
-    private static String getDirectory(String gameName, String username) {
-        return directory + username + "/" + gameName + extension;
     }
     
     private static String getFolder(Game game) {
