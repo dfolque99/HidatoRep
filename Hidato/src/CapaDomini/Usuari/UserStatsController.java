@@ -12,6 +12,9 @@ import java.time.Duration;
  */
 public final class UserStatsController {
 
+    /**
+     * internal user instantiated with the class
+     */
     private final HidatoUser user;
 
     @SuppressWarnings("unused")
