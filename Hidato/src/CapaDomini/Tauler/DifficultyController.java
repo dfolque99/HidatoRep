@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @author felix.axel.gimeno
  * @see Hidato
  */
-public class DifficultyController {
+public final class DifficultyController {
 
     /**
      * lower bound of Difficulty.MEDIUM
