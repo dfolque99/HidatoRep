@@ -193,7 +193,8 @@ public class GeneratorController {
         boolean solucio = false;
         iter = 0;
         int maxim = Math.max(n,m);
-        double aproximador = maxim*maxim*Math.log10(maxim)*5;
+        int nn = maxim*maxim;
+        double aproximador = nn*Math.log(nn)*Math.log(nn)*5;
         
         while (iter < Math.max(aproximador*5, 10000)) {
             ++iter;
