@@ -5,9 +5,8 @@
  */
 package CapaDomini.Usuari;
 
-import CapaPersistencia.GameDBController;
+
 import CapaPersistencia.UserDBController;
-import java.io.File;
 
 /**
  *

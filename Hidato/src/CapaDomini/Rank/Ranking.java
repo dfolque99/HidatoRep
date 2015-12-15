@@ -8,7 +8,6 @@ package CapaDomini.Rank;
 import CapaDomini.Partida.Difficulty;
 import java.io.Serializable;
 import java.util.ArrayList;
-//import java.util.Date;
 
 /**
  * Representa un ranking.
