@@ -107,7 +107,7 @@ public class AdminVistes {
     }
     
     public void obrirStats(JFrame antic) {
-        FrameStats fs = new FrameStats(this, uc, hmc);
+        FrameStats fs = new FrameStats(this, uc, hmc, gmc);
         fs.setVisible(true);
         fs.setLocation(antic.getLocation());
         antic.dispose();

@@ -1,6 +1,7 @@
 package CapaPresentacio;
 
 import CapaDomini.Misc.Fonts;
+import CapaDomini.Partida.GameManagerController;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Usuari.HidatoUserController;
 import CapaDomini.Usuari.UserController;
@@ -93,6 +94,7 @@ public class FrameStats extends javax.swing.JFrame {
         String Password = FrameStats.askPassword(myJFrame, "actual \ni pressiona \"OK\" per esborrar l'usuari, \npressiona \"Cancel\" per cancelar");
         Boolean truePass = uc.getLoggedUser().getPassword().equals(Password);
         if (truePass) {
+            gmc.deleteAllGames();
             hmc.renameUserHidatos();
             uc.deleteUser(Password);
             JOptionPane.showMessageDialog(myJFrame, "Usuari esborrat", "Usuari esborrat", JOptionPane.PLAIN_MESSAGE);
@@ -102,6 +104,7 @@ public class FrameStats extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(myJFrame, "Contrasenya incorrecta", "Contrasenya incorrecta", JOptionPane.ERROR_MESSAGE);
         }
     }
+    private GameManagerController gmc;
     private HidatoManagerController hmc;
     private CapaPresentacio.AdminVistes parent;
     private HidatoUserController uc;
@@ -111,9 +114,10 @@ public class FrameStats extends javax.swing.JFrame {
         throw new UnsupportedOperationException();
     }
 
-    public FrameStats(CapaPresentacio.AdminVistes parent, final HidatoUserController uc, HidatoManagerController hmc) {
+    public FrameStats(CapaPresentacio.AdminVistes parent, final HidatoUserController uc, HidatoManagerController hmc, GameManagerController gmc) {
         super("Gestió del perfil d'usuari");
         this.parent = parent;
+        this.gmc = gmc;
         this.hmc = hmc;
         this.uc = uc;
         this.parent = parent;

@@ -31,12 +31,13 @@ public class HidatoUserController extends UserController {
         return new UserStatsController((HidatoUser) getLoggedUser());
     }
     
+    /*
     @Override
     public int deleteUser(String password) {
         GameDBController db = new GameDBController();
         db.deleteAllGames(getLoggedUser().getUsername());
         return super.deleteUser(password);
     }
-    
+    */
     
 }
