@@ -404,9 +404,9 @@ public class FrameMenu extends javax.swing.JFrame {
         b_jugar_a.addActionListener(al);
         
         int min_files = 2;
-        int max_files = 20;
+        int max_files = 25;
         int min_columnes = 2;
-        int max_columnes = 20;
+        int max_columnes = 25;
         spin_files.setValue(8);
         spin_columnes.setValue(8);
         spin_files.addChangeListener(new ChangeListener() {

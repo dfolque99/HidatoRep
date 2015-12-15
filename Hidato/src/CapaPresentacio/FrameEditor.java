@@ -385,7 +385,7 @@ public class FrameEditor extends javax.swing.JFrame {
                     int val = hmc.getTempCellVal(i,j);
                     CapaDomini.Tauler.Type type = hmc.getTempCellType(i,j);
                     if (type != CapaDomini.Tauler.Type.GIVEN) val = 0;
-                    SquareCell p = new SquareCell(i,j,val,type,Colors.c(2),Colors.c(4),Colors.c(1),Colors.c(0), 500/maxim*5/10,true);
+                    SquareCell p = new SquareCell(i,j,val,type,Colors.c(2),Colors.c(4),Colors.c(1),Colors.c(0), 450/maxim*5/10,true);
                     panels.get(i).add(p);
                     fixats.get(i).add(val);
                     jPanel1.add(p, i0*maxim+j0);
