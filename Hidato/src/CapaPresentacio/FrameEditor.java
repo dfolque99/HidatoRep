@@ -13,7 +13,6 @@ import CapaDomini.Partida.Help;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Tauler.SolverControllerStop;
-import CapaDomini.Tauler.Type;
 import CapaDomini.Usuari.HidatoUserController;
 import java.awt.Color;
 import java.awt.Container;
@@ -26,14 +25,10 @@ import java.util.ArrayList;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -41,8 +36,8 @@ import javax.swing.event.ChangeListener;
  */
 public class FrameEditor extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrameEditor
+    /*
+     * Creadora amb parametres
      */
     public FrameEditor(AdminVistes parent, HidatoManagerController hmc) {
         initComponents();
@@ -265,52 +260,14 @@ public class FrameEditor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * Funció que es duu a terme quan es va a tancar el formulari.
+     * Guarda tot abans de tancar.
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         parent.saveBeforeClose();
     }//GEN-LAST:event_formWindowClosing
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameEditor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                HidatoUserController uc = new HidatoUserController();
-                //uc.createUser("Usuari", "password");
-                uc.login("david", "david");
-                HidatoManagerController hmc = new HidatoManagerController(new HidatoSet(), uc);
-                hmc.loadAll();
-                hmc.createRandom(7,7);
-                new FrameEditor(null, hmc).setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_autocompletar;
@@ -335,20 +292,63 @@ public class FrameEditor extends javax.swing.JFrame {
     // =============================AQUI LO MEU=================================
 
     
-    
+    /*
+     * Array amb tots els SquareCells que formen el hidato en pantalla
+     */
     private ArrayList<ArrayList<SquareCell>> panels;
+    
+    /*
+     * Array amb els valors que l'usuari ha fixat sobre el hidato que s'edita
+     */
     private ArrayList<ArrayList<Integer>> fixats;
+    
+    /*
+     * Mida del hidato editat (N: files, M: columnes)
+     */
     private int N, M;
+    
+    /*
+     * Controlador HidatoManagerController per manejar el hidato que s'esta
+     * editant
+     */
     private HidatoManagerController hmc;
+    
+    /*
+     * Controlador AdminVistes per fer canvis de vista
+     */
     private AdminVistes parent;
+    
+    /*
+     * Grup de botons que inclou els RadioButton d'edició
+     */
     private ButtonGroup g1;
+    
+    /*
+     * Nom del hidato que s'està editant
+     */
     private String nomHidato;
+    
+    /*
+     * Indica si s'està mostrant la solució en aquest moment o no
+     */
     private boolean solMostrada;
+    
+    /*
+     * Referència al objecte this (per quan l'entorn no permet fer-ho)
+     */
     private final FrameEditor dis = this;
+    
+    /*
+     * Diàleg que s'obre quan s'està resolent o generant un hidato
+     */
     DialogProgressBar dialog;
     
     
-    
+    /*
+     * Funció que es duu a terme al crear l'objecte.
+     * Actualitza els parametres, dibuixa el hidato que s'està editant en
+     * pantalla, posa l'estat inicial dels botons
+     */
     public void inici(AdminVistes parent, HidatoManagerController hmc) {
         this.N = hmc.getTempSizeX();
         this.M = hmc.getTempSizeY();
@@ -415,7 +415,10 @@ public class FrameEditor extends javax.swing.JFrame {
         
     }
     
-    
+    /*
+     * Configura els listeners dels botons Esborrar tot, Autocompletar, Validar,
+     * Desar, Sortir, Mostrar solució i Jugar hidato
+     */
     private void configurarBotons() {
         b_esborrar_tot.addActionListener(new ActionListener() {
             @Override
@@ -467,7 +470,7 @@ public class FrameEditor extends javax.swing.JFrame {
                         }
                     }
                 });
-                dialog = obrirProgressBar("Completant el hidato...", t);
+                dialog = obrirProgressBar("Completant el hidato...");
                 t.start();
             }
         });
@@ -502,7 +505,7 @@ public class FrameEditor extends javax.swing.JFrame {
                         }
                     }
                 });
-                dialog = obrirProgressBar("Buscant una solució...", t);
+                dialog = obrirProgressBar("Buscant una solució...");
                 t.start();
             }
         });
@@ -515,7 +518,7 @@ public class FrameEditor extends javax.swing.JFrame {
         b_sortir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                tancar();
+                parent.obrirMenu(dis);
             }
         });
         b_solucio.addActionListener(new ActionListener() {
@@ -543,23 +546,32 @@ public class FrameEditor extends javax.swing.JFrame {
         });
     }
     
-    private DialogProgressBar obrirProgressBar(String titol, Thread t) {
-        DialogProgressBar dialog = new DialogProgressBar(this,false,new Runnable() {
+    /*
+     * Obre i retorna una instància de DialogProgressBar, creant l'objecte
+     * Runnable que se li passa, definint així el comportament de quan es tanca
+     * el dial. Aquest comportament és posar SolverControllerStop a stopped,
+     * i posar enabled aquest frame
+     */
+    private DialogProgressBar obrirProgressBar(String titol) {
+        DialogProgressBar dial = new DialogProgressBar(this,false,new Runnable() {
             @Override
             public void run() {
                 SolverControllerStop.stop();
                 dis.setEnabled(true);
             }
         });
-        int x = dis.getLocation().x+(dis.getSize().width-dialog.getSize().width)/2;
-        int y = dis.getLocation().y+(dis.getSize().height-dialog.getSize().height)/2;
-        dialog.setTitle(titol);
-        dialog.setLocation(new Point(x,y));
-        dialog.setVisible(true);
-        return dialog;
+        int x = dis.getLocation().x+(dis.getSize().width-dial.getSize().width)/2;
+        int y = dis.getLocation().y+(dis.getSize().height-dial.getSize().height)/2;
+        dial.setTitle(titol);
+        dial.setLocation(new Point(x,y));
+        dial.setVisible(true);
+        return dial;
     }
     
-    
+    /*
+     * Mostra un jOptionPane per escollir el nivell d'ajuda i posteriorment
+     * comença una partida amb el hidato que s'estava editant
+     */
     private void obrirJoc() {
         Object[] options = { "Baix", "Mitja","Alt" };
         int val = JOptionPane.showOptionDialog(null, "Tria el nivell d'ajuda", "",
@@ -575,6 +587,9 @@ public class FrameEditor extends javax.swing.JFrame {
         }
     }
     
+    /*
+     * Permet o prohibeix les comandes d'edició
+     */
     private void enablePanelEdicio(boolean b) {
         panel_edicio.setEnabled(b);
         b_buida_esborrar.setEnabled(b);
@@ -588,6 +603,10 @@ public class FrameEditor extends javax.swing.JFrame {
         }
     }
     
+    /*
+     * Esborra valors residuals de solucions o generacions anteriors al hidato
+     * del hmc per efectuar una resolució o generació nova
+     */
     private void posarZeros() {
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < M; ++j) {
@@ -598,6 +617,10 @@ public class FrameEditor extends javax.swing.JFrame {
         }
     }
     
+    /*
+     * Mostra tots els valors del hidato de hmc a la pantalla (és a dir la
+     * solució)
+     */
     private void mostrarTot() {
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < M; ++j) {
@@ -609,6 +632,9 @@ public class FrameEditor extends javax.swing.JFrame {
         }
     }
     
+    /*
+     * Mostra a la pantalla només els valors del hidato fixats per l'usuari 
+     */
     private void noMostrarTot() {
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < M; ++j) {
@@ -619,6 +645,10 @@ public class FrameEditor extends javax.swing.JFrame {
         }
     }
     
+    /*
+     * Demana un nom pel hidato, i no està utilitzat, guarda el hidato que
+     * s'està editant amb aquell nom
+     */
     private void desar() {
         if (nomHidato == null) {
             String newName = JOptionPane.showInputDialog(this,"Introdueix un nom per al hidato",null);
@@ -636,46 +666,33 @@ public class FrameEditor extends javax.swing.JFrame {
         msgInfo("Hidato " + nomHidato + " desat correctament");
     }
     
-    private void canviarColors(Container c) {
-        Color fons = new Color(0x0C0C0C); // negre
-        Color blanc = new Color(fons.getRGB()^0xFFFFFF);
-        try {
-            ((SquareCell) c).getA();
-        }
-        catch(Exception e1) {
-            try {
-                ((Container)c).setBackground(fons);
-            }
-            catch (Exception e) {}
-            try {
-                ((Container)c).setForeground(blanc);
-            }
-            catch (Exception e) {}
-            try {
-                Border d = ((JPanel)c).getBorder();
-                ((TitledBorder)d).setTitleColor(blanc);
-            }
-            catch (Exception e) {}
-            try {
-                ((JButton)c).setForeground(fons);
-            }
-            catch(Exception e) {}
-            int n = c.getComponentCount();
-            for (int i = 0; i < n; ++i) {
-                try {
-                    canviarColors((Container)c.getComponent(i));
-                }
-                catch(Exception e) {}
-            }
-        }
-        
-        
-    }
-    
+    /*
+     * Funció que es duu a terme quan es pressiona sobre una SquareCell.
+     * Consisteix en donar una informació a la SquareCell per poder gestionar
+     * l'esdeveniment "press+release-moveOut"
+     */
     private void mousePress (SquareCell p) {
         p.setLight(true);
     }
     
+    /*
+     * Funció que es duu a terme quan es deixa de pressionar sobre una SC.
+     * Només actua quan ha vingut precedida d'un press sobre la mateixa sense
+     * haver sortit en el temps entre press i release.
+     * Fa la acció corresponent al RadioButton seleccionat en el panel d'edició:
+     *  - Si esta seleccionat casella buida (esborrar), converteix en cel·la
+     *    buida (BLANK) i n'esborra el valor.
+     *  - Si esta seleccionat casella buida (posar), converteix la cel·la en
+     *    buida (BLANK) i hi posa el valor que diu l'usuari.
+     *  - Si esta seleccionat casella pista (posar), converteix la cel·la en
+     *    pista (GIVEN) i hi posa el valor que diu l'usuari.
+     *  - Si esta seleccionat casella no valida, converteix la cel·la en
+     *    no valida (VOID).
+     * Quan l'usuari entra un número, comprova que aquest sigui vàlid, mirant
+     * que sigui un nombre estrictament positiu.
+     * Quan s'efectua el canvi sobre el taulell, desactiva les opcions de desar
+     * i jugar, ja que el hidato que queda no ha estat validat.
+     */
     private void mouseRelease (SquareCell p) {
         if (p.getLight()) {
             if (b_buida_esborrar.isSelected()) {
@@ -721,6 +738,16 @@ public class FrameEditor extends javax.swing.JFrame {
         }
     }
     
+    /*
+     * Si b == true, activa els botons de desar, mostrar solucio i jugar,
+     * desactivant el de validar (ja que el hidato ja ha estat validat). A part,
+     * calcula la dificultat del hidato i la mostra.
+     * Si b == false, desactiva els botons de desar, mostrar solucio i jugar,
+     * mentre que activa el de calidar (ja que el hidato acaba de passar a no
+     * estar validat).
+     * Segons l'estat de validat o no validat del hidato, el text del botó
+     * validar és "Validar" (quan no ho està) o "Hidato validat!" (quan si)
+     */
     private void poderDesar(boolean b) {
         b_desar.setEnabled(b);
         b_solucio.setEnabled(b);
@@ -739,16 +766,18 @@ public class FrameEditor extends javax.swing.JFrame {
         }
     }
     
+    /*
+     * Mostra un missatge d'error amb la informació text
+     */
     private void msgError(String text) {
         JOptionPane.showMessageDialog(this,text,"Error",JOptionPane.ERROR_MESSAGE);
     }
     
+    /*
+     * Mostra un missatge informatiu amb la informació text
+     */
     private void msgInfo(String text) {
         JOptionPane.showMessageDialog(this,text,"",JOptionPane.INFORMATION_MESSAGE);
     }
     
-    private void tancar() {
-        hmc.saveAll();
-        parent.obrirMenu(this);
-    }
 }

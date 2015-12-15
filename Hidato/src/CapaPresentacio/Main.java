@@ -12,6 +12,6 @@ package CapaPresentacio;
 public class Main {
     public static void main (String args[]) {
         AdminVistes d = new AdminVistes();
-        d.adelanteee();
+        d.executaPrograma();
     }
 }

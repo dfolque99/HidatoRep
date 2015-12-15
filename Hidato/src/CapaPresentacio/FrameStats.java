@@ -18,28 +18,30 @@ import javax.swing.JOptionPane;
  * usercontroller
  *
  * @author felix.axel.gimeno
- * @version 0.31
+ * @version 0.33
  * @since 05-12-2015
  */
 @SuppressWarnings("serial")
 public class FrameStats extends javax.swing.JFrame {
 
+    /**
+     * sizeX of window, constant, for size of frame
+     */
     private final static Integer sizeX = 800;
+    /**
+     * sizeY of window, constant, for size of frame
+     */
     private final static Integer sizeY = 600;
+    /**
+     * font for texts
+     */
     private final static Font myFont = Fonts.getFont("OpenSans-Light", Font.PLAIN, 18);
 
-    private static String convertToMultiline(final String orig) {
-        return "<html>" + orig.replaceAll("\n", "<br>") + "</html>";
-    }
-
-    private static String convertToString(String[] myArray) {
-        String ret = "";
-        for (String s : myArray) {
-            ret = ret.concat(s).concat("\n\n");
-        }
-        return ret;
-    }
-
+    /**
+     *
+     * @param uc of the logged user
+     * @return string array of statistics
+     */
     private static String[] getStats(final HidatoUserController uc) {
         UserStatsController usc = uc.getStatsController();
         String[] ret = new String[]{"Estadístiques de " + usc.getUsername(),
@@ -52,21 +54,31 @@ public class FrameStats extends javax.swing.JFrame {
             "Hidatos creats: " + String.valueOf(usc.getTotalCreatedBoards())
         };
         if (usc.getSolvedGames() != 0) {
-            String aux = String.format("%.2f",usc.getSolvedPercentage());
+            String aux = String.format("%.2f", usc.getSolvedPercentage());
             ret[2] += aux + "%";
             ret[3] += String.valueOf(usc.getAverageScore()) + " punts";
             ret[4] += String.valueOf(usc.getBestScore()) + " punts";
-            ret[5] += String.valueOf(usc.getAverageTimePerSolve()/60) + " minuts, " + 
-                usc.getAverageTimePerSolve()%60 + " segons";
-            ret[6] += String.valueOf(usc.getBestTime()/60) + " minuts, " + 
-                String.valueOf(usc.getBestTime()%60) + " segons";
-        }
-        else {
-            ret[2] += "--"; ret[3] += "--"; ret[4] += "--"; ret[5] += "--"; ret[6] += "--";
+            ret[5] += String.valueOf(usc.getAverageTimePerSolve() / 60) + " minuts, "
+                    + usc.getAverageTimePerSolve() % 60 + " segons";
+            ret[6] += String.valueOf(usc.getBestTime() / 60) + " minuts, "
+                    + String.valueOf(usc.getBestTime() % 60) + " segons";
+        } else {
+            ret[2] += "--";
+            ret[3] += "--";
+            ret[4] += "--";
+            ret[5] += "--";
+            ret[6] += "--";
         }
         return ret;
     }
 
+    /**
+     * create a button
+     *
+     * @param text text of the button
+     * @param l when button pressed do
+     * @return created button
+     */
     private static javax.swing.JButton createButton(final String text, final java.awt.event.ActionListener l) {
         javax.swing.JButton myButton = new javax.swing.JButton(text);
         myButton.setFont(myFont);
@@ -74,14 +86,22 @@ public class FrameStats extends javax.swing.JFrame {
         return myButton;
     }
 
+    /**
+     * ask the user for password usiang an JOptionPane.showOptionDialog and a
+     * KPasswordField
+     *
+     * @param myFrame frame for the dialog
+     * @param extra extra text for the dialog
+     * @return user input in the password field, or null if cancel
+     */
     private static String askPassword(javax.swing.JFrame myFrame, String extra) {
         javax.swing.JPanel panel = new javax.swing.JPanel();
         javax.swing.JLabel label = new javax.swing.JLabel("Introdueix contrasenya " + extra + ":");
         javax.swing.JPasswordField pass = new javax.swing.JPasswordField(20);
         panel.add(label);
         panel.add(pass);
-        String[] options = new String[]{"OK", "Cancel"};
-        int option = JOptionPane.showOptionDialog(null, panel, null,
+        String[] options = new String[]{"OK", "Cancel·lar"};
+        int option = JOptionPane.showOptionDialog(myFrame, panel, null,
                 JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options, options[1]);
         if (0 == option) {
@@ -89,31 +109,37 @@ public class FrameStats extends javax.swing.JFrame {
         }
         return null;
     }
-
-    private void buttonDeleteActionPerformed(javax.swing.JFrame myJFrame, final UserController uc) {
-        String Password = FrameStats.askPassword(myJFrame, "actual \ni pressiona \"OK\" per esborrar l'usuari, \npressiona \"Cancel\" per cancelar");
-        Boolean truePass = uc.getLoggedUser().getPassword().equals(Password);
-        if (truePass) {
-            gmc.deleteAllGames();
-            hmc.renameUserHidatos();
-            uc.deleteUser(Password);
-            JOptionPane.showMessageDialog(myJFrame, "Usuari esborrat", "Usuari esborrat", JOptionPane.PLAIN_MESSAGE);
-            parent.saveBeforeClose();
-            System.exit(0);
-        } else if (null != Password) {
-            JOptionPane.showMessageDialog(myJFrame, "Contrasenya incorrecta", "Contrasenya incorrecta", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+    /**
+     * internal value
+     */
     private GameManagerController gmc;
+    /**
+     * internal value
+     */
     private HidatoManagerController hmc;
+    /**
+     * internal value
+     */
     private CapaPresentacio.AdminVistes parent;
+    /**
+     *
+     */
     private HidatoUserController uc;
-    private String hidatoName;
 
+    /**
+     * disabled
+     */
     private FrameStats() {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     *
+     * @param parent
+     * @param uc
+     * @param hmc
+     * @param gmc
+     */
     public FrameStats(CapaPresentacio.AdminVistes parent, final HidatoUserController uc, HidatoManagerController hmc, GameManagerController gmc) {
         super("Gestió del perfil d'usuari");
         this.parent = parent;
@@ -121,7 +147,7 @@ public class FrameStats extends javax.swing.JFrame {
         this.hmc = hmc;
         this.uc = uc;
         this.parent = parent;
-        this.initComponents(uc);
+        this.initComponents();
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -130,46 +156,78 @@ public class FrameStats extends javax.swing.JFrame {
         });
     }
 
-    private void buttonModifyPasswordActionPerformed(final UserController uc) {
+    /**
+     * button delete user
+     */
+    private void buttonDeleteActionPerformed() {
+        String Password = FrameStats.askPassword(this, "actual \ni pressiona \"OK\" per esborrar l'usuari, \npressiona \"Cancel·la\" per cancelar");
+        Boolean truePass = uc.getLoggedUser().getPassword().equals(Password);
+        if (truePass) {
+            gmc.deleteAllGames();
+            hmc.renameUserHidatos();
+            uc.deleteUser(Password);
+            JOptionPane.showMessageDialog(this, "Usuari esborrat", "Usuari esborrat", JOptionPane.PLAIN_MESSAGE);
+            parent.saveBeforeClose();
+            System.exit(0);
+        } else if (null != Password) {
+            JOptionPane.showMessageDialog(this, "Contrasenya incorrecta", "Contrasenya incorrecta", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * button modify passwrod user
+     */
+    private void buttonModifyPasswordActionPerformed() {
         String OldPassword = FrameStats.askPassword(this, "actual");
         Boolean truePass = uc.getLoggedUser().getPassword().equals(OldPassword);
         if (truePass) {
             String NewPassword = FrameStats.askPassword(this, "nova");
             if (null != NewPassword) {
                 uc.modifyPassword(OldPassword, NewPassword);
-                JOptionPane.showMessageDialog(this, "Contraseña canviada", "Contraseña canviada", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Contrasenya canviada", "Contrasenya canviada", JOptionPane.PLAIN_MESSAGE);
             }
 
         } else if (null != OldPassword) {
-            JOptionPane.showMessageDialog(this, "Contraseñya incorrecta", "Contraseñya incorrecta", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Contrasenya incorrecta", "Contrasenya incorrecta", JOptionPane.ERROR_MESSAGE);
         }
 
     }
 
-    private Object[] getHidatos(final UserController uc) {
-        String[] ret = hmc.getUserHidatoList().toArray(new String[]{});
-        return ret;
+    /**
+     *
+     * @return string[] of hidato names of user
+     */
+    private Object[] getHidatos() {
+        return hmc.getUserHidatoList().toArray(new String[]{});
     }
 
-    private void buttonSelectHidatoToEditActionPerformed(final UserController uc) {
-        Object[] myList = getHidatos(uc);
-        if (myList.length > 0) {
+    /**
+     * button select hidato user
+     */
+    private void buttonSelectHidatoToEditActionPerformed() {
+        if (getHidatos().length > 0) {
             obrirLlista();
         } else {
-            JOptionPane.showMessageDialog(this, "No hidatos trobats", "L'usuari no te hidatos guardats", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Cap hidato trobat", "L'usuari no té hidatos guardats", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
+    /**
+     *
+     * @see FrameLLista
+     * @see RetornadorString
+     */
     private void obrirLlista() {
-        //                            FELIX NO HAGAS LO DE LA LAMBDA AQUÍ
         FrameLlista fll = new FrameLlista(new RetornadorString() {
             public void retorna(String s) {
                 openSelectedHidato(s);
             }
+
             public void elimina(String s) {
                 deleteHidato(s);
             }
-            public void canviaNom(String oldName, String newName){
+
+            public void canviaNom(String oldName, String newName) {
                 renameHidato(oldName, newName);
             }
         }, hmc);
@@ -178,42 +236,57 @@ public class FrameStats extends javax.swing.JFrame {
         fll.setVisible(true);
         this.setVisible(false);
     }
-    
+
+    /**
+     *
+     * @param name
+     */
     private void deleteHidato(String name) {
         hmc.deleteHidato(name);
-        Object[] myList = getHidatos(uc);
+        Object[] myList = getHidatos();
         if (myList.length > 0) {
             obrirLlista();
-        }
-        else {
+        } else {
             this.setVisible(true);
         }
     }
-    
+
+    /**
+     *
+     * @param oldName
+     * @param newName
+     */
     private void renameHidato(String oldName, String newName) {
         hmc.renameHidato(oldName, newName);
-        buttonSelectHidatoToEditActionPerformed(uc);
+        buttonSelectHidatoToEditActionPerformed();
     }
 
+    /**
+     *
+     * @param hidatoName
+     */
     private void openSelectedHidato(String hidatoName) {
         if (hidatoName == null) {
             this.setVisible(true);
-        }
-        else {
+        } else {
             if (hmc.loadHidato(hidatoName)) {
                 parent.obrirEditor(this);
             } else {
-                JOptionPane.showMessageDialog(this, "No se ha pogut carregar", "No se ha pogut carregar", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No s'ha pogut carregar", "No s'ha pogut carregar", JOptionPane.PLAIN_MESSAGE);
             }
         }
     }
 
+    /**
+     *
+     * @param uc
+     */
     @SuppressWarnings(value = "unchecked")
-    private void initComponents(final HidatoUserController uc) {
+    private void initComponents() {
         javax.swing.JLabel[] myJLabels = new javax.swing.JLabel[8]; //SwingConstants.CENTER is for centering the jlabel text
-        String [] text = getStats(uc);
+        String[] text = getStats(uc);
         for (int i = 0; i < 8; ++i) {
-            myJLabels[i] = new javax.swing.JLabel(text[i],javax.swing.SwingConstants.CENTER);
+            myJLabels[i] = new javax.swing.JLabel(text[i], javax.swing.SwingConstants.CENTER);
             myJLabels[i].setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));
         }
         myJLabels[0].setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 36));
@@ -227,13 +300,13 @@ public class FrameStats extends javax.swing.JFrame {
             parent.obrirMenu(this);
         });
         final JButton buttonDelete = createButton("Esborrar usuari", (java.awt.event.ActionEvent evt) -> {
-            buttonDeleteActionPerformed(this, uc);
+            buttonDeleteActionPerformed();
         });
         final JButton buttonModifyPassword = createButton("Canviar contrasenya", (java.awt.event.ActionEvent evt) -> {
-            buttonModifyPasswordActionPerformed(uc);
+            buttonModifyPasswordActionPerformed();
         });
         final JButton buttonSelectHidatoToEdit = createButton("Editar hidato guardat", (java.awt.event.ActionEvent evt) -> {
-            buttonSelectHidatoToEditActionPerformed(uc);
+            buttonSelectHidatoToEditActionPerformed();
         });
 
         layout.setAutoCreateGaps(true);
@@ -276,7 +349,6 @@ public class FrameStats extends javax.swing.JFrame {
                         .addComponent(myJLabels[6], javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                         .addComponent(myJLabels[7], javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                 )
-                
         );
 
         this.pack();

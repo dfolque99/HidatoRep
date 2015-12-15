@@ -47,7 +47,7 @@ public class GenProves {
         else {
             System.out.print("Solució trobada:\n" + Utils.toString(sol) + "\n" + Utils.toStringWithZeros(sol));
         }
-        System.out.printf("Milions d'iteracions: %f\n", gc.iteracions/1000000);
+        //System.out.printf("Milions d'iteracions: %f\n", gc.iteracions/1000000);
         System.out.printf("Milisegons : %d\n", t2-t1);
         s.close();
     }

@@ -7,76 +7,67 @@ package CapaPresentacio;
 
 import CapaDomini.Partida.CurrentGameController;
 import CapaDomini.Partida.GameManagerController;
-import CapaDomini.Partida.Help;
 import CapaDomini.Rank.RankingController;
-import CapaDomini.Tauler.Hidato;
 import CapaDomini.Tauler.HidatoManagerController;
 import CapaDomini.Tauler.HidatoSet;
 import CapaDomini.Usuari.HidatoUserController;
-import CapaPresentacio.FrameEditor;
-import CapaPresentacio.FrameGame;
-import CapaPresentacio.FrameLlista;
-import CapaPresentacio.FrameLlistaPartides;
-import CapaPresentacio.FrameLogin;
-import CapaPresentacio.FrameMenu;
-import CapaPresentacio.FrameRanking;
-import CapaPresentacio.FrameStats;
-import CapaPresentacio.RetornadorString;
 import java.awt.Point;
 import java.io.File;
 import javax.swing.JFrame;
 
 /**
- *
+ * Classe administradora de les vistes.
  * @author David
  */
 public class AdminVistes {
     
+    /*
+     * Controladors que seran unics en tota la execució
+     */
     private HidatoUserController uc;
     private HidatoManagerController hmc;
-    private HidatoSet hs;
     private GameManagerController gmc;
     private RankingController rc;
-    private boolean convidat;
-    public AdminVistes(){}
-    public AdminVistes(HidatoUserController uc, RankingController rc, GameManagerController gmc, HidatoManagerController hmc){
-        this.uc = uc;
-        this.rc = rc;
-        this.gmc = gmc;
-        this.hmc = hmc;   
-    }
     
-    public void adelanteee() {
-        this.hs = new HidatoSet();
-        
+    /*
+     * Diu si s'ha entrat en mode convidat
+     */
+    private boolean convidat;
+    
+    /**
+     * Funció que executarà el programa.
+     * Crea els controladors principals i les carpetes on guardar dades.
+     * Inicialitza la vista de login
+     */
+    public void executaPrograma() {
         File f = new File("Users/");
         f.mkdir();
-        this.uc = new HidatoUserController();
-        
-        this.rc = new RankingController();
-        rc.init();
-        
-        this.hmc = new HidatoManagerController(hs, uc);
-        
         f = new File("Games/");
         f.mkdir();
+        this.uc = new HidatoUserController();
+        this.rc = new RankingController();
+        rc.init();
+        this.hmc = new HidatoManagerController(uc);
         this.gmc = new GameManagerController(rc, uc, hmc);
-        
         hmc.setGameManagerController(gmc);
         hmc.loadAll();
-        
         convidat = false;
         FrameLogin fl = new FrameLogin(this, uc, gmc);
         fl.setLocationByPlatform(true);
         fl.setVisible(true);
-        hmc.veure();
     }
     
+    /*
+     * Posa convidat a true
+     */
     public void setConvidat() {
         convidat = true;
         uc = null;
     }
     
+    /*
+     * Obre la vista del menu principal
+     */
     public void obrirMenu(JFrame antic) {
         FrameMenu fm;
         if (convidat) {
@@ -99,6 +90,9 @@ public class AdminVistes {
         antic.dispose();
     }
     
+    /*
+     * Obre la vista de l'editor
+     */
     public void obrirEditor(JFrame antic) {
         FrameEditor fe = new FrameEditor(this, hmc);
         fe.setVisible(true);
@@ -106,6 +100,9 @@ public class AdminVistes {
         antic.dispose();
     }
     
+    /*
+     * Obre la vista d'estadistiques
+     */
     public void obrirStats(JFrame antic) {
         FrameStats fs = new FrameStats(this, uc, hmc, gmc);
         fs.setVisible(true);
@@ -113,6 +110,9 @@ public class AdminVistes {
         antic.dispose();
     }
     
+    /*
+     * Obre la vista de partida
+     */
     public void obrirPartida(JFrame antic, CurrentGameController cgc) {
         FrameGame fg = new FrameGame(this, cgc, hmc);
         fg.setVisible(true);
@@ -120,6 +120,9 @@ public class AdminVistes {
         antic.dispose();
     }
     
+    /*
+     * Obre la vista del ranking
+     */
     public void obrirRanking(JFrame antic){
         FrameRanking fr = new FrameRanking(this,rc);
         fr.setVisible(true);
@@ -127,6 +130,9 @@ public class AdminVistes {
         antic.dispose();
     }
     
+    /*
+     * Executa les funcions de guardar les dades a disc
+     */
     public void saveBeforeClose() {
         rc.save();
         hmc.saveAll();
