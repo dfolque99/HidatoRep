@@ -8,7 +8,7 @@ package CapaDomini.Misc;
 import java.awt.Color;
 
 /**
- *
+ * Classe estàtica que reuneix els colors especials utilitzats al projecte.
  * @author David
  */
 public class Colors {
