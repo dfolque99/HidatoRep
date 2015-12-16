@@ -154,6 +154,7 @@ public class FrameStats extends javax.swing.JFrame {
         this.rc = rc;
         this.parent = parent;
         this.initComponents();
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {

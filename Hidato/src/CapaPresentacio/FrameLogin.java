@@ -100,6 +100,7 @@ public class FrameLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Identifica't");
         setLocationByPlatform(true);
+        setResizable(false);
         setSize(new java.awt.Dimension(800, 600));
 
         jLabel1.setFont(Fonts.getFont("OpenSans-Light", Font.PLAIN, 18));

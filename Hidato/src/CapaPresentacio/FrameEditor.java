@@ -69,6 +69,7 @@ public class FrameEditor extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Editor de hidato");
         setBounds(new java.awt.Rectangle(0, 0, 800, 600));
+        setResizable(false);
         setSize(new java.awt.Dimension(800, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
