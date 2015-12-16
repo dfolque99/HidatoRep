@@ -653,11 +653,17 @@ public class FrameEditor extends javax.swing.JFrame {
     private void desar() {
         if (nomHidato == null) {
             String newName = JOptionPane.showInputDialog(this,"Introdueix un nom per al hidato",null);
+            if (newName == null) return;
+            if (newName.equals("")) {
+                msgError("Has d'introduir algun nom");
+                return;
+            }
             if (hmc.usedName(newName)) {
                 msgError("Ja existeix un hidato amb aquest nom");
                 return;
             }
             nomHidato = newName;
+            label_nom.setText(newName);
         }
         if (label_dificultat.getText().equals("")) {
             hmc.calcTempDifficulty();
